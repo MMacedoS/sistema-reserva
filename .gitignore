@@ -1,12 +1,12 @@
 
-/Control/Conexao.php
-/index.php
+# /Control/Conexao.php
+# /index.php
 .autenticar.php
-.config.php
+# .config.php
 .functions.php
 /vendor
 /fonts
-/rota
+# /rota
 /scss
 /image
 /anexos
