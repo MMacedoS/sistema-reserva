@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sistema Escolar</title>
+    <title>Sistema Reserva</title>
     <link rel="shortcut icon" href="<?=ROTA_GERAL?>/Estilos/image/logo.png">
 	<link rel="stylesheet" href="<?=ROTA_GERAL?>/Estilos/css/bootstrap.min.css">
 	<link href="<?=ROTA_GERAL?>/Estilos/css/login.css" rel="stylesheet" id="bootstrap-css">

@@ -34,19 +34,8 @@ class LoginController {
         $painel_session =  $_SESSION['painel'];
 
         switch ($painel_session) {
-            case 'Coordenacao':
-                header('Location: '.$this->url.'/Coordenacao');                
-            break;
-
-            case 'Aluno':
-                header('Location: '.$this->url.'/Estudante');
-            break;
-
-            case 'professor':
-                header('Location: '.$this->url.'/Professor');
-            break;
-
-            case 'Administrativo':
+           
+            case 'Administrador':
                 header('Location: '.$this->url.'/Administrativo');
             break;
             

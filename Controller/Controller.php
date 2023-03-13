@@ -1,7 +1,13 @@
 <?php
+
 require_once "./Config/autoload.php";
+require_once 'Trait/DateTrait.php';
+require_once 'Trait/GeneralTrait.php';
 
 class Controller {
+
+    use GeneralTrait;
+
     protected $site_model;
     protected $disciplina_id;
     protected $background;
@@ -14,31 +20,23 @@ class Controller {
         require "View/Site/{$view}.php";
     }
 
-    public function viewAluno($view) {
-        require "View/Aluno/{$view}.php";
-    }
-
-    public function viewCoordenador($view, $id = null) {
-        $this->disciplina_id = $id;
-        $this->background();
-        require "View/Coordenacao/{$view}.php";
-    }
-    
-    public function viewProfessor($view, $id = null) {
-        $this->disciplina_id = $id;
-        $this->background();
-        require "View/Professor/{$view}.php";
-    }
-
     public function viewAdmin($view, $request = null, $page = null) {
         $sub_view = $page;
-        $bg = "Light";
-        $this->background();
-        require "View/Administrativo/{$view}.php";
-    }
+        $painel = $view;
+        
+        if(!is_null($request)) {
+            $dados = explode('_@_', $request);  
+            $texto = $dados[0];
+            if(count($dados) == 1){
+                $chave = str_replace('page=', '', $dados[0]);
+                $texto = '';
+            }      
+            
+            $status = $dados[1];
+            $entrada = $dados[2];
+            $saida = $dados[3];
+        }
 
-    public function background(){
-        $background = $this->app_model->buscabackground($_SESSION['code']);
-        $this->background = is_null($background) ? 0 : $background[0]['status'];
+        require "View/Administrativo/views.php";
     }
 }

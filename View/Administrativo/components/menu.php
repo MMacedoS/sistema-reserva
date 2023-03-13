@@ -53,48 +53,69 @@
         </a>
         <div id="collapseCad" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/turmas">Turmas</a>    
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/professores">Professores</a>    
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/estudantes">Estudantes</a>  
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/disciplinas">Disciplinas</a> 
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/bimestres">Bimestres</a> 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/apartamentos">Apartamentos</a>                    
+                <!-- <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/Empresa">Empresa</a>   -->
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Funcionários</a> 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/Hospedes">Hospedes</a>    
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/produtos">Produto</a>                 
             </div>
         </div>
     </li>
-    <!-- Nav Item - Utilities Collapse Menu -->
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Vincular Turmas com </br>&nbsp;&nbsp; Estudantes ou Disciplinas </span>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstoque" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-dice-five"></i>
+            <span>Estoque</span>
         </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+        <div id="collapseEstoque" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header"></h6>
-                <a class="collapse-item" href="">Aprovados/Reprovados</a>
-                <a class="collapse-item" href="">Ata</a>
-                <a class="collapse-item" href="">Boletim</a>
-                <a class="collapse-item" href="">Notas Disciplinas Detalhadas</a>
-                <a class="collapse-item" href="">Turmas/Estudante</a>
-                <a class="collapse-item" href="">Login Acesso Alunos</a>
-                <a class="collapse-item" href="">Login Acesso Professores</a>
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/entradaEstoque">Entrada</a>                    
+                <!-- <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/Empresa">Empresa</a>   -->
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/estoque">Estoque</a>                 
             </div>
         </div>
-    </li> -->
+    </li>
+
+    <!-- Nav Item - Utilities Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Imprimir</span>
+            <span>Reservas &</br>&nbsp;&nbsp; Hospedagens </span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"></h6>
-                <a class="collapse-item" href="">Aprovados/Reprovados</a>
-                <a class="collapse-item" href="">Ata</a>
-                <a class="collapse-item" href="">Boletim</a>
-                <a class="collapse-item" href="">Notas Disciplinas Detalhadas</a>
-                <a class="collapse-item" href="">Turmas/Estudante</a>
-                <a class="collapse-item" href="">Login Acesso Alunos</a>
-                <a class="collapse-item" href="">Login Acesso Professores</a>
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/reservas">Criar</a>
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/consultas">Consultar</a>                
+            </div>
+        </div>
+    </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinanceiro" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-dice-five"></i>
+            <span>Financeiro</span>
+        </a>
+        <div id="collapseFinanceiro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/entrada">Entrada</a>                    
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/movimentacoes">Movimentos</a>                  
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/saida">Saida</a>                 
+            </div>
+        </div>
+    </li>
+
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseUtilities">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Imprimir</span>
+        </a>
+        <div id="collapseRelatorios" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header"></h6>
+              
             </div>
         </div>
     </li>
@@ -170,19 +191,19 @@
                 </li>
 
                 <!-- Nav Item - Alerts -->
-                <li class="nav-item dropdown no-arrow mx-1">
+                <!-- <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell fa-fw"></i>
+                        <i class="fas fa-bell fa-fw"></i> -->
                         <!-- Counter - Alerts -->
                      
-                        <span class="badge badge-danger badge-counter"><count?>+</span>
-                    </a>
+                        <!-- <span class="badge badge-danger badge-counter"><count?>+</span>
+                    </a> -->
                     <!-- Dropdown - Alerts -->
-                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                    <!-- <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header">
                             Alerts Center
                         </h6>
-                        <?php for ($i=0; $i < 3; $i++) { 
+                        
                             # code...?>
                         
                           <a class="dropdown-item d-flex align-items-center" href="#">
@@ -192,15 +213,55 @@
                                 </div>
                             </div>
                         <div>
-                                <div class="small text-gray-500"><?=@$busca_contratos[$i]['data'];?></div>
-                                <span class="font-weight-bold"><?=@$busca_contratos[$i]['titulo'];?></span>
+                                <div class="small text-gray-500"><=@$busca_contratos[$i]['data'];?></div>
+                                <span class="font-weight-bold"><=@$busca_contratos[$i]['titulo'];?></span>
                             </div>
                         </a>
-                        <?php } ?>
                         
-                    </div>
-                </li>
+                        
+                    </div> -->
+                <!-- </li> -->
 
+
+                  <!-- Nav Item - Alerts -->
+                  <li class="nav-item dropdown no-arrow mx-1 d-none d-sm-inline-block">
+                    <a class="nav-link dropdown-toggle btn-secondary" href="<?=ROTA_GERAL?>/Administrativo/checkin" id="alertsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bed fa-fw"></i>
+                        <!-- Counter - Alerts -->
+                        Apartamento Disponiveis
+                        <span class="badge badge-danger badge-counter"><?php                        
+                            echo count(@$this->listApartamento());
+                        ?>+</span>
+                    </a>
+                  </li>
+                  <li class="nav-item dropdown no-arrow mx-1 d-none d-sm-inline-block">
+                    <a class="nav-link dropdown-toggle btn-success" href="<?=ROTA_GERAL?>/Administrativo/checkin" id="alertsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell fa-fw"></i>
+                        <!-- Counter - Alerts -->
+                        Check-in
+                        <span class="badge badge-danger badge-counter"><?php
+                        
+                        echo count(@$this->buscaCheckin());
+                        ?>+</span>
+                    </a>
+                  </li>
+                  <li class="nav-item dropdown no-arrow mx-1 d-none d-sm-inline-block">
+                    <a class="nav-link dropdown-toggle btn-danger" href="<?=ROTA_GERAL?>/Administrativo/checkout" id="alertsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell fa-fw"></i>
+                        <!-- Counter - Alerts -->
+                        Check-out
+                        <span class="badge badge-success badge-counter"><?= count($reservas = $this->buscaCheckout())  ?>+</span>
+                    </a>
+                  </li>
+                  
+                  <li class="nav-item dropdown no-arrow mx-1 d-none d-sm-inline-block">
+                    <a class="nav-link dropdown-toggle btn-primary" href="<?=ROTA_GERAL?>/Administrativo/hospedadas" id="alertsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell fa-fw"></i>
+                        <!-- Counter - Alerts -->
+                        Hospedadas
+                        <span class="badge badge-danger badge-counter"><?= count($reservas = $this->buscaHospedadas())  ?>+</span>
+                    </a>
+                  </li>
                 <!-- Nav Item - Messages -->
                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

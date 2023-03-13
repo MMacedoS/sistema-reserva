@@ -7,9 +7,7 @@ class ConexaoModel
    public function conexao()
     {
         $con = new Conexao;
-        return $con->MontarConexao();
-
-        
+        return $con->MontarConexao();        
     }
 
     public function enviarEmail($email_usu,$txt_subject ,$text_message)

@@ -1,29 +1,15 @@
 <?php
 
 class AdministrativoController extends \Controller{
-    protected $notas_model;
-    protected $turma_model;
-    protected $bimestre_model;
-    protected $estudante_model;
-    protected $app_model;
-    protected $disciplina_model;
-    protected $professor_model;
-
-
+    protected $financeiro_controller;
+    
     public function __construct() {
-        
-        $this->validPainel();
-        $this->app_model =  new AppModel();
-        $this->notas_model = new NotasModel();
-        $this->bimestre_model = new BimestreModel();
-        $this->turma_model = new TurmaModel();
-        $this->estudante_model = new EstudanteModel();         
-        $this->disciplina_model = new DisciplinaModel(); 
-        $this->professor_model = new ProfessorModel();
+        $this->validPainel();     
+        $this->financeiro_controller = new FinanceiroController();       
     }
 
     private function validPainel() {        
-        if ($_SESSION['painel'] != 'Administrativo' && $_SESSION['painel'] != 'financeiro') {   
+        if ($_SESSION['painel'] != 'Administrador' && $_SESSION['painel'] != 'financeiro') {   
             session_start();
             session_destroy();            
             return header('Location: '.$this->url.'/Login');            
@@ -31,261 +17,173 @@ class AdministrativoController extends \Controller{
     }
 
     public function index() {        
-        $this->viewAdmin('index');
+        $this->viewAdmin('consultas');
     }
 
-    public function turmas($request = null) {
-        $this->viewAdmin('turmas',$request,"turmas");
-    }
-
-    public function estudantes($request = null) {
-        $this->viewAdmin('estudantes',$request,"estudantes");
-    }
-
-    public function professores($request = null) {
-        $this->viewAdmin('professores',$request,"professores");
-    }
-
-    public function disciplinas($request = null) {
-        $this->viewAdmin('disciplinas',$request,"disciplinas");
-    }
-
-    public function bimestres($request = null) {
-        $this->viewAdmin('bimestres',$request,"bimestres");
-    }
-
-    public function contratos($request = null) {
-        $this->viewAdmin('contratos',$request,"listaContratos");
-    }
-
-    public function buscaContrato($dados = null) {
-        if (is_null($dados))
-            return $this->app_model->buscaContrato();
-        
-        return $this->app_model->buscaContratoPorEstudante($dados);       
-    }
-
-    public function buscaTurma($dados = null) {
-        if (is_null($dados)){
-            return $this->turma_model->buscaTurma();
-        }
-        return $this->turma_model->buscaTurmaPorNome($dados);
-    }
-
-    public function buscaTurmaAtivas() {
-        return $this->turma_model->buscaTurmaAtivas();
-    }
-
-    public function buscaEstudantes($dados = null) {
-        if (is_null($dados))
-            return $this->estudante_model->buscaEstudantes();
-        if ($dados == 'todos')
-            return $this->estudante_model->buscaTodosEstudantes();
-        
-        return $this->estudante_model->buscaEstudantePorNome($dados);
-    }
-
-    public function buscaTodosEstudantes() {
-        return $this->estudante_model->buscaTodosEstudantes();
-    }
-
-    public function buscaCategoriasTurma() {
-        return $this->app_model->buscaCategoriasTurma();
-    }
-
-    public function buscaDisciplinas($dados = null) {
-        if (is_null($dados)){
-            return $this->disciplina_model->buscaDisciplinas();            
-        }
-
-        return $this->disciplina_model->buscaDisciplinasPorParams($dados);
-    }
-
-    public function buscaProfessor($dados = null) {
-        return $this->professor_model->buscaProfessor($dados);
-    }
-
-    public function buscaTodosProfessores() {
-        return $this->professor_model->buscaTodosProfessores();
-    }
-
-    public function buscaBimestres($dados = null) {
-        return $this->bimestre_model->bimestres($dados);
-    }
-    // json retorno
-
-    public function addBimestre() {
-        $turmas = $this->bimestre_model->preparaInsertBimestre($_POST);
-        echo json_encode($turmas);
-    }  
-
-    public function addTurmas() {
-        $turmas = $this->turma_model->preparaInsertTurmas($_POST);
-        echo json_encode($turmas);
-    }  
-
-    public function updTurmas($id) {
-        $turmas = $this->turma_model->preparaUpdateTurmas($_POST,$id);
-        echo json_encode($turmas);
-    }  
-
-    public function buscaTurmasPorId($id) {
-        $turmas = $this->turma_model->buscaTurmasPorId($id);
-        echo json_encode($turmas[0]);
+    public function apartamentos($request = null) {
+        $this->viewAdmin('apartamentos',$request,"");
     }
     
-    public function changeStatusTurma($codigo) {
-        $turmas = $this->turma_model->changeStatusTurma($codigo);
-        echo json_encode($turmas);
-    }
-
-   // estudantes
-   public function listaEstudantesPorTurma($turma) {
-    $estudantes = $this->estudante_model->buscaEstudantePorTurmaEAno($turma,Date('Y'));
-    echo json_encode($estudantes);
-    }
-
-    public function inserirEstudante() {
-        $estudantes = $this->estudante_model->preparaInsertEstudante($_POST);
-        echo json_encode($estudantes);
-    }
-
-    public function buscaEstudantePorId($id) {
-        $estudantes = $this->estudante_model->buscaEstudantePorId($id);
-        echo json_encode($estudantes);
-    }
-
-    public function updateEstudante($id) {
-        $estudantes = $this->estudante_model->preparaUpdateEstudante($_POST, $id);
-        echo json_encode($estudantes);
-    }
-
-    public function changeStatusEstudante($codigo) {
-        $estudantes = $this->estudante_model->changeStatusEstudante($codigo);
-        echo json_encode($estudantes);
-    }
-
-    public function buscaVinculoTurmaEstudantePorIdEstudante($codigo) {
-        $estudantes = $this->estudante_model->vinculoTurmaEstudantePorIdEstudante($codigo);
-        echo json_encode($estudantes);
-    }
-
-    public function vincularEstudanteTurma() {
-        $estudantes = $this->estudante_model->preparaVinculoTurmaEstudante($_POST);
-        echo json_encode($estudantes);
-    }
-
-    //fim estudantes
-
-    // professores 
-    public function InserirProfessor() {
-        $estudantes = $this->professor_model->preparaInsertProfessor($_POST);
-        echo json_encode($estudantes);
-    }
-
-    public function listaProfessorPorTurma($turma) {
-        $professores = $this->professor_model->buscaProfessorPorTurmaEAno($turma);
-        echo json_encode($professores);
-    }
-
-    public function buscaProfessorPorId($id) {
-        $professores = $this->professor_model->buscaProfessorPorId($id);
-        echo json_encode($professores);
-    }
-
-    public function updateProfessor($id) {
-        $professors = $this->professor_model->preparaUpdateProfessor($_POST, $id);
-        echo json_encode($professors);
-    }
-
-    public function changeStatusProfessor($codigo) {
-        $professors = $this->professor_model->changeStatusProfessor((int)$codigo);
-        echo json_encode($professors);
-    }
-
-    //fim professores
-
-    // disicplinas
-
-    public function buscaDisciplina($id) {
-        $disciplinas = $this->disciplina_model->buscaDisciplina();
-        echo json_encode($disciplinas);
-    }
-
-    public function buscaTurmaPorCategoria($id) {
-        $turmas = $this->turma_model->buscaTurmaPorCategoria((int)$id);
-        echo json_encode($turmas);
-    }
-
-    public function buscaProfessorParaSelect()
+    public function buscaApartamentos($request =  null)
     {
-        echo json_encode($this->buscaProfessor());
+        $apartamento_controller = new ApartamentoController();
+        return $apartamento_controller->buscaApartamentos($request);
     }
 
-    public function buscaDisciplinaPorId($id) {
-        $disciplinas = $this->disciplina_model->buscaDisciplinaPorId($id);
-        echo json_encode($disciplinas);
+    public function funcionarios($request = null) {
+        $this->viewAdmin('funcionarios',$request,"");
     }
 
-    public function salvarDiciplinas()
+    public function buscaFuncionarios($request =  null)
     {
-        $disciplinas = $this->disciplina_model->prepareInsertDisciplinas($_POST);
-        echo json_encode($disciplinas);
+        $funcionario_controller = new FuncionarioController();
+        return $funcionario_controller->buscaFuncionarios($request);
     }
 
-    public function updateDisciplina($id)
+    public function hospedes($request = null) {
+        $this->viewAdmin('hospedes',$request,"");
+    }
+
+    public function buscaHospedes($request =  null)
     {
-        $disciplinas = $this->disciplina_model->preparaUpdateDisciplinas($_POST,$id);
-        echo json_encode($disciplinas);
+        $hospedes_controller = new HospedeController();
+        return $hospedes_controller->buscaHospedes($request);
     }
 
-    public function criandoDiciplinas()
+    public function reservas($request = null) {
+        $this->viewAdmin('reservas',$request,"");
+    }
+
+    public function consultas($request = null) {
+        $this->viewAdmin('consultas',$request,"");
+    }
+
+    public function buscaReservas($request =  null)
+    {        
+        $reservas_controller = new ReservaController();
+        return $reservas_controller->buscaReservas($request);
+    }
+
+    public function hospedadas($request = null) {
+        $this->viewAdmin('hospedadas',$request,"");
+    }
+
+    public function buscaHospedadas($request =  null)
+    {        
+        $reservas_controller = new ReservaController();
+        return $reservas_controller->buscaHospedadas($request);
+    }
+
+    public function checkin($request = null) {
+        $this->viewAdmin('checkin',$request,"");
+    }
+
+    public function buscaCheckin($request =  null)
+    {        
+        $reservas_controller = new ReservaController();
+        return $reservas_controller->buscaCheckin($request);
+    }
+
+    public function listproduto()
     {
-        $disciplinas = $this->disciplina_model->prepareInsertListaDisciplinas($_POST);
-        echo json_encode($disciplinas);
+        $this->produto_model = new ProdutoModel();     
+        return $this->produto_model->getProdutos($request);
     }
 
-    public function criandoCarga()
+    public function listApartamento()
     {
-        $disciplinas = $this->disciplina_model->prepareInsertCarga($_POST);
-        echo json_encode($disciplinas);
+        $this->apartamento_model = new ApartamentoModel();     
+        return $this->apartamento_model->getApartamento();
     }
 
-    public function diasSemanaAulasDisciplina()
+    public function checkout($request = null) {
+        $this->viewAdmin('checkout',$request,"");
+    }
+
+    public function buscaCheckout($request =  null)
+    {        
+        $reservas_controller = new ReservaController();
+        return $reservas_controller->buscaCheckout($request);
+    }
+
+    public function confirmada($request = null) {
+        $this->viewAdmin('confirmada',$request,"");
+    }
+
+    public function buscaConfirmada($request =  null)
+    {        
+        $reservas_controller = new ReservaController();
+        return $reservas_controller->buscaConfirmada($request);
+    }
+
+    public function produtos($request = null) {
+        $this->viewAdmin('produtos',$request,"");
+    }
+
+    public function buscaProdutos($request =  null)
+    {        
+        $produto_controller = new ProdutoController();
+        return $produto_controller->buscaProduto($request);
+    }
+
+    public function buscaEntradaProdutos($request =  null)
+    {        
+        $produto_controller = new ProdutoController();
+        return $produto_controller->buscaEntradaProdutos();
+    }
+
+    public function entradaEstoque($request = null) {
+        $this->viewAdmin('entradaEstoque',$request,"");
+    }
+
+    public function estoque($request = null) {
+        $this->viewAdmin('estoque',$request,"");
+    }
+
+    public function buscaEstoques($request = null) {
+        $produto_controller = new ProdutoController();
+        return $produto_controller->buscaEstoques($request);
+    }
+
+    public function buscaEntradaEstoques($request = null) {
+        $produto_controller = new ProdutoController();
+        return $produto_controller->buscaEntradaProduto($request);
+    }
+
+    public function buscaProdutosSelect()
+    {        
+        $produto_controller = new ProdutoController();
+        return $produto_controller->buscaProdutos();
+    }
+
+    public function movimentacoes($request = null)
     {
-        $disciplinas = $this->disciplina_model->prepareDiasSemanaAulasDisciplina($_POST);
-        echo json_encode($disciplinas);
+        $this->viewAdmin('movimentacoes',$request,"");
     }
 
-    public function removeDiaSemanaTurma($id) 
+    public function buscaMovimentos($request = null)
     {
-        $disciplinas = $this->disciplina_model->removeDiaSemanaTurma($id);
-        echo json_encode($disciplinas);
+        return $this->financeiro_controller->buscaMovimentos($request);
     }
 
-    public function diaSemanaTurma($id){
-        $dias = $this->disciplina_model->diaSemanaTurma($id);
-        echo json_encode($dias);
+    public function entrada($request = null)
+    {
+        $this->viewAdmin('entrada',$request,"");
     }
 
-    public function buscaCargaParaSelect() {
-        $disciplinas = $this->disciplina_model->buscaCargaParaSelect($_POST);
-        echo json_encode($disciplinas);
+    public function buscaEntrada($request = null)
+    {
+        return $this->financeiro_controller->buscaEntrada($request);
     }
 
-    public function changeStatusDisciplina($codigo) {
-        $disciplinas = $this->disciplina_model->changeStatusDisciplina((int)$codigo);
-        echo json_encode($disciplinas);
+    public function saida($request = null)
+    {
+        $this->viewAdmin('saida',$request,"");
     }
 
-    public function changeStatusBg($code) {
-        $bg = $this->app_model->changeStatusBg($code);
-        return $bg;
+    public function buscaSaida($request = null)
+    {
+        return $this->financeiro_controller->buscaSaida($request);
     }
 
-    public function changeStatusBgGet($code) {
-        $bg = $this->app_model->changeStatusBg($code);
-        echo json_encode($bg);
-    }
-      
 }

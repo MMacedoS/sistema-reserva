@@ -9,7 +9,7 @@ class LoginModel extends ConexaoModel
             'SELECT * from usuarios where email = :usuario and senha = :senha and status=:status'
         );
         $cmd->bindValue(":usuario", $params['user']);
-        $cmd->bindValue(":senha", $params['password']);
+        $cmd->bindValue(":senha", md5($params['password']));
         $cmd->bindValue(":status",'1');
         $cmd->execute();
 
