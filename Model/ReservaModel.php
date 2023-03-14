@@ -24,8 +24,6 @@ class ReservaModel extends ConexaoModel {
 
         $this->apartamento_model = new ApartamentoModel();
         $this->consumo_model = new ConsumoModel();
-
-        $this->gerarDiarias();
     }
 
     public function prepareInsertReserva($dados)
@@ -513,10 +511,11 @@ class ReservaModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
+            $this->gerarDiarias();
             return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        return "Nenhuma hospedagem encontrada!";
+        return [];
         
     }
 
@@ -578,7 +577,7 @@ class ReservaModel extends ConexaoModel {
             return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        return [];
+        return array();
         
     }
 
@@ -712,7 +711,6 @@ class ReservaModel extends ConexaoModel {
             // var_dump(strtotime(Date('Y-m-d 17:00:00')), strtotime(Date('Y-m-d H:i:s')));
             if (strtotime($dados) <= strtotime(Date('Y-m-d 17:00:00'))) {
                 $this->verificaGerarDiarias($dados);
-                return $this->gerarDiarias();
             }
 
             return true;

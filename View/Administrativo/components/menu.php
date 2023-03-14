@@ -239,9 +239,8 @@
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
                         Check-in
-                        <span class="badge badge-danger badge-counter"><?php
-                        
-                        echo count(@$this->buscaCheckin());
+                        <span class="badge badge-danger badge-counter"><?php                        
+                            echo count($this->buscaCheckin(''));
                         ?>+</span>
                     </a>
                   </li>
@@ -250,7 +249,7 @@
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
                         Check-out
-                        <span class="badge badge-success badge-counter"><?= count($reservas = $this->buscaCheckout())  ?>+</span>
+                        <span class="badge badge-success badge-counter"><?= count($reservas = $this->buscaCheckout(''))  ?>+</span>
                     </a>
                   </li>
                   
@@ -259,7 +258,7 @@
                         <i class="fas fa-bell fa-fw"></i>
                         <!-- Counter - Alerts -->
                         Hospedadas
-                        <span class="badge badge-danger badge-counter"><?= count($reservas = $this->buscaHospedadas())  ?>+</span>
+                        <span class="badge badge-danger badge-counter"><?= count($this->buscaHospedadas())  ?>+</span>
                     </a>
                   </li>
                 <!-- Nav Item - Messages -->

@@ -249,7 +249,7 @@
                 return Swal.fire({
                     icon: 'warning',
                     title: 'ops...',
-                    text: "Algo de errado aconteceu!",
+                    text: data.message,
                     footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
             })
         });

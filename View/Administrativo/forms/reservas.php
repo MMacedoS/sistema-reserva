@@ -209,12 +209,12 @@
 
                         <div class="col-sm-6">
                             <label for="">Valor</label>
-                            <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="0.00" id="valor">
+                            <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
                         </div>
 
                         <div class="col-sm-12">
                             <label for="">observação</label><br>
-                            <textarea name="observacao" class="form-control" id="observacao" cols="30" rows="5"></textarea>
+                            <textarea name="observacao" class="form-control" id="observacao" cols="30" rows="5"> &nbsp;</textarea>
                         </div>
                     </div>   
 
