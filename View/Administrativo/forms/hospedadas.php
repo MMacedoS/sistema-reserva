@@ -825,7 +825,8 @@
                     if(data.status === 201){
                         $('#inp-entrada').val(data.data[0]['dataEntrada']);
                         $('#inp-saida').val(data.data[0]['dataSaida']);
-                        $('#inp-hospede').val(data.data[0]['hospede_id']);
+                        var newHosp= $('<option selected value="' + data.data[0]['hospede_id'] + '">' + data.data[0]['nome'] + '</option>');
+                        $("#inp-hospedes").append(newHosp);
                         var newOption = $('<option selected value="' + data.data[0]['apartamento_id'] + '">' + data.data[0]['numero'] + '</option>');
                         $("#inp-apartamento").append(newOption);
                         $('#inp-tipo').val(data.data[0]['tipo']);

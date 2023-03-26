@@ -324,6 +324,8 @@
         $('#saida').val(data[0].dataSaida);
         $('#buscar').click();
         $('#hospedes').val(data[0].hospede_id);
+        var newHosp= $('<option selected value="' + data[0].hospede_id + '">mesmo Hóspede</option>');
+        $("#hospedes").append(newHosp);
         $('#tipo').val(data[0].tipo);
         $('#valor').val(data[0].valor);
         $('#status').val(data[0].status);
