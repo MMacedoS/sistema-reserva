@@ -77,7 +77,7 @@
 <!-- editar -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Dados da Hospedagem</h5>
@@ -114,19 +114,23 @@
                     </div>
                    
                 </div>
+                
+                <h6 class="modal-title" id="">Ações</h6>
                 <hr>
                 <div class="row">
                     <div class="col-sm-3 text-center">
-                        <button class="btn btn-primary checkout">Fazer o check-out</button>
+                        <button class="btn btn-primary checkout">Iniciar Check-out</button>
                     </div>
                     <div class="col-sm-3 text-center">
-                        <button class="btn btn-success pagamento">Lançar Pagamento </button>
+                        <button class="btn btn-success pagamento">Pagamento </button>
                     </div>
-                    <div class="col-sm-3 text-center">
-                        <button class="btn btn-warning consumo">Lançar Consumo </button>
+                    <div class="col-sm-2 text-center">
+                        <button class="btn btn-warning consumo">Consumo </button>
                     </div>
-                    <div class="col-sm-3 text-center">
-                        <!-- <button class="btn btn-info editar">Editar</button> -->
+                    <div class="col-sm-2 text-center">
+                        <button class="btn btn-info editar">Editar</button>
+                    </div>
+                    <div class="col-sm-2 text-center">
                         <button class="btn btn-secondary imprimir">Imprimir</button>
                     </div>
                 </div>
@@ -351,80 +355,93 @@
 
 
 <!-- editar -->
-<!-- <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cadastro de Reserva</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Atualização da Reserva</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
            
-            <form action="" id="form" method="POST">
+            <form action="" id="formReserva" method="POST">
                 <div class="modal-body" id="">                               
                     <div class="form-row">
-                        <input type="hidden" disabled id="id" >
+                        <input type="hidden" disabled id="inp-id" >
                         <input type="hidden" disabled id="opcao" value="" >
                         <div class="col-sm-5">
                             <label for="">Data Entrada</label>
-                            <input type="date" name="entrada" id="entrada" class="form-control">
+                            <input type="date" name="entrada" id="inp-entrada" class="form-control">
                         </div>
 
                         <div class="col-sm-5">
                             <label for="">Data Saida</label>
-                            <input type="date" name="saida" id="saida" class="form-control">
+                            <input type="date" name="saida" id="inp-saida" class="form-control">
                         </div>                                    
                     </div>
                     <div class="form-row" id="div_apartamento">
 
                         <div class="col-sm-8">
                             <label for="">Hospede</label><br>
-                            <select class="form-control js-example-basic-single" name="hospedes" id="hospedes">
-                                <php
+                            <select class="form-control js-example-basic-single" name="hospedes" id="inp-hospedes">
+                                <?php
                                 $hospedes = $this->buscaHospedes();
                                     foreach ($hospedes as $hospede) { 
                                         ?>
-                                            <option value="<=$hospede['id']?>"><=$hospede['nome'] . " CPF: " . $hospede['cpf']?></option>
-                                        <php
+                                            <option value="<?=$hospede['id']?>"><?=$hospede['nome'] . " CPF: " . $hospede['cpf']?></option>
+                                        <?php
                                     }
                                 ?>
                             </select>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Apartamentos</label><br>
-                            <select class="form-control js-example-basic-single" name="apartamento" id="apartamento">
-                               
+                            <select class="form-control js-example-basic-single" name="apartamento" id="inp-apartamento">
+                               <?php
+                                    $paratamentos = $this->listApartamento();
+                                    foreach ($paratamentos as $apartamento) { 
+                                        ?>
+                                            <option value="<?=$apartamento['id']?>"><?=$apartamento['numero']?></option>
+                                        <?php
+                                    }
+                               ?>
                             </select>
                         </div>
 
                         <div class="col-sm-2">
                             <label for="">Tipo</label><br>
-                            <select class="form-control" name="tipo" id="tipo">
+                            <select class="form-control" name="tipo" id="inp-tipo">
                                 <option value="1">Diária</option>
                                 <option value="2">Pacote</option>
                                 <option value="3">Promocao</option>
                             </select>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-3">
                             <label for="">Status</label><br>
-                            <select class="form-control" name="status" id="status">
+                            <select class="form-control" name="status" id="inp-status">
                                 <option value="1">Reservada</option>
                                 <option value="2">Confirmada</option>
+                                <option value="3">Hospedada</option>
                                 <option value="5">Cancelada</option>
                             </select>
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <label for="">Valor</label>
-                            <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
+                            <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="">Placa</label>
+                            <input type="text" class="form-control" name="placa" value="" id="inp-placa">
                         </div>
 
                         <div class="col-sm-12">
                             <label for="">observação</label><br>
-                            <textarea name="observacao" class="form-control" id="observacao" cols="30" rows="5"> &nbsp;</textarea>
+                            <textarea name="observacao" class="form-control" id="inp-observacao" cols="30" rows="5"> &nbsp;</textarea>
                         </div>
                     </div>   
 
@@ -435,13 +452,13 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="sair" data-dismiss="modal">Fechar</button>
-                    <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar">Salvar</button>
+                    <button type="button" name="salvar" id="btnSubmit" class="btn btn-primary SalvarReserva">Salvar</button>
                 </div>
             </form>        
         </div>
         
     </div>
-</div> -->
+</div>
 <!-- editar -->
 
 </div>
@@ -453,7 +470,7 @@
      var subTotal = 0;
 
       function valores(){
-        var dias = moment($('#saida').val()).diff(moment($('#entrada').val()), 'days');
+        var dias = moment($('#inp-saida').val()).diff(moment($('#inp-entrada').val()), 'days');
          var valor = $("#valor").val();
             $('#valores').removeClass('text-success');
             $('#valores').addClass('text-success');
@@ -806,11 +823,27 @@
                 dataType: 'json     ',
                 success: function(data){
                     if(data.status === 201){
-                        
+                        $('#inp-entrada').val(data.data[0]['dataEntrada']);
+                        $('#inp-saida').val(data.data[0]['dataSaida']);
+                        $('#inp-hospede').val(data.data[0]['hospede_id']);
+                        var newOption = $('<option selected value="' + data.data[0]['apartamento_id'] + '">' + data.data[0]['numero'] + '</option>');
+                        $("#inp-apartamento").append(newOption);
+                        $('#inp-tipo').val(data.data[0]['tipo']);
+                        $('#inp-valor').val(data.data[0]['valor']);
+                        $('#inp-status').val(data.data[0]['status']);
+                        $('#inp-observacao').val(data.data[0]['obs']);
+                        $('#inp-placa').val(data.data[0]['placa']);
+                        $('#exampleModalLabel').text("Dados Informativos");
+                        $('#modalReserva').modal('show');  
                     }
                 }
             })    
             
+        });
+
+        $(document).on('click', '.SalvarReserva', function(){
+            var code=$("#id").val();  
+            envioRequisicaoPostViaAjax('Reserva/atualizarReserva/'+ code, new FormData(document.getElementById("formReserva")));            
         });
 
 

@@ -133,12 +133,14 @@ class ReservaModel extends ConexaoModel {
     private function updateReserva($dados, int $id)
     {
         $this->conexao->beginTransaction();
-        try {      
+        try {    
+            
+            $reserva = self::findById($id);
+            
             $cmd = $this->conexao->prepare(
                 "UPDATE 
                     $this->model 
                 SET 
-                    dataReserva = :dataReserva, 
                     dataEntrada = :dataEntrada, 
                     dataSaida = :dataSaida,
                     obs = :observacao,
@@ -147,12 +149,12 @@ class ReservaModel extends ConexaoModel {
                     hospede_id = :hospede_id,
                     valor = :valor,
                     status = :status,
+                    placa = :placa,
                     funcionario =  :funcionario
                 WHERE 
                     id = :id"
                 );
 
-                $cmd->bindValue(':dataReserva', Date('Y-m-d'));
                 $cmd->bindValue(':dataEntrada',$dados['entrada']);
                 $cmd->bindValue(':dataSaida',$dados['saida']);
                 $cmd->bindValue(':apartamento_id',$dados['apartamento']);
@@ -161,6 +163,7 @@ class ReservaModel extends ConexaoModel {
                 $cmd->bindValue(':tipo',$dados['tipo']);
                 $cmd->bindValue(':observacao',$dados['observacao']);
                 $cmd->bindValue(':hospede_id',$dados['hospedes']);
+                $cmd->bindValue(':placa',$dados['placa']);
                 $cmd->bindValue(':funcionario',$_SESSION['code']);
                 $cmd->bindValue(':id',$id);
             $dados = $cmd->execute();
