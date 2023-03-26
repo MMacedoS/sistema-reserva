@@ -416,7 +416,11 @@
             var opcao = $('#opcao').val();            
 
             if(dataSaida >= dataEntrada){
-                $.ajax({
+                $.ajax({getRequisicaoGetViaAjax('Consumo/getDadosConsumos/'+ code, "Consumo");                       
+                        data.data.map(element => {
+                            var newOption = $('<option value="' + element.id + '">' + element.descricao + '</option>');
+                            $("#produto").append(newOption);
+                        })
                     url: '<?=ROTA_GERAL?>/Reserva/reservaBuscaPorData/',
                     method:'POST',
                     data: {
