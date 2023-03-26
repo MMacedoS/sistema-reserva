@@ -96,6 +96,9 @@
                                     <td>' . self::prepareTipo($value['tipoPagamento']) . '</td>
                                     <td>' . self::prepareTipoSaidas($value['tipo']) . '</td>
                                     <td>R$ ' . $value['valor'] . '</td>
+                                    <td>
+                                        <a href="#" class="remove-pagamento" id=' . $value['id'] . ' >&#10060;</a>
+                                    </td>
                                 </tr>
                             ';
                         }
@@ -297,6 +300,23 @@
         $(document).on('click','.Salvar',function(){
             event.preventDefault();
             return envioRequisicaoPostViaAjax('Financeiro/insertSaida', new FormData(document.getElementById("form")));
+        });
+
+        $(document).on('click','.remove-pagamento',function(){
+            var code=$(this).attr("id");
+            Swal.fire({
+                title: 'Deseja remover esta saida?',
+                showDenyButton: true,
+                confirmButtonText: 'Sim',
+                denyButtonText: `Não`,
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    envioRequisicaoGetViaAjax('Financeiro/removerSaida/'+ code);
+                } else if (result.isDenied) {
+                    Swal.fire('nenhuma mudança efetuada', '', 'info')
+                }
+            })
         });
 
         $(document).on('click','.view_data',function(){

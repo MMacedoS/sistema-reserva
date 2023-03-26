@@ -48,7 +48,7 @@ class PagamentoModel extends ConexaoModel {
             $cmd->bindValue(':dataPagamento', Date('Y-m-d'));
             $cmd->bindValue(':valor',$valor);
             $cmd->bindValue(':reserva_id',$reserva_id);
-            $cmd->bindValue(':funcionario','123');
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();
 
             $this->conexao->commit();

@@ -17,7 +17,16 @@ class Route {
             $this->parameter = array();
         }
         else {
-            $url=$_GET['pag'];           
+            $url=$_GET['pag'];  
+            
+            if($url == "gerardiaria")
+            {
+                $this->controller="AppController";
+                $this->method="gerarDiarias";            
+                $this->parameter = array();
+                
+                $this->run();                
+            }
 
             $url= explode('/',$url);
 
@@ -38,7 +47,7 @@ class Route {
         $this->run();
     }
 
-    public function run()
+    private function run()
     {
         $this->prepareRota();
         $control=new $this->controller;

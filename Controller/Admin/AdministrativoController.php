@@ -9,7 +9,7 @@ class AdministrativoController extends \Controller{
     }
 
     private function validPainel() {        
-        if ($_SESSION['painel'] != 'Administrador' && $_SESSION['painel'] != 'financeiro') {   
+        if ($_SESSION['painel'] != 'Administrador' && $_SESSION['painel'] != 'Recepcao') {   
             session_start();
             session_destroy();            
             return header('Location: '.$this->url.'/Login');            
@@ -98,6 +98,10 @@ class AdministrativoController extends \Controller{
 
     public function checkout($request = null) {
         $this->viewAdmin('checkout',$request,"");
+    }
+
+    public function disponiveis(){
+        $this->viewAdmin('disponiveis',$request,"");
     }
 
     public function buscaCheckout($request =  null)

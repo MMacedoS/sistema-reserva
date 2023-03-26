@@ -50,7 +50,7 @@ class ConsumoModel extends ConexaoModel {
             $cmd->bindValue(':valor_unitario',$produto['0']['valor']);
             $cmd->bindValue(':reserva_id',$reserva_id);
             $cmd->bindValue(':produto_id',$produto_id);
-            $cmd->bindValue(':funcionario','123');
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();
 
             $this->conexao->commit();
@@ -95,7 +95,7 @@ class ConsumoModel extends ConexaoModel {
             $cmd->bindValue(':valor_unitario',$valor);
             $cmd->bindValue(':reserva_id',$reserva_id);
             $cmd->bindValue(':produto_id',$produto_id);
-            $cmd->bindValue(':funcionario','123');
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();
 
             $this->conexao->commit();

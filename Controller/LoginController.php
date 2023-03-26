@@ -38,6 +38,10 @@ class LoginController {
             case 'Administrador':
                 header('Location: '.$this->url.'/Administrativo');
             break;
+
+            case 'Recepcao':
+                header('Location: '.$this->url.'/Administrativo');
+            break;
             
         }
     }

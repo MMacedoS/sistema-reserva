@@ -97,4 +97,9 @@ class ReservaController extends \Controller{
         $reserva = $this->reserva_model->buscaConfirmada($request);
         return $reserva;
     }
+
+    public function gerarDiarias()
+    {
+       return $this->reserva_model->gerarDiarias();
+    }
 }

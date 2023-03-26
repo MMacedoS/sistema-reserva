@@ -262,13 +262,15 @@ class FinanceiroModel extends ConexaoModel {
                     valor = :valor, 
                     descricao = :descricao, 
                     tipoPagamento = :tipopagamento,
-                    tipo = :tipo"
+                    tipo = :tipo,
+                    funcionario = :funcionario"
                 );
 
             $cmd->bindValue(':valor',$dados['valor']);
             $cmd->bindValue(':descricao',$dados['descricao']);
             $cmd->bindValue(':tipo',$dados['tipo']);
             $cmd->bindValue(':tipopagamento',$dados['pagamento']);
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();
 
             $this->conexao->commit();
@@ -278,5 +280,53 @@ class FinanceiroModel extends ConexaoModel {
             $this->conexao->rollback();
             return self::message(422, $th->getMessage());
         }
+    }
+
+    public function insertEntrada($dados)
+    {
+        $this->conexao->beginTransaction();
+        try {      
+            $cmd = $this->conexao->prepare(
+                "INSERT INTO 
+                    entrada
+                SET 
+                    valor = :valor, 
+                    descricao = :descricao, 
+                    tipoPagamento = :tipopagamento,
+                    funcionario = :funcionario"
+                );
+
+            $cmd->bindValue(':valor',$dados['valor']);
+            $cmd->bindValue(':descricao',$dados['descricao']);
+            $cmd->bindValue(':tipopagamento',$dados['pagamento']);
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
+            $dados = $cmd->execute();
+
+            $this->conexao->commit();
+            return self::message(201, "dados inseridos!!");
+
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            return self::message(422, $th->getMessage());
+        }
+    }
+
+    public function deleteSaida($id){
+        $cmd  = $this->conexao->query(
+            "DELETE 
+                FROM 
+                saida
+                WHERE
+                    id = $id
+            "
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return self::message(200, 'Saida deletado');
+        }
+
+        return self::message(422, 'Nenhum dado encontrado');
     }
 }

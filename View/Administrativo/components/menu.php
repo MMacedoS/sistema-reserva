@@ -69,8 +69,14 @@
         </a>
         <div id="collapseEstoque" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+            <?php 
+                if($_SESSION['painel'] == 'Administrador'){
+            ?>
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/entradaEstoque">Entrada</a>                    
                 <!-- <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/Empresa">Empresa</a>   -->
+            <?php
+                }
+            ?>  
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/estoque">Estoque</a>                 
             </div>
         </div>
@@ -91,7 +97,9 @@
         </div>
     </li>
 
-
+   <?php 
+    if($_SESSION['painel'] == 'Administrador'){
+   ?>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinanceiro" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-dice-five"></i>
@@ -106,7 +114,9 @@
         </div>
     </li>
 
-
+    <?php
+    }
+    ?>
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -225,7 +235,7 @@
 
                   <!-- Nav Item - Alerts -->
                   <li class="nav-item dropdown no-arrow mx-1 d-none d-sm-inline-block">
-                    <a class="nav-link dropdown-toggle btn-secondary" href="<?=ROTA_GERAL?>/Administrativo/checkin" id="alertsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle btn-secondary" href="<?=ROTA_GERAL?>/Administrativo/disponiveis" id="alertsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-bed fa-fw"></i>
                         <!-- Counter - Alerts -->
                         Apartamento Disponiveis

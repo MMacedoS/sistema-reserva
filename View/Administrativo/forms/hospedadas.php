@@ -60,7 +60,7 @@
                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">APT <?= $value['numero']?></div>
                                             </div>
                                             <div class="col-auto">
-                                                <i class="fas fa-graduation-cap fa-2x text-gray-300"></i>
+                                                <i class="fas fa-door-closed fa-2x text-gray-300"></i>
                                             </div>                                                         
                                         </div>
                                     </div>
@@ -126,6 +126,7 @@
                         <button class="btn btn-warning consumo">Lançar Consumo </button>
                     </div>
                     <div class="col-sm-3 text-center">
+                        <!-- <button class="btn btn-info editar">Editar</button> -->
                         <button class="btn btn-secondary imprimir">Imprimir</button>
                     </div>
                 </div>
@@ -345,6 +346,102 @@
         
     </div>
 </div>
+<!-- editar -->
+
+
+
+<!-- editar -->
+<!-- <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Cadastro de Reserva</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+           
+            <form action="" id="form" method="POST">
+                <div class="modal-body" id="">                               
+                    <div class="form-row">
+                        <input type="hidden" disabled id="id" >
+                        <input type="hidden" disabled id="opcao" value="" >
+                        <div class="col-sm-5">
+                            <label for="">Data Entrada</label>
+                            <input type="date" name="entrada" id="entrada" class="form-control">
+                        </div>
+
+                        <div class="col-sm-5">
+                            <label for="">Data Saida</label>
+                            <input type="date" name="saida" id="saida" class="form-control">
+                        </div>                                    
+                    </div>
+                    <div class="form-row" id="div_apartamento">
+
+                        <div class="col-sm-8">
+                            <label for="">Hospede</label><br>
+                            <select class="form-control js-example-basic-single" name="hospedes" id="hospedes">
+                                <php
+                                $hospedes = $this->buscaHospedes();
+                                    foreach ($hospedes as $hospede) { 
+                                        ?>
+                                            <option value="<=$hospede['id']?>"><=$hospede['nome'] . " CPF: " . $hospede['cpf']?></option>
+                                        <php
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Apartamentos</label><br>
+                            <select class="form-control js-example-basic-single" name="apartamento" id="apartamento">
+                               
+                            </select>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <label for="">Tipo</label><br>
+                            <select class="form-control" name="tipo" id="tipo">
+                                <option value="1">Diária</option>
+                                <option value="2">Pacote</option>
+                                <option value="3">Promocao</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="">Status</label><br>
+                            <select class="form-control" name="status" id="status">
+                                <option value="1">Reservada</option>
+                                <option value="2">Confirmada</option>
+                                <option value="5">Cancelada</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="">Valor</label>
+                            <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
+                        </div>
+
+                        <div class="col-sm-12">
+                            <label for="">observação</label><br>
+                            <textarea name="observacao" class="form-control" id="observacao" cols="30" rows="5"> &nbsp;</textarea>
+                        </div>
+                    </div>   
+
+                    <small>
+                        <div align="center" class="mt-1" id="mensagem"></div>
+                        <div align="right" class="mt-1 fs" id="valores"></div>
+                    </small>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="sair" data-dismiss="modal">Fechar</button>
+                    <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar">Salvar</button>
+                </div>
+            </form>        
+        </div>
+        
+    </div>
+</div> -->
 <!-- editar -->
 
 </div>
@@ -698,6 +795,24 @@
             })    
             
         });
+
+        $(document).on('click', '.editar', function(){
+            var code=$("#id").val();  
+             $('#produto option').detach();
+            $.ajax({
+                url: url+ 'Reserva/getDadosReservas/'+ code,
+                method:'GET',
+                processData: false,
+                dataType: 'json     ',
+                success: function(data){
+                    if(data.status === 201){
+                        
+                    }
+                }
+            })    
+            
+        });
+
 
         $(document).on('click','.Salvar-pagamento',function(){
             event.preventDefault();

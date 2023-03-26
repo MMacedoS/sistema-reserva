@@ -19,7 +19,13 @@ class HospedeModel extends ConexaoModel {
 
     public function prepareInsertHospede($dados)
     {
-        $validation = self::requiredParametros($dados);
+
+        // $validation = self::requiredParametros($dados);
+        $validation = null;
+        if(empty($dados['nome']))
+        {
+            return self::message(422, 'preencha o nome do Hóspede');
+        }
 
         if(is_null($validation)){
             
@@ -37,6 +43,11 @@ class HospedeModel extends ConexaoModel {
     private function verificaHospedesSeExiste($dados)
     {
         $email = (string)$dados['email'];
+        $nome = (string)$dados['nome'];
+        
+        if (empty($email)) {
+            return true;    
+        }
         
         $cmd = $this->conexao->query(
             "SELECT 

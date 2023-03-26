@@ -230,8 +230,7 @@
         $('#modalProdutos').modal('show');        
     });
 
-    $(document).ready(function(){
-        
+    $(document).ready(function(){        
 
         $(document).on('click','.Salvar',function(){
             event.preventDefault();
@@ -248,7 +247,7 @@
             event.preventDefault();
             $('#btnSubmit').attr('disabled','disabled');
             var id = $('#id').val();
-            envioRequisicaoPostViaAjax('Produto/atualizarProdutos/' + id, new FormData(document.getElementById("form")));   
+            envioRequisicaoPostViaAjax('Produto/atualizarProduto/' + id, new FormData(document.getElementById("form")));   
         });
 
         $(document).on('click','.view_Ativo',function(){    

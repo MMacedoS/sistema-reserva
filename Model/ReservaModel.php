@@ -107,7 +107,7 @@ class ReservaModel extends ConexaoModel {
             $cmd->bindValue(':tipo',$dados['tipo']);
             $cmd->bindValue(':observacao',$dados['observacao']);
             $cmd->bindValue(':hospede_id',$dados['hospedes']);
-            $cmd->bindValue(':funcionario','123');
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();
 
             $this->conexao->commit();
@@ -161,7 +161,7 @@ class ReservaModel extends ConexaoModel {
                 $cmd->bindValue(':tipo',$dados['tipo']);
                 $cmd->bindValue(':observacao',$dados['observacao']);
                 $cmd->bindValue(':hospede_id',$dados['hospedes']);
-                $cmd->bindValue(':funcionario','123');
+                $cmd->bindValue(':funcionario',$_SESSION['code']);
                 $cmd->bindValue(':id',$id);
             $dados = $cmd->execute();
 
@@ -511,7 +511,6 @@ class ReservaModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            $this->gerarDiarias();
             return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
 
@@ -606,8 +605,6 @@ class ReservaModel extends ConexaoModel {
                 r.status = 3
                AND
                 dataSaida <= curdate()
-               AND
-                dataSaida >= DATE_SUB(curdate(), INTERVAL 5 DAY)
             AND
                 h.nome LIKE '%$nome%'
             "
@@ -693,7 +690,7 @@ class ReservaModel extends ConexaoModel {
         return self::messageWithData(422, 'nehum dado encontrado', []);
     }
 
-    private function gerarDiarias()
+    public function gerarDiarias()
     {
         $cmd  = $this->conexao->query(
             "SELECT 

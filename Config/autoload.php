@@ -18,4 +18,8 @@ spl_autoload_register(function($instancia) {
     elseif(file_exists("./Rota/".$instancia.".php")) {
         require './Rota/'.$instancia.'.php';
     }
+
+    elseif(file_exists("./Controller/API/".$instancia.".php")) {
+        require './Controller/API/'.$instancia.'.php';
+    }
 });

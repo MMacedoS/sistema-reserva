@@ -17,7 +17,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-sm-8">
-                <h4>Check-in</h4>
+                <h4>Apartamentos Disponiveis</h4>
             </div>
             <div class="col-sm-4 text-right">
                 <a href="<?=ROTA_GERAL?>/Administrativo/consultas" class="btn btn-primary" id="novo">Voltar</a>
@@ -42,7 +42,7 @@
 <hr>
     <div class="row">        
             <?php
-                $reservas = $this->buscaCheckin($request);                    
+                $reservas = $this->listApartamento();                    
                 if(is_array($reservas)) {
                     foreach ($reservas as $key => $value) {
                         ?>
@@ -55,13 +55,7 @@
                                             <div class="col mr-2">
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 <?= $value['nome']?>
-                                                </div>
-                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Entrada:
-                                                <?php echo implode('/',
-                                                    array_reverse(
-                                                        explode('-', $value['dataEntrada'])
-                                                    ));?>
-                                                </div>                      
+                                                </div>                 
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Codigo:
                                                 <?= $value['id']?>
                                                 </div> 

@@ -130,20 +130,20 @@
                             </select>
                         </div>
 
-                        <div class="col-sm-5">
+                        <!-- <div class="col-sm-5">
                             <label for="">Empresa</label>
                             <select name="empresa" class="form-control" id="empresa">
                                 <option value="">Selecione ...</option>
                                 <option value="1">MMS</option>
                             </select>
-                        </div>
-                        <div class="col-sm-1 mt-1">
+                        </div> -->
+                        <!-- <div class="col-sm-1 mt-1">
                             <label for="">&nbsp;</label>
                             <button class="btn btn-primary mt-4">+</button>
 
-                        </div>
+                        </div> -->
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-4">
                             <label for="">Status</label>
                             <select name="status" class="form-control" id="status">
                                 <option value="1">Disponível</option>

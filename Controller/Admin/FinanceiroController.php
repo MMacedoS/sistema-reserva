@@ -28,4 +28,14 @@ class FinanceiroController extends \Controller{
     {
         echo json_encode($this->financeiro_model->insertSaida($_POST));
     }
+
+    public function removerSaida($id)
+    {
+        echo json_encode($this->financeiro_model->deleteSaida($id));
+    }
+
+    public function salvarEntradas()
+    {
+        echo json_encode($this->financeiro_model->insertEntrada($_POST));
+    }
 }
