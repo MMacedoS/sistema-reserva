@@ -65,13 +65,12 @@
 		<div class="container-login100">
 			<div class="wrap-login100">
 				<div class="login100-pic js-tilt" data-tilt>
-					<a href="index.php"><img src="<?=ROTA_GERAL?>/image/img-01.png" alt="IMG bag" id="imagen">
-					</a>
+					<a href="<?=ROTA_GERAL?>"><img src="<?=ROTA_GERAL?>/Estilos/img/img-01.png" alt="IMG bag" id="imagen"></a>
 				</div>
 
 				<form class="login100-form validate-form" action="<?=ROTA_GERAL?>/Login/logar" method="post">
 					<span class="login100-form-title">
-				<a href="index.php"><img src="<?=ROTA_GERAL?>/image/logo.png" width="150" alt="IMG" id="imagen"></a>
+						<a href="<?=ROTA_GERAL?>"><img src="<?=ROTA_GERAL?>/Estilos/img/image_logo.png" width="150" alt="IMG" id="imagen"></a>
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "email obrigatório: ex@abc.xyz">

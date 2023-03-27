@@ -18,12 +18,14 @@
         <div class="row">
             <div class="col-sm-8">
                 <h4>Hospedadas</h4>
+               
             </div>
             <div class="col-sm-4 text-right">
                 <a href="<?=ROTA_GERAL?>/Administrativo/consultas" class="btn btn-primary" id="novo">Voltar</a>
             </div>
         </div>
     </div>
+    
 <hr>
     <div class="row">   
         <div class="input-group">         

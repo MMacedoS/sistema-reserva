@@ -709,7 +709,7 @@ class ReservaModel extends ConexaoModel {
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC)[0]['valor'];
             // var_dump(strtotime(Date('Y-m-d 17:00:00')), strtotime(Date('Y-m-d H:i:s')));
-            if (strtotime($dados) <= strtotime(Date('Y-m-d 17:00:00'))) {
+            if (strtotime($dados) <= strtotime(Date('Y-m-d H:i:s'))) {
                 $this->verificaGerarDiarias($dados);
             }
 
@@ -723,7 +723,8 @@ class ReservaModel extends ConexaoModel {
         $cmd  = $this->conexao->query(
             "SELECT 
                 id,
-                valor
+                valor,
+                gerarDiaria
             FROM 
                 reserva
             WHERE 
@@ -741,7 +742,7 @@ class ReservaModel extends ConexaoModel {
             return $this->prepareGerarDiarias($data, $param);
         }
 
-        return null;
+        return $this->updateConfiguracaoGerarDiaria(self::addDayInDate(Date('Y-m-d 16:00:00'), 1));
     }
 
     private function prepareGerarDiarias($dados, $param)
@@ -752,11 +753,21 @@ class ReservaModel extends ConexaoModel {
         }
 
         foreach ($dados as $key => $value) {
-            $this->insertDiariaConsumo($value, self::addDayInDate($param, 1));
-            $this->updateGerarDiaria($value['id'], self::addDayInDate($param, 1));
+            $dias = round((strtotime(Date('Y-m-d H:i:s')) - strtotime($value['gerarDiaria']))/86400);
+
+            if($dias < 1){
+                $dias = 1;
+            }
+
+            for ($i=1; $i <= $dias; $i++) { 
+                $this->insertDiariaConsumo($value, self::addDayInDate($param, $i -1 ));
+                $this->updateGerarDiaria($value['id'], self::addDayInDate($param, $i));
+
+                $this->updateConfiguracaoGerarDiaria(self::addDayInDate($param, $i));
+            }            
         }
 
-        $this->updateConfiguracaoGerarDiaria(self::addDayInDate($param, 1));
+        return "atalizações consumos feitas";
     }
 
     private function insertDiariaConsumo($value, $data)
@@ -808,6 +819,6 @@ class ReservaModel extends ConexaoModel {
 
         $cmd->execute();
 
-        return true;
+        return "atualizado configurações";
     }
 }

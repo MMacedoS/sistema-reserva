@@ -86,7 +86,8 @@ class ConsumoModel extends ConexaoModel {
                     valorUnitario = :valor_unitario,
                     reserva_id = :reserva_id,
                     produto_id = :produto_id,
-                    funcionario = :funcionario
+                    funcionario = :funcionario,
+                    created_at = :created_at
                     "
                 );
 
@@ -95,6 +96,7 @@ class ConsumoModel extends ConexaoModel {
             $cmd->bindValue(':valor_unitario',$valor);
             $cmd->bindValue(':reserva_id',$reserva_id);
             $cmd->bindValue(':produto_id',$produto_id);
+            $cmd->bindValue(':created_at',$data);
             $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();
 
