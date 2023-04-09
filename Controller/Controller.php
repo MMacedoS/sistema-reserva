@@ -7,6 +7,7 @@ require_once 'Trait/GeneralTrait.php';
 class Controller {
 
     use GeneralTrait;
+    use DateTrait;
 
     protected $site_model;
     protected $disciplina_id;
@@ -38,5 +39,9 @@ class Controller {
         }
 
         require "View/Administrativo/views.php";
+    }
+
+    public function viewImpressao($painel, $dados) {
+        require "View/Administrativo/impressao.php";
     }
 }

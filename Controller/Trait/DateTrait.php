@@ -45,4 +45,30 @@ trait DateTrait {
         ));
     }
 
+    public function prepareDateWithTimeBr($date)
+    {
+        if(is_null($date)){
+            $date = Date('Y-m-d H:i:s');
+        }  
+
+        $date = explode(' ', $date);
+
+        $data_end = implode('/',
+        array_reverse(
+            explode('-', $date[0])
+        ));
+
+        return $data_end . " ". $date[1];
+
+    }    
+    
+    public function countDaysInReserva($dados)
+    {
+        $data_entrada = strtotime($dados->dataEntrada);
+        $data_saida = strtotime($dados->dataSaida);
+
+        $days = ($data_saida - $data_entrada) / 86400;
+
+        return $days;
+    }
 }

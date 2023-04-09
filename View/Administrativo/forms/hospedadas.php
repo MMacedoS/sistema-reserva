@@ -133,7 +133,7 @@
                         <button class="btn btn-info editar">Editar</button>
                     </div>
                     <div class="col-sm-2 text-center">
-                        <button class="btn btn-secondary imprimir">Imprimir</button>
+                        <button type="button" class="btn btn-dart imprimir text-danger">Imprimir</button>
                     </div>
                 </div>
             </div>
@@ -431,9 +431,14 @@
                             </select>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <label for="">Valor</label>
                             <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
+                        </div>
+
+                        <div class="col-sm-2">
+                            <label for="">Qtde Hospedes</label>
+                            <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
                         </div>
 
                         <div class="col-sm-3">
@@ -506,6 +511,9 @@
                   }).then(()=>{
                     window.location.reload();    
                 })
+              }
+              if(data.status === 200){
+                    return ;
               }
               return Swal.fire({
                       icon: 'warning',
@@ -654,6 +662,7 @@
                     parseFloat(element.valorUnitario * element.quantidade).toFixed(2)
                     +'</td>' +
                     '<td>'+
+                        '<a href="#" id="'+element.id+'" class="alterar-consumo" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
                         '<a href="#" id="'+element.id+'" class="remove-consumo" >&#10060;</a>'+
                     '</td>'+
                 '</tr>');
@@ -676,7 +685,8 @@
                         prepareTipo(element.tipoPagamento)
                     +'</td>' +
                     '<td>R$ '+parseFloat(element.valorPagamento).toFixed(2)+'</td>' +
-                    '<td>'+
+                    '<td>'+            
+                        '<a href="#" id="'+element.id+'" class="alterar-pagamento" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
                         '<a href="#" id="'+element.id+'" class="remove-pagamento" >&#10060;</a>'+
                     '</td>'+
                 '</tr>');
@@ -891,6 +901,34 @@
             })  
         });
 
+        $(document).on('click', '.alterar-consumo', function(){
+            var code=$(this).attr("id");  
+            var produto;
+            $.ajax({
+                url: url+ "Consumo/getConsumoPorId/" + code ,
+                method:'GET',
+                processData: false,
+                dataType: 'json     ',
+                success: function(data){
+                    if(data.status === 201){
+                        Swal.fire({
+                            title: 'Alterar Consumo',
+                            html:
+                                '<form id="swal-form"><label>Qtdo<input id="swal-input1" name="quantidade" class="swal2-input" type="number" placeholder="quantidade" value="'+data.data[0].quantidade+'" min="1"></label>' +
+                                '<label>Valor<input id="swal-input2" class="swal2-input" name="valor" palceholder="valor" type="number" step="0.1" min="0" value="'+data.data[0].valorUnitario+'"></label></form>',
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form")));                                  
+                                $('.consumo').click();
+                            }
+                        })
+                        
+                    }
+                }
+            })    
+        });
+
         $(document).on('click', '.remove-consumo', function(){
             var code=$(this).attr("id");  
             $.ajax({
@@ -926,9 +964,15 @@
             envioRequisicaoGetViaAjax("Reserva/executaCheckout/" + code);  
         });
 
-        $(document).on('click', '.imprimir', function(){
-            $('#exampleModalLabel').text("Dados Informativos");
-            $('#modalCheckout').modal('show');  
+        $(document).on('click', '.imprimir', function(event){
+            event.preventDefault();
+            var code=$("#id").val(); 
+            redirectUrl(code)
         });
     });
+
+    function redirectUrl(params)
+    {
+        window.open('<?=ROTA_GERAL?>/Impressao/cliente/' + params, '_blank');
+    }
 </script>

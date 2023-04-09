@@ -65,7 +65,7 @@ class ConsumoModel extends ConexaoModel {
     public function insertDiaria($dados, $data)
     {
         $produto_id = 1;
-        $quantidade =  1;
+        $quantidade =  $dados['quantidade'];
         $valor = $dados['valor'];
         $reserva_id = $dados['id'];
 
@@ -129,7 +129,16 @@ class ConsumoModel extends ConexaoModel {
         return self::messageWithData(201, 'nenhum dado encontrado', []);
     }
 
-    public function getRemoveConsumo($id){
+    public function getRemoveConsumo($id)
+    {
+        $dados = self::findById($id)['data'][0];
+
+        $dados['tabela'] = "consumo";
+
+        $appModel = new AppModel();
+        
+        $appModel->insertApagados($dados);
+        
         $cmd  = $this->conexao->query(
             "DELETE 
                 FROM 
@@ -146,5 +155,39 @@ class ConsumoModel extends ConexaoModel {
         }
 
         return self::message(422, 'nehum dado encontrado');
+    }
+
+    public function updateConsumo($dados, $id)
+    {
+        $valor = $dados['valor'];
+        $quantidade =  $dados['quantidade'];
+        
+        $this->conexao->beginTransaction();
+        try {      
+            $cmd = $this->conexao->prepare(
+                "UPDATE 
+                    $this->model 
+                SET 
+                    quantidade = :quantidade, 
+                    valorUnitario = :valor_unitario,
+                    funcionario = :funcionario
+                WHERE 
+                     id = :id
+                    "
+                );
+
+            $cmd->bindValue(':quantidade',$quantidade);
+            $cmd->bindValue(':valor_unitario',$valor);
+            $cmd->bindValue(':funcionario',$_SESSION['code']);
+            $cmd->bindValue(':id',$id);
+            $dados = $cmd->execute();
+
+            $this->conexao->commit();
+            return self::message(200, "dados atualizados!!");
+
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            return self::message(422, $th->getMessage());
+        }
     }
 }

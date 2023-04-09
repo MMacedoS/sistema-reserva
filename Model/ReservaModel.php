@@ -94,7 +94,8 @@ class ReservaModel extends ConexaoModel {
                     hospede_id = :hospede_id,
                     valor = :valor,
                     status = :status,
-                    funcionario =  :funcionario
+                    funcionario =  :funcionario,
+                    qtde_hosp = :qtde_hosp
                     "
                 );
 
@@ -108,6 +109,7 @@ class ReservaModel extends ConexaoModel {
             $cmd->bindValue(':observacao',$dados['observacao']);
             $cmd->bindValue(':hospede_id',$dados['hospedes']);
             $cmd->bindValue(':funcionario',$_SESSION['code']);
+            $cmd->bindValue(':qtde_hosp',$dados['qtde_hosp']);
             $dados = $cmd->execute();
 
             $this->conexao->commit();
@@ -150,7 +152,8 @@ class ReservaModel extends ConexaoModel {
                     valor = :valor,
                     status = :status,
                     placa = :placa,
-                    funcionario =  :funcionario
+                    funcionario =  :funcionario,
+                    qtde_hosp = :qtde_hosp
                 WHERE 
                     id = :id"
                 );
@@ -165,6 +168,7 @@ class ReservaModel extends ConexaoModel {
                 $cmd->bindValue(':hospede_id',$dados['hospedes']);
                 $cmd->bindValue(':placa',$dados['placa']);
                 $cmd->bindValue(':funcionario',$_SESSION['code']);
+                $cmd->bindValue(':qtde_hosp',$dados['qtde_hosp']);
                 $cmd->bindValue(':id',$id);
             $dados = $cmd->execute();
 
@@ -368,9 +372,12 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'Apartamento não esta disponivel', []);
         }
 
+        $qtde_dias = self::countDaysInReserva((object)$reserva['data'][0]);
+
         $dados = [
             'id' => $reserva['data'][0]['id'],
             'valor' => $reserva['data'][0]['valor'],
+            'quantidade' => $qtde_dias
         ];
 
         $this->insertDiariaConsumo($dados, date('Y-m-d H:i:s'));
@@ -709,7 +716,7 @@ class ReservaModel extends ConexaoModel {
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC)[0]['valor'];
             // var_dump(strtotime(Date('Y-m-d 17:00:00')), strtotime(Date('Y-m-d H:i:s')));
-            if (strtotime($dados) <= strtotime(Date('Y-m-d H:i:s'))) {
+            if (strtotime($dados) < strtotime(Date('Y-m-d H:i:s'))) {
                 $this->verificaGerarDiarias($dados);
             }
 

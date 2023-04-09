@@ -16,16 +16,28 @@ class ConsumoController extends \Controller{
         echo json_encode($dados);
     }
 
+    public function updateConsumo($id)
+    {
+        $dados = $this->consumo_model->updateConsumo($_POST, $id);
+        echo json_encode($dados);
+    }
+
+    public function getConsumoPorId($id)
+    {
+        $consumo = $this->consumo_model->findById($id);
+        echo json_encode($consumo);
+    }
+
     public function getDadosConsumos($code)
     {
-        $reserva = $this->consumo_model->getDadosConsumos($code);
-        echo json_encode($reserva);
+        $consumo = $this->consumo_model->getDadosConsumos($code);
+        echo json_encode($consumo);
     }
 
     public function getRemoveConsumo($code)
     {
-        $reserva = $this->consumo_model->getRemoveConsumo($code);
-        echo json_encode($reserva);
+        $consumo = $this->consumo_model->getRemoveConsumo($code);
+        echo json_encode($consumo);
     }
 
 }

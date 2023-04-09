@@ -81,6 +81,15 @@ class PagamentoModel extends ConexaoModel {
     }
 
     public function getRemovePagamento($id){
+
+        $dados = self::findById($id)['data'][0];
+
+        $dados['tabela'] = "pagamento";
+
+        $appModel = new AppModel();
+        
+        $appModel->insertApagados($dados);
+
         $cmd  = $this->conexao->query(
             "DELETE 
                 FROM 

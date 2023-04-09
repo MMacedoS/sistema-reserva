@@ -212,6 +212,11 @@
                             <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
                         </div>
 
+                        <div class="col-sm-2">
+                            <label for="">Qtde Hospedes</label>
+                            <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                        </div>
+
                         <div class="col-sm-12">
                             <label for="">observação</label><br>
                             <textarea name="observacao" class="form-control" id="observacao" cols="30" rows="5"> &nbsp;</textarea>

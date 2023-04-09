@@ -13,4 +13,18 @@ trait DateModelTrait {
         
     }
 
+    public function countDaysInReserva($dados = null)
+    {
+        if(is_null($dados)){
+            return 1;
+        }
+        
+        $data_entrada = strtotime($dados->dataEntrada);
+        $data_saida = strtotime($dados->dataSaida);
+
+        $days = ($data_saida - $data_entrada) / 86400;
+
+        return $days;
+    }
+
 }

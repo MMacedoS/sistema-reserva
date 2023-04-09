@@ -16,6 +16,7 @@ class FinanceiroModel extends ConexaoModel {
 
     public function __construct() 
     {
+        $this->model = 'movimento';
         $this->conexao = ConexaoModel::conexao();
     }
 
@@ -311,7 +312,18 @@ class FinanceiroModel extends ConexaoModel {
         }
     }
 
-    public function deleteSaida($id){
+    public function deleteSaida($id)
+    {
+        $this->model = 'saida';
+
+        $dados = self::findById($id)['data'][0];
+
+        $dados['tabela'] = "saida";
+
+        $appModel = new AppModel();
+        
+        $appModel->insertApagados($dados);
+
         $cmd  = $this->conexao->query(
             "DELETE 
                 FROM 

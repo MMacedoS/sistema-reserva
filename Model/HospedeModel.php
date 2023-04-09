@@ -165,7 +165,8 @@ class HospedeModel extends ConexaoModel {
             OR
                 nome
             LIKE
-                '%$request%'"
+                '%$request%'             
+            ORDER BY id DESC"
         );
 
         if($cmd->rowCount() > 0)
