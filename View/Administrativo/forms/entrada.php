@@ -32,20 +32,20 @@
             <!-- <div class="col-sm-12 mb-2">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
             </div> -->
-            <div class="col-sm-3">
+            <div class="col-sm-3 mb-2">
                 <input type="date" name="" id="busca_entrada" class="form-control" value="<?=@$entrada ? $entrada : Date('Y-m-d') ?>">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 mb-2">
                 <input type="date" name="" id="busca_saida" class="form-control" value="<?=@$saida ? $saida : Date('Y-m-d')?>">
             </div>
-            <!-- <div class="col-sm-3">
+            <!-- <div class="col-sm-3 mb-2">
                 <select name="" id="" class="form-control">
                     <option value="">Selecione uma empresa</option>
                     <option value="">Confirmada</option>
                     <option value="">Hospedadas</option>
                 </select>
             </div>     -->
-            <div class="col-sm-3">
+            <div class="col-sm-3 mb-2">
                 <select name="" id="busca_status" class="form-control">
                     <option value="">Selecione o Tipo</option>
                     <option <?=$status == 1 ? 'selected': '';?> value="1">Dinhero</option>
@@ -54,8 +54,8 @@
                     <option <?=$status == 4 ? 'selected': '';?> value="4">Deposito/PIX</option>
                 </select>
             </div>  
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="btn_busca">
+            <div class="input-group-append float-right">
+                <button class="btn btn-primary ml-3" type="button" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
             </div>
@@ -70,8 +70,8 @@
                 ?>
                 <thead>
                     <tr>
-                        <th scope="col">COD</th>
-                        <th>Descrição</th>
+                        <th scope="col" class="d-none d-sm-table-cell">COD</th>
+                        <th class="d-none d-sm-table-cell">Descrição</th>
                         <th scope="col">Tipo de Pagamento</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Valor</th>
@@ -83,8 +83,8 @@
                             $data_saida = explode(' ', $value['created_at']);
                             echo '
                                 <tr>
-                                    <td>' . $value['id'] . '</td>
-                                    <td>' . $value['descricao'] . '</td>
+                                    <td class="d-none d-sm-table-cell">' . $value['id'] . '</td>
+                                    <td class="d-none d-sm-table-cell">' . $value['descricao'] . '</td>
                                     <td>' . self::prepareTipo($value['tipoPagamento']) . '</td>
                                     <td>' . self::prepareTipoVenda($value['venda_id']) . '</td>
                                     <td>R$ ' . $value['valor'] . '</td>

@@ -101,6 +101,39 @@ class ProdutoModel extends ConexaoModel {
         }
     }
 
+    public function prepareChangedProduto($id)
+    {
+        $data = (object)$this->findById($id)['data'];
+
+        if(empty($data)){
+            return false;
+        }
+        
+        $this->conexao->beginTransaction();
+        try {      
+            $cmd = $this->conexao->prepare(
+                "UPDATE 
+                    $this->model 
+                SET
+                    status = :status
+                WHERE 
+                    id = :id
+                    "
+                );
+
+            $cmd->bindValue(':status',$data->status);
+            $cmd->bindValue(':id',$id);
+            $cmd->execute();
+
+            $this->conexao->commit();
+            return self::message(201, "Dados Atualizados!!");
+
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            return self::message(422, $th->getMessage());
+        }
+    }
+
     public function buscaEntradaProduto()
     {
         $cmd = $this->conexao->query(

@@ -43,7 +43,7 @@ class ProdutoController extends \Controller{
 
     public function buscaEntradaProduto($request =  null)
     {
-        return $this->produto_model->buscaEntradaProduto()['data'];
+        return $this->produto_model->buscaEntradaProduto();
     }
 
     public function buscaProdutos()

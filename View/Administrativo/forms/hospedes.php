@@ -31,9 +31,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Nome</th>
-                        <th scope="col">Email</th>
+                        <th scope="col" class="d-none d-sm-table-cell" >Email</th>
                         <th scope="col">tefelone</th>
-                        <th scope="col">Tipo</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Tipo</th>
                         <th scope="col">Status</th>
                         <th colspan="2">Ações</th>
                     </tr>
@@ -44,9 +44,9 @@
                             echo '
                                 <tr>
                                     <td>' . $value['nome'] . '</td>
-                                    <td>' . $value['email'] . '</td>
+                                    <td class="d-none d-sm-table-cell"> ' . $value['email'] . '</td>
                                     <td>' . $value['telefone'] . '</td>
-                                    <td>' . $value['tipo'] . '</td>';
+                                    <td class="d-none d-sm-table-cell">' . $value['tipo'] . '</td>';
                                 switch ($value['status']) {
                                     case '0':
                                             echo " <td>Inativo</td>";
@@ -61,7 +61,7 @@
                                 }
                                     
                             echo '
-                                <td><button type="button" class="btn btn-outline-primary view_data" id="'.$value['id'].'" >Editar</button> &nbsp;';                        
+                                <td><button type="button" class="btn btn-outline-primary mb-2 view_data" id="'.$value['id'].'" >Editar</button> &nbsp;';                        
                                 if($value['status'] == "0"){
                                     echo '<button type="button" class="btn btn-outline-primary view_Ativo" id="'.$value['id'].'" >Ativar</button> &nbsp;';
                                 } 

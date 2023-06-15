@@ -31,7 +31,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Apartamento</th>
-                        <th scope="col">Tipo</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Tipo</th>
                         <th scope="col">Status</th>
                         <th colspan="2">Ações</th>
                     </tr>
@@ -42,7 +42,7 @@
                             echo '
                                 <tr>
                                     <td>' . $value['numero'] . '</td>
-                                    <td>' . $value['tipo'] . '</td>';
+                                    <td class="d-none d-sm-table-cell">' . $value['tipo'] . '</td>';
                                 switch ($value['status']) {
                                     case '4':
                                             echo " <td>Inativo</td>";

@@ -11,6 +11,28 @@
     .fs{
         font-size: 21px;
     }
+
+
+    @media screen and (max-width: 767px) {
+        .modal-content {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            width: 390px;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, .2);
+            border-radius: .3rem;
+            outline: 0;
+            left: -70px;
+            }  
+            
+            .campos_modal{
+            width: 125px;
+        }            
+    }
+
 </style>
 
 <div class="container-fluid">    
@@ -31,11 +53,11 @@
         <div class="input-group">         
             
             <div class="col-sm-11 mt-2">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<?=$request?>" aria-describedby="basic-addon2">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome ou cpf" id="txt_busca" aria-label="Search" value="<?=$request?>" aria-describedby="basic-addon2">
             </div>
 
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="btn_busca">
+            <div class="input-group-append ">
+                <button class="btn btn-primary ml-3" type="button" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
             </div>
@@ -79,7 +101,7 @@
 <!-- editar -->
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Dados da Hospedagem</h5>
@@ -90,28 +112,28 @@
             <div class="modal-body" id="">  
                 <input type="hidden" id="id">
                 <div class="row">
-                    <div class="col-sm-6 mb-2">
+                    <div class="col-sm-6 campos_modal mb-2">
                         Hospedes: <p id="hospede"></p>
                     </div>
-                    <div class="col-sm-3 mb-2">
+                    <div class="col-sm-3 campos_modal mb-2">
                         Codigo: <p id="codigo"></p>
                     </div>
-                    <div class="col-sm-3 mb-2">
+                    <div class="col-sm-3 campos_modal mb-2">
                         Apartamento: <p id="apartamento"></p>
                     </div>                    
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-4 campos_modal mb-2">
                         Data Entrada: <p id="entrada"></p>
                     </div>
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-4 campos_modal mb-2">
                         Data Saida: <p id="saida"></p>
                     </div>
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-4 campos_modal mb-2">
                         Valor da Diaria: <p id="diaria"></p>
                     </div>
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-4 campos_modal mb-2">
                         Consumo: <p id="consumo"></p>
                     </div>
-                    <div class="col-sm-4 mb-2">
+                    <div class="col-sm-4 campos_modal mb-2">
                         Pagamento: <p id="pagamento"></p>
                     </div>
                    
@@ -120,19 +142,19 @@
                 <h6 class="modal-title" id="">Ações</h6>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-3 text-center">
-                        <button class="btn btn-primary checkout">Iniciar Check-out</button>
+                    <div class="col-sm-3 campos_modal text-left mb-2">
+                        <button class="btn btn-primary checkout">Check-out</button>
                     </div>
-                    <div class="col-sm-3 text-center">
+                    <div class="col-sm-3 campos_modal text-left mb-2">
                         <button class="btn btn-success pagamento">Pagamento </button>
                     </div>
-                    <div class="col-sm-2 text-center">
+                    <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-warning consumo">Consumo </button>
                     </div>
-                    <div class="col-sm-2 text-center">
+                    <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-info editar">Editar</button>
                     </div>
-                    <div class="col-sm-2 text-center">
+                    <div class="col-sm-2 campos_modal text-left mb-2">
                         <button type="button" class="btn btn-dart imprimir text-danger">Imprimir</button>
                     </div>
                 </div>
@@ -213,16 +235,16 @@
                                         <th>
                                             Produto
                                         </th>
-                                        <th>
+                                        <th class="d-none d-sm-table-cell">
                                             Data
                                         </th>
                                         <th>
                                             Quantidade
                                         </th>
-                                        <th>
+                                        <th class="d-none d-sm-table-cell">
                                             valor Unitario
                                         </th>
-                                        <th>
+                                        <th class="d-none d-sm-table-cell">
                                             Total
                                         </th>
                                         <th>
@@ -290,10 +312,10 @@
                                         <th>
                                             Data
                                         </th>
-                                        <th>
+                                        <th class="d-none d-sm-table-cell">
                                             Descrição
                                         </th>
-                                        <th>
+                                        <th class="d-none d-sm-table-cell">
                                             Tipo
                                         </th>
                                         <th>
@@ -655,10 +677,10 @@
         data.map(element => {
             var newOption = $('<tr>'+
                     '<td>'+element.descricao+'</td>' +
-                    '<td>'+formatDateWithHour(element.created_at)+'</td>' +
+                    '<td class="d-none d-sm-table-cell">'+formatDateWithHour(element.created_at)+'</td>' +
                     '<td>'+element.quantidade+'</td>' +
-                    '<td>R$ '+element.valorUnitario+'</td>' +
-                    '<td>R$ '+
+                    '<td class="d-none d-sm-table-cell">R$ '+element.valorUnitario+'</td>' +
+                    '<td class="d-none d-sm-table-cell">R$ '+
                     parseFloat(element.valorUnitario * element.quantidade).toFixed(2)
                     +'</td>' +
                     '<td>'+
@@ -680,8 +702,8 @@
         data.map(element => {
             var newOption = $('<tr>'+                    
                     '<td>'+formatDate(element.dataPagamento)+'</td>' +
-                    '<td>'+element.descricao+'</td>' +
-                    '<td>'+
+                    '<td class="d-none d-sm-table-cell">'+element.descricao+'</td>' +
+                    '<td class="d-none d-sm-table-cell">'+
                         prepareTipo(element.tipoPagamento)
                     +'</td>' +
                     '<td>R$ '+parseFloat(element.valorPagamento).toFixed(2)+'</td>' +

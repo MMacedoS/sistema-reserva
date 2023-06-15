@@ -29,10 +29,10 @@
             <!-- <div class="col-sm-12 mb-2">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
             </div> -->
-            <div class="col-sm-3">
+            <div class="col-sm-3 mb-2">
                 <input type="date" name="" id="busca_entrada" class="form-control" value="<?=$entrada?>">
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 mb-2">
                 <input type="date" name="" id="busca_saida" class="form-control" value="<?=$saida?>">
             </div>
             <!-- <div class="col-sm-3">
@@ -75,14 +75,14 @@
                 ?>
                 <thead>
                     <tr>
-                        <th scope="col">COD</th>
+                        <th scope="col" class="d-none d-sm-table-cell">COD</th>
                         <th>Apartamento</th>
                         <th scope="col">Hospede</th>
                         <th scope="col">Data Entrada</th>
-                        <th scope="col">Data Saida</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Situação</th>
-                        <th scope="col">Valor</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Data Saida</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Tipo</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Situação</th>
+                        <th scope="col" class="d-none d-sm-table-cell">Valor</th>
                         <th colspan="2">Ações</th>
                     </tr>
                 </thead>
@@ -93,20 +93,20 @@
                             $data_saida = explode(' ', $value['dataSaida']);
                             echo '
                                 <tr>
-                                    <td>' . $value['id'] . '</td>
+                                    <td class="d-none d-sm-table-cell">' . $value['id'] . '</td>
                                     <td>' . $value['numero'] . '</td>
                                     <td>' . $value['nome'] . '</td>
                                     <td>' . implode('/', array_reverse(explode('-', $data_entrada[0]))) . '</td>
-                                    <td>' . implode('/', array_reverse(explode('-', $data_saida[0])))  . '</td>
-                                    <td>' . self::prepareTipoReserva($value['tipo']) . '</td>
-                                    <td>' . self::prepareStatusReserva($value['status']) . '</td>
-                                    <td>' . $value['valor'] . '</td>
-                                    <td><button type="button" class="btn btn-outline-primary view_data" id="'.$value['id'].'" >Editar</button> &nbsp;';                        
+                                    <td class="d-none d-sm-table-cell">' . implode('/', array_reverse(explode('-', $data_saida[0])))  . '</td>
+                                    <td class="d-none d-sm-table-cell">' . self::prepareTipoReserva($value['tipo']) . '</td>
+                                    <td class="d-none d-sm-table-cell">' . self::prepareStatusReserva($value['status']) . '</td>
+                                    <td class="d-none d-sm-table-cell">' . $value['valor'] . '</td>
+                                    <td><button type="button" class="btn btn-outline-primary mb-2 view_data" id="'.$value['id'].'" >Editar</button> &nbsp;';                        
                                     if($value['status'] == "5"){
                                         echo '<button type="button" class="btn btn-outline-primary view_Ativo" id="'.$value['id'].'" >Ativar</button> &nbsp;';
                                     } 
                                     if($value['status'] == '1'){
-                                        echo '<button type="button" class="btn btn-outline-danger view_Ativo" id="'.$value['id'].'" >Cancelar</button> &nbsp;';
+                                        echo '<button type="button" class="btn btn-outline-danger view_Ativo" id="'.$value['id'].'" >Inativar</button> &nbsp;';
                                     }
                                     '</td>
                                 </tr>
