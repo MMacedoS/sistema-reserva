@@ -7,9 +7,29 @@
     <link rel="shortcut icon" href="<?=ROTA_GERAL?>/image/logo.png">
     <title>Administrativo</title>
 
+    <style>
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
     <!-- Bootstrap core JavaScript-->
-  <script  src="<?=ROTA_GERAL?>/Estilos/vendor/jquery/jquery.min.js"></script>
-  <script src="<?=ROTA_GERAL?>/Estilos/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- <script  src="<=ROTA_GERAL?>/Estilos/vendor/jquery/jquery.min.js"></script>
+ -->
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ <script src="<?=ROTA_GERAL?>/Estilos/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
                     <!-- Core plugin JavaScript-->
   <script src="<?=ROTA_GERAL?>/Estilos/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -30,10 +50,7 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
-
-    <script>
-      
-    </script>
+    <script src="<?= ROTA_GERAL . '/View/Administrativo/functions/main.js'?>"></script>
 </head>
 <body>
     
