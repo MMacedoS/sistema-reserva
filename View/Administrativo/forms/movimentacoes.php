@@ -61,9 +61,9 @@
     </div>
 <hr>
     <div class="row">
-        <div class="col-lg-4 col-sm-3 text-info">Entrada: R$ <?=self::calculateEntrada($movimentos);?></div>
-        <div class="col-lg-4 col-sm-3 text-danger">Saida: R$ <?=self::calculateSaida($movimentos);?></div>
-        <div class="col-lg-4 col-sm-3 text-success">SubToral: R$ <?=number_format(self::calculateEntrada($movimentos) - self::calculateSaida($movimentos),2,',','')?></div>
+        <div class="col-lg-4 col-sm-3 text-info">Entrada: R$ <?=self::valueBr(self::calculateEntrada($movimentos));?></div>
+        <div class="col-lg-4 col-sm-3 text-danger">Saida: R$ <?=self::valueBr(self::calculateSaida($movimentos));?></div>
+        <div class="col-lg-4 col-sm-3 text-success">SubTotal: R$ <?=self::valueBr(self::calculateEntrada($movimentos) - self::calculateSaida($movimentos))?></div>
     </div>
     <div class="row">
         <div class="table-responsive ml-3">

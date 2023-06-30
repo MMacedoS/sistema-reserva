@@ -119,7 +119,7 @@
                         </div>
                         <div class="col-sm-4">
                             <label for="">Senha</label>
-                            <input type="password" name="senha" class="form-control" id="senha">
+                            <input type="password" name="senha" class="form-control" value="" id="senha">
                         </div>
                     </div>     
                     <small>
@@ -220,7 +220,7 @@
         $('#email').val(data[0].email);           
         $('#painel').val(data[0].painel);
         $('#status').val(data[0].status);
-        $('#senha').attr('disabled','disabled');
+        // $('#senha').attr('disabled','disabled');
         $('#id').val(data[0].id);
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar Funcionarios");

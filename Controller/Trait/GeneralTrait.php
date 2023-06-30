@@ -116,7 +116,7 @@ trait GeneralTrait{
             }
         }   
 
-        return number_format($total,2,',', '');
+        return $total;
     }
 
     public function calculateSaida($movimentos)
@@ -135,7 +135,7 @@ trait GeneralTrait{
             }
         }   
 
-        return number_format($total,2,',', '');
+        return $total;
     }
 
     public function prepareTipoVenda($value)
