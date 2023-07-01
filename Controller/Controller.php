@@ -4,10 +4,13 @@ require_once "./Config/autoload.php";
 require_once 'Trait/DateTrait.php';
 require_once 'Trait/GeneralTrait.php';
 
+require_once __DIR__ . "/../Trait/ErrorLogginTrait.php";
+
 class Controller {
 
     use GeneralTrait;
     use DateTrait;
+    use ErrorLoggingTrait;
 
     protected $site_model;
     protected $disciplina_id;

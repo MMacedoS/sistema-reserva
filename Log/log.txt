@@ -1,0 +1,21 @@
+[2023-05-27 22:12:50] aassa
+[2023-05-28 01:15:00] Administrativo
+[2023-05-28 01:16:02] sadasdsa
+[2023-05-28 01:41:32] sadasdsa
+[2023-05-27 22:41:44] aassa
+[2023-05-28 01:41:44] sadasdsa
+[2023-05-28 01:42:21] sadasdsa
+[2023-05-27 23:07:03] aassa
+[2023-05-28 09:51:50] aassa
+[2023-05-28 09:51:50] aassa
+[2023-06-24 14:35:53] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'sistema'
+[2023-06-24 14:35:53] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'sistema'
+[2023-06-24 14:36:00] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'sistema'
+[2023-06-24 14:36:01] Erro de conexão com o banco de dados: SQLSTATE[HY000] [1049] Unknown database 'sistema'
+[2023-06-24 14:49:25] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution
+[2023-06-24 14:49:33] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution
+[2023-06-24 14:49:41] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution
+[2023-06-24 14:52:11] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused
+[2023-06-24 14:52:11] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused
+[2023-06-24 14:52:12] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused
+[2023-06-24 14:52:12] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused

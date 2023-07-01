@@ -1,9 +1,11 @@
 <?php
 
 require_once "./Config/autoload.php";
+require_once __DIR__ . "/../Trait/ErrorLogginTrait.php";
 
 class LoginController {  
-    
+    use ErrorLoggingTrait;
+
     protected $login_model;
     protected $url;
 
@@ -47,7 +49,7 @@ class LoginController {
     }
 
     public function logar() {
-        // return header('Location: /alunoBloqueado.html');
+        
        $login = $this->login_model->logar($_POST);
        if(!is_null(
             $login
@@ -56,9 +58,9 @@ class LoginController {
             $_SESSION['code'] = $login[0]['id'];
             $_SESSION['nome'] = $login[0]['nome'];
             $_SESSION['painel'] = $login[0]['painel'];
-            $_SESSION['logado'] = true;
+            $_SESSION['logado'] = true;            
         }
-
+        
         return header('Location: '.$this->url.'/Login');
     }
 
