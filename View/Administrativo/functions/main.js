@@ -1,3 +1,4 @@
+window.minhaVariavel = "";
   // Função para criar um novo registro
   function createData(url, data) {
     showLoader();
@@ -10,6 +11,7 @@
       cache: false,
       processData:false,
       success: function(response) {
+        window.minhaVariavel = response.data;
         showSuccessMessage('Registro criado com sucesso!');
         hideLoader();
         showSuccessMessage("Registro criado com sucesso!");
@@ -30,6 +32,7 @@
       type: 'PUT',
       data: data,
       success: function(response) {
+        window.minhaVariavel = response.data;
         showSuccessMessage('Registro atualizado com sucesso!');
         hideLoader();
       },
@@ -43,19 +46,14 @@
   // Função para exibir um registro
   function showData(url) {
     showLoader();
-    $.ajax({
+    return $.ajax({
       url: url,
       method:'GET',
       processData: false,
       dataType: 'json',
-      success: function(response) {
-        showSuccessMessage('Registro obtido com sucesso!');
-        hideLoader();
-      },
-      error: function(error) {
-        console.error('Erro ao obter registro:', error);
-        hideLoader();
-      }
+    }).catch(function(error){
+      console.error('Erro ao obter registro:', error);
+      hideLoader();
     });
   }
 
@@ -66,6 +64,7 @@
       url: url,
       method: 'DELETE',
       success: function(response) {
+        window.minhaVariavel = response.data;
         showSuccessMessage('Registro excluído com sucesso!');
         hideLoader();
       },

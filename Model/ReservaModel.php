@@ -668,6 +668,51 @@ class ReservaModel extends ConexaoModel {
         
     }
 
+    public function buscaReservadas($nome)
+    {
+        $cmd  = $this->conexao->query(
+            "SELECT 
+                r.*, 
+                h.nome, 
+                a.numero 
+            FROM 
+                $this->model r 
+            INNER JOIN
+                hospede h 
+            ON 
+                r.hospede_id = h.id
+            LEFT JOIN 
+                empresa_has_hospede eh
+            ON 
+                eh.hospede_id = h.id
+            INNER JOIN 
+                apartamento a 
+            ON 
+                r.apartamento_id = a.id
+            WHERE
+               (
+                    r.status = 1 
+                OR
+                    r.status= 2
+               )
+               AND
+                dataEntrada >= curdate()
+               AND
+                YEAR(dataEntrada) = YEAR(CURDATE())
+            AND
+                h.nome LIKE '%$nome%'
+            "
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return array();
+        
+    }
+
     public function getDadosReservas($id){
         $cmd  = $this->conexao->query(
             "SELECT 
