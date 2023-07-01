@@ -2,6 +2,8 @@
 
 class AdministrativoController extends \Controller{
     protected $financeiro_controller;
+    protected $apartamento_model;
+    protected $produto_model;
     
     public function __construct() {
         $this->validPainel();     
@@ -12,7 +14,7 @@ class AdministrativoController extends \Controller{
         if ($_SESSION['painel'] != 'Administrador' && $_SESSION['painel'] != 'Recepcao') {   
             session_start();
             session_destroy();            
-            return header('Location: '.$this->url.'/Login');            
+            return header('Location: '. $this->url .'/Login');            
         }       
     }
 
@@ -78,13 +80,17 @@ class AdministrativoController extends \Controller{
         $this->viewAdmin('checkin',$request,"");
     }
 
+    public function financeiro($request = null) {
+        $this->viewAdmin('checkin',$request,"");
+    }
+
     public function buscaCheckin($request =  null)
     {        
         $reservas_controller = new ReservaController();
         return $reservas_controller->buscaCheckin($request);
     }
 
-    public function listproduto()
+    public function listproduto($request = null)
     {
         $this->produto_model = new ProdutoModel();     
         return $this->produto_model->getProdutos($request);
@@ -100,7 +106,7 @@ class AdministrativoController extends \Controller{
         $this->viewAdmin('checkout',$request,"");
     }
 
-    public function disponiveis(){
+    public function disponiveis($request = null){
         $this->viewAdmin('disponiveis',$request,"");
     }
 
@@ -133,7 +139,7 @@ class AdministrativoController extends \Controller{
     public function buscaEntradaProdutos($request =  null)
     {        
         $produto_controller = new ProdutoController();
-        return $produto_controller->buscaEntradaProdutos();
+        return $produto_controller->buscaEntradaProduto();
     }
 
     public function entradaEstoque($request = null) {
@@ -150,8 +156,15 @@ class AdministrativoController extends \Controller{
     }
 
     public function buscaEntradaEstoques($request = null) {
+        $request = self::splitString($request);
         $produto_controller = new ProdutoController();
-        return $produto_controller->buscaEntradaProduto($request);
+        $dados = $produto_controller->buscaEntradaProduto($request);
+  
+        if(!empty($dados)){
+            return $dados['data'];
+        }
+
+        return null;
     }
 
     public function buscaProdutosSelect()

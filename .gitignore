@@ -4,6 +4,7 @@
 .autenticar.php
 # .config.php
 .functions.php
+/Config
 /vendor
 /fonts
 # /rota

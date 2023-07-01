@@ -132,45 +132,8 @@
 </div>
 
 <script>
-    let url = "<?=ROTA_GERAL?>/";
+    let url = "<?=ROTA_GERAL?>/";      
       
-      function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/entradaEstoque">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/entradaEstoque">Atualizar?</a>'
-                  })
-          });
-      }
-
     function envioRequisicaoGetViaAjax(controle_metodo) {            
         $.ajax({
             url: url+controle_metodo,
@@ -218,7 +181,7 @@
 
     $('#btn_busca').click(function(){
         var texto = $('#txt_busca').val();
-        window.location.href ="<?=ROTA_GERAL?>/Administrativo/produtos/"+texto;
+        window.location.href ="<?=ROTA_GERAL?>/Administrativo/entradaEstoque/"+texto ;
     });
 
     $('#novo').click(function(){
@@ -228,14 +191,14 @@
 
     $(document).ready(function(){       
 
-        $(document).on('click','.Salvar',function(){
+        $(document).on('click','.Salvar',function(event){
             event.preventDefault();
-            envioRequisicaoPostViaAjax('Produto/salvarEntrada', new FormData(document.getElementById("form")));
+            createData(url+'Produto/salvarEntrada', new FormData(document.getElementById("form")));
         });
 
         $(document).on('click','.view_data',function(){
             var id = $(this).attr("id");
-            envioRequisicaoGetViaAjax('Produto/deleteEntrada/' + id);
+            deleteData(url+'Produto/deleteEntrada/' + id);
         }); 
         
     });

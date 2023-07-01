@@ -134,8 +134,13 @@ class ProdutoModel extends ConexaoModel {
         }
     }
 
-    public function buscaEntradaProduto()
+    public function buscaEntradaProduto(array $filter = null)
     {
+        $filter_prefix1 = '';
+        if(!is_null($filter)){
+            $filter_prefix1 = $filter['prefix1'];
+        }
+
         $cmd = $this->conexao->query(
                 "SELECT 
                     en.*,
@@ -146,6 +151,8 @@ class ProdutoModel extends ConexaoModel {
                     produto p
                 ON 
                     p.id = en.produto_id
+                where 
+                    p.descricao like '%$filter_prefix1%'
                 ORDER BY 
                     p.descricao
                 ASC"

@@ -109,7 +109,8 @@ class FuncionarioModel extends ConexaoModel {
                     nome = :nome, 
                     email = :email, 
                     status = :status,
-                    painel = :painel
+                    painel = :painel,
+                    senha = :senha
                 WHERE 
                     id = :id"
                 );
@@ -118,6 +119,7 @@ class FuncionarioModel extends ConexaoModel {
             $cmd->bindValue(':email',$dados['email']);
             $cmd->bindValue(':status',$dados['status']);
             $cmd->bindValue(':painel',$dados['painel']);
+            $cmd->bindValue(':senha',md5($dados['senha']));
             $cmd->bindValue(':id',$id);
             $dados = $cmd->execute();
 

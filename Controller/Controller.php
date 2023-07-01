@@ -10,14 +10,17 @@ class Controller {
 
     use GeneralTrait;
     use DateTrait;
+    use RequestTrait;
     use ErrorLoggingTrait;
 
     protected $site_model;
     protected $disciplina_id;
     protected $background;
+    protected $url;
 
     public function __construct(){
         $this->site_model = new SiteModel();
+        $this->url = ROTA_GERAL;
     }
 
     public function viewSite($view) {
