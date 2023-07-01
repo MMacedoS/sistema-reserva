@@ -250,7 +250,7 @@ function criarGraficoBarras(canvas, dados, titulo = "Valores das Hospedagens",) 
   const valores = dados.map((dado) => parseFloat(dado.valor));
 
   // Extrair os nomes dos apartamentos
-  const nomes = dados.map((dado) => `Apt. ${dado.apartamento_id}`);
+  const nomes = dados.map((dado) => `Apt. ${dado.numero}`);
 
   // Criar o gráfico de barras usando a biblioteca Chart.js
   new Chart(canvas, {
