@@ -1,4 +1,4 @@
-window.minhaVariavel = "";
+
   // Função para criar um novo registro
   function createData(url, data) {
     showLoader();
@@ -11,7 +11,6 @@ window.minhaVariavel = "";
       cache: false,
       processData:false,
       success: function(response) {
-        window.minhaVariavel = response.data;
         showSuccessMessage('Registro criado com sucesso!');
         hideLoader();
         showSuccessMessage("Registro criado com sucesso!");
@@ -32,7 +31,6 @@ window.minhaVariavel = "";
       type: 'PUT',
       data: data,
       success: function(response) {
-        window.minhaVariavel = response.data;
         showSuccessMessage('Registro atualizado com sucesso!');
         hideLoader();
       },
@@ -64,7 +62,6 @@ window.minhaVariavel = "";
       url: url,
       method: 'DELETE',
       success: function(response) {
-        window.minhaVariavel = response.data;
         showSuccessMessage('Registro excluído com sucesso!');
         hideLoader();
       },
