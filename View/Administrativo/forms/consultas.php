@@ -244,7 +244,7 @@
 
     });
 
-function criarGraficoBarras(canvas, dados, titulo = "Valores das Hospedagens",) {
+function criarGraficoBarras(canvas, dados, titulo = "Valor da Hospedagem",) {
     
   // Extrair os valores das reservas
   const valores = dados.map((dado) => parseFloat(dado.valor));
