@@ -209,7 +209,7 @@
                 hospedadas = response;
 
             const canvas1 = document.getElementById("canvas1");
-            criarGraficoBarras(canvas1, hospedadas, "Valores das Hospedagens",);
+            criarGraficoBarras(canvas1, hospedadas, "Valor da Hospedagem",);
             $('#hospedadas').text(hospedadas.length);
             const canvas2 = document.getElementById("canvas2");
             createChart(canvas2, hospedadas, 25);
