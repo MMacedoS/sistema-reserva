@@ -2,7 +2,7 @@
 
 trait ErrorLoggingTrait {
     public function logError($message) {
-        $logFile = __DIR__ . '/../../Log/log.txt';
+        $logFile = __DIR__ . '/../Log/log.txt';
 
         // Obtém a data e hora atual
         $timestamp = date('[Y-m-d H:i:s]');

@@ -1,9 +1,9 @@
 <?php
-require_once "./Control/Conexao.php";
-
+require_once __DIR__ . "/../Control/Conexao.php";
+require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 class ConexaoModel
 {
-
+    use ErrorLoggingTrait;
    public function conexao()
     {
         $con = new Conexao;

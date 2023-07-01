@@ -1,7 +1,7 @@
 <?php
 
 require_once "./Config/autoload.php";
-require_once __DIR__ . "/../Trait/ErrorLogginTrait.php";
+require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 
 class LoginController {  
     use ErrorLoggingTrait;

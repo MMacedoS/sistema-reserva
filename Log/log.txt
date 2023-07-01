@@ -19,3 +19,41 @@
 [2023-06-24 14:52:11] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused
 [2023-06-24 14:52:12] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused
 [2023-06-24 14:52:12] Erro de conexão com o banco de dados: SQLSTATE[HY000] [2002] Connection refused
+[2023-07-01 09:48:15] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:51:09] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:54:53] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:56:09] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:56:27] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:56:36] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:59:08] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 09:59:13] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 10:00:23] ERRO: #1049<br>
+                Mensagem:SQLSTATE[HY000] [1049] Unknown database 'belavistapousada'<br>
+                No Arquivo:/var/www/html/Control/Conexao.php<br
+                Na linha:22
+[2023-07-01 10:03:06] Array
+[2023-07-01 10:03:18] Array

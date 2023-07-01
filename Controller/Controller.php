@@ -3,8 +3,9 @@
 require_once "./Config/autoload.php";
 require_once 'Trait/DateTrait.php';
 require_once 'Trait/GeneralTrait.php';
+require_once 'Trait/RequestTrait.php';
 
-require_once __DIR__ . "/../Trait/ErrorLogginTrait.php";
+require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 
 class Controller {
 
