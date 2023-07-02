@@ -8,9 +8,14 @@ class FuncionarioController extends \Controller{
         $this->funcionario_model = new FuncionarioModel();      
     }
 
+    public function getAll()
+    {
+        echo json_encode($this->funcionario_model->getAll());
+    }
+
     public function buscaFuncionarios($request =  null)
     {
-        return $this->funcionario_model->findFuncionarios($request);
+        echo json_encode($this->funcionario_model->findFuncionarios($request));
     }
 
     public function buscaFuncionarioPorId($id)

@@ -8,9 +8,13 @@ class HospedeController extends \Controller{
         $this->hospede_model = new HospedeModel(); 
     }
 
+    public function getAll() {
+        echo json_encode($this->hospede_model->getAll());
+    }
+
     public function buscaHospedes($request =  null)
     {
-        return $this->hospede_model->findHospedes($request);
+        echo json_encode($this->hospede_model->findHospedes($request));
     }
 
     public function buscaHospedePorId($id)

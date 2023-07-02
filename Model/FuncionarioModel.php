@@ -132,6 +132,18 @@ class FuncionarioModel extends ConexaoModel {
         }
     }
 
+    public function getAll()
+    {
+        $cmd = $this->conexao->query(
+            "SELECT 
+                id,nome, email, painel, status
+            FROM
+                $this->model"
+        );
+
+        return $cmd->fetchAll();
+    }
+
     public function findFuncionarios($request)
     {
         $cmd  = $this->conexao->query(
@@ -151,7 +163,7 @@ class FuncionarioModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
         return false;
