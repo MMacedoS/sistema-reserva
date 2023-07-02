@@ -127,6 +127,16 @@ class ApartamentoModel extends ConexaoModel {
         }
     }
 
+    public function getAll() {
+        $cmd = $this->conexao->query(
+            "SELECT 
+                *
+            FROM
+                $this->model"
+        );
+        return $cmd->fetchAll();
+    }
+
     public function findApartamentos($request)
     {
         $cmd  = $this->conexao->query(
@@ -142,22 +152,23 @@ class ApartamentoModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
-        return false;
+        return [];
         
     }
 
-    public function prepareChangedApartamento($id)
+    public function prepareChangedApartamento($id, $dados)
     {
+        $status = 1;
         $apartamento = self::findById($id);
 
         if(is_null($apartamento)) {
             return self::messageWithData(422, 'apartamento não encontrado', []);
         }
 
-        return $this->updateStatusApartamento(1, $id);
+        return $this->updateStatusApartamento($status, $id);
     }
 
     private function updateStatusApartamento($status, $id)

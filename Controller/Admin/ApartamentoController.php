@@ -8,9 +8,13 @@ class ApartamentoController extends \Controller{
         $this->apartamento_model = new ApartamentoModel();      
     }
 
+    public function getAll() {
+        echo json_encode($this->apartamento_model->getAll());
+    }
+
     public function buscaApartamentos($request =  null)
     {
-        return $this->apartamento_model->findApartamentos($request);
+        echo json_encode($this->apartamento_model->findApartamentos($request));
     }
 
     public function buscaApartamentoPorId($id)
@@ -31,7 +35,7 @@ class ApartamentoController extends \Controller{
 
     public function changeStatusApartamentos($id)
     {
-        $apartamento = $this->apartamento_model->prepareChangedApartamento($id);
+        $apartamento = $this->apartamento_model->prepareChangedApartamento($id,$_POST);
         echo json_encode($apartamento);
     }
 }

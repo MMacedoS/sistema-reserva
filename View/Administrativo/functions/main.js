@@ -13,7 +13,6 @@
       success: function(response) {
         showSuccessMessage('Registro criado com sucesso!');
         hideLoader();
-        showSuccessMessage("Registro criado com sucesso!");
       },
       error: function(error) {
         console.error('Erro ao criar registro:', error);
@@ -28,8 +27,12 @@
     showLoader();
     $.ajax({
       url: url,
-      type: 'PUT',
+      method: 'POST',
       data: data,
+      dataType: 'JSON',
+      contentType: false,
+      cache: false,
+      processData:false,
       success: function(response) {
         showSuccessMessage('Registro atualizado com sucesso!');
         hideLoader();
