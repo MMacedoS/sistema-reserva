@@ -14,7 +14,7 @@
         <div class="input-group">
             <input type="text" class="form-control bg-light border-0 small" placeholder="busca por ..." id="txt_busca" aria-label="Search" value="<?=$request?>" aria-describedby="basic-addon2">
             <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="btn_busca">
+                <button class="btn btn-primary" type="button" onclick="pesquisa()">
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
             </div>
@@ -23,55 +23,7 @@
 
     <div class="row">
         <div class="table-responsive ml-3">
-            <table class="table table-sm mr-4 mt-3" id="lista">     
-                <?php
-                    $funcionarios = $this->buscaFuncionarios($request);
-                    if(!empty($funcionarios)) {
-                ?>
-                <thead>
-                    <tr>
-                        <th scope="col">Nome</th>
-                        <th scope="col" class="d-none d-sm-table-cell">Email</th>
-                        <th scope="col">Status</th>
-                        <th colspan="2">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        foreach ($funcionarios as $key => $value) {
-                            echo '
-                                <tr>
-                                    <td>' . $value['nome'] . '</td>
-                                    <td class="d-none d-sm-table-cell">' . $value['email'] . '</td>';
-                                switch ($value['status']) {
-                                    case '0':
-                                            echo " <td>Inativo</td>";
-                                        break;
-                                    case '1':
-                                        echo " <td>Disponivel</td>";
-                                    break;
-                                    
-                                    default:
-                                        # code...
-                                        break;
-                                }
-                                    
-                            echo '
-                                <td><button type="button" class="btn btn-outline-primary mb-2 view_data" id="'.$value['id'].'" >Editar</button> &nbsp;';                        
-                                if($value['status'] == "0"){
-                                    echo '<button type="button" class="btn btn-outline-primary view_Ativo" id="'.$value['id'].'" >Ativar</button> &nbsp;';
-                                } 
-                                if($value['status'] == '1'){
-                                    echo '<button type="button" class="btn btn-outline-danger view_Ativo" id="'.$value['id'].'" >Inativar</button> &nbsp;';
-                                }
-                                    '</td>
-                                </tr>
-                            ';
-                        }
-                    ?>
-                </tbody>
-                <?php }?>
-            </table>
+            <div id="table"></div>
         </div>
     </div>
 
@@ -140,79 +92,148 @@
 <!-- editar -->
 
 </div>
-
 <script>
-    let url = "<?=ROTA_GERAL?>/";
-      
-      function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Atualizar?</a>'
-                  })
-          });
-      }
+    $(document).ready(function(){
+        showData("<?=ROTA_GERAL?>/Funcionario/getAll")
+        .then((response) => createTable(response));
+    });
 
-    function envioRequisicaoGetViaAjax(controle_metodo) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                if(data.status === 201){
-                    preparaModalEditarFuncionarios(data.data);
-                }
+    
+    $('#novo').click(function(){
+        $('#exampleModalLabel').text("Cadastro de Funcionarios");
+        $('#modalFuncionarios').modal('show');        
+    });
+
+    function pesquisa() {
+        // Obtém o valor do input
+        var input = document.getElementById('txt_busca');
+        var valor = input.value;
+        
+        // Executa a função com base no valor do input
+        showData("<?=ROTA_GERAL?>/Funcionario/buscaFuncionarios/"+valor)
+        .then((response) => createTable(response));;    
+    }
+
+    function destroyTable() {
+        var table = document.getElementById('table');
+        if (table) {
+        table.remove(); // Remove a tabela do DOM
+        }
+    }
+
+    function createTable(data) {
+        // Remove a tabela existente, se houver
+        var tableContainer = document.getElementById('table');
+        var existingTable = tableContainer.querySelector('table');
+        if (existingTable) {
+            existingTable.remove();
+        }
+        var thArray = ['Cod', 'Nome', 'E-mail','Acesso', 'Status']; 
+        var table = document.createElement('table');
+        table.className = 'table table-sm mr-4 mt-3';
+        var thead = document.createElement('thead');
+        var headerRow = document.createElement('tr');
+
+        thArray.forEach(function(value) {
+            var th = document.createElement('th');
+            th.textContent = value;
+            
+            if (value === 'Nome' || value === 'Acesso' || value === 'Cod') {
+                th.classList.add('d-none', 'd-sm-table-cell');
             }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: "Algo de errado aconteceu!",
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Atualizar?</a>'
-            })
+            headerRow.appendChild(th);
         });
-        return "";
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        var tbody = document.createElement('tbody');
+
+            data.forEach(function(item) {
+                var tr = document.createElement('tr');
+
+                thArray.forEach(function(value, key) {
+                        var td = document.createElement('td');
+                        td.textContent = item[key];
+                        
+                        if (item[key] === '1' && value === 'Status') {
+                            td.textContent = 'Ativo';
+                        } if (item[4] === '0' && value === 'Status') {
+                            td.textContent = 'Suspenso';
+                        } 
+
+                        if (value === 'Nome' || value === 'Acesso' || value === 'Cod') {
+                            td.classList.add('d-none', 'd-sm-table-cell');
+                        }
+                        tr.appendChild(td);
+                    });
+                                    // Adiciona os botões em cada linha da tabela
+                var buttonsTd = document.createElement('td');
+
+                var editButton = document.createElement('button');
+                editButton.innerHTML = '<i class="fa fa-edit"></i>';
+                editButton.className = 'btn btn-edit';
+                buttonsTd.appendChild(editButton);
+
+                // var clearButton = document.createElement('button');
+                // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
+                // buttonsTd.appendChild(clearButton);
+
+                var activateButton = document.createElement('button');
+                activateButton.innerHTML = '<i class="fa fa-check"></i>';
+                activateButton.className = 'btn btn-activate';
+                buttonsTd.appendChild(activateButton);
+
+                // Verificar o valor e definir o ícone e classe apropriados
+                if (item.status === '2') {           
+                    activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
+                    activateButton.title = 'Ocupado';
+                } else {
+                    activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
+                    activateButton.title = 'Ativo';
+                }
+
+                // Adicionando a ação para o botão "Editar"
+                editButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                editarRegistro(rowData);
+                });
+
+                // Adicionando a ação para o botão "Editar"
+                activateButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                activeRegistro(rowData);
+                });
+
+                tr.appendChild(buttonsTd);
+                tbody.appendChild(tr);                
+            });
+
+            table.appendChild(tbody);
+
+            var destinationElement = document.getElementById('table');
+            destinationElement.appendChild(table);
+
+        return table;
+    }
+
+    function editarRegistro(rowData)
+    {
+        showData("<?=ROTA_GERAL?>/Funcionario/buscaFuncionarioPorId/" + rowData[0])
+            .then((response) => preparaModalEditarFuncionarios(response.data));
+        console.log(rowData[0]);
+    }
+
+    function activeRegistro(rowData)
+    {
+        showData("<?=ROTA_GERAL?>/Funcionario/changeStatusFuncionarios/" + rowData[0])
+            .then((response) => showSuccessMessage('Registro atualizado com sucesso!'));
     }
 
     function preparaModalEditarFuncionarios(data) {
@@ -227,44 +248,11 @@
         $('#modalFuncionarios').modal('show');   
     }
 
-    $('#btn_busca').click(function(){
-        var texto = $('#txt_busca').val();
-        window.location.href ="<?=ROTA_GERAL?>/Administrativo/funcionarios/"+texto;
-    });
-
-    $('#novo').click(function(){
-        $('#exampleModalLabel').text("Cadastro de Funcionarios");
-        $('#modalFuncionarios').modal('show');        
-    });
-
-    $(document).ready(function(){
-        $(document).on("click",".fechar",function(){ 
-            $('#modalFuncionarios').modal('hide');
-        });
-
-        $(document).on('click','.Salvar',function(){
-            event.preventDefault();
-            envioRequisicaoPostViaAjax('Funcionario/salvarFuncionarios', new FormData(document.getElementById("form")));
-        });
-
-        $(document).on('click','.view_data',function(){
-            var id = $(this).attr("id");
-            $('#btnSubmit').removeClass('Salvar');
-            envioRequisicaoGetViaAjax('Funcionario/buscaFuncionarioPorId/' + id);
-        });
-
-        $(document).on('click','.Atualizar',function(){
-            event.preventDefault();
-            $('#btnSubmit').attr('disabled','disabled');
-            var id = $('#id').val();
-            envioRequisicaoPostViaAjax('Funcionario/atualizarFuncionarios/' + id, new FormData(document.getElementById("form")));   
-        });
-
-        $(document).on('click','.view_Ativo',function(){    
-            event.preventDefault();
-            var code=$(this).attr("id");
-            envioRequisicaoGetViaAjax('Funcionario/changeStatusFuncionarios/'+ code);
-        });    
-        
+    $(document).on('click','.Salvar',function(){
+        event.preventDefault();
+        var id = $('#id').val();
+        if(id == '') return createData('<?=ROTA_GERAL?>/Funcionario/salvarFuncionarios', new FormData(document.getElementById("form")));
+    
+        return updateData('<?=ROTA_GERAL?>/Funcionario/atualizarFuncionarios/' + id, new FormData(document.getElementById("form")), id);
     });
 </script>
