@@ -150,16 +150,36 @@ class HospedeModel extends ConexaoModel {
             return self::message(422, $th->getMessage());
         }
     }
-
-    public function getAll() {
-        $cmd = $this->conexao->query(
-            "SELECT 
-                *
-            FROM
-                $this->model"
-        );
-        return $cmd->fetchAll();
+    
+    public function getAll()
+    {
+        self::logError("model");
+        $query = "SELECT id, nome, cpf, endereco, telefone FROM `hospede`";
+        
+        self::logError($query);
+        try {
+            $cmd = $this->conexao->prepare($query);
+            $cmd->execute();
+            $dados = $cmd->fetchAll();
+            self::logError("entrou no try");
+            return $dados;
+        } catch (PDOException $e) {
+            // Tratar o erro conforme necessário
+            // Por exemplo, você pode exibir uma mensagem de erro ou registrar o erro em um log
+            self::logError("Ocorreu um erro na consulta: " . $e->getMessage());
+            return false;
+        }
     }
+
+    // public function getAll() {
+    //     $cmd = $this->conexao->query(
+    //         "SELECT 
+    //             *
+    //         FROM
+    //             $this->model"
+    //     );
+    //     return $cmd->fetchAll();
+    // }
 
     public function findHospedes($request)
     {
