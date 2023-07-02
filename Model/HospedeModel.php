@@ -151,6 +151,16 @@ class HospedeModel extends ConexaoModel {
         }
     }
 
+    public function getAll() {
+        $cmd = $this->conexao->query(
+            "SELECT 
+                *
+            FROM
+                $this->model"
+        );
+        return $cmd->fetchAll();
+    }
+
     public function findHospedes($request)
     {
         $cmd  = $this->conexao->query(
@@ -171,7 +181,7 @@ class HospedeModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
         return false;
