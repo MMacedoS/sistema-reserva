@@ -241,6 +241,31 @@ class ReservaModel extends ConexaoModel {
         
     }
 
+    public function getAll() {
+        $cmd = $this->conexao->query(
+            "SELECT 
+                r.id,
+                h.nome,
+                r.dataEntrada,
+                r.dataSaida,
+                p.numero,
+                r.status
+            FROM
+                $this->model r
+            left join
+            hospede h
+            on h.id = r.hospede_id
+            left join apartamento p on  p.id = r.apartamento_id
+            where r.status != 3 and r.status != 4
+            order by r.id desc"
+        );
+        
+        if($cmd->rowCount() > 0)
+        {
+            return $cmd->fetchAll();
+        }
+    }
+
     public function findAllReservas($nome, int $off = 0)
     {
         $off = $off;

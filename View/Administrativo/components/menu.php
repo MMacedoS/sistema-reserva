@@ -117,7 +117,7 @@
     <?php
     }
     ?>
-    <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Imprimir</span>
@@ -125,11 +125,11 @@
         <div id="collapseRelatorios" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"></h6>
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/impressoes">Movimentações</a> 
+                <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/impressoes">Movimentações</a> 
               
             </div>
         </div>
-    </li>
+    </li> -->
     
     <div class="text-center d-none d-md-inline mb-3">
         <?php         

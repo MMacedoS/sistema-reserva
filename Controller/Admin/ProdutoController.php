@@ -9,14 +9,18 @@ class ProdutoController extends \Controller{
         $this->produto_model = new ProdutoModel();      
     }
 
-    public function getDadosProdutos()
+    public function getAll()
     {
-        echo  json_encode($this->produto_model->getProdutos());
+        echo json_encode($this->produto_model->getAll());
+    }
+    public function getDadosProdutos($request = null)
+    {
+        echo  json_encode($this->produto_model->getProdutos($request));
     }
 
-    public function buscaProduto($request =  null)
+    public function buscaProduto($request =  '')
     {
-        return $this->produto_model->getProdutos()['data'];
+        echo  json_encode($this->produto_model->getProdutos($request)['data']);
     }
 
     public function buscaProdutoPorId($id)

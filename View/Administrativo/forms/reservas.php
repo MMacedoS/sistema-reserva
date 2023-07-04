@@ -24,114 +24,54 @@
         </div>
     </div>
 <hr>
-    <div class="row">   
-        <div class="input-group">
+    <form id="form_search" method="POST">
+        <div class="row">              
             <!-- <div class="col-sm-12 mb-2">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
             </div> -->
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_entrada" class="form-control" value="<?=$entrada?>">
-            </div>
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_saida" class="form-control" value="<?=$saida?>">
-            </div>
-            <!-- <div class="col-sm-3">
-                <select name="" id="" class="form-control">
-                    <option value="">Selecione uma empresa</option>
-                    <option value="">Confirmada</option>
-                    <option value="">Hospedadas</option>
-                </select>
-            </div>     -->
-            <div class="col-sm-3">
-                <select name="" id="busca_status" class="form-control">
-                    <option value="">Selecione o status</option>
-                    <option <?=$status == 1 ? 'selected': '';?> value="1">Reservada</option>
-                    <option <?=$status == 2 ? 'selected': '';?> value="2">Confirmada</option>
-                    <option <?=$status == 3 ? 'selected': '';?> value="3">Hospedadas</option>
-                    <option <?=$status == 4 ? 'selected': '';?> value="4">Finalizada</option>
-                    <option <?=$status == 5 ? 'selected': '';?> value="5">Cancelada</option>
-                </select>
-            </div>  
-            
-            <div class="col-sm-11 mt-2">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<?=$texto?>" aria-describedby="basic-addon2">
-            </div>
+                
+                    <!-- <div class="col-sm-3 mb-2">
+                        <input type="date" name="" id="busca_entrada" class="form-control" value="">
+                    </div>
+                    <div class="col-sm-3 mb-2">
+                        <input type="date" name="" id="busca_saida" class="form-control" value="">
+                    </div> -->
+                    <!-- <div class="col-sm-3">
+                        <select name="" id="" class="form-control">
+                            <option value="">Selecione uma empresa</option>
+                            <option value="">Confirmada</option>
+                            <option value="">Hospedadas</option>
+                        </select>
+                    </div>     -->
+                    <!-- <div class="col-sm-3">
+                        <select name="" id="busca_status" class="form-control">
+                            <option value="">Selecione o status</option>
+                            <option value="1">Reservada</option>
+                            <option value="2">Confirmada</option>
+                            <option value="3">Hospedadas</option>
+                            <option value="4">Finalizada</option>
+                            <option value="5">Cancelada</option>
+                        </select>
+                    </div>  
+                    
+                    <div class="col-sm-11 mt-2">
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+                    </div>
+                
 
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button" id="btn_busca">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>   
-            </div>
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="pesquisa()">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>   
+                </div> -->
         </div>
-    </div>
+    
+    </form>
 <hr>
     <div class="row">
         <div class="table-responsive ml-3">
-            <table class="table table-sm mr-4" id="lista">     
-                <?php
-                    $reservas = $this->buscaReservas($request);
-                    // var_dump($reservas);
-                    if(!empty($reservas)) {
-                ?>
-                <thead>
-                    <tr>
-                        <th scope="col" class="d-none d-sm-table-cell">COD</th>
-                        <th>Apartamento</th>
-                        <th scope="col">Hospede</th>
-                        <th scope="col">Data Entrada</th>
-                        <th scope="col" class="d-none d-sm-table-cell">Data Saida</th>
-                        <th scope="col" class="d-none d-sm-table-cell">Tipo</th>
-                        <th scope="col" class="d-none d-sm-table-cell">Situação</th>
-                        <th scope="col" class="d-none d-sm-table-cell">Valor</th>
-                        <th colspan="2">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        foreach ($reservas as $key => $value) {
-                            $data_entrada = explode(' ', $value['dataEntrada']);
-                            $data_saida = explode(' ', $value['dataSaida']);
-                            echo '
-                                <tr>
-                                    <td class="d-none d-sm-table-cell">' . $value['id'] . '</td>
-                                    <td>' . $value['numero'] . '</td>
-                                    <td>' . $value['nome'] . '</td>
-                                    <td>' . implode('/', array_reverse(explode('-', $data_entrada[0]))) . '</td>
-                                    <td class="d-none d-sm-table-cell">' . implode('/', array_reverse(explode('-', $data_saida[0])))  . '</td>
-                                    <td class="d-none d-sm-table-cell">' . self::prepareTipoReserva($value['tipo']) . '</td>
-                                    <td class="d-none d-sm-table-cell">' . self::prepareStatusReserva($value['status']) . '</td>
-                                    <td class="d-none d-sm-table-cell">' . $value['valor'] . '</td>
-                                    <td><button type="button" class="btn btn-outline-primary mb-2 view_data" id="'.$value['id'].'" >Editar</button> &nbsp;';                        
-                                    if($value['status'] == "5"){
-                                        echo '<button type="button" class="btn btn-outline-primary view_Ativo" id="'.$value['id'].'" >Ativar</button> &nbsp;';
-                                    } 
-                                    if($value['status'] == '1'){
-                                        echo '<button type="button" class="btn btn-outline-danger view_Ativo" id="'.$value['id'].'" >Inativar</button> &nbsp;';
-                                    }
-                                    '</td>
-                                </tr>
-                            ';
-                        }
-                    ?>
-                </tbody>
-                <?php } else{
-                    'echo <td>não possui reservas cadastradas</td>';
-                }
-                ?>
-            </table>
+            <div id="table"></div>
         </div>
-        <ul class="pagination">
-            <!-- Declare the item in the group -->
-            <li class="page-item">
-                <!-- Declare the link of the item -->
-                <a class="page-link" href="<?=ROTA_GERAL?>/Administrativo/reservas/page=<?= $chave == 0 ? 0 : $chave + (-12)?>">Anterior</a>
-            </li>
-            <!-- Rest of the pagination items -->
-          
-            <li class="page-item">
-                <a class="page-link" href="<?=ROTA_GERAL?>/Administrativo/reservas/page=<?=$chave + 12?>">proxima</a>
-            </li>
-        </ul>
     </div>    
 
 <!-- editar -->
@@ -162,7 +102,7 @@
                         </div>
 
                         <div class="col-sm-2 mt-4">
-                            <button class="btn btn-primary mt-2" type="button" id="buscar">
+                            <button class="btn btn-primary mt-2" type="button" onclick="buscaApt()">
                                 <i class="fas fa-search fa-sm"></i>
                             </button>   
                         </div>                    
@@ -172,14 +112,6 @@
                         <div class="col-sm-8">
                             <label for="">Hospede</label><br>
                             <select class="form-control js-example-basic-single" name="hospedes" id="hospedes">
-                                <?php
-                                $hospedes = $this->buscaHospedes();
-                                    foreach ($hospedes as $hospede) { 
-                                        ?>
-                                            <option value="<?=$hospede['id']?>"><?=$hospede['nome'] . " CPF: " . $hospede['cpf']?></option>
-                                        <?php
-                                    }
-                                ?>
                             </select>
                         </div>
                         <div class="col-sm-4">
@@ -241,115 +173,20 @@
 
 </div>
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
-<script>
-    let url = "<?=ROTA_GERAL?>/";
 
-      function valores(){
+<script>
+    function valores(){
         var dias = moment($('#saida').val()).diff(moment($('#entrada').val()), 'days');
          var valor = $("#valor").val();
             $('#valores').removeClass('text-success');
             $('#valores').addClass('text-success');
             $('#valores').text("Valor Total da Estadia: R$" + valor * dias);
       }
-      
-      function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  })
-          });
-      }
 
-    function envioRequisicaoGetViaAjax(controle_metodo) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                if(data.status === 201){
-                    preparaModalEditarReserva(data.data);
-                }
-            }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: "Algo de errado aconteceu!",
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-            })
-        });
-        return "";
-    }
-
-    function preparaModalEditarReserva(data) 
-    {
-        $('#entrada').val(data[0].dataEntrada);
-        $('#saida').val(data[0].dataSaida);
-        $('#buscar').click();
-        $('#hospedes').val(data[0].hospede_id);
-        var newHosp= $('<option selected value="' + data[0].hospede_id + '">mesmo Hóspede</option>');
-        $("#hospedes").append(newHosp);
-        $('#tipo').val(data[0].tipo);
-        $('#valor').val(data[0].valor);
-        $('#status').val(data[0].status);
-        $('#observacao').val(data[0].obs);
-        $('#id').val(data[0].id);
-        $("#apartamento").append('<option selected value="'+data[0].apartamento_id+'">mesmo Apartamento</option>');
-        $('#btnSubmit').addClass('Atualizar');
-        $('#exampleModalLabel').text("Atualizar Reservas");
-        $('#modal').modal('show');   
-
-        return ;
-    }
-
-    $('#btn_busca').click(function(){
-        var texto = $('#txt_busca').val();
-        var entrada = $('#busca_entrada').val();
-        var saida  = $('#busca_saida').val();
-        var status  = $('#busca_status').val();
-        window.location.href ="<?=ROTA_GERAL?>/Administrativo/reservas/"+texto + '_@_' + status + '_@_' + entrada + '_@_' + saida;
+    $(document).ready(function(){
+        showData("<?=ROTA_GERAL?>/Reserva/getAll")
+        .then((response) => createTable(response))
+        .then(() => hideLoader()); 
     });
 
     $('#novo').click(function(){
@@ -357,72 +194,163 @@
         $('#modal').modal('show');        
     });
 
-    $(document).ready(function(){
-        $(document).on("click",".fechar",function(){ 
-            $('#modal').modal('hide');
-        });
+    function pesquisa() {
+                
+        // Executa a função com base no valor do input
+        showDataWithData("<?=ROTA_GERAL?>/Reserva/buscaReservas/",  new FormData(document.getElementById("form_search")))
+        .then((response) => createTable(response))
+        .then(() => hideLoader());    
+    }
 
-        $(document).on('click','.Salvar',function(){
-            event.preventDefault();
-            var dataEntrada = moment($('#entrada').val());
-            var dataSaida = moment($('#saida').val());
+    function destroyTable() {
+        var table = document.getElementById('table');
+        if (table) {
+        table.remove(); // Remove a tabela do DOM
+        }
+    }
 
-            if(dataSaida > dataEntrada){
-                return envioRequisicaoPostViaAjax('Reserva/salvarReservas', new FormData(document.getElementById("form")));
+    function createTable(data) {
+        // Remove a tabela existente, se houver
+        var tableContainer = document.getElementById('table');
+        var existingTable = tableContainer.querySelector('table');
+        if (existingTable) {
+            existingTable.remove();
+        }
+        var thArray = ['Cod', 'Hospede', 'Dt.Entrada','Dt.Saida', 'Apt', 'Situação']; 
+        var table = document.createElement('table');
+        table.className = 'table table-sm mr-4 mt-3';
+        var thead = document.createElement('thead');
+        var headerRow = document.createElement('tr');
+
+        thArray.forEach(function(value) {
+            var th = document.createElement('th');
+            th.textContent = value;
+            
+            if (value === 'CPF' || value === 'Endereço' || value === 'Cod') {
+                th.classList.add('d-none', 'd-sm-table-cell');
             }
+            headerRow.appendChild(th);
         });
 
-        $(document).on('click','.view_data',function(){
-            var id = $(this).attr("id");
-            $('#btnSubmit').removeClass('Salvar');
-            $('#opcao').val('atualiza')
-            envioRequisicaoGetViaAjax('Reserva/buscaReservaPorId/' + id);
-        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
 
-        $(document).on('click','.Atualizar',function(){
-            event.preventDefault();
-            // $('#btnSubmit').attr('disabled','disabled');
-            var id = $('#id').val();
-            var dataEntrada = moment($('#entrada').val());
-            var dataSaida = moment($('#saida').val());
+        var tbody = document.createElement('tbody');
 
-            if(dataSaida > dataEntrada){
-                return envioRequisicaoPostViaAjax('Reserva/atualizarReserva/' + id, new FormData(document.getElementById("form")));   
-            }
-            return  Swal.fire({
-                        icon: 'warning',
-                        title: 'Datas invalidas',
-                        text: "Possui verifique as datas!",
+            data.forEach(function(item) {
+                var tr = document.createElement('tr');
+
+                thArray.forEach(function(value, key) {
+                        var td = document.createElement('td');
+                        td.textContent = item[key];
+                        
+                        if (item[key] === '1' && value === 'Situação') {
+                            td.textContent = 'Reservada';
+                        } if (item[key] === '2' && value === 'Situação') {
+                            td.textContent = 'Confirmada';
+                        } 
+                        if (item[key] === '3' && value === 'Situação') {
+                            td.textContent = 'Hospedada';
+                        } if (item[key] === '4' && value === 'Situação') {
+                            td.textContent = 'Finalizada';
+                        } 
+                        if (item[key] === '5' && value === 'Situação') {
+                            td.textContent = 'Cancelada';
+                        } 
+
+                        if (value === 'CPF' || value === 'Endereço' || value === 'Cod') {
+                            td.classList.add('d-none', 'd-sm-table-cell');
+                        }
+                        tr.appendChild(td);
                     });
-        });
+                                    // Adiciona os botões em cada linha da tabela
+                var buttonsTd = document.createElement('td');
 
-        $(document).on('click','.view_Ativo',function(){    
-            event.preventDefault();
-            var code=$(this).attr("id");
-            Swal.fire({
-                title: 'Deseja cancelar esta reserva?',
-                showDenyButton: true,
-                confirmButtonText: 'Sim',
-                denyButtonText: `Não`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    envioRequisicaoGetViaAjax('Reserva/changeStatusReservas/'+ code);
-                } else if (result.isDenied) {
-                    Swal.fire('nenhuma mudança efetuada', '', 'info')
-                }
-            })
-        });    
+                var editButton = document.createElement('button');
+                editButton.innerHTML = '<i class="fa fa-edit"></i>';
+                editButton.className = 'btn btn-edit';
+                buttonsTd.appendChild(editButton);
 
-        $('.js-example-basic-single').select2();    
-    
-        $(document).on('click', '#buscar', function(){
+                // var clearButton = document.createElement('button');
+                // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
+                // buttonsTd.appendChild(clearButton);
+
+                // var activateButton = document.createElement('button');
+                // activateButton.innerHTML = '<i class="fa fa-check"></i>';
+                // activateButton.className = 'btn btn-activate';
+                // buttonsTd.appendChild(activateButton);
+
+                // // Verificar o valor e definir o ícone e classe apropriados
+                // if (item.status === '2') {           
+                //     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
+                //     activateButton.title = 'Ocupado';
+                // } else {
+                //     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
+                //     activateButton.title = 'Ativo';
+                // }
+
+                // Adicionando a ação para o botão "Editar"
+                editButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                editarRegistro(rowData);
+                });
+
+                // Adicionando a ação para o botão "Editar"
+                // activateButton.addEventListener('click', function() {
+                //     var rowData = Array.from(tr.cells).map(function(cell) {
+                //         return cell.textContent;
+                //     });
+                // // Chame a função desejada passando os dados da linha
+                //     // redirectWithModal(rowData);
+                // });
+
+                tr.appendChild(buttonsTd);
+                tbody.appendChild(tr);                
+            });
+
+            table.appendChild(tbody);
+
+            var destinationElement = document.getElementById('table');
+            destinationElement.appendChild(table);
+
+        return table;
+    }
+
+    function editarRegistro(rowData)
+    {
+        showData("<?=ROTA_GERAL?>/Reserva/buscaReservaPorId/" + rowData[0])
+            .then((response) => preparaModalEditarReserva(response.data))
+            .then((response) => buscaApt(response.data));
+    }
+
+    function activeRegistro(rowData)
+    {
+        Swal.fire({
+            title: 'Deseja cancelar esta reserva?',
+            showDenyButton: true,
+            confirmButtonText: 'Sim',
+            denyButtonText: `Não`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                showData("<?=ROTA_GERAL?>/Reserva/changeStatusReservas/" + rowData[0])
+                    .then((response) => showSuccessMessage('Registro atualizado com sucesso!'));
+            } else if (result.isDenied) {
+                Swal.fire('nenhuma mudança efetuada', '', 'info')
+            }
+        })   
+    }
+
+    function buscaApt(array = null){
             var dataEntrada = moment($('#entrada').val());
-            var dataSaida = moment($('#saida').val());
+            var dataSaida = moment($('#saida').val());           
             
             var opcao = $('#opcao').val();            
 
             if(dataSaida >= dataEntrada){
+                
                 $.ajax({
                     url: '<?=ROTA_GERAL?>/Reserva/reservaBuscaPorData/',
                     method:'POST',
@@ -442,6 +370,7 @@
                             });
 
                             $('#div_apartamento').removeClass('hide');
+                            populaHospede();
                             data.data.map(element => {
                                 var newOption = $('<option value="' + element.id + '">' + element.numero + '</option>');
                                 $("#apartamento").append(newOption);
@@ -451,6 +380,65 @@
                     }
                 })
             }            
-        });        
+        }      
+
+    function preparaModalEditarReserva(data) 
+    {
+        $('#entrada').val(data[0].dataEntrada);
+        $('#saida').val(data[0].dataSaida);
+        $('#hospedes').val(data[0].hospede_id);
+        var newHosp= $('<option selected value="' + data[0].hospede_id + '">mesmo Hóspede</option>');
+        $("#hospedes").append(newHosp);
+        $('#tipo').val(data[0].tipo);
+        $('#valor').val(data[0].valor);
+        $('#status').val(data[0].status);
+        $('#observacao').val(data[0].obs);
+        $('#id').val(data[0].id);
+        $('#div_apartamento').removeClass('hide');
+        var newOption = $('<option selected value="' + data[0].apartamento_id + '">Mesmo  Apartamento</option>');
+        $("#apartamento").append(newOption);
+        $('#btnSubmit').addClass('Atualizar');
+        $('#exampleModalLabel').text("Atualizar Reservas");
+        $('#modal').modal('show');   
+
+        return ;
+    }
+
+    function populaHospede(){
+        showData("<?=ROTA_GERAL?>/Hospede/getAllSelect")
+       .then((response) => {
+            response.map(element => {
+                var newOption = $('<option value="' + element.id + '">' + element.nome + '</option>');
+                $("#hospedes").append(newOption);
+            })
+       });
+
+    }
+
+    $(document).on('click','.Salvar',function(){
+        event.preventDefault();
+        var id = $('#id').val();
+        var dataEntrada = moment($('#entrada').val());
+        var dataSaida = moment($('#saida').val());
+        
+        if(dataSaida > dataEntrada){
+            if(id == '') return createData('<?=ROTA_GERAL?>/Reserva/salvarReservas', new FormData(document.getElementById("form"))).then( (response) => alert(response));
+        
+            return updateData('<?=ROTA_GERAL?>/Reserva/atualizarReserva/' + id, new FormData(document.getElementById("form")), id);
+        }
     });
+
+    $('.js-example-basic-single').select2();    
+
+</script>
+<script>
+      
+    // $('#btn_busca').click(function(){
+    //     var texto = $('#txt_busca').val();
+    //     var entrada = $('#busca_entrada').val();
+    //     var saida  = $('#busca_saida').val();
+    //     var status  = $('#busca_status').val();
+    //     window.location.href ="<=ROTA_GERAL?>/Administrativo/reservas/"+texto + '_@_' + status + '_@_' + entrada + '_@_' + saida;
+    // });
+
 </script>

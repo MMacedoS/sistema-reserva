@@ -9,6 +9,11 @@ class ReservaController extends \Controller{
         $this->reserva_model = new ReservaModel();      
     }
 
+    public function getAll() {
+        $reservas = $this->reserva_model->getAll();
+        echo json_encode($reservas);
+    }
+
     public function buscaReservas($request =  null)
     {
         if(is_null($request)){

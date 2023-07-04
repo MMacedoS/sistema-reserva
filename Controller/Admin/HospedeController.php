@@ -12,6 +12,10 @@ class HospedeController extends \Controller{
         echo json_encode($this->hospede_model->getAll());
     }
 
+    public function getAllSelect() {
+        echo json_encode($this->hospede_model->getAllOfSelect());
+    }
+
     public function buscaHospedes($request =  null)
     {
         echo json_encode($this->hospede_model->findHospedes($request));

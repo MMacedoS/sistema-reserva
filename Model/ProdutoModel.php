@@ -17,13 +17,23 @@ class ProdutoModel extends ConexaoModel {
         $this->conexao = ConexaoModel::conexao();
     }
 
-    public function getProdutos()
+    public function getAll()
+    {
+        $sql = "SELECT * FROM $this->model";
+        $stmt = $this->conexao->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function getProdutos($text)
     {
         $cmd = $this->conexao->query(
                 "SELECT 
                     * 
                 FROM
                     produto
+                WHERE
+                 descricao LIKE '%$text%'
                 ORDER BY 
                     tipo
                 ASC"
@@ -31,7 +41,7 @@ class ProdutoModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);            
+            $dados = $cmd->fetchAll();            
             return self::messageWithData(201, 'produtos encontrados', $dados);
         }
 
@@ -183,7 +193,7 @@ class ProdutoModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);            
+            $dados = $cmd->fetchAll();            
             return self::messageWithData(201, 'produtos encontrados', $dados);
         }
 

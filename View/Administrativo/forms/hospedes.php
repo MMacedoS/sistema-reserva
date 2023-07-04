@@ -208,10 +208,10 @@
                 // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
                 // buttonsTd.appendChild(clearButton);
 
-                // var activateButton = document.createElement('button');
-                // activateButton.innerHTML = '<i class="fa fa-check"></i>';
-                // activateButton.className = 'btn btn-activate';
-                // buttonsTd.appendChild(activateButton);
+                var activateButton = document.createElement('button');
+                activateButton.innerHTML = '<i class="fas fa-calendar"></i>';
+                activateButton.className = 'btn btn-activate';
+                buttonsTd.appendChild(activateButton);
 
                 // // Verificar o valor e definir o ícone e classe apropriados
                 // if (item.status === '2') {           
@@ -232,13 +232,13 @@
                 });
 
                 // Adicionando a ação para o botão "Editar"
-                // activateButton.addEventListener('click', function() {
-                //     var rowData = Array.from(tr.cells).map(function(cell) {
-                //         return cell.textContent;
-                //     });
-                // // Chame a função desejada passando os dados da linha
-                // activeRegistro(rowData);
-                // });
+                activateButton.addEventListener('click', function() {
+                    var rowData = Array.from(tr.cells).map(function(cell) {
+                        return cell.textContent;
+                    });
+                // Chame a função desejada passando os dados da linha
+                    redirectWithModal(rowData);
+                });
 
                 tr.appendChild(buttonsTd);
                 tbody.appendChild(tr);                
@@ -283,9 +283,26 @@
     $(document).on('click','.Salvar',function(){
         event.preventDefault();
         var id = $('#id').val();
-        if(id == '') return createData('<?=ROTA_GERAL?>/Hospede/salvarHospedes', new FormData(document.getElementById("form")));
+        if(id == '') return createData('<?=ROTA_GERAL?>/Hospede/salvarHospedes', new FormData(document.getElementById("form"))).then( (response) => alert(response));
     
         return updateData('<?=ROTA_GERAL?>/Hospede/atualizarHospedes/' + id, new FormData(document.getElementById("form")), id);
     });
+
+    function handleFormSubmit(form) {
+        // Redireciona para a página de destino
+        redirectWithModal(form.action);
+
+        // Retorna false para evitar o envio do formulário pelo método tradicional
+        return false;
+    }
+
+    function redirectWithModal(rowData) {
+        var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/Reservas/index"; 
+            redirectUrl += "?id=" + rowData[0]  + '&showModal=true';
+        
+        // Redireciona para a página de destino
+        window.location.href = redirectUrl;
+    }
+
 </script>
 
