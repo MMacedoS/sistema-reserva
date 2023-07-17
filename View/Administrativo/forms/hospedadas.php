@@ -105,9 +105,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Dados da Hospedagem</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
+                <button class="btn btn-danger close" onclick="sair()"> <span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body" id="">  
                 <input type="hidden" id="id">
@@ -561,6 +562,7 @@
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
     let url = "<?=ROTA_GERAL?>/";
+    var id_reserva = null
 
     var totalConsumos = 0;
      var subTotal = 0;
@@ -823,11 +825,12 @@
         $('#nomeHospede').text(data[0].nome);
         $('#codigoReserva').text(data[0].id);
         $('#numeroApartamento').text(data[0].numero);
-        $('#totalHospedagem').text("R$ " + parseFloat(data[0].consumos).toFixed(2));
+        $('#totalHospedagem').text("R$ " + (parseFloat(data[0].consumos) + parseFloat(data[0].diarias)).toFixed(2));
         $('#totalPago').text("R$ " + data[0].pag);
         var total = calculaCheckout(
             parseFloat(data[0].consumos),
-            parseFloat(data[0].pag)
+            parseFloat(data[0].pag),
+            parseFloat(data[0].diarias)
         ).toFixed(2);
         
         if(total > 0) {
@@ -875,9 +878,9 @@
         return valor;
     }
 
-    function calculaCheckout(consumos, pagamento)
+    function calculaCheckout(consumos, pagamento, diarias)
     {        
-        return consumos - pagamento;
+        return (consumos + diarias) - pagamento;
     }
 
     function prepareTipo(value)
@@ -907,29 +910,40 @@
     });
 
     $(document).ready(function(){
+        setInterval(function(){
+            if(id_reserva){
+                showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ id_reserva)
+                .then((response) => {
+                    preparaModalEditarReserva(response.data)
+                    hideLoader()
+                });
+            }
+        }, 10000);
         $(document).on("click",".fechar",function(){ 
+            
             $('#modalCheckout').modal('hide');
         });
         
         $('.js-example-basic-single').select2();    
     
         $(document).on('click', '.hospedadas', function(){     
-            var code=$(this).attr("id");      
+            var code=$(this).attr("id"); 
+            id_reserva = code;    
             showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ code)
-            .then((response) => preparaModalEditarReserva(response.data));
+            .then((response) => {preparaModalEditarReserva(response.data),  hideLoader()});
         });    
         
         $(document).on('click', '.checkout', function(){
             var code=$("#id").val();     
             showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ code)
-            .then( (response) => preparaModalHospedadas( response.data, "Checkout"));  
+            .then( (response) => {preparaModalHospedadas( response.data, "Checkout"),  hideLoader()});  
         });
 
         $(document).on('click', '.pagamento', function()
         {
             var code=$("#id").val();  
             showData("<?=ROTA_GERAL?>/Pagamento/getDadosPagamentos/"+ code)
-            .then( (response) => preparaModalHospedadas( response.data, "Pagamento"));                      
+            .then( (response) => {preparaModalHospedadas( response.data, "Pagamento"),  hideLoader()});                      
         });
 
         $(document).on('click', '.consumo', function(){
@@ -947,7 +961,7 @@
                             $("#produto").append(newOption);
                         })
                         showData("<?=ROTA_GERAL?>/Consumo/getDadosConsumos/"+ code)
-                        .then( (response) => preparaModalHospedadas( response.data, "Consumo"));   
+                        .then( (response) => {preparaModalHospedadas( response.data, "Consumo"),  hideLoader()});   
                     }
                 }
             })    
@@ -1053,7 +1067,7 @@
                             showCancelButton: true,
                             focusConfirm: false,
                             preConfirm: () => {
-                                updateData('<?=ROTA_GERAL?>/Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form")));                                  
+                                envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form")));                                  
                                 $('.consumo').click();
                             }
                         })
@@ -1139,7 +1153,7 @@
 
         $(document).on('click', '.executar-checkout', function(){
             var code=$("#id").val(); 
-            showData("<?=ROTA_GERAL?>/Reserva/executaCheckout/" + code);  
+            showData("<?=ROTA_GERAL?>/Reserva/executaCheckout/" + code).then(function(){ hideLoader()});  
         });
 
         $(document).on('click', '.imprimir', function(event){
@@ -1152,5 +1166,9 @@
     function redirectUrl(params)
     {
         window.open('<?=ROTA_GERAL?>/Impressao/cliente/' + params, '_blank');
+    }
+
+    function sair(){
+        redirecionarPagina("<?=ROTA_GERAL?>/Administrativo/hospedadas");
     }
 </script>

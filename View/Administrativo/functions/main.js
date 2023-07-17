@@ -80,6 +80,10 @@
     });
   }
 
+  function redirecionarPagina(url) {
+    window.location.assign(url);
+  }
+
   // Função para excluir um registro
   function deleteData(url) {
     showLoader();

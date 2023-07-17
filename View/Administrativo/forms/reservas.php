@@ -82,9 +82,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Cadastro de Reserva</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button class="btn btn-danger close" onclick="sair()"> <span aria-hidden="true">&times;</span></button>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
-                </button>
+                </button> -->
             </div>
            
             <form action="" id="form" method="POST">
@@ -163,7 +164,8 @@
                     </small>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="sair" data-dismiss="modal">Fechar</button>
+                    
+                    <!-- <button  class="btn btn-secondary" onclick="sair()" >Fechar</button> -->
                     <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar">Salvar</button>
                 </div>
             </form>        
@@ -201,6 +203,11 @@
         $('#exampleModalLabel').text("Cadastro de Reservas");
         $('#modal').modal('show');        
     });
+
+
+    function sair(){
+        redirecionarPagina("<?=ROTA_GERAL?>/Administrativo/reservas");
+    }
 
     function pesquisa() {                
         // Executa a função com base no valor do input
@@ -452,10 +459,13 @@
         var dataSaida = moment($('#saida').val());
         
         if(dataSaida > dataEntrada){
-            if(id == '') return createData('<?=ROTA_GERAL?>/Reserva/salvarReservas', new FormData(document.getElementById("form"))).then( (response) => {
-                apartamento = null;
-                hospede = null;
-            });
+            if(id == ''){
+                return createData('<?=ROTA_GERAL?>/Reserva/salvarReservas', new FormData(document.getElementById("form"))).then( (response) => {
+                    apartamento = null;
+                    hospede = null;
+                    window.location.href="<?=ROTA_GERAL?>/Administrativo/Reservas/";
+                });
+            }
         
             return updateData('<?=ROTA_GERAL?>/Reserva/atualizarReserva/' + id, new FormData(document.getElementById("form"))).then( (response) => {
                 apartamento = null;
