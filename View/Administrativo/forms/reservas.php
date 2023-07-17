@@ -1,3 +1,4 @@
+
 <style>
     .hide{
         visibility: hidden;
@@ -102,7 +103,7 @@
                         </div>
 
                         <div class="col-sm-2 mt-4">
-                            <button class="btn btn-primary mt-2" type="button" onclick="buscaApt()">
+                            <button class="btn btn-primary mt-2" type="button" id="buscaApt" >
                                 <i class="fas fa-search fa-sm"></i>
                             </button>   
                         </div>                    
@@ -111,14 +112,15 @@
 
                         <div class="col-sm-8">
                             <label for="">Hospede</label><br>
-                            <select class="form-control js-example-basic-single" name="hospedes" id="hospedes">
+                            <select id="hospedes" class="selectized" name="hospedes">
+                               
                             </select>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Apartamentos</label><br>
-                            <select class="form-control js-example-basic-single" name="apartamento" id="apartamento">
-                               
-                            </select>
+                                <select name="apartamento" id="apartamento">                               
+                                   
+                                </select>
                         </div>
 
                         <div class="col-sm-2">
@@ -171,10 +173,14 @@
 </div>
 <!-- editar -->
 
+
+
 </div>
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 
 <script>
+    var apartamento = null;
+    var hospede = null;
     function valores(){
         var dias = moment($('#saida').val()).diff(moment($('#entrada').val()), 'days');
          var valor = $("#valor").val();
@@ -183,10 +189,12 @@
             $('#valores').text("Valor Total da Estadia: R$" + valor * dias);
       }
 
-    $(document).ready(function(){
+    $(document).ready(function() {
+        $('#hospedes').selectize({});
+        $('#apartamento').selectize({});
         showData("<?=ROTA_GERAL?>/Reserva/getAll")
         .then((response) => createTable(response))
-        .then(() => hideLoader()); 
+        .then(() => hideLoader());  
     });
 
     $('#novo').click(function(){
@@ -194,8 +202,7 @@
         $('#modal').modal('show');        
     });
 
-    function pesquisa() {
-                
+    function pesquisa() {                
         // Executa a função com base no valor do input
         showDataWithData("<?=ROTA_GERAL?>/Reserva/buscaReservas/",  new FormData(document.getElementById("form_search")))
         .then((response) => createTable(response))
@@ -322,8 +329,7 @@
     function editarRegistro(rowData)
     {
         showData("<?=ROTA_GERAL?>/Reserva/buscaReservaPorId/" + rowData[0])
-            .then((response) => preparaModalEditarReserva(response.data))
-            .then((response) => buscaApt(response.data));
+            .then((response) => preparaModalEditarReserva(response.data));
     }
 
     function activeRegistro(rowData)
@@ -343,20 +349,31 @@
         })   
     }
 
-    function buscaApt(array = null){
+    $(document).on('click','#buscaApt',function() {
             var dataEntrada = moment($('#entrada').val());
             var dataSaida = moment($('#saida').val());           
             
             var opcao = $('#opcao').val();            
 
             if(dataSaida >= dataEntrada){
-                
-                $.ajax({
+                valores();
+                buscaApartamento(
+                    dataEntrada._i,
+                    dataSaida._i
+                );
+            }            
+        });
+
+    function buscaApartamento(
+        dataEntrada,
+        dataSaida
+    ){
+        $.ajax({
                     url: '<?=ROTA_GERAL?>/Reserva/reservaBuscaPorData/',
                     method:'POST',
                     data: {
-                        dataEntrada: dataEntrada._i,
-                        dataSaida: dataSaida._i
+                        dataEntrada: dataEntrada,
+                        dataSaida: dataSaida
                     },
                     dataType: 'JSON',
                     success: function(data){
@@ -370,47 +387,60 @@
                             });
 
                             $('#div_apartamento').removeClass('hide');
-                            populaHospede();
-                            data.data.map(element => {
-                                var newOption = $('<option value="' + element.id + '">' + element.numero + '</option>');
-                                $("#apartamento").append(newOption);
-                            })
+                            populaHospede(hospede);
+                            let apartamentos = data.data.map(element => {
+                                return {
+                                    id: element.id,
+                                    title: element.numero
+                                }
+                            });
+
+                            if(apartamento) {
+                                apartamentos.push(
+                                  {
+                                    id: apartamento,
+                                    title: 'mesmo Apartamento'
+                                  }
+                                );
+                            }
                             
+                            prepareSelect(apartamentos, '#apartamento', apartamento);
                         }
                     }
                 })
-            }            
-        }      
+    }
 
     function preparaModalEditarReserva(data) 
     {
         $('#entrada').val(data[0].dataEntrada);
         $('#saida').val(data[0].dataSaida);
-        $('#hospedes').val(data[0].hospede_id);
-        var newHosp= $('<option selected value="' + data[0].hospede_id + '">mesmo Hóspede</option>');
-        $("#hospedes").append(newHosp);
         $('#tipo').val(data[0].tipo);
         $('#valor').val(data[0].valor);
         $('#status').val(data[0].status);
         $('#observacao').val(data[0].obs);
         $('#id').val(data[0].id);
         $('#div_apartamento').removeClass('hide');
-        var newOption = $('<option selected value="' + data[0].apartamento_id + '">Mesmo  Apartamento</option>');
-        $("#apartamento").append(newOption);
+        apartamento =  data[0].apartamento_id;
+        hospede = data[0].hospede_id;
+        buscaApartamento(
+            data[0].dataEntrada, 
+            data[0].dataSaida           
+        );
+        
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar Reservas");
-        $('#modal').modal('show');   
-
+        $('#modal').modal('show'); 
         return ;
     }
 
-    function populaHospede(){
+    function populaHospede(hospede = null){
         showData("<?=ROTA_GERAL?>/Hospede/getAllSelect")
        .then((response) => {
-            response.map(element => {
-                var newOption = $('<option value="' + element.id + '">' + element.nome + '</option>');
-                $("#hospedes").append(newOption);
-            })
+            let hospedes = response.map(element => {
+               return { id: element.id, title: element.nome}
+            });
+            console.log("Hospede" + hospede);
+            prepareSelect(hospedes, '#hospedes', hospede);
        });
 
     }
@@ -422,23 +452,40 @@
         var dataSaida = moment($('#saida').val());
         
         if(dataSaida > dataEntrada){
-            if(id == '') return createData('<?=ROTA_GERAL?>/Reserva/salvarReservas', new FormData(document.getElementById("form"))).then( (response) => alert(response));
+            if(id == '') return createData('<?=ROTA_GERAL?>/Reserva/salvarReservas', new FormData(document.getElementById("form"))).then( (response) => {
+                apartamento = null;
+                hospede = null;
+            });
         
-            return updateData('<?=ROTA_GERAL?>/Reserva/atualizarReserva/' + id, new FormData(document.getElementById("form")), id);
+            return updateData('<?=ROTA_GERAL?>/Reserva/atualizarReserva/' + id, new FormData(document.getElementById("form"))).then( (response) => {
+                apartamento = null;
+                hospede = null;
+            });
         }
     });
 
-    $('.js-example-basic-single').select2();    
+    function prepareSelect(data, select_id, selected = '')
+    {
+        console.log(selected);
+        $(select_id).selectize()[0].selectize.destroy();
+        let $select = $(select_id).selectize({
+            maxItems: 1,
+            valueField: 'id',
+            labelField: 'title',
+            searchField: 'title',
+            options: 
+               data,
+                create: true,
+        });
 
+        var control = $select[0].selectize;
+        control.setValue(selected);
+    }
 </script>
-<script>
-      
-    // $('#btn_busca').click(function(){
-    //     var texto = $('#txt_busca').val();
-    //     var entrada = $('#busca_entrada').val();
-    //     var saida  = $('#busca_saida').val();
-    //     var status  = $('#busca_status').val();
-    //     window.location.href ="<=ROTA_GERAL?>/Administrativo/reservas/"+texto + '_@_' + status + '_@_' + entrada + '_@_' + saida;
-    // });
 
-</script>
+<?php if (isset($_GET['hospede']) && !empty($_GET['hospede'])) {?>
+    <script>
+        hospede = <?=$_GET['hospede'];?> ;
+        $('#novo').click();       
+    </script>
+<?php } ?>

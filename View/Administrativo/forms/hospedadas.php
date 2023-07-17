@@ -134,6 +134,9 @@
                         Consumo: <p id="consumo"></p>
                     </div>
                     <div class="col-sm-4 campos_modal mb-2">
+                        Diarias: <p id="diarias"></p>
+                    </div>
+                    <div class="col-sm-4 campos_modal mb-2">
                         Pagamento: <p id="pagamento"></p>
                     </div>
                    
@@ -142,14 +145,17 @@
                 <h6 class="modal-title" id="">Ações</h6>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-3 campos_modal text-left mb-2">
+                    <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-primary checkout">Check-out</button>
                     </div>
-                    <div class="col-sm-3 campos_modal text-left mb-2">
+                    <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-success pagamento">Pagamento </button>
                     </div>
                     <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-warning consumo">Consumo </button>
+                    </div>
+                    <div class="col-sm-2 campos_modal text-left mb-2">
+                        <button class="btn btn-danger diarias">Diarias </button>
                     </div>
                     <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-info editar">Editar</button>
@@ -164,7 +170,6 @@
     </div>
 </div>
 <!-- editar -->
-
 
 <!-- editar -->
 <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -290,6 +295,68 @@
 </div>
 <!-- editar -->
 
+<div class="modal fade" id="modalDiarias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="labelConsumo">Lança Diarias</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="">  
+                <form action="" id="form-diarias" method="post">
+                    <div class="row">
+                        <div class="table-responsive" style="height: 250px">
+                            <table class="table bordered">
+                                <thead>
+                                    <tr>
+                                        <th >
+                                            Data
+                                        </th>
+                                        <th >
+                                            Calor
+                                        </th>
+                                        <th>
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaDiarias">
+
+                                </tbody>
+                            </table>
+                           
+                        </div>       
+                        <div class="col-sm-6 text-right">
+                            <small class="text-end">Registro(s) <span id="numeroDiarias">0</span></small> 
+                        </div> 
+                        <div class="col-sm-6 text-right">
+                            <small class="text-end">Total R$ <span id="totalDiarias"></span></small> 
+                        </div>      
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="col-sm-4">
+                            <label for="">Data</label>
+                            <input type="date" class="form-control" name="data" id="dataDiaria">
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">Valor</label>
+                            <input type="number" step="0.01" min="0.00"  value="" class="form-control" name="valor" id="valorReserva">
+                        </div>
+                        <div class="col-sm-4 text-center">
+                            <label for="">&nbsp;</label>
+                            <button type="submit" name="salvar" id="" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
 
 <!-- editar -->
 <div class="modal fade" id="modalPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -625,12 +692,13 @@
         $('#saida').text(formatDate(data[0].dataSaida));
         $('#diaria').text("R$ " + parseFloat(data[0].valor).toFixed(2));
 
-        totalConsumos = data[0].consumos;
+        totalConsumos = parseFloat(data[0].consumos) + parseFloat(data[0].diarias);
         subTotal = calculaCheckout(
             parseFloat(data[0].consumos),
             parseFloat(data[0].pag)
         );
-        $('#consumo').text("R$ " + parseFloat(totalConsumos).toFixed(2));
+        $('#consumo').text("R$ " + parseFloat(data[0].consumos).toFixed(2));
+        $('#diarias').text("R$ " + parseFloat(data[0].diarias).toFixed(2));
         $('#pagamento').text("R$ " + parseFloat(data[0].pag).toFixed(2));
         $('#modal').modal('show');   
     }
@@ -651,6 +719,10 @@
 
                 case 'Checkout':
                     prepareCheckout(data);
+                break;
+                
+                case 'Diarias':
+                    prepareTableDiarias(data);
                 break;
         
             default:
@@ -696,6 +768,29 @@
         totalConsumos = calculaConsumo(data);
     }
 
+    function prepareTableDiarias(data)
+    {
+        $("#listaDiarias tr").detach();
+        data.map(element => {
+            var newOption = $('<tr>'+
+                    '<td class="d-none d-sm-table-cell">'+formatDate(element.data)+'</td>' +
+                    '<td>R$ '+
+                    parseFloat(element.valor).toFixed(2)
+                    +'</td>' +
+                    '<td>'+
+                        '<a href="#" id="'+element.id+'" class="alterar-diarias" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
+                        '<a href="#" id="'+element.id+'" class="remove-diarias" >&#10060;</a>'+
+                    '</td>'+
+                '</tr>');
+            $("#listaDiarias").append(newOption);
+        })
+
+        $('#numeroDiarias').text(data.length);
+        $('#totalDiarias').text(calculaDiarias(data).toFixed(2));
+        // totalDiarias = calculaConsumo(data);
+    } 
+
+
     function prepareTablePagamento(data)
     {
         $("#listaPagamento tr").detach();
@@ -721,8 +816,6 @@
         if(subTotal > 0){
             $('#valor').val(subTotal);
         }
-
-
     }
 
     function prepareCheckout(data)
@@ -757,6 +850,16 @@
         var valor = 0;
         data.forEach(element => {
             valor += element.valorUnitario * element.quantidade;
+        });
+
+        return valor;
+    }
+
+    function calculaDiarias(data)
+    {
+        var valor = 0;
+        data.forEach(element => {
+            valor += parseFloat(element.valor);
         });
 
         return valor;
@@ -812,18 +915,21 @@
     
         $(document).on('click', '.hospedadas', function(){     
             var code=$(this).attr("id");      
-            envioRequisicaoGetViaAjax('Reserva/getDadosReservas/'+ code);                                            
+            showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ code)
+            .then((response) => preparaModalEditarReserva(response.data));
         });    
         
         $(document).on('click', '.checkout', function(){
             var code=$("#id").val();     
-            getRequisicaoGetViaAjax('Reserva/getDadosReservas/'+ code, "Checkout");  
+            showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ code)
+            .then( (response) => preparaModalHospedadas( response.data, "Checkout"));  
         });
 
         $(document).on('click', '.pagamento', function()
         {
             var code=$("#id").val();  
-            getRequisicaoGetViaAjax('Pagamento/getDadosPagamentos/'+ code, "Pagamento");                       
+            showData("<?=ROTA_GERAL?>/Pagamento/getDadosPagamentos/"+ code)
+            .then( (response) => preparaModalHospedadas( response.data, "Pagamento"));                      
         });
 
         $(document).on('click', '.consumo', function(){
@@ -835,16 +941,23 @@
                 processData: false,
                 dataType: 'json     ',
                 success: function(data){
-                    if(data.status === 201){
-                        getRequisicaoGetViaAjax('Consumo/getDadosConsumos/'+ code, "Consumo");                       
+                    if(data.status === 201){                    
                         data.data.map(element => {
                             var newOption = $('<option value="' + element.id + '">' + element.descricao + '</option>');
                             $("#produto").append(newOption);
                         })
+                        showData("<?=ROTA_GERAL?>/Consumo/getDadosConsumos/"+ code)
+                        .then( (response) => preparaModalHospedadas( response.data, "Consumo"));   
                     }
                 }
             })    
             
+        });
+
+        $(document).on('click', '.diarias', function(){
+            var code=$("#id").val();  
+            showData("<?=ROTA_GERAL?>/Reserva/getDadosDiarias/"+ code)
+            .then( (response) => preparaModalHospedadas(response.data, "Diarias"));   
         });
 
         $(document).on('click', '.editar', function(){
@@ -878,7 +991,7 @@
 
         $(document).on('click', '.SalvarReserva', function(){
             var code=$("#id").val();  
-            envioRequisicaoPostViaAjax('Reserva/atualizarReserva/'+ code, new FormData(document.getElementById("formReserva")));            
+            updateData('<?=ROTA_GERAL?>/Reserva/atualizarReserva/'+ code, new FormData(document.getElementById("formReserva")));            
         });
 
 
@@ -902,7 +1015,6 @@
                 })  
             }
         });
-
 
         $(document).on('click','.Salvar-consumo',function(){
             event.preventDefault();
@@ -941,8 +1053,37 @@
                             showCancelButton: true,
                             focusConfirm: false,
                             preConfirm: () => {
-                                envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form")));                                  
+                                updateData('<?=ROTA_GERAL?>/Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form")));                                  
                                 $('.consumo').click();
+                            }
+                        })
+                        
+                    }
+                }
+            })    
+        });
+
+        $(document).on('click', '.alterar-diarias', function(){
+            var code=$(this).attr("id");  
+            var produto;
+            $.ajax({
+                url: url+ "Reserva/getDiariasPorId/" + code ,
+                method:'GET',
+                processData: false,
+                dataType: 'json     ',
+                success: function(data){
+                    if(data.status === 201){
+                        Swal.fire({
+                            title: 'Alterar Diaria',
+                            html:
+                                '<form id="swal-form-diarias"><label>Data<input id="swal-input1" name="data" class="swal2-input" type="date" value="'+data.data[0].data+'"></label>' +
+                                '<label>Valor<input id="swal-input2" class="swal2-input" name="valor" palceholder="valor" type="number" step="0.1" min="0" value="'+data.data[0].valor+'"></label></form>',
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            preConfirm: () => {
+                                envioRequisicaoPostViaAjax('Reserva/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diarias")));
+                                $('.diarias').click();                                  
+                               
                             }
                         })
                         
@@ -966,6 +1107,21 @@
             })    
         });
 
+        $(document).on('click', '.remove-diarias', function(){
+            var code=$(this).attr("id");  
+            $.ajax({
+                url: url+ "Reserva/getRemoveDiarias/" + code ,
+                method:'GET',
+                processData: false,
+                dataType: 'json     ',
+                success: function(data){
+                    if(data.status === 200){
+                       $('.diarias').click();
+                    }
+                }
+            })    
+        });
+
         $(document).on('click', '.remove-pagamento', function(){
             var code=$(this).attr("id");  
             $.ajax({
@@ -983,7 +1139,7 @@
 
         $(document).on('click', '.executar-checkout', function(){
             var code=$("#id").val(); 
-            envioRequisicaoGetViaAjax("Reserva/executaCheckout/" + code);  
+            showData("<?=ROTA_GERAL?>/Reserva/executaCheckout/" + code);  
         });
 
         $(document).on('click', '.imprimir', function(event){

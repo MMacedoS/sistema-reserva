@@ -298,7 +298,7 @@
 
     function redirectWithModal(rowData) {
         var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/Reservas/index"; 
-            redirectUrl += "?id=" + rowData[0]  + '&showModal=true';
+            redirectUrl += "?hospede=" + rowData[0]  + '&showModal=true';
         
         // Redireciona para a página de destino
         window.location.href = redirectUrl;

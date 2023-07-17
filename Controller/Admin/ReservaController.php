@@ -97,6 +97,30 @@ class ReservaController extends \Controller{
         echo json_encode($reserva);
     }
 
+    public function getDadosDiarias($code)
+    {
+        $reserva = $this->reserva_model->getDadosDiarias($code);
+        echo json_encode($reserva);
+    }
+
+    public function getDiariasPorId($id)
+    {
+        $diarias = $this->reserva_model->findDiariasById($id);
+        echo json_encode($diarias);
+    }
+
+    public function updateDiaria($id)
+    {
+        $diarias = $this->reserva_model->updateDiarias($_POST, $id);
+        echo json_encode($diarias);
+    }
+
+    public function getRemoveDiarias($id)
+    {
+        $diarias = $this->reserva_model->getRemoveDiarias($id);
+        echo json_encode($diarias);
+    }
+
     public function buscaConfirmada($request = null)
     {
         $reserva = $this->reserva_model->buscaConfirmada($request);

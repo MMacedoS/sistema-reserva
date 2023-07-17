@@ -121,6 +121,43 @@ class ReservaModel extends ConexaoModel {
         }
     }
 
+    private function inserirValoresDiaria($dataInicial, $dataFinal, $valor, $idReserva) {
+        $dataAtual = new DateTime($dataInicial);
+        $dataFim = new DateTime($dataFinal);
+
+        while ($dataAtual < $dataFim) {
+            $valorData = $dataAtual->format('Y-m-d');
+
+            $cmd = $this->conexao->prepare(
+                "INSERT INTO 
+                    diarias
+                SET 
+                    reserva_id = :reserva_id, 
+                    data = :data, 
+                    valor = :valor
+                    "
+                );
+
+            $cmd->bindValue(':reserva_id', $idReserva);
+            $cmd->bindValue(':data', $valorData);
+            $cmd->bindValue(':valor', $valor);
+            $cmd->execute();
+            $dataAtual->modify('+1 day');
+        }
+    }
+
+    private function removerValoresDiaria($idReserva) {
+        $cmd = $this->conexao->prepare(
+            "DELETE FROM
+                diarias
+            WHERE   
+                reserva_id = :reserva_id"
+            );
+
+        $cmd->bindValue(':reserva_id', $idReserva);
+        $cmd->execute();
+    }
+
     public function prepareUpdatereserva($dados, $id)
     {
         $validation = self::requiredParametros($dados);
@@ -132,13 +169,27 @@ class ReservaModel extends ConexaoModel {
         return $validation;
     }
 
+    private function calculeReserva(int $id)
+    {
+        $reserva = self::findById($id);
+            
+        if($reserva['data'][0]['status'] == 3) {
+            $this->removerValoresDiaria($id);
+
+            $this->inserirValoresDiaria(
+                $reserva['data'][0]['dataEntrada'], 
+                $reserva['data'][0]['dataSaida'], 
+                $reserva['data'][0]['valor'] ,
+                 $id
+             );
+
+         }
+    }
+
     private function updateReserva($dados, int $id)
     {
         $this->conexao->beginTransaction();
-        try {    
-            
-            $reserva = self::findById($id);
-            
+        try {               
             $cmd = $this->conexao->prepare(
                 "UPDATE 
                     $this->model 
@@ -170,8 +221,8 @@ class ReservaModel extends ConexaoModel {
                 $cmd->bindValue(':funcionario',$_SESSION['code']);
                 $cmd->bindValue(':qtde_hosp',$dados['qtde_hosp']);
                 $cmd->bindValue(':id',$id);
-            $dados = $cmd->execute();
-
+                $dados = $cmd->execute();
+            $this->calculeReserva($id);
             $this->conexao->commit();
             return self::message(201, "dados Atualizados!!");
 
@@ -399,13 +450,12 @@ class ReservaModel extends ConexaoModel {
 
         $qtde_dias = self::countDaysInReserva((object)$reserva['data'][0]);
 
-        $dados = [
-            'id' => $reserva['data'][0]['id'],
-            'valor' => $reserva['data'][0]['valor'],
-            'quantidade' => $qtde_dias
-        ];
-
-        $this->insertDiariaConsumo($dados, date('Y-m-d H:i:s'));
+        $this->inserirValoresDiaria(
+           $reserva['data'][0]['dataEntrada'], 
+           $reserva['data'][0]['dataSaida'], 
+           $reserva['data'][0]['valor'] ,
+            $id
+        );
 
         return $this->updateStatusReserva(
             3,
@@ -416,7 +466,6 @@ class ReservaModel extends ConexaoModel {
 
     public function apartamentoDisponiveisPorData($dataStart, $dataEnd)
     {
-
         $dados = [];
 
         $this->conexao->beginTransaction();
@@ -745,6 +794,7 @@ class ReservaModel extends ConexaoModel {
                 h.nome, 
                 a.numero,
                 COALESCE((SELECT sum(valorUnitario * quantidade) FROM consumo c where c.reserva_id = r.id), 0) as consumos,
+                COALESCE((SELECT sum(valor) FROM diarias d where d.reserva_id = r.id), 0) as diarias,
                 COALESCE((SELECT sum(p.valorPagamento) FROM pagamento p where p.reserva_id = r.id), 0) as pag
             FROM 
                 `reserva` r 
@@ -768,6 +818,101 @@ class ReservaModel extends ConexaoModel {
         }
 
         return self::messageWithData(422, 'nehum dado encontrado', []);
+    }
+
+    public function getDadosDiarias($id){
+        $cmd  = $this->conexao->query(
+            "SELECT 
+               *
+            FROM 
+                diarias 
+            WHERE 
+                reserva_id = $id
+            "
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return self::messageWithData(201, 'reserva encontrada', $dados);
+        }
+
+        return self::messageWithData(422, 'nehum dado encontrado', []);
+    }
+
+    public function updateDiarias($dados, $id)
+    {
+        $valor = $dados['valor'];
+        $data =  $dados['data'];
+        
+        $this->conexao->beginTransaction();
+        try {      
+            $cmd = $this->conexao->prepare(
+                "UPDATE 
+                    diarias
+                SET 
+                    data = :data, 
+                    valor = :valor
+                WHERE 
+                    id = :id
+                    "
+                );
+
+            $cmd->bindValue(':data',$data);
+            $cmd->bindValue(':valor',$valor);
+            $cmd->bindValue(':id',$id);
+            $dados = $cmd->execute();
+
+            $this->conexao->commit();
+            return self::message(200, "dados atualizados!!");
+
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            return self::message(422, $th->getMessage());
+        }
+    }
+
+    public function getRemoveDiarias($id)
+    {
+        $this->conexao->beginTransaction();
+        try {      
+            $cmd = $this->conexao->prepare(
+                "DELETE FROM
+                    diarias
+                WHERE 
+                    id = :id
+                    "
+                );
+            $cmd->bindValue(':id',$id);
+            $cmd->execute();
+            $this->conexao->commit();
+            return self::message(200, "dados REMOVIDOS!!");
+
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            return self::message(422, $th->getMessage());
+        }
+    }
+
+    public function findDiariasById($id)
+    {
+        $cmd = $this->conexao->query(
+            "SELECT 
+                *
+            FROM
+                diarias
+            WHERE
+                id = $id
+            "
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+
+            return self::messageWithData(201,'Dados encontrados', $cmd->fetchAll(PDO::FETCH_ASSOC));
+        }
+
+        return false;
     }
 
     public function gerarDiarias()
