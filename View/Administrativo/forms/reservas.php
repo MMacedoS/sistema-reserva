@@ -264,18 +264,18 @@
                         dateSaida = formatDate(item.dataSaida);
                     } 
 
-                if (item.status === '1') {
+                if (item.status == '1') {
                      status = 'Reservada';
-                } if (item.status === '2') {
+                } if (item.status == '2') {
                     status = 'Confirmada';
                 } 
-                if (item.status === '3') {
+                if (item.status == '3') {
                     status = 'Hospedada';
                 } 
-                if (item.status === '4') {
+                if (item.status == '4') {
                     status = 'Finalizada';
                 } 
-                if (item.status === '5') {
+                if (item.status == '5') {
                     status = 'Cancelada';
                 } 
 
