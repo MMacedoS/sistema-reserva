@@ -191,6 +191,12 @@
             $('#valores').text("Valor Total da Estadia: R$" + valor * dias);
       }
 
+    function formatDate(value)
+    {
+        const date = value.split('-');
+        return ''+date[2]+ '/' + date[1] + '/' + date[0];
+    }
+
     $(document).ready(function() {
         $('#hospedes').selectize({});
         $('#apartamento').selectize({});
@@ -253,24 +259,41 @@
 
             data.forEach(function(item) {
                 var tr = document.createElement('tr');
+                if (item.dataEntrada) {
+                        dateEntrada = formatDate(item.dataEntrada);
+                        dateSaida = formatDate(item.dataSaida);
+                    } 
+
+                if (item.status === '1') {
+                     status = 'Reservada';
+                } if (item.status === '2') {
+                    status = 'Confirmada';
+                } 
+                if (item.status === '3') {
+                    status = 'Hospedada';
+                } 
+                if (item.status === '4') {
+                    status = 'Finalizada';
+                } 
+                if (item.status === '5') {
+                    status = 'Cancelada';
+                } 
 
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
                         td.textContent = item[key];
+
+                        if (value === 'Dt.Entrada') {
+                            td.textContent = dateEntrada;
+                        }
+
+                        if (value === 'Dt.Saida') {
+                            td.textContent = dateSaida;
+                        }
                         
-                        if (item[key] === '1' && value === 'Situação') {
-                            td.textContent = 'Reservada';
-                        } if (item[key] === '2' && value === 'Situação') {
-                            td.textContent = 'Confirmada';
-                        } 
-                        if (item[key] === '3' && value === 'Situação') {
-                            td.textContent = 'Hospedada';
-                        } if (item[key] === '4' && value === 'Situação') {
-                            td.textContent = 'Finalizada';
-                        } 
-                        if (item[key] === '5' && value === 'Situação') {
-                            td.textContent = 'Cancelada';
-                        } 
+                        if (value === 'Situação') {
+                            td.textContent = status;
+                        }                       
 
                         if (value === 'CPF' || value === 'Endereço' || value === 'Cod') {
                             td.classList.add('d-none', 'd-sm-table-cell');
