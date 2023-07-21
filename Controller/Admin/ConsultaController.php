@@ -38,4 +38,15 @@ class ConsultaController extends Controller {
             $this->reservaModel->buscaReservadas('')
         );
     }
+
+    public function mapa($params) {
+
+        $params = explode("_@_", $params);
+
+       $dados = $this->reservaModel->buscaMapaReservas($params[0], $params[1]);
+        
+        echo json_encode(
+            $dados
+        );
+    }
 }

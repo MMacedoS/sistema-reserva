@@ -496,29 +496,19 @@
             });
         }
     });
-
-    function prepareSelect(data, select_id, selected = '')
-    {
-        console.log(selected);
-        $(select_id).selectize()[0].selectize.destroy();
-        let $select = $(select_id).selectize({
-            maxItems: 1,
-            valueField: 'id',
-            labelField: 'title',
-            searchField: 'title',
-            options: 
-               data,
-                create: true,
-        });
-
-        var control = $select[0].selectize;
-        control.setValue(selected);
-    }
 </script>
 
 <?php if (isset($_GET['hospede']) && !empty($_GET['hospede'])) {?>
     <script>
         hospede = <?=$_GET['hospede'];?> ;
+        $('#novo').click();       
+    </script>
+<?php } ?>
+
+
+<?php if (isset($_GET['apartamento']) && !empty($_GET['apartamento'])) {?>
+    <script>
+        apartamento = <?=$_GET['apartamento'];?> ;
         $('#novo').click();       
     </script>
 <?php } ?>

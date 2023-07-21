@@ -96,7 +96,7 @@
             </div>
             <div class="modal-body" id="">  
                 <form action="" method="post">
-                    <input type="text" id="idReserva">
+                    <input type="hidden" id="idReserva">
                     <div class="row">
                         <div class="col-sm-6 mb-2">
                             Hospedes: <p id="nomeHospede"></p>
@@ -109,7 +109,10 @@
                         </div>          
                         
                         <div class="col-sm-4 mb-2">
-                            Valor: <p id="totalHospedagem"></p>
+                            Consumo: <p id="totalHospedagem"></p>
+                        </div>
+                        <div class="col-sm-4 mb-2">
+                            Diarias R$: <p id="totalDiarias"></p>
                         </div>
                         <div class="col-sm-4 mb-2">
                             Valor Pago: <p id="totalPago"></p>
@@ -120,10 +123,11 @@
                     </div>
                     <hr>
                     <div class="modal-footer">
-                        <button type="button" class="close mr-4" data-dismiss="modal" aria-label="Close">
+                        <button type="button" id="btnSubmit" class="btn btn-success executar-pagamento mr-4">Add Pagamento</button>
+                        <button type="button" class="close mr-4 btn btn-danger" data-dismiss="modal" aria-label="Close">
                                 X
                         </button>
-                        <button type="button" name="salvar" disabled id="btnSubmit" class="btn btn-primary executar-checkout">Executar</button>
+                        <button type="button" name="salvar" id="btnSubmit" class="btn btn-primary executar-checkout">Executar</button>
                     </div>
                 </form>
             </div>
@@ -131,6 +135,92 @@
         
     </div>
 </div>
+
+
+<!-- editar -->
+<div class="modal fade" id="modalPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="labelPagamento">Lançar Pagamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="">  
+                <form action="" id="form-pagamento" method="post">
+                    <div class="row">
+                        <div class="table-responsive" style="height: 250px">
+                            <table class="table bordered">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Data
+                                        </th>
+                                        <th class="d-none d-sm-table-cell">
+                                            Descrição
+                                        </th>
+                                        <th class="d-none d-sm-table-cell">
+                                            Tipo
+                                        </th>
+                                        <th>
+                                            Valor
+                                        </th>
+                                        <th>
+                                            Ações
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaPagamento">
+
+                                </tbody>
+                            </table>
+                           
+                        </div>    
+                        <div class="col-sm-3 text-right text-success">
+                            <small class="text-end">Registro(s) <span id="numeroPagamento">0</span></small> 
+                        </div> 
+
+                        <div class="col-sm-3 text-right text-danger">
+                            <small class="text-end">Consumos(s) R$ <span id="totalConsumos"></span> </small> 
+                        </div>   
+
+                        <div class="col-sm-6 text-right">
+                            <small class="text-end">Total R$ <span id="totalPagamento"></span></small> 
+                        </div>      
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="col-sm-3">
+                            <label for="">Tipo</label>
+                            <select name="tipo" class="form-control" id="tipo">
+                                <option value="2">Cartão de Crédito</option>
+                                <option value="3">Cartão Débito</option>
+                                <option value="4">Déposito/PIX</option>
+                                <option value="1">Dinheiro</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">Valor</label>
+                            <input type="number" step="0.01" min="0.00"  value="0" class="form-control" name="valor" id="valor">
+                        </div>
+                        <div class="col-sm-3">
+                            <label for="">Descrição</label>
+                            <input type="text" value="" class="form-control" name="descricao" id="descricao">
+                        </div>
+                        <div class="col-sm-3 text-center">
+                            <label for="">&nbsp;</label>
+                            <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar-pagamento mt-4"> &#10010; Pagamento</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<!-- editar -->
 
 <script>
 let url = "<?=ROTA_GERAL?>/";
@@ -212,7 +302,7 @@ function envioRequisicaoPostViaAjax(controle_metodo, dados) {
             url: url+controle_metodo,
             method:'GET',
             processData: false,
-            dataType: 'json     ',
+            dataType: 'json',
             success: function(data){
                 if(data.status === 201){
                     preparaModalHospedadas(data.data, tipo);
@@ -241,9 +331,9 @@ function envioRequisicaoPostViaAjax(controle_metodo, dados) {
         return "";
     }
 
-    function calculaCheckout(consumos, pagamento)
+    function calculaCheckout(consumos, diarias, pagamento)
     {        
-        return consumos - pagamento;
+        return (consumos + diarias) - pagamento;
     }
 
 $(document).ready(function(){
@@ -260,9 +350,30 @@ $(document).ready(function(){
         
         $(document).on('click', '.executar-checkout', function(){
             var code=$('#idReserva').val();
-            envioRequisicaoGetViaAjax("Reserva/executaCheckout/" + code);  
+            // envioRequisicaoGetViaAjax("Reserva/executaCheckout/" + code);  
+            showData('<?=ROTA_GERAL?>/Reserva/getDadosReservas/'+ code).then(function(res){
+                var total = calculaCheckout(
+                    parseFloat(res.data[0].consumos),
+                    parseFloat(res.data[0].diarias),
+                    parseFloat(res.data[0].pag)
+                ).toFixed(2);
+           
+                if(total == 0) {
+                    showData("<?=ROTA_GERAL?>/Reserva/executaCheckout/" + code).then(function(res) {
+                        showSuccessMessage(res.message);
+                    });
+                    return;
+                } 
+                showErrorMessage("Não foi possivel executar o checkout");
+                return false;
+            });
         });
 
+        $(document).on('click', '.executar-pagamento', function(){
+            var code=$('#idReserva').val();  
+            showData("<?=ROTA_GERAL?>/Pagamento/getDadosPagamentos/"+ code)
+            .then( (response) => {preparaModalHospedadas(response.data, "Pagamento"),  hideLoader()});     
+        });
 });
 
 function preparaModalHospedadas(data, tipo) 
@@ -295,13 +406,15 @@ function preparaModalHospedadas(data, tipo)
         $('#nomeHospede').text(data[0].nome);
         $('#codigoReserva').text(data[0].id);
         $('#numeroApartamento').text(data[0].numero);
-        $('#totalHospedagem').text("R$ " + parseFloat(data[0].consumos).toFixed(2));
+        $('#totalHospedagem').text("R$ " + parseFloat(data[0].consumos).toFixed(2));        
+        $('#totalDiarias').text("R$ " + parseFloat(data[0].diarias).toFixed(2));
         $('#totalPago').text("R$ " + data[0].pag);
         var total = calculaCheckout(
             parseFloat(data[0].consumos),
+            parseFloat(data[0].diarias),
             parseFloat(data[0].pag)
         ).toFixed(2);
-        
+        totalConsumos = ( parseFloat(data[0].consumos) + parseFloat(data[0].diarias) );
         if(total > 0) {
             $('#restante').addClass('text-danger');
             $('#restante').text("Resta pagar R$ " + total);
@@ -316,5 +429,68 @@ function preparaModalHospedadas(data, tipo)
             $('#btnSubmit').attr('disabled',false);
         }
     }
+
+    function prepareTablePagamento(data)
+    {
+        $("#listaPagamento tr").detach();
+        data.map(element => {
+            var newOption = $('<tr>'+                    
+                    '<td>'+formatDate(element.dataPagamento)+'</td>' +
+                    '<td class="d-none d-sm-table-cell">'+element.descricao+'</td>' +
+                    '<td class="d-none d-sm-table-cell">'+
+                        prepareTipo(element.tipoPagamento)
+                    +'</td>' +
+                    '<td>R$ '+parseFloat(element.valorPagamento).toFixed(2)+'</td>' +
+                    '<td>'+            
+                        '<a href="#" id="'+element.id+'" class="alterar-pagamento" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
+                        '<a href="#" id="'+element.id+'" class="remove-pagamento" >&#10060;</a>'+
+                    '</td>'+
+                '</tr>');
+            $("#listaPagamento").append(newOption);
+        })
+
+        $('#numeroPagamento').text(data.length);
+        $('#totalConsumos').text(parseFloat(totalConsumos).toFixed(2));
+        $('#totalPagamento').text(calculaPagamento(data).toFixed(2));
+        if(subTotal > 0){
+            $('#valor').val(subTotal);
+        }
+    }
+
+    $(document).on('click','.Salvar-pagamento',function(){
+            event.preventDefault();
+            var code=$('#idReserva').val();  
+            if ($('#valor').val() > 0) {
+                $.ajax({
+                    url: url+ 'Pagamento/addPagamento/' + code,
+                    method:'POST',
+                    data: new FormData(document.getElementById("form-pagamento")),
+                    processData: false,
+                    dataType: 'json',
+                    contentType: false,
+                    cache: false,
+                    success: function(data){
+                        if(data.status === 201){
+                        $('.executar-pagamento').click();
+                        }
+                    }
+                })  
+            }
+        });
+
+        $(document).on('click', '.remove-pagamento', function(){
+            var code=$(this).attr("id");  
+            $.ajax({
+                url: url+ "Pagamento/getRemovePagamento/" + code ,
+                method:'GET',
+                processData: false,
+                dataType: 'json     ',
+                success: function(data){
+                    if(data.status === 200){
+                       $('.executar-pagamento').click();
+                    }
+                }
+            })    
+        });
 
 </script>

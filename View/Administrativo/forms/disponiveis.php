@@ -179,125 +179,24 @@
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
     let url = "<?=ROTA_GERAL?>/";
-
-      function valores(){
-        var dias = moment($('#saida').val()).diff(moment($('#entrada').val()), 'days');
-         var valor = $("#valor").val();
-            $('#valores').removeClass('text-success');
-            $('#valores').addClass('text-success');
-            $('#valores').text("Valor Total da Estadia: R$" + valor * dias);
-      }
-      
-      function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  })
-          });
-      }
-
-    function envioRequisicaoGetViaAjax(controle_metodo) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                if(data.status === 201){
-                    preparaModalEditarReserva(data.data);
-                }
-            }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-            })
-        });
-        return "";
-    }
-
-    function preparaModalEditarReserva(data) 
-    {
-        $('#entrada').val(data[0].dataEntrada);
-        $('#saida').val(data[0].dataSaida);
-        $('#buscar').click();
-        $('#hospedes').val(data[0].hospede_id);
-        $('#tipo').val(data[0].tipo);
-        $('#valor').val(data[0].valor);
-        $('#status').val(data[0].status);
-        $('#observacao').val(data[0].obs);
-        $('#id').val(data[0].id);
-        $("#apartamento").append('<option selected value="'+data[0].apartamento_id+'">mesmo Apartamento</option>');
-        $('#btnSubmit').addClass('Atualizar');
-        $('#exampleModalLabel').text("Atualizar Reservas");
-        $('#modal').modal('show');   
-    }
-
-    $('#btn_busca').click(function(){
-        var texto = $('#txt_busca').val();
-        var entrada = $('#busca_entrada').val();
-        var saida  = $('#busca_saida').val();
-        var status  = $('#busca_status').val();
-        window.location.href ="<?=ROTA_GERAL?>/Administrativo/checkin/"+texto;
-    });
-
     $(document).ready(function()
     {        
         $(document).on('click','.checkin',function(){
             event.preventDefault();
             var code=$(this).attr("id");
             Swal.fire({
-                title: 'Deseja fazer o check-in esta reserva? reserva:'+ code,
+                title: 'Deseja fazer criar reserva ?',
                 showDenyButton: true,
                 confirmButtonText: 'Sim',
                 denyButtonText: `Não`,
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    envioRequisicaoGetViaAjax('Reserva/changeCheckinReservas/'+ code);
+                    var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/Reservas/index"; 
+                        redirectUrl += "?apartamento=" + code  + '&showModal=true';
+                    
+                    // Redireciona para a página de destino
+                    window.location.href = redirectUrl;
                 } else if (result.isDenied) {
                     Swal.fire('nenhuma mudança efetuada', '', 'info')
                 }

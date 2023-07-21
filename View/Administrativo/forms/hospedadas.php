@@ -443,9 +443,6 @@
     </div>
 </div>
 <!-- editar -->
-
-
-
 <!-- editar -->
 <div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -477,29 +474,15 @@
 
                         <div class="col-sm-8">
                             <label for="">Hospede</label><br>
-                            <select class="form-control js-example-basic-single" name="hospedes" id="inp-hospedes">
-                                <?php
-                                $hospedes = $this->buscaHospedes();
-                                    foreach ($hospedes as $hospede) { 
-                                        ?>
-                                            <option value="<?=$hospede['id']?>"><?=$hospede['nome'] . " CPF: " . $hospede['cpf']?></option>
-                                        <?php
-                                    }
-                                ?>
+                            <select id="select_hospedes" class="selectized" name="hospedes">
+                               
                             </select>
                         </div>
                         <div class="col-sm-4">
                             <label for="">Apartamentos</label><br>
-                            <select class="form-control js-example-basic-single" name="apartamento" id="inp-apartamento">
-                               <?php
-                                    $paratamentos = $this->listApartamento();
-                                    foreach ($paratamentos as $apartamento) { 
-                                        ?>
-                                            <option value="<?=$apartamento['id']?>"><?=$apartamento['numero']?></option>
-                                        <?php
-                                    }
-                               ?>
-                            </select>
+                                <select name="apartamento" id="select_apartamentos">                               
+                                   
+                                </select>
                         </div>
 
                         <div class="col-sm-2">
@@ -565,7 +548,9 @@
     var id_reserva = null
 
     var totalConsumos = 0;
-     var subTotal = 0;
+    var subTotal = 0;
+    var apartamento = null;
+    var hospede = null;
 
       function valores(){
         var dias = moment($('#inp-saida').val()).diff(moment($('#inp-entrada').val()), 'days');
@@ -733,18 +718,6 @@
         
     }
 
-    function formatDate(value)
-    {
-        const date = value.split('-');
-        return ''+date[2]+ '/' + date[1] + '/' + date[0];
-    }
-
-    function formatDateWithHour(value)
-    {
-        const date = value.split(' ');
-        return formatDate(date[0]) + ' ' + date[1];
-    }
-
     function prepareTableConsumo(data)
     {
         $("#listaConsumo tr").detach();
@@ -868,40 +841,9 @@
         return valor;
     }
 
-    function calculaPagamento(data)
-    {
-        var valor = 0;
-        data.forEach(element => {
-            valor += parseFloat(element.valorPagamento);
-        });
-
-        return valor;
-    }
-
     function calculaCheckout(consumos, pagamento, diarias)
     {        
         return (consumos + diarias) - pagamento;
-    }
-
-    function prepareTipo(value)
-    {
-        var res = "";
-        switch (value) {
-            case '1':
-                res = "Dinheiro";
-            break;
-            case '2':
-                res = "Cartão de Crédito"
-            break;
-            case '3':
-               res =  "Cartão de Débito"
-            break;
-            case '4':
-               res =  "Déposito/PIX"
-            break;
-        }
-
-        return res;
     }
 
     $('#btn_busca').click(function(){
@@ -910,6 +852,8 @@
     });
 
     $(document).ready(function(){
+        $('#select_hospedes').selectize({});
+        $('#select_apartamentos').selectize({});
         setInterval(function(){
             if(id_reserva){
                 showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ id_reserva)
@@ -918,7 +862,7 @@
                     hideLoader()
                 });
             }
-        }, 10000);
+        }, 60000);
         $(document).on("click",".fechar",function(){ 
             
             $('#modalCheckout').modal('hide');
@@ -976,7 +920,8 @@
 
         $(document).on('click', '.editar', function(){
             var code=$("#id").val();  
-             $('#produto option').detach();
+             
+           
             $.ajax({
                 url: url+ 'Reserva/getDadosReservas/'+ code,
                 method:'GET',
@@ -986,10 +931,8 @@
                     if(data.status === 201){
                         $('#inp-entrada').val(data.data[0]['dataEntrada']);
                         $('#inp-saida').val(data.data[0]['dataSaida']);
-                        var newHosp= $('<option selected value="' + data.data[0]['hospede_id'] + '">' + data.data[0]['nome'] + '</option>');
-                        $("#inp-hospedes").append(newHosp);
-                        var newOption = $('<option selected value="' + data.data[0]['apartamento_id'] + '">' + data.data[0]['numero'] + '</option>');
-                        $("#inp-apartamento").append(newOption);
+                        apartamento =  data.data[0].apartamento_id;
+                        hospede = data.data[0].hospede_id;
                         $('#inp-tipo').val(data.data[0]['tipo']);
                         $('#inp-valor').val(data.data[0]['valor']);
                         $('#inp-status').val(data.data[0]['status']);
@@ -997,6 +940,11 @@
                         $('#inp-placa').val(data.data[0]['placa']);
                         $('#exampleModalLabel').text("Dados Informativos");
                         $('#modalReserva').modal('show');  
+
+                        buscaApartamento(
+                            data.data[0].dataEntrada, 
+                            data.data[0].dataSaida           
+                        );
                     }
                 }
             })    
@@ -1170,5 +1118,62 @@
 
     function sair(){
         redirecionarPagina("<?=ROTA_GERAL?>/Administrativo/hospedadas");
+    }
+
+    function buscaApartamento(
+        dataEntrada,
+        dataSaida
+    ){
+        $.ajax({
+            url: '<?=ROTA_GERAL?>/Reserva/reservaBuscaPorData/',
+            method:'POST',
+            data: {
+                dataEntrada: dataEntrada,
+                dataSaida: dataSaida
+            },
+            dataType: 'JSON',
+            success: function(data){
+                if(opcao == '')
+                   $('#apartamento option').detach();
+                  if(data.status === 200){
+                        Swal.fire({
+                        icon: 'success',
+                        title: 'Apartamentos Disponiveis',
+                        text: "Possui " + data.data.length + " apartamento(s)!",
+                    });
+
+                    populaHospede(hospede);
+                    let apartamentos = data.data.map(element => {
+                    return {
+                        id: element.id,
+                        title: element.numero
+                        }
+                    });
+
+                    if(apartamento) {
+                    apartamentos.push(
+                            {
+                                id: apartamento,
+                                title: 'mesmo Apartamento'
+                            }
+                        );
+                    }
+                                
+                    prepareSelect(apartamentos, '#select_apartamentos', apartamento);
+                }
+            }
+        })
+    }
+
+    function populaHospede(hospede = null){
+        showData("<?=ROTA_GERAL?>/Hospede/getAllSelect")
+       .then((response) => {
+            let hospedes = response.map(element => {
+               return { id: element.id, title: element.nome}
+            });
+            console.log("Hospede" + hospede);
+            prepareSelect(hospedes, '#select_hospedes', hospede);
+       });
+
     }
 </script>

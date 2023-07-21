@@ -1043,4 +1043,92 @@ class ReservaModel extends ConexaoModel {
 
         return "atualizado configurações";
     }
+
+    public function buscaMapaReservas($startDate,$endDate)
+    {
+        try {      
+            $cmd = $this->conexao->prepare(
+                "SELECT all_dates.date_value AS start, IFNULL(count(r.dataEntrada), 0) AS title
+                FROM (
+                    SELECT DATE_ADD(:entrada, INTERVAL n.num DAY) AS date_value
+                    FROM (
+                        SELECT (a.a + (10 * b.a) + (100 * c.a)) num
+                        FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) a
+                        CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
+                        CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) c
+                    ) n
+                    WHERE DATE_ADD(:entrada, INTERVAL n.num DAY) <= :saida
+                ) all_dates
+                LEFT JOIN reserva r ON r.dataEntrada <= all_dates.date_value AND r.dataSaida >= all_dates.date_value
+                GROUP BY all_dates.date_value
+                ORDER BY all_dates.date_value                
+                "
+                );
+
+            $cmd->bindValue(':entrada', $startDate);
+            $cmd->bindValue(':saida',$endDate);
+            $cmd->execute();
+            
+            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
+
+            
+        // Converter os resultados para o formato do FullCalendar
+        $eventos_fullcalendar = [];
+        foreach ($dados as $evento) {
+            if($evento['title'] > 0) {
+                $evento_fullcalendar = [
+                    'title' => $evento['title'] . " Apt reservados", // Título do evento, com a quantidade de reservas
+                    'start' => $evento['start'], // Data de início da reserva
+                ];
+                $eventos_fullcalendar[] = $evento_fullcalendar;
+            }
+        }
+
+        return $eventos_fullcalendar;
+
+            
+            // // Criar a tabela temporária
+            //     $sql_create_tmp_table = "CREATE TEMPORARY TABLE tmp_dates (date_value DATE)";
+            //     $this->conexao->exec($sql_create_tmp_table);
+
+            //     // Preencher a tabela temporária com as datas do intervalo
+            //     $sql_fill_tmp_table = "INSERT INTO tmp_dates (date_value)
+            //                         SELECT DATE_ADD(:entrada, INTERVAL n.num DAY) AS date_value
+            //                         FROM (
+            //                             SELECT (a.a + (10 * b.a) + (100 * c.a)) num
+            //                             FROM (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) a
+            //                             CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) b
+            //                             CROSS JOIN (SELECT 0 AS a UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) c
+            //                         ) n
+            //                         WHERE DATE_ADD(:entrada, INTERVAL n.num DAY) <= :saida";
+            //     $this->conexao->prepare($sql_fill_tmp_table)->execute(['entrada' => $startDate, 'saida' => $endDate]);
+
+            //     // Executar a consulta SQL com a tabela temporária
+            //     $sql_query = "SELECT d.date_value AS start, COUNT(r.dataEntrada) AS title
+            //                 FROM tmp_dates d
+            //                 LEFT JOIN reserva r ON r.dataEntrada = d.date_value
+            //                 WHERE d.date_value BETWEEN :entrada AND :saida
+            //                 GROUP BY d.date_value
+            //                 ORDER BY d.date_value";
+
+            //     $stmt = $this->conexao->prepare($sql_query);
+            //     $stmt->execute(['entrada' => $startDate, 'saida' => $endDate]);
+            //     $eventos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            //     $eventos_fullcalendar = [];
+            //     foreach ($eventos as $evento) {
+            //         $evento_fullcalendar = [
+            //             'title' => $evento['title'] . ' Apt Reservados', // Título do evento, concatenando a contagem com a string
+            //             'start' => $evento['start'], // Data de início da reserva
+            //             'end' => $evento['start'], // Neste exemplo, estamos assumindo que não há hora de término, então a data de início também é usada como data de término
+            //         ];
+            //         $eventos_fullcalendar[] = $evento_fullcalendar;
+            //     }
+                
+            // return $eventos_fullcalendar;
+
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
 }

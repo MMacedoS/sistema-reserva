@@ -150,3 +150,63 @@
   }
   
   
+  function formatDate(value)
+  {
+      const date = value.split('-');
+      return ''+date[2]+ '/' + date[1] + '/' + date[0];
+  }
+
+  function formatDateWithHour(value)
+  {
+      const date = value.split(' ');
+      return formatDate(date[0]) + ' ' + date[1];
+  }
+
+  function prepareTipo(value)
+  {
+      var res = "";
+      switch (value) {
+          case '1':
+              res = "Dinheiro";
+          break;
+          case '2':
+              res = "Cartão de Crédito"
+          break;
+          case '3':
+             res =  "Cartão de Débito"
+          break;
+          case '4':
+             res =  "Déposito/PIX"
+          break;
+      }
+
+      return res;
+  }
+
+  function calculaPagamento(data)
+    {
+        var valor = 0;
+        data.forEach(element => {
+            valor += parseFloat(element.valorPagamento);
+        });
+
+        return valor;
+    }
+
+    function prepareSelect(data, select_id, selected = '')
+    {
+        console.log(selected);
+        $(select_id).selectize()[0].selectize.destroy();
+        let $select = $(select_id).selectize({
+            maxItems: 1,
+            valueField: 'id',
+            labelField: 'title',
+            searchField: 'title',
+            options: 
+               data,
+                create: true,
+        });
+
+        var control = $select[0].selectize;
+        control.setValue(selected);
+    }

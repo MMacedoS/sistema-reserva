@@ -483,3 +483,45 @@
 [2023-07-16 23:05:46] model
 [2023-07-16 23:05:46] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
 [2023-07-16 23:05:46] entrou no try
+[2023-07-20 21:43:37] model
+[2023-07-20 21:43:37] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-20 21:43:37] entrou no try
+[2023-07-20 21:44:04] model
+[2023-07-20 21:44:04] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-20 21:44:04] entrou no try
+[2023-07-21 04:06:15] model
+[2023-07-21 04:06:15] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:06:15] entrou no try
+[2023-07-21 04:06:29] model
+[2023-07-21 04:06:29] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:06:29] entrou no try
+[2023-07-21 04:16:00] model
+[2023-07-21 04:16:00] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:16:00] entrou no try
+[2023-07-21 04:17:37] model
+[2023-07-21 04:17:37] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:17:37] entrou no try
+[2023-07-21 04:18:51] model
+[2023-07-21 04:18:51] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:18:51] entrou no try
+[2023-07-21 04:19:20] model
+[2023-07-21 04:19:20] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:19:20] entrou no try
+[2023-07-21 04:21:00] model
+[2023-07-21 04:21:00] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:21:00] entrou no try
+[2023-07-21 04:23:08] model
+[2023-07-21 04:23:08] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:23:08] entrou no try
+[2023-07-21 04:26:05] model
+[2023-07-21 04:26:05] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:26:05] entrou no try
+[2023-07-21 04:26:23] model
+[2023-07-21 04:26:23] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:26:23] entrou no try
+[2023-07-21 04:27:21] model
+[2023-07-21 04:27:21] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:27:21] entrou no try
+[2023-07-21 04:27:37] model
+[2023-07-21 04:27:37] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-07-21 04:27:37] entrou no try
