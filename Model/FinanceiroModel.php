@@ -128,7 +128,12 @@ class FinanceiroModel extends ConexaoModel {
        
         $cmd  = $this->conexao->query(
             "SELECT 
-                * 
+                id,
+                descricao,
+                tipoPagamento,
+                created_at,
+                pagamento_id,
+                valor 
             FROM
                 entrada
             ORDER BY
@@ -138,7 +143,7 @@ class FinanceiroModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
         return [];
@@ -150,7 +155,12 @@ class FinanceiroModel extends ConexaoModel {
         $saida = date($saida . ' H:i:s');
        
         $sql  = "SELECT 
-                    * 
+                    id,
+                    descricao,
+                    created_at,
+                    tipoPagamento,
+                    pagamento_id,
+                    valor
                 FROM
                     entrada
                 WHERE
@@ -171,7 +181,7 @@ class FinanceiroModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
         return [];

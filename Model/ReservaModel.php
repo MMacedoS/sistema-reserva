@@ -1060,6 +1060,7 @@ class ReservaModel extends ConexaoModel {
                     WHERE DATE_ADD(:entrada, INTERVAL n.num DAY) <= :saida
                 ) all_dates
                 LEFT JOIN reserva r ON r.dataEntrada <= all_dates.date_value AND r.dataSaida >= all_dates.date_value
+                where r.status < 4
                 GROUP BY all_dates.date_value
                 ORDER BY all_dates.date_value                
                 "

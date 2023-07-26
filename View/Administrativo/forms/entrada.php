@@ -32,12 +32,12 @@
             <!-- <div class="col-sm-12 mb-2">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
             </div> -->
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_entrada" class="form-control" value="<?=@$entrada ? $entrada : Date('Y-m-d') ?>">
+            <!-- <div class="col-sm-3 mb-2">
+                <input type="date" name="" id="busca_entrada" class="form-control" value="<=@$entrada ? $entrada : Date('Y-m-d') ?>">
             </div>
             <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_saida" class="form-control" value="<?=@$saida ? $saida : Date('Y-m-d')?>">
-            </div>
+                <input type="date" name="" id="busca_saida" class="form-control" value="<=@$saida ? $saida : Date('Y-m-d')?>">
+            </div> -->
             <!-- <div class="col-sm-3 mb-2">
                 <select name="" id="" class="form-control">
                     <option value="">Selecione uma empresa</option>
@@ -45,27 +45,27 @@
                     <option value="">Hospedadas</option>
                 </select>
             </div>     -->
-            <div class="col-sm-3 mb-2">
+            <!-- <div class="col-sm-3 mb-2">
                 <select name="" id="busca_status" class="form-control">
                     <option value="">Selecione o Tipo</option>
-                    <option <?=$status == 1 ? 'selected': '';?> value="1">Dinhero</option>
-                    <option <?=$status == 2 ? 'selected': '';?> value="2">Cartão de Crédito</option>
-                    <option <?=$status == 3 ? 'selected': '';?> value="3">Cartão de Débito</option>
-                    <option <?=$status == 4 ? 'selected': '';?> value="4">Deposito/PIX</option>
+                    <option <=$status == 1 ? 'selected': '';?> value="1">Dinhero</option>
+                    <option <=$status == 2 ? 'selected': '';?> value="2">Cartão de Crédito</option>
+                    <option <=$status == 3 ? 'selected': '';?> value="3">Cartão de Débito</option>
+                    <option <=$status == 4 ? 'selected': '';?> value="4">Deposito/PIX</option>
                 </select>
-            </div>  
-            <div class="input-group-append float-right">
+            </div>   -->
+            <!-- <div class="input-group-append float-right">
                 <button class="btn btn-primary ml-3" type="button" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
-            </div>
+            </div> -->
         </div>
     </div>
 <hr>
    
-    <div class="row">
+    <!-- <div class="row">
             <table class="table table-sm mr-4" id="lista">     
-                <?php                    
+                <php                    
                     if(!empty($movimentos)) {
                 ?>
                 <thead>
@@ -78,7 +78,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+                    <php
                         foreach ($movimentos as $key => $value) {
                             $data_saida = explode(' ', $value['created_at']);
                             echo '
@@ -93,24 +93,25 @@
                         }
                     ?>
                 </tbody>
-                <?php } else{
+                <php } else{
                     'echo <td>não possui reservas cadastradas</td>';
                 }
                 ?>
             </table>
         <ul class="pagination">
-            <!-- Declare the item in the group -->
             <li class="page-item">
-                <!-- Declare the link of the item -->
-                <a class="page-link" href="<?=ROTA_GERAL?>/Administrativo/entrada/page=<?= $chave == 0 ? 0 : $chave + (-12)?>">Anterior</a>
-            </li>
-            <!-- Rest of the pagination items -->
-          
+                <a class="page-link" href="<=ROTA_GERAL?>/Administrativo/entrada/page=<= $chave == 0 ? 0 : $chave + (-12)?>">Anterior</a>
+            </li>         
             <li class="page-item">
-                <a class="page-link" href="<?=ROTA_GERAL?>/Administrativo/entrada/page=<?=$chave + 12?>">proxima</a>
+                <a class="page-link" href="<=ROTA_GERAL?>/Administrativo/entrada/page=<=$chave + 12?>">proxima</a>
             </li>
         </ul>
-    </div> 
+    </div>  -->
+    <div class="row">
+        <div class="table-responsive ml-3">
+            <div id="table"></div>
+        </div>
+    </div>
 </div>
 
 <!-- editar -->
@@ -159,6 +160,182 @@
 
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
+    
+    $(document).ready(function(){
+        showData("<?=ROTA_GERAL?>/Financeiro/getAll")
+        .then((response) => createTable(response));
+    });
+
+    
+    $('#novo').click(function(){
+        $('#exampleModalLabel').text("Cadastro de Apartamentos");
+        $('#modalApartamentos').modal('show');        
+    });
+
+    function pesquisa() {
+        // Obtém o valor do input
+        var input = document.getElementById('txt_busca');
+        var valor = input.value;
+        
+        // Executa a função com base no valor do input
+        showData("<?=ROTA_GERAL?>/Apartamento/buscaApartamentos/"+valor)
+        .then((response) => createTable(response));;    
+    }
+
+    function destroyTable() {
+        var table = document.getElementById('table');
+        if (table) {
+        table.remove(); // Remove a tabela do DOM
+        }
+    }
+
+    function createTable(data) {
+        // Remove a tabela existente, se houver
+        var tableContainer = document.getElementById('table');
+        var existingTable = tableContainer.querySelector('table');
+        if (existingTable) {
+            existingTable.remove();
+        }
+        var thArray = ['Cod', 'Descrição', 'Tipo de Pagamento', "Data",'Tipo','Valor']; 
+        var table = document.createElement('table');
+        table.className = 'table table-sm mr-4 mt-3';
+        var thead = document.createElement('thead');
+        var headerRow = document.createElement('tr');
+
+        thArray.forEach(function(value) {
+            var th = document.createElement('th');
+            th.textContent = value;
+            
+            if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
+                th.classList.add('d-none', 'd-sm-table-cell');
+            }
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        var tbody = document.createElement('tbody');
+
+            data.forEach(function(item) {
+                var tr = document.createElement('tr');
+
+                thArray.forEach(function(value, key) {
+                        var td = document.createElement('td');
+                        td.textContent = item[key];
+                        console.log(item[key]);
+                        
+                        if (item[key] === '1' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Dinhero';
+                        } if (item[key] === '2' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Cartão de Crédito';
+                        } if (item[key] === '3' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Cartão de Débito';
+                        } if (item[key] === '4' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Deposito/PIX';
+                        }
+                        // venda
+                        if (item[key] === null && value == 'Tipo') {
+                            td.textContent = 'Venda';
+                        }
+                        if (item[key] !== null && value == 'Tipo') {
+                            td.textContent = 'Hospedagem';
+                        }
+
+                        if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
+                            td.classList.add('d-none', 'd-sm-table-cell');
+                        }
+                        tr.appendChild(td);
+                    });
+                                    // Adiciona os botões em cada linha da tabela
+                var buttonsTd = document.createElement('td');
+
+                var editButton = document.createElement('button');
+                editButton.innerHTML = '<i class="fa fa-edit"></i>';
+                editButton.className = 'btn btn-edit';
+                buttonsTd.appendChild(editButton);
+
+                // var clearButton = document.createElement('button');
+                // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
+                // buttonsTd.appendChild(clearButton);
+
+                var activateButton = document.createElement('button');
+                activateButton.innerHTML = '<i class="fa fa-check"></i>';
+                activateButton.className = 'btn btn-activate';
+                buttonsTd.appendChild(activateButton);
+
+                // Verificar o valor e definir o ícone e classe apropriados
+                if (item.status === '2') {           
+                    activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
+                    activateButton.title = 'Ocupado';
+                } else {
+                    activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
+                    activateButton.title = 'Ativo';
+                }
+
+                // Adicionando a ação para o botão "Editar"
+                editButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                editarRegistro(rowData);
+                });
+
+                // Adicionando a ação para o botão "Editar"
+                activateButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                activeRegistro(rowData);
+                });
+
+                tr.appendChild(buttonsTd);
+                tbody.appendChild(tr);                
+            });
+
+            table.appendChild(tbody);
+
+            var destinationElement = document.getElementById('table');
+            destinationElement.appendChild(table);
+
+        return table;
+    }
+
+    function editarRegistro(rowData)
+    {
+        showData("<?=ROTA_GERAL?>/Apartamento/buscaApartamentoPorId/" + rowData[0])
+            .then((response) => preparaModalEditarApartamentos(response.data));
+        console.log(rowData[0]);
+    }
+
+    function activeRegistro(rowData)
+    {
+        showData("<?=ROTA_GERAL?>/Apartamento/changeStatusApartamentos/" + rowData[0])
+            .then((response) => showSuccessMessage('Registro atualizado com sucesso!'));
+    }
+
+    function preparaModalEditarApartamentos(data) {
+        $('#apartamento').val(data[0].numero);
+        $('#descricao').val(data[0].descricao);           
+        $('#tipo').val(data[0].tipo);
+        $('#status').val(data[0].status);
+        $('#id').val(data[0].id);
+        $('#btnSubmit').addClass('Atualizar');
+        $('#exampleModalLabel').text("Atualizar apartamentos");
+        $('#modalApartamentos').modal('show');   
+    }
+
+    $(document).on('click','.Salvar',function(){
+        event.preventDefault();
+        var id = $('#id').val();
+        if(id == '') return createData('<?=ROTA_GERAL?>/Apartamento/salvarApartamentos', new FormData(document.getElementById("form")));
+    
+        return updateData('<?=ROTA_GERAL?>/Apartamento/atualizarApartamentos/' + id, new FormData(document.getElementById("form")), id);
+    });
+
+
     let url = "<?=ROTA_GERAL?>/";
             
       function envioRequisicaoPostViaAjax(controle_metodo, dados) {
@@ -258,4 +435,106 @@
         });        
           
     });
+</script>
+
+<script>
+    // let url = "<=ROTA_GERAL?>/";
+            
+    //   function envioRequisicaoPostViaAjax(controle_metodo, dados) {
+    //       $.ajax({
+    //           url: url+controle_metodo,
+    //           method:'POST',
+    //           data: dados,
+    //           dataType: 'JSON',
+    //           contentType: false,
+	//           cache: false,
+	//           processData:false,
+    //           success: function(data){
+    //               if(data.status === 422){
+    //                   $('#mensagem').removeClass('text-danger');
+    //                   $('#mensagem').addClass('text-success');
+    //                   $('#mensagem').text(data.message);
+    //               }
+    //           }
+    //       })
+    //       .done(function(data) {
+    //           if(data.status === 201){
+    //               return Swal.fire({
+    //                   icon: 'success',
+    //                   title: 'OhoWW...',
+    //                   text: data.message,
+    //                   footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
+    //               }).then(()=>{
+    //                 window.location.reload();    
+    //             })
+    //           }
+    //           return Swal.fire({
+    //                   icon: 'warning',
+    //                   title: 'ops...',
+    //                   text: data.message,
+    //                   footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
+    //               })
+    //       });
+    //   }
+
+    // function envioRequisicaoGetViaAjax(controle_metodo) {            
+    //     $.ajax({
+    //         url: url+controle_metodo,
+    //         method:'GET',
+    //         processData: false,
+    //         dataType: 'json     ',
+    //         success: function(data){
+    //             if(data.status === 201){
+    //                 preparaModalEditarReserva(data.data);
+    //             }
+    //         }
+    //     })
+    //     .done(function(data) {
+    //         if(data.status === 200){
+    //             return Swal.fire({
+    //                 icon: 'success',
+    //                 title: 'OhoWW...',
+    //                 text: data.message,
+    //                 footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
+    //             }).then(()=>{
+    //                 window.location.reload();    
+    //             })
+    //         } 
+    //         if(data.status === 422)           
+    //             return Swal.fire({
+    //                 icon: 'warning',
+    //                 title: 'ops...',
+    //                 text: "Algo de errado aconteceu!",
+    //                 footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
+    //         })
+    //     });
+    //     return "";
+    // }
+
+    // function preparaModalEditarReserva(data) 
+    // {
+        
+    //     $('#btnSubmit').addClass('Atualizar');
+    //     $('#exampleModalLabel').text("Atualizar Reservas");
+    //     $('#modal').modal('show');   
+
+    //     return ;
+    // }
+    
+    // $('#novo').click(function(){
+    //     $('#exampleModalLabel').text("Cadastro de Entrada");
+    //     $('#modalEntrada').modal('show');        
+    // });
+
+    // $(document).ready(function(){
+    //     $(document).on("click",".fechar",function(){ 
+    //         $('#modal').modal('hide');
+    //     });
+
+    //     $(document).on('click','.Salvar',function(){
+    //         event.preventDefault();            
+    //         return envioRequisicaoPostViaAjax('Financeiro/salvarEntradas', new FormData(document.getElementById("form")));           
+    //     });        
+          
+    // });
 </script>

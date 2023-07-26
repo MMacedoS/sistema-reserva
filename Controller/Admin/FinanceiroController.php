@@ -16,7 +16,13 @@ class FinanceiroController extends \Controller{
 
     public function buscaEntrada($request = null)
     {       
-        return $this->financeiro_model->buscaEntrada($request);
+        return $this->financeiro_model->buscaEntrada($request);///old formula
+    }
+
+    public function getAll($request = null)
+    {       
+        echo json_encode($this->financeiro_model->buscaEntrada($request));
+        return;
     }
 
     public function buscaSaida($request = null)
