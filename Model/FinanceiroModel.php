@@ -102,91 +102,6 @@ class FinanceiroModel extends ConexaoModel {
         return [];
     }
 
-    public function buscaEntrada($off = 0)
-    {
-        if(is_null($off) || empty($off))
-        {
-            return $this->entrada($off = 0);
-        } 
-        $dados = explode('_@_', $off);   
-
-        if(count($dados) == 1)
-        {
-            $chave = str_replace('page=', '', $dados[0]);
-            return $this->entrada($chave);
-        }
-
-        return $this->entradaComParams(
-            $dados[1],
-            $dados[2], 
-            $dados[3]
-        );
-    }
-
-    public function entrada($off = 0)
-    {
-       
-        $cmd  = $this->conexao->query(
-            "SELECT 
-                id,
-                descricao,
-                tipoPagamento,
-                created_at,
-                pagamento_id,
-                valor 
-            FROM
-                entrada
-            ORDER BY
-                id DESC
-            LIMIT 12 offset $off "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            return $cmd->fetchAll();
-        }
-
-        return [];
-    }
-
-    public function entradaComParams($texto = 0, $entrada, $saida)
-    {
-        $entrada = date($entrada . ' 00:00:00');
-        $saida = date($saida . ' H:i:s');
-       
-        $sql  = "SELECT 
-                    id,
-                    descricao,
-                    created_at,
-                    tipoPagamento,
-                    pagamento_id,
-                    valor
-                FROM
-                    entrada
-                WHERE
-                    created_at between '$entrada' and '$saida' 
-                ";
-
-        if(!empty($texto)){
-                
-            $sql.= "
-            AND
-               tipoPagamento = $texto                 
-            ";
-        }
-
-        $cmd  = $this->conexao->query(
-            $sql
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            return $cmd->fetchAll();
-        }
-
-        return [];
-    }
-
     public function buscaSaida($off = 0)
     {
         if(is_null($off) || empty($off))
@@ -280,35 +195,6 @@ class FinanceiroModel extends ConexaoModel {
             $cmd->bindValue(':valor',$dados['valor']);
             $cmd->bindValue(':descricao',$dados['descricao']);
             $cmd->bindValue(':tipo',$dados['tipo']);
-            $cmd->bindValue(':tipopagamento',$dados['pagamento']);
-            $cmd->bindValue(':funcionario',$_SESSION['code']);
-            $dados = $cmd->execute();
-
-            $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
-
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
-        }
-    }
-
-    public function insertEntrada($dados)
-    {
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "INSERT INTO 
-                    entrada
-                SET 
-                    valor = :valor, 
-                    descricao = :descricao, 
-                    tipoPagamento = :tipopagamento,
-                    funcionario = :funcionario"
-                );
-
-            $cmd->bindValue(':valor',$dados['valor']);
-            $cmd->bindValue(':descricao',$dados['descricao']);
             $cmd->bindValue(':tipopagamento',$dados['pagamento']);
             $cmd->bindValue(':funcionario',$_SESSION['code']);
             $dados = $cmd->execute();

@@ -4,9 +4,11 @@ class FinanceiroController extends \Controller{
     use DateTrait;
 
     protected $financeiro_model;
+    protected $entrada_model;
 
     public function __construct() {
-        $this->financeiro_model = new FinanceiroModel();      
+        $this->financeiro_model = new FinanceiroModel(); 
+        $this->entrada_model = new EntradaModel();      
     }
     
     public function buscaMovimentos($request = null)
@@ -15,13 +17,25 @@ class FinanceiroController extends \Controller{
     }
 
     public function buscaEntrada($request = null)
-    {       
-        return $this->financeiro_model->buscaEntrada($request);///old formula
+    {     
+        return $this->entrada_model->buscaEntrada($request);///old formula
     }
 
-    public function getAll($request = null)
+    public function findAllEntradas($request = null)
     {       
-        echo json_encode($this->financeiro_model->buscaEntrada($request));
+        echo json_encode($this->entrada_model->buscaEntrada($request));
+        return;
+    }
+
+    public function findEntradasByParams()
+    {       
+        echo json_encode($this->entrada_model->buscaEntradaByParams($_POST));
+        return;
+    }
+
+    public function findEntradaById($id)
+    {       
+        echo json_encode($this->entrada_model->findById($id));
         return;
     }
 
@@ -42,6 +56,11 @@ class FinanceiroController extends \Controller{
 
     public function salvarEntradas()
     {
-        echo json_encode($this->financeiro_model->insertEntrada($_POST));
+        echo json_encode($this->entrada_model->insertEntrada($_POST));
+    }
+
+    public function atualizarEntradas($id)
+    {
+        echo json_encode($this->entrada_model->updateEntrada($_POST, $id));
     }
 }

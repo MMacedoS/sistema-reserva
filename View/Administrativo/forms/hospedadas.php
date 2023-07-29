@@ -516,12 +516,12 @@
 
                         <div class="col-sm-3">
                             <label for="">Placa</label>
-                            <input type="text" class="form-control" name="placa" value="" id="inp-placa">
+                            <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
                         </div>
 
                         <div class="col-sm-12">
                             <label for="">observação</label><br>
-                            <textarea name="observacao" class="form-control" id="inp-observacao" cols="30" rows="5"> &nbsp;</textarea>
+                            <textarea name="observacao" class="form-control" value="tudo certo" id="inp-observacao" cols="30" rows="5"> &nbsp;</textarea>
                         </div>
                     </div>   
 

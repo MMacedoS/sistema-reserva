@@ -29,36 +29,29 @@
 <hr>
     <div class="row">   
         <div class="input-group">
-            <!-- <div class="col-sm-12 mb-2">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
-            </div> -->
-            <!-- <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_entrada" class="form-control" value="<=@$entrada ? $entrada : Date('Y-m-d') ?>">
+            <div class="col-sm-2 mb-2">
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
             <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_saida" class="form-control" value="<=@$saida ? $saida : Date('Y-m-d')?>">
-            </div> -->
-            <!-- <div class="col-sm-3 mb-2">
-                <select name="" id="" class="form-control">
-                    <option value="">Selecione uma empresa</option>
-                    <option value="">Confirmada</option>
-                    <option value="">Hospedadas</option>
-                </select>
-            </div>     -->
-            <!-- <div class="col-sm-3 mb-2">
-                <select name="" id="busca_status" class="form-control">
+                <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
+            </div>
+            <div class="col-sm-3 mb-2">
+                <input type="date" name="" id="end_date" class="form-control" value="<?=Date('Y-m-d')?>">
+            </div>   
+            <div class="col-sm-3 mb-2">
+                <select name="" id="status" class="form-control">
                     <option value="">Selecione o Tipo</option>
-                    <option <=$status == 1 ? 'selected': '';?> value="1">Dinhero</option>
-                    <option <=$status == 2 ? 'selected': '';?> value="2">Cartão de Crédito</option>
-                    <option <=$status == 3 ? 'selected': '';?> value="3">Cartão de Débito</option>
-                    <option <=$status == 4 ? 'selected': '';?> value="4">Deposito/PIX</option>
+                    <option value="1">Dinhero</option>
+                    <option value="2">Cartão de Crédito</option>
+                    <option value="3">Cartão de Débito</option>
+                    <option value="4">Deposito/PIX</option>
                 </select>
-            </div>   -->
-            <!-- <div class="input-group-append float-right">
-                <button class="btn btn-primary ml-3" type="button" id="btn_busca">
+            </div>  
+            <div class="input-group-append float-right">
+                <button class="btn btn-primary ml-3" type="button" onclick="pesquisa()" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
-            </div> -->
+            </div>
         </div>
     </div>
 <hr>
@@ -129,6 +122,7 @@
                 <form action="" id="form" method="post">                   
                     <div class="form-row">
                         <div class="col-sm-8">
+                            <input type="hidden" name="id" id="id">
                             <label for="">Descrição</label>
                             <input type="text" name="descricao" class="form-control" id="descricao">
                         </div>
@@ -162,8 +156,8 @@
 <script>
     
     $(document).ready(function(){
-        showData("<?=ROTA_GERAL?>/Financeiro/getAll")
-        .then((response) => createTable(response));
+        showData("<?=ROTA_GERAL?>/Financeiro/findAllEntradas")
+        .then((response) => createTable(response)).then(() => hideLoader());
     });
 
     
@@ -174,11 +168,13 @@
 
     function pesquisa() {
         // Obtém o valor do input
-        var input = document.getElementById('txt_busca');
-        var valor = input.value;
-        
+        let data = new FormData();
+        data.append('search', $('#txt_busca').val());
+        data.append('startDate', $('#start_date').val());
+        data.append('endDate', $('#end_date').val());
+        data.append('status', $('#status').val());  
         // Executa a função com base no valor do input
-        showData("<?=ROTA_GERAL?>/Apartamento/buscaApartamentos/"+valor)
+        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findEntradasByParams/",data)
         .then((response) => createTable(response));;    
     }
 
@@ -219,6 +215,9 @@
 
             data.forEach(function(item) {
                 var tr = document.createElement('tr');
+                if (item.created_at) {
+                        created_at = formatDateWithHour(item.created_at);
+                    } 
 
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
@@ -242,6 +241,14 @@
                             td.textContent = 'Hospedagem';
                         }
 
+                        if (value === 'Data') {
+                            td.textContent = created_at;
+                        }
+
+                        if (value === 'Dt.Saida') {
+                            td.textContent = dateSaida;
+                        }
+
                         if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
                             td.classList.add('d-none', 'd-sm-table-cell');
                         }
@@ -253,6 +260,9 @@
                 var editButton = document.createElement('button');
                 editButton.innerHTML = '<i class="fa fa-edit"></i>';
                 editButton.className = 'btn btn-edit';
+                if(item.pagamento_id !== null) {
+                    editButton.hidden = true;
+                } 
                 buttonsTd.appendChild(editButton);
 
                 // var clearButton = document.createElement('button');
@@ -265,12 +275,12 @@
                 buttonsTd.appendChild(activateButton);
 
                 // Verificar o valor e definir o ícone e classe apropriados
-                if (item.status === '2') {           
+                if (item.status === '0') {           
                     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
-                    activateButton.title = 'Ocupado';
+                    activateButton.title = 'devolvido';
                 } else {
                     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
-                    activateButton.title = 'Ativo';
+                    activateButton.title = 'Recebido';
                 }
 
                 // Adicionando a ação para o botão "Editar"
@@ -305,136 +315,41 @@
 
     function editarRegistro(rowData)
     {
-        showData("<?=ROTA_GERAL?>/Apartamento/buscaApartamentoPorId/" + rowData[0])
-            .then((response) => preparaModalEditarApartamentos(response.data));
+        showData("<?=ROTA_GERAL?>/Financeiro/findEntradaById/" + rowData[0])
+            .then((response) => prepareModalEditarEntrada(response.data));
         console.log(rowData[0]);
     }
 
-    function activeRegistro(rowData)
-    {
-        showData("<?=ROTA_GERAL?>/Apartamento/changeStatusApartamentos/" + rowData[0])
-            .then((response) => showSuccessMessage('Registro atualizado com sucesso!'));
-    }
-
-    function preparaModalEditarApartamentos(data) {
-        $('#apartamento').val(data[0].numero);
+   
+    function prepareModalEditarEntrada(data) {
         $('#descricao').val(data[0].descricao);           
-        $('#tipo').val(data[0].tipo);
-        $('#status').val(data[0].status);
+        $('#valor').val(data[0].valor);
+        $('#pagamento').val(data[0].tipoPagamento);
         $('#id').val(data[0].id);
-        $('#btnSubmit').addClass('Atualizar');
-        $('#exampleModalLabel').text("Atualizar apartamentos");
-        $('#modalApartamentos').modal('show');   
+        $('#btnSubmit').text('Atualizar');
+        $('#exampleModalLabel').text("Atualizar Entrada");
+        $('#modalEntrada').modal('show');   
     }
 
     $(document).on('click','.Salvar',function(){
         event.preventDefault();
         var id = $('#id').val();
-        if(id == '') return createData('<?=ROTA_GERAL?>/Apartamento/salvarApartamentos', new FormData(document.getElementById("form")));
+        if(id == '') return createData('<?=ROTA_GERAL?>/Financeiro/salvarEntradas', new FormData(document.getElementById("form")));
     
-        return updateData('<?=ROTA_GERAL?>/Apartamento/atualizarApartamentos/' + id, new FormData(document.getElementById("form")), id);
-    });
+        return updateData('<?=ROTA_GERAL?>/Financeiro/atualizarEntradas/' + id, new FormData(document.getElementById("form")), id);
+    });   
 
+    // $(document).ready(function(){
+    //     $(document).on("click",".fechar",function(){ 
+    //         $('#modal').modal('hide');
+    //     });
 
-    let url = "<?=ROTA_GERAL?>/";
-            
-      function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  })
-          });
-      }
-
-    function envioRequisicaoGetViaAjax(controle_metodo) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                if(data.status === 201){
-                    preparaModalEditarReserva(data.data);
-                }
-            }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: "Algo de errado aconteceu!",
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-            })
-        });
-        return "";
-    }
-
-    function preparaModalEditarReserva(data) 
-    {
-        
-        $('#btnSubmit').addClass('Atualizar');
-        $('#exampleModalLabel').text("Atualizar Reservas");
-        $('#modal').modal('show');   
-
-        return ;
-    }
-    
-    $('#novo').click(function(){
-        $('#exampleModalLabel').text("Cadastro de Entrada");
-        $('#modalEntrada').modal('show');        
-    });
-
-    $(document).ready(function(){
-        $(document).on("click",".fechar",function(){ 
-            $('#modal').modal('hide');
-        });
-
-        $(document).on('click','.Salvar',function(){
-            event.preventDefault();            
-            return envioRequisicaoPostViaAjax('Financeiro/salvarEntradas', new FormData(document.getElementById("form")));           
-        });        
+    //     $(document).on('click','.Salvar',function(){
+    //         event.preventDefault();            
+    //         return envioRequisicaoPostViaAjax('Financeiro/salvarEntradas', new FormData(document.getElementById("form")));           
+    //     });        
           
-    });
+    // });
 </script>
 
 <script>

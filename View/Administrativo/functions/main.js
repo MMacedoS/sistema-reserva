@@ -61,7 +61,7 @@
   // Função para exibir um registro
   function showDataWithData(url, data) {
     showLoader();
-    $.ajax({
+    return $.ajax({
       url: url,
       method: 'POST',
       data: data,
@@ -70,7 +70,6 @@
       cache: false,
       processData:false,
       success: function(response) {
-        showSuccessMessage('Registro atualizado com sucesso!');
         hideLoader();
       },
       error: function(error) {

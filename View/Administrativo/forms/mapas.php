@@ -1,7 +1,20 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang='pt-br'>
   <head>
     <meta charset='utf-8' />
+    <style>
+      table.fc-scrollgrid-sync-table {
+        width: 95% !important;
+        height: 70vh !important;
+      }
+
+      table.fc-col-header {
+          width: 95% !important;
+      }
+      div#calendar {
+          height: 81vh;
+      }
+    </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
