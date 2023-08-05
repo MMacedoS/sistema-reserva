@@ -99,11 +99,12 @@
         </ul>
     </div>  -->
     <div class="row">
-        <div class="col-lg-3 col-sm-3 text-info" id="dinheiro"></div>
-        <div class="col-lg-3 col-sm-3 text-danger" id="credito"></div>
-        <div class="col-lg-3 col-sm-3 text-warning" id="debito"></div>
-        <div class="col-lg-3 col-sm-3 text-success" id="deposito"></div>
+        <div class="col-lg-12 col-sm-12 text-info text-right" id="total"></div>
     </div>
+
+    <!-- <div class="row">
+        <canvas id="paymentTypeChart" width="400" height="400"></canvas>
+    </div> -->
     <div class="row">
         <div class="table-responsive ml-3">
             <div id="table"></div>
@@ -189,6 +190,7 @@
     }
 
     function createTable(data) {
+        
         // Remove a tabela existente, se houver
         var tableContainer = document.getElementById('table');
         var existingTable = tableContainer.querySelector('table');
@@ -200,7 +202,7 @@
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
         var headerRow = document.createElement('tr');
-
+        var totalValue = 0; 
         thArray.forEach(function(value) {
             var th = document.createElement('th');
             th.textContent = value;
@@ -221,6 +223,8 @@
                 if (item.created_at) {
                         created_at = formatDateWithHour(item.created_at);
                     } 
+
+                totalValue += parseFloat(item[5]);
 
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
@@ -314,9 +318,59 @@
 
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
+
+            $('#total').text("Total de Entradas R$ " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
           
         return table;
     }
+
+    function createPaymentTypeChart(data) {
+        var paymentTypes = ['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito', 'Deposito/PIX'];
+        var paymentTypeCounts = [0, 0, 0, 0];
+
+        data.forEach(function(item) {
+            var tipoPagamento = item[2]; // Supondo que o tipo de pagamento esteja na terceira posição (índice 2) do array
+
+            switch (tipoPagamento) {
+                case '1':
+                    paymentTypeCounts[0]+= parseFloat(item.valor);
+                    break;
+                case '2':
+                    paymentTypeCounts[1]+= parseFloat(item.valor);
+                    break;
+                case '3':
+                    paymentTypeCounts[2]+= parseFloat(item.valor);
+                    break;
+                case '4':
+                    paymentTypeCounts[3]+= parseFloat(item.valor);
+                    break;
+            }
+        });
+
+        var ctx = document.getElementById('paymentTypeChart').getContext('2d');
+        var paymentTypeChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: paymentTypes,
+                datasets: [{
+                    data: paymentTypeCounts,
+                    backgroundColor: ['#FF5733', '#36A2EB', '#FFC300', '#4CAF50']
+                }]
+            },
+            options: {
+                responsive: true,
+                legend: {
+                    display: true,
+                    position: 'right'
+                },
+                title: {
+                    display: true,
+                    text: 'Gráfico de Pagamento por Tipo'
+                }
+            }
+        });
+    }
+
 
     function editarRegistro(rowData)
     {

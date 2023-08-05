@@ -93,7 +93,7 @@ class EntradaModel extends ConexaoModel {
     public function entradaComParams($texto = 0, $entrada, $saida, $tipoPagamento)
     {
         $entrada = date($entrada . ' 00:00:00');
-        $saida = date($saida . ' H:i:s');
+        $saida = date($saida . '  23:59:59');
        
         $sql  = "SELECT 
              id,
