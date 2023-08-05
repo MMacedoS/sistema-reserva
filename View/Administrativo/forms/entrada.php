@@ -160,10 +160,6 @@
 <script>
     
     $(document).ready(function(){
-        var dinheiro = 0;
-        var creadito = 0;
-        var pix = 0;
-        var debito = 0;
         showData("<?=ROTA_GERAL?>/Financeiro/findAllEntradas")
         .then((response) => createTable(response)).then(() => hideLoader());
     });
@@ -233,13 +229,13 @@
                         if (item[key] === '1' && value == 'Tipo de Pagamento') {                            
                             td.textContent = 'Dinhero';
                         } if (item[key] === '2' && value == 'Tipo de Pagamento') {
-                            credito += item.valor;
+                           
                             td.textContent = 'Cartão de Crédito';
                         } if (item[key] === '3' && value == 'Tipo de Pagamento') {
-                            debito += item.valor;
+                            
                             td.textContent = 'Cartão de Débito';
                         } if (item[key] === '4' && value == 'Tipo de Pagamento') {
-                            pix += item.valor;
+                            
                             td.textContent = 'Deposito/PIX';
                         }
                         // venda
@@ -318,11 +314,7 @@
 
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
-            // console.log(dinheiro);
-            // $('#dinheiro').text(dinheiro);
-            // $('#credito').textContent("Crédito R$ " + credito);
-            // // $('#debito').text("Débito R$ " + debito);
-            // $('#deposito').textContent("Depósito R$ " + pix);
+          
         return table;
     }
 
