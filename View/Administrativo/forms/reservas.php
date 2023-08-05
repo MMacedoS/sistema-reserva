@@ -166,7 +166,7 @@
                 <div class="modal-footer">
                     
                     <!-- <button  class="btn btn-secondary" onclick="sair()" >Fechar</button> -->
-                    <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar">Salvar</button>
+                    <button type="submit" name="salvar" id="btnSubmit" disabled class="btn btn-primary Salvar">Salvar</button>
                 </div>
             </form>        
         </div>
@@ -383,7 +383,7 @@
             var dataEntrada = moment($('#entrada').val());
             var dataSaida = moment($('#saida').val());           
             
-            var opcao = $('#opcao').val();            
+            var opcao = $('#opcao').val();   
 
             if(dataSaida >= dataEntrada){
                 valores();
@@ -391,6 +391,8 @@
                     dataEntrada._i,
                     dataSaida._i
                 );
+
+                $('.Salvar').attr('disabled', false);
             }            
         });
 
@@ -460,6 +462,7 @@
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar Reservas");
         $('#modal').modal('show'); 
+        $('.Salvar').attr('disabled', false);
         return ;
     }
 

@@ -162,7 +162,7 @@
 
     
     $('#novo').click(function(){
-        $('#exampleModalLabel').text("Cadastro de Apartamentos");
+        $('#exampleModalLabel').text("Cadastro de Entradas");
         $('#modalApartamentos').modal('show');        
     });
 

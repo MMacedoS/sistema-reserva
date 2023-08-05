@@ -634,7 +634,6 @@
         return "";
     }
 
-
     function getRequisicaoGetViaAjax(controle_metodo, tipo) {            
         $.ajax({
             url: url+controle_metodo,
@@ -671,6 +670,7 @@
 
     function preparaModalEditarReserva(data) 
     {
+        var id_reserva = null;
         $('#id').val(data[0].id);
         $('#hospede').text(data[0].nome);
         $('#codigo').text(data[0].id);
@@ -765,7 +765,6 @@
         // totalDiarias = calculaConsumo(data);
     } 
 
-
     function prepareTablePagamento(data)
     {
         $("#listaPagamento tr").detach();
@@ -778,7 +777,7 @@
                     +'</td>' +
                     '<td>R$ '+parseFloat(element.valorPagamento).toFixed(2)+'</td>' +
                     '<td>'+            
-                        '<a href="#" id="'+element.id+'" class="alterar-pagamento" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
+                        // '<a href="#" id="'+element.id+'" class="alterar-pagamento" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
                         '<a href="#" id="'+element.id+'" class="remove-pagamento" >&#10060;</a>'+
                     '</td>'+
                 '</tr>');
@@ -864,35 +863,38 @@
             }
         }, 60000);
         $(document).on("click",".fechar",function(){ 
-            
+            id_reserva = null;
             $('#modalCheckout').modal('hide');
         });
         
         $('.js-example-basic-single').select2();    
     
         $(document).on('click', '.hospedadas', function(){     
-            var code=$(this).attr("id"); 
+            let code=$(this).attr("id"); 
             id_reserva = code;    
             showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ code)
             .then((response) => {preparaModalEditarReserva(response.data),  hideLoader()});
         });    
         
         $(document).on('click', '.checkout', function(){
-            var code=$("#id").val();     
+            let code=$("#id").val(); 
+            id_reserva = code;    
             showData("<?=ROTA_GERAL?>/Reserva/getDadosReservas/"+ code)
             .then( (response) => {preparaModalHospedadas( response.data, "Checkout"),  hideLoader()});  
         });
 
         $(document).on('click', '.pagamento', function()
         {
-            var code=$("#id").val();  
+            let code=$("#id").val();  
+            id_reserva = code;
             showData("<?=ROTA_GERAL?>/Pagamento/getDadosPagamentos/"+ code)
             .then( (response) => {preparaModalHospedadas( response.data, "Pagamento"),  hideLoader()});                      
         });
 
         $(document).on('click', '.consumo', function(){
-            var code=$("#id").val();  
-             $('#produto option').detach();
+            let code=$("#id").val();  
+            id_reserva = code;
+            $('#produto option').detach();
             $.ajax({
                 url: url+ "Produto/getDadosProdutos",
                 method:'GET',
@@ -913,14 +915,15 @@
         });
 
         $(document).on('click', '.diarias', function(){
-            var code=$("#id").val();  
+            let code=$("#id").val();  
+            id_reserva = code;
             showData("<?=ROTA_GERAL?>/Reserva/getDadosDiarias/"+ code)
             .then( (response) => preparaModalHospedadas(response.data, "Diarias"));   
         });
 
         $(document).on('click', '.editar', function(){
-            var code=$("#id").val();  
-             
+            let code=$("#id").val();  
+            id_reserva = code;            
            
             $.ajax({
                 url: url+ 'Reserva/getDadosReservas/'+ code,
@@ -952,14 +955,16 @@
         });
 
         $(document).on('click', '.SalvarReserva', function(){
-            var code=$("#id").val();  
+            let code=$("#id").val();  
+            id_reserva = code;
             updateData('<?=ROTA_GERAL?>/Reserva/atualizarReserva/'+ code, new FormData(document.getElementById("formReserva")));            
         });
 
 
         $(document).on('click','.Salvar-pagamento',function(){
             event.preventDefault();
-            var code=$("#id").val(); 
+            let code=$("#id").val(); 
+            id_reserva = code;
             if ($('#valor').val() > 0) {
                 $.ajax({
                     url: url+ 'Pagamento/addPagamento/' + code,
@@ -980,7 +985,8 @@
 
         $(document).on('click','.Salvar-consumo',function(){
             event.preventDefault();
-            var code=$("#id").val(); 
+            let code=$("#id").val(); 
+            id_reserva = code;
             $.ajax({
                 url: url+ 'Consumo/addConsumo/' + code,
                 method:'POST',
@@ -998,8 +1004,9 @@
         });
 
         $(document).on('click', '.alterar-consumo', function(){
-            var code=$(this).attr("id");  
-            var produto;
+            let code=$(this).attr("id");  
+            let produto;
+            id_reserva = code;
             $.ajax({
                 url: url+ "Consumo/getConsumoPorId/" + code ,
                 method:'GET',
@@ -1026,8 +1033,9 @@
         });
 
         $(document).on('click', '.alterar-diarias', function(){
-            var code=$(this).attr("id");  
-            var produto;
+            let code=$(this).attr("id");  
+            let produto;
+            id_reserva = code;
             $.ajax({
                 url: url+ "Reserva/getDiariasPorId/" + code ,
                 method:'GET',
@@ -1055,7 +1063,8 @@
         });
 
         $(document).on('click', '.remove-consumo', function(){
-            var code=$(this).attr("id");  
+            let code=$(this).attr("id");  
+            id_reserva = code;
             $.ajax({
                 url: url+ "Consumo/getRemoveConsumo/" + code ,
                 method:'GET',
@@ -1070,7 +1079,8 @@
         });
 
         $(document).on('click', '.remove-diarias', function(){
-            var code=$(this).attr("id");  
+            let code=$(this).attr("id");  
+            id_reserva = code;
             $.ajax({
                 url: url+ "Reserva/getRemoveDiarias/" + code ,
                 method:'GET',
@@ -1085,7 +1095,8 @@
         });
 
         $(document).on('click', '.remove-pagamento', function(){
-            var code=$(this).attr("id");  
+            let code=$(this).attr("id"); 
+            id_reserva = code; 
             $.ajax({
                 url: url+ "Pagamento/getRemovePagamento/" + code ,
                 method:'GET',
@@ -1100,13 +1111,15 @@
         });
 
         $(document).on('click', '.executar-checkout', function(){
-            var code=$("#id").val(); 
-            showData("<?=ROTA_GERAL?>/Reserva/executaCheckout/" + code).then(function(){ hideLoader()});  
+            let code=$("#id").val(); 
+            id_reserva = code;
+            showData("<?=ROTA_GERAL?>/Reserva/executaCheckout/" + code).then(function(){ showSuccessMessage('executado com sucesso!'); hideLoader()});  
         });
 
         $(document).on('click', '.imprimir', function(event){
             event.preventDefault();
-            var code=$("#id").val(); 
+            let code=$("#id").val(); 
+            id_reserva = code;
             redirectUrl(code)
         });
     });
@@ -1171,7 +1184,6 @@
             let hospedes = response.map(element => {
                return { id: element.id, title: element.nome}
             });
-            console.log("Hospede" + hospede);
             prepareSelect(hospedes, '#select_hospedes', hospede);
        });
 

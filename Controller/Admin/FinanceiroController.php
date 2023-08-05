@@ -5,10 +5,12 @@ class FinanceiroController extends \Controller{
 
     protected $financeiro_model;
     protected $entrada_model;
+    protected $saida_model;
 
     public function __construct() {
         $this->financeiro_model = new FinanceiroModel(); 
-        $this->entrada_model = new EntradaModel();      
+        $this->entrada_model = new EntradaModel();   
+        $this->saida_model = new SaidaModel();      
     }
     
     public function buscaMovimentos($request = null)
@@ -44,14 +46,20 @@ class FinanceiroController extends \Controller{
         return $this->financeiro_model->buscaSaida($request);
     }
 
+    public function findAllSaidas($request = null)
+    {       
+        echo json_encode($this->saida_model->buscaSaida($request));
+        return;
+    }
+
     public function insertSaida()
     {
-        echo json_encode($this->financeiro_model->insertSaida($_POST));
+        echo json_encode($this->saida_model->insertSaida($_POST));
     }
 
     public function removerSaida($id)
     {
-        echo json_encode($this->financeiro_model->deleteSaida($id));
+        echo json_encode($this->saida_model->deleteSaida($id));
     }
 
     public function salvarEntradas()
