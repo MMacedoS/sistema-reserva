@@ -1,6 +1,4 @@
-<?php
-  $movimentos = $this->buscaEntrada($request);
-?>
+
 <style>
     .hide{
         visibility: hidden;
@@ -101,6 +99,12 @@
         </ul>
     </div>  -->
     <div class="row">
+        <div class="col-lg-3 col-sm-3 text-info" id="dinheiro"></div>
+        <div class="col-lg-3 col-sm-3 text-danger" id="credito"></div>
+        <div class="col-lg-3 col-sm-3 text-warning" id="debito"></div>
+        <div class="col-lg-3 col-sm-3 text-success" id="deposito"></div>
+    </div>
+    <div class="row">
         <div class="table-responsive ml-3">
             <div id="table"></div>
         </div>
@@ -156,14 +160,17 @@
 <script>
     
     $(document).ready(function(){
+        var dinheiro = 0;
+        var creadito = 0;
+        var pix = 0;
+        var debito = 0;
         showData("<?=ROTA_GERAL?>/Financeiro/findAllEntradas")
         .then((response) => createTable(response)).then(() => hideLoader());
     });
-
     
     $('#novo').click(function(){
         $('#exampleModalLabel').text("Cadastro de Entradas");
-        $('#modalApartamentos').modal('show');        
+        $('#modalEntrada').modal('show');        
     });
 
     function pesquisa() {
@@ -222,15 +229,17 @@
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
                         td.textContent = item[key];
-                        console.log(item[key]);
-                        
-                        if (item[key] === '1' && value == 'Tipo de Pagamento') {
+                                               
+                        if (item[key] === '1' && value == 'Tipo de Pagamento') {                            
                             td.textContent = 'Dinhero';
                         } if (item[key] === '2' && value == 'Tipo de Pagamento') {
+                            credito += item.valor;
                             td.textContent = 'Cartão de Crédito';
                         } if (item[key] === '3' && value == 'Tipo de Pagamento') {
+                            debito += item.valor;
                             td.textContent = 'Cartão de Débito';
                         } if (item[key] === '4' && value == 'Tipo de Pagamento') {
+                            pix += item.valor;
                             td.textContent = 'Deposito/PIX';
                         }
                         // venda
@@ -309,7 +318,11 @@
 
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
-
+            // console.log(dinheiro);
+            // $('#dinheiro').text(dinheiro);
+            // $('#credito').textContent("Crédito R$ " + credito);
+            // // $('#debito').text("Débito R$ " + debito);
+            // $('#deposito').textContent("Depósito R$ " + pix);
         return table;
     }
 
