@@ -2,7 +2,7 @@
 
 Este é um projeto pessoal de **Sistema de Gerenciamento de Hospedagem em Pousada/Hotel** desenvolvido por **Maurício Macedo**.
 
-![Maurício Macedo](https://www.linkedin.com/in/maur%C3%ADcio-macedo-b7333887/)
+![Maurício Macedo](https://www.linkedin.com/in/maurício-macedo-b7333887/)
 
 ## Descrição do Projeto
 
