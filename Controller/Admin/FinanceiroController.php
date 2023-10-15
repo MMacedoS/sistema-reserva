@@ -41,6 +41,12 @@ class FinanceiroController extends \Controller{
         return;
     }
 
+    public function deleteEntradaById($id)
+    {
+        echo json_encode($this->entrada_model->deleteById($id));
+        return;
+    }
+
     public function buscaSaida($request = null)
     {       
         return $this->financeiro_model->buscaSaida($request);
@@ -48,7 +54,6 @@ class FinanceiroController extends \Controller{
 
     public function findAllSaidas($request = null)
     {       
-        echo json_encode($this->saida_model->buscaSaida($request));
         return;
     }
 
@@ -57,14 +62,21 @@ class FinanceiroController extends \Controller{
         echo json_encode($this->saida_model->insertSaida($_POST));
     }
 
-    public function removerSaida($id)
-    {
-        echo json_encode($this->saida_model->deleteSaida($id));
+    public function findSaidasByParams()
+    {       
+        echo json_encode($this->saida_model->buscaSaidasByParams($_POST));
+        return;
     }
 
     public function salvarEntradas()
     {
         echo json_encode($this->entrada_model->insertEntrada($_POST));
+    }
+
+    public function deleteSaidaById($id)
+    {
+        echo json_encode($this->saida_model->deleteById($id));
+        return;
     }
 
     public function atualizarEntradas($id)

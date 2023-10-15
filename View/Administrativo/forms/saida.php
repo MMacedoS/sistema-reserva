@@ -27,102 +27,42 @@
 <hr>
     <div class="row">   
         <div class="input-group">
-            <!-- <div class="col-sm-12 mb-2">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
-            </div> -->
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_entrada" class="form-control" value="<?=@$entrada ? $entrada : Date('Y-m-d') ?>">
-            </div>
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="busca_saida" class="form-control" value="<?=@$saida ? $saida : Date('Y-m-d')?>">
-            </div>
-            <!-- <div class="col-sm-3 mb-2">
-                <select name="" id="" class="form-control">
-                    <option value="">Selecione uma empresa</option>
-                    <option value="">Confirmada</option>
-                    <option value="">Hospedadas</option>
-                </select>
-            </div>     -->
             <div class="col-sm-2 mb-2">
-                <select name="" id="busca_status" class="form-control">
-                    <option value="">Selecione o Tipo</option>
-                    <option <?=$status == 1 ? 'selected': '';?> value="1">Adiantamento</option>
-                    <option <?=$status == 2 ? 'selected': '';?> value="2">Operacionais</option>
-                    <option <?=$status == 3 ? 'selected': '';?> value="3">Pessoal</option>
-                    <option <?=$status == 4 ? 'selected': '';?> value="4">Outros</option>
-                </select>
-            </div>  
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+            </div>
             <div class="col-sm-3 mb-2">
-                <select name="" id="busca_text" class="form-control">
-                    <option value="">Selecione o forma</option>
-                    <option <?=$status == 1 ? 'selected': '';?> value="1">Dinhero</option>
-                    <option <?=$status == 2 ? 'selected': '';?> value="2">Cartão de Crédito</option>
-                    <option <?=$status == 3 ? 'selected': '';?> value="3">Cartão de Débito</option>
-                    <option <?=$status == 4 ? 'selected': '';?> value="4">Deposito/PIX</option>
+                <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
+            </div>
+            <div class="col-sm-3 mb-2">
+                <input type="date" name="" id="end_date" class="form-control" value="<?=Date('Y-m-d')?>">
+            </div>   
+            <div class="col-sm-3 mb-2">
+                <select name="" id="status" class="form-control">
+                    <option value="">Selecione o Tipo</option>
+                    <option value="1">Dinhero</option>
+                    <option value="2">Cartão de Crédito</option>
+                    <option value="3">Cartão de Débito</option>
+                    <option value="4">Deposito/PIX</option>
                 </select>
             </div>  
-            <div class="input-group-append">
-                <button class="btn btn-primary ml-3" type="button" id="btn_busca">
+            <div class="input-group-append float-right">
+                <button class="btn btn-primary ml-3" type="button" onclick="pesquisa()" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
             </div>
         </div>
     </div>
 <hr>
+
+    <div class="row">
+        <div class="col-lg-12 col-sm-12 text-info text-right" id="total"></div>
+    </div>
    
     <div class="row">
-            <table class="table table-sm mr-4" id="lista">     
-                <?php       
-                 $movimentos = $this->buscaSaida($request);             
-                    if(!empty($movimentos)) {
-                ?>
-                <thead>
-                    <tr>
-                        <th class="d-none d-sm-table-cell" scope="col">COD</th>
-                        <th class="d-none d-sm-table-cell" >Descrição</th>
-                        <th scope="col">Tipo de Pgto.</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Valor</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        foreach ($movimentos as $key => $value) {
-                            $data_saida = explode(' ', $value['created_at']);
-                            echo '
-                                <tr>
-                                    <td class="d-none d-sm-table-cell">' . $value['id'] . '</td>
-                                    <td class="d-none d-sm-table-cell">' . $value['descricao'] . '</td>
-                                    <td>' . self::prepareTipo($value['tipoPagamento']) . '</td>
-                                    <td>' . self::prepareTipoSaidas($value['tipo']) . '</td>
-                                    <td>R$ ' . $value['valor'] . '</td>
-                                    <td>
-                                        <a href="#" class="remove-pagamento" id=' . $value['id'] . ' >&#10060;</a>
-                                    </td>
-                                </tr>
-                            ';
-                        }
-                    ?>
-                </tbody>
-                <?php } else{
-                    'echo <td>não possui reservas cadastradas</td>';
-                }
-                ?>
-            </table>
-        <ul class="pagination">
-            <!-- Declare the item in the group -->
-            <li class="page-item">
-                <!-- Declare the link of the item -->
-                <a class="page-link" href="<?=ROTA_GERAL?>/Administrativo/saida/page=<?= $chave == 0 ? 0 : $chave + (-12)?>">Anterior</a>
-            </li>
-            <!-- Rest of the pagination items -->
-          
-            <li class="page-item">
-                <a class="page-link" href="<?=ROTA_GERAL?>/Administrativo/saida/page=<?=$chave + 12?>">proxima</a>
-            </li>
-        </ul>
-    </div>    
+        <div class="table-responsive ml-3">
+            <div id="table"></div>
+        </div>
+    </div>  
 </div>
 
 <!-- editar -->
@@ -180,6 +120,243 @@
 <!-- editar -->
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
+     $(document).ready(function(){
+        showData("<?=ROTA_GERAL?>/Financeiro/findAllSaidas")
+        .then((response) => createTable(response)).then(() => hideLoader());
+    });
+
+    
+    $('#novo').click(function(){
+        $('#exampleModalLabel').text("Cadastro de Entradas");
+        $('#modalApartamentos').modal('show');        
+    });
+
+    function pesquisa() {
+        // Obtém o valor do input
+        let data = new FormData();
+        data.append('search', $('#txt_busca').val());
+        data.append('startDate', $('#start_date').val());
+        data.append('endDate', $('#end_date').val());
+        data.append('status', $('#status').val());  
+        // Executa a função com base no valor do input
+        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findSaidasByParams/",data)
+        .then((response) => createTable(response));;    
+    }
+
+    function destroyTable() {
+        var table = document.getElementById('table');
+        if (table) {
+        table.remove(); // Remove a tabela do DOM
+        }
+    }
+
+    function createTable(data) {
+        if (data.length < 0) {
+            
+            return ;
+        }
+        // Remove a tabela existente, se houver
+        var tableContainer = document.getElementById('table');
+        var existingTable = tableContainer.querySelector('table');
+        if (existingTable) {
+            existingTable.remove();
+        }
+        var thArray = ['Cod', 'Descrição', 'Tipo de Pagamento', "Data",'Valor']; 
+        var table = document.createElement('table');
+        table.className = 'table table-sm mr-4 mt-3';
+        var thead = document.createElement('thead');
+        var headerRow = document.createElement('tr');
+        
+        var totalValue = 0; 
+
+        thArray.forEach(function(value) {
+            var th = document.createElement('th');
+            th.textContent = value;
+            
+            if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
+                th.classList.add('d-none', 'd-sm-table-cell');
+            }
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        var tbody = document.createElement('tbody');
+
+            data.forEach(function(item) {
+                var tr = document.createElement('tr');
+
+                totalValue += parseFloat(item[4]);
+                if (item.created_at) {
+                        created_at = formatDateWithHour(item.created_at);
+                    } 
+
+                thArray.forEach(function(value, key) {
+                        var td = document.createElement('td');
+                        td.textContent = item[key];
+                        
+                        if (item[key] === '1' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Dinhero';
+                        } if (item[key] === '2' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Cartão de Crédito';
+                        } if (item[key] === '3' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Cartão de Débito';
+                        } if (item[key] === '4' && value == 'Tipo de Pagamento') {
+                            td.textContent = 'Deposito/PIX';
+                        }
+                        // venda
+                        if (item[key] === null && value == 'Tipo') {
+                            td.textContent = 'Venda';
+                        }
+                        if (item[key] !== null && value == 'Tipo') {
+                            td.textContent = 'Hospedagem';
+                        }
+
+                        if (value === 'Data') {
+                            td.textContent = created_at;
+                        }
+
+                        if (value === 'Dt.Saida') {
+                            td.textContent = dateSaida;
+                        }
+
+                        if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
+                            td.classList.add('d-none', 'd-sm-table-cell');
+                        }
+                        tr.appendChild(td);
+                    });
+                                    // Adiciona os botões em cada linha da tabela
+                var buttonsTd = document.createElement('td');
+
+                var delButton = document.createElement('button');
+                delButton.innerHTML = '<i class="fa fa-trash"></i>';
+                delButton.className = 'btn btn-edit';
+                
+                buttonsTd.appendChild(delButton);
+
+                // var clearButton = document.createElement('button');
+                // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
+                // buttonsTd.appendChild(clearButton);
+
+                // var activateButton = document.createElement('button');
+                // activateButton.innerHTML = '<i class="fa fa-check"></i>';
+                // activateButton.className = 'btn btn-activate';
+                // buttonsTd.appendChild(activateButton);
+
+                // // Verificar o valor e definir o ícone e classe apropriados
+                // if (item.status === '0') {           
+                //     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
+                //     activateButton.title = 'devolvido';
+                // } else {
+                //     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
+                //     activateButton.title = 'Recebido';
+                // }
+
+                // Adicionando a ação para o botão "deletar"
+                delButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                    deletarRegistro(rowData);
+                });
+
+                // // Adicionando a ação para o botão "Editar"
+                // activateButton.addEventListener('click', function() {
+                // var rowData = Array.from(tr.cells).map(function(cell) {
+                //     return cell.textContent;
+                // });
+                // // Chame a função desejada passando os dados da linha
+                // deletarRegistro(rowData);
+                // });
+
+                tr.appendChild(buttonsTd);
+                tbody.appendChild(tr);                
+            });
+
+            table.appendChild(tbody);
+
+            var destinationElement = document.getElementById('table');
+            destinationElement.appendChild(table);
+
+        $('#total').text("Total de saidas " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+
+        return table;
+    }
+
+    function editarRegistro(rowData)
+    {
+        showData("<?=ROTA_GERAL?>/Financeiro/findEntradaById/" + rowData[0])
+            .then((response) => prepareModalEditarEntrada(response.data));
+        console.log(rowData[0]);
+    }
+
+    function deletarRegistro(rowData)
+    {
+        Swal.fire({
+            title: 'Deseja remover esta saida?',
+            showDenyButton: true,
+            confirmButtonText: 'Sim',
+            denyButtonText: `Não`,
+        }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteSaidaById/" + rowData[0]);
+            } else if (result.isDenied) {
+                Swal.fire('nenhuma mudança efetuada', '', 'info')
+            }
+        })
+    }
+
+   
+    function prepareModalEditarEntrada(data) {
+        $('#descricao').val(data[0].descricao);           
+        $('#valor').val(data[0].valor);
+        $('#pagamento').val(data[0].tipoPagamento);
+        $('#id').val(data[0].id);
+        $('#btnSubmit').text('Atualizar');
+        $('#exampleModalLabel').text("Atualizar Entrada");
+        $('#modalEntrada').modal('show');   
+    }
+
+    $(document).on('click','.Salvar',function(){
+        event.preventDefault();
+        var id = $('#id').val();
+        if(id == '') return createData('<?=ROTA_GERAL?>/Financeiro/salvarEntradas', new FormData(document.getElementById("form")));
+    
+        return updateData('<?=ROTA_GERAL?>/Financeiro/atualizarEntradas/' + id, new FormData(document.getElementById("form")), id);
+    });   
+
+    // $(document).ready(function(){
+    //     $(document).on("click",".fechar",function(){ 
+    //         $('#modal').modal('hide');
+    //     });
+
+    //     $(document).on('click','.Salvar',function(){
+    //         event.preventDefault();            
+    //         return envioRequisicaoPostViaAjax('Financeiro/salvarEntradas', new FormData(document.getElementById("form")));           
+    //     });        
+          
+    // });
+
+    $(document).on('click','.remove-pagamento',function(){
+        var code=$(this).attr("id");
+        Swal.fire({
+            title: 'Deseja remover esta saida?',
+            showDenyButton: true,
+            confirmButtonText: 'Sim',
+            denyButtonText: `Não`,
+        }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                envioRequisicaoGetViaAjax('Financeiro/removerSaida/'+ code);
+            } else if (result.isDenied) {
+                Swal.fire('nenhuma mudança efetuada', '', 'info')
+            }
+        })
+    });
+
     let url = "<?=ROTA_GERAL?>/";
 
       function valores(){
@@ -190,7 +367,7 @@
             $('#valores').text("Valor Total da Estadia: R$" + valor * dias);
       }
       
-      function envioRequisicaoPostViaAjax(controle_metodo, dados) {
+    function envioRequisicaoPostViaAjax(controle_metodo, dados) {
           $.ajax({
               url: url+controle_metodo,
               method:'POST',
@@ -280,13 +457,13 @@
         return ;
     }
 
-    $('#btn_busca').click(function(){
-        var entrada = $('#busca_entrada').val();
-        var saida  = $('#busca_saida').val();
-        var status  = $('#busca_status').val();
-        var texto  = $('#busca_text').val();
-        window.location.href ="<?=ROTA_GERAL?>/Administrativo/saida/"+ texto + '_@_' + status + '_@_' + entrada + '_@_' + saida;
-    });
+    // $('#btn_busca').click(function(){
+    //     var entrada = $('#busca_entrada').val();
+    //     var saida  = $('#busca_saida').val();
+    //     var status  = $('#busca_status').val();
+    //     var texto  = $('#busca_text').val();
+    //     window.location.href ="<?=ROTA_GERAL?>/Administrativo/saida/"+ texto + '_@_' + status + '_@_' + entrada + '_@_' + saida;
+    // });
 
     $('#novo').click(function(){
         $('#exampleModalLabel').text("Cadastro de Reservas");
@@ -303,22 +480,7 @@
             return envioRequisicaoPostViaAjax('Financeiro/insertSaida', new FormData(document.getElementById("form")));
         });
 
-        $(document).on('click','.remove-pagamento',function(){
-            var code=$(this).attr("id");
-            Swal.fire({
-                title: 'Deseja remover esta saida?',
-                showDenyButton: true,
-                confirmButtonText: 'Sim',
-                denyButtonText: `Não`,
-            }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-                if (result.isConfirmed) {
-                    envioRequisicaoGetViaAjax('Financeiro/removerSaida/'+ code);
-                } else if (result.isDenied) {
-                    Swal.fire('nenhuma mudança efetuada', '', 'info')
-                }
-            })
-        });
+        
 
         $(document).on('click','.view_data',function(){
             var id = $(this).attr("id");

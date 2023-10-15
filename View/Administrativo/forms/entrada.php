@@ -152,8 +152,7 @@
                     </div>
                 </form>
             </div>
-        </div>
-        
+        </div>        
     </div>
 </div>
 
@@ -189,8 +188,7 @@
         }
     }
 
-    function createTable(data) {
-        
+    function createTable(data) {        
         // Remove a tabela existente, se houver
         var tableContainer = document.getElementById('table');
         var existingTable = tableContainer.querySelector('table');
@@ -269,10 +267,16 @@
                 var editButton = document.createElement('button');
                 editButton.innerHTML = '<i class="fa fa-edit"></i>';
                 editButton.className = 'btn btn-edit';
+
+                var delButton = document.createElement('button');
+                delButton.innerHTML = '<i class="fa fa-trash"></i>';
+                delButton.className = 'btn btn-edit';
                 if(item.pagamento_id !== null) {
                     editButton.hidden = true;
+                    delButton.hidden = true;
                 } 
                 buttonsTd.appendChild(editButton);
+                buttonsTd.appendChild(delButton);
 
                 // var clearButton = document.createElement('button');
                 // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
@@ -301,6 +305,14 @@
                 editarRegistro(rowData);
                 });
 
+                delButton.addEventListener('click', function() {
+                var rowData = Array.from(tr.cells).map(function(cell) {
+                    return cell.textContent;
+                });
+                // Chame a função desejada passando os dados da linha
+                deletarRegistro(rowData);
+                });
+
                 // Adicionando a ação para o botão "Editar"
                 activateButton.addEventListener('click', function() {
                 var rowData = Array.from(tr.cells).map(function(cell) {
@@ -319,7 +331,7 @@
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
 
-            $('#total').text("Total de Entradas R$ " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#total').text("Total de Entradas " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
           
         return table;
     }
@@ -371,7 +383,6 @@
         });
     }
 
-
     function editarRegistro(rowData)
     {
         showData("<?=ROTA_GERAL?>/Financeiro/findEntradaById/" + rowData[0])
@@ -379,6 +390,22 @@
         console.log(rowData[0]);
     }
 
+    function deletarRegistro(rowData)
+    {
+        Swal.fire({
+            title: 'Deseja remover esta entrada?',
+            showDenyButton: true,
+            confirmButtonText: 'Sim',
+            denyButtonText: `Não`,
+        }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {                
+                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteEntradaById/" + rowData[0]);
+            } else if (result.isDenied) {
+                Swal.fire('nenhuma mudança efetuada', '', 'info')
+            }
+        })
+    }
    
     function prepareModalEditarEntrada(data) {
         $('#descricao').val(data[0].descricao);           
@@ -392,123 +419,11 @@
 
     $(document).on('click','.Salvar',function(){
         event.preventDefault();
+        $('.Salvar').prop('disabled', true);
         var id = $('#id').val();
         if(id == '') return createData('<?=ROTA_GERAL?>/Financeiro/salvarEntradas', new FormData(document.getElementById("form")));
     
         return updateData('<?=ROTA_GERAL?>/Financeiro/atualizarEntradas/' + id, new FormData(document.getElementById("form")), id);
     });   
-
-    // $(document).ready(function(){
-    //     $(document).on("click",".fechar",function(){ 
-    //         $('#modal').modal('hide');
-    //     });
-
-    //     $(document).on('click','.Salvar',function(){
-    //         event.preventDefault();            
-    //         return envioRequisicaoPostViaAjax('Financeiro/salvarEntradas', new FormData(document.getElementById("form")));           
-    //     });        
-          
-    // });
 </script>
 
-<script>
-    // let url = "<=ROTA_GERAL?>/";
-            
-    //   function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-    //       $.ajax({
-    //           url: url+controle_metodo,
-    //           method:'POST',
-    //           data: dados,
-    //           dataType: 'JSON',
-    //           contentType: false,
-	//           cache: false,
-	//           processData:false,
-    //           success: function(data){
-    //               if(data.status === 422){
-    //                   $('#mensagem').removeClass('text-danger');
-    //                   $('#mensagem').addClass('text-success');
-    //                   $('#mensagem').text(data.message);
-    //               }
-    //           }
-    //       })
-    //       .done(function(data) {
-    //           if(data.status === 201){
-    //               return Swal.fire({
-    //                   icon: 'success',
-    //                   title: 'OhoWW...',
-    //                   text: data.message,
-    //                   footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-    //               }).then(()=>{
-    //                 window.location.reload();    
-    //             })
-    //           }
-    //           return Swal.fire({
-    //                   icon: 'warning',
-    //                   title: 'ops...',
-    //                   text: data.message,
-    //                   footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-    //               })
-    //       });
-    //   }
-
-    // function envioRequisicaoGetViaAjax(controle_metodo) {            
-    //     $.ajax({
-    //         url: url+controle_metodo,
-    //         method:'GET',
-    //         processData: false,
-    //         dataType: 'json     ',
-    //         success: function(data){
-    //             if(data.status === 201){
-    //                 preparaModalEditarReserva(data.data);
-    //             }
-    //         }
-    //     })
-    //     .done(function(data) {
-    //         if(data.status === 200){
-    //             return Swal.fire({
-    //                 icon: 'success',
-    //                 title: 'OhoWW...',
-    //                 text: data.message,
-    //                 footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-    //             }).then(()=>{
-    //                 window.location.reload();    
-    //             })
-    //         } 
-    //         if(data.status === 422)           
-    //             return Swal.fire({
-    //                 icon: 'warning',
-    //                 title: 'ops...',
-    //                 text: "Algo de errado aconteceu!",
-    //                 footer: '<a href="<=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-    //         })
-    //     });
-    //     return "";
-    // }
-
-    // function preparaModalEditarReserva(data) 
-    // {
-        
-    //     $('#btnSubmit').addClass('Atualizar');
-    //     $('#exampleModalLabel').text("Atualizar Reservas");
-    //     $('#modal').modal('show');   
-
-    //     return ;
-    // }
-    
-    // $('#novo').click(function(){
-    //     $('#exampleModalLabel').text("Cadastro de Entrada");
-    //     $('#modalEntrada').modal('show');        
-    // });
-
-    // $(document).ready(function(){
-    //     $(document).on("click",".fechar",function(){ 
-    //         $('#modal').modal('hide');
-    //     });
-
-    //     $(document).on('click','.Salvar',function(){
-    //         event.preventDefault();            
-    //         return envioRequisicaoPostViaAjax('Financeiro/salvarEntradas', new FormData(document.getElementById("form")));           
-    //     });        
-          
-    // });
-</script>

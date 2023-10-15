@@ -89,6 +89,8 @@
     $.ajax({
       url: url,
       method: 'DELETE',
+      processData: false,
+      dataType: 'json',
       success: function(response) {
         showSuccessMessage('Registro excluído com sucesso!');
         hideLoader();

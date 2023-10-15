@@ -3,12 +3,14 @@
 require_once 'Trait/StandartTrait.php';
 require_once 'Trait/FindTrait.php';
 require_once 'Trait/DateModelTrait.php';
+require_once 'Trait/DataDropTrait.php';
 
 class EntradaModel extends ConexaoModel {
 
     use StandartTrait;
     use FindTrait;
     use DateModelTrait;
+    use DataDropTrait;
     
     protected $conexao;
 
@@ -52,21 +54,7 @@ class EntradaModel extends ConexaoModel {
     }
 
     public function entrada($off = 0)
-    { 
-        
-        
-        self::logError("SELECT 
-        id,
-        descricao,
-        tipoPagamento,
-        created_at,
-        pagamento_id,
-        valor 
-    FROM 
-        $this->model 
-    ORDER BY
-        id DESC
-    LIMIT 12 offset $off ");
+    {         
         $cmd  = $this->conexao->query(
             "SELECT 
                 id,
@@ -181,6 +169,39 @@ class EntradaModel extends ConexaoModel {
         } catch (\Throwable $th) {
             $this->conexao->rollback();
             return self::message(422, $th->getMessage());
+        }
+    }
+
+    public function deleteById($id)
+    {
+        if(is_null($id)) {
+            return null;
+        }
+        
+        $entrada = $this->findById($id);
+
+        if($entrada) {
+            $this->conexao->beginTransaction();
+            try {      
+                $cmd = $this->conexao->prepare(
+                    "DELETE FROM 
+                        $this->model
+                    WHERE 
+                        id = :id"
+                    );
+
+                $cmd->bindValue(':id',$id);
+                $cmd->execute();
+
+                self::dropRegister($entrada['data']);
+    
+                $this->conexao->commit();
+                return self::message(201, "Registro deletado!!");
+    
+            } catch (\Throwable $th) {
+                $this->conexao->rollback();
+                return self::message(422, $th->getMessage());
+            }
         }
     }
 

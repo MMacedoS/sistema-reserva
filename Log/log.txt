@@ -693,3 +693,501 @@
             created_at BETWEEN '2023-03-01 00:00:00' AND '2023-08-07 12:50:50'
         AND (('4' = '' or '4' is null) or tipoPagamento = '4')
         AND descricao LIKE '%%'
+[2023-08-05 20:21:26] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:48:17] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:49:57] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:50:31] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-08-05 00:00:00' AND '2023-08-05 20:50:31'
+        AND (('1' = '' or '1' is null) or tipoPagamento = '1')
+        AND descricao LIKE '%%'
+[2023-08-05 20:50:42] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:53:16] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:53:50] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:54:13] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:54:53] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:54:57] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:55:29] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:56:23] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:57:15] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:57:29] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-08-05 00:00:00' AND '2023-08-05 20:57:29'
+        AND (('1' = '' or '1' is null) or tipoPagamento = '1')
+        AND descricao LIKE '%%'
+[2023-08-05 20:58:14] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 20:58:25] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:05:54] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:06:27] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:11:03] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:12:03] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:18:17] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:20:00] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:20:48] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:21:21] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:23:00] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:23:45] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:24:05] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:24:32] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:28:29] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:28:36] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:29:56] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:31:37] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 21:32:00] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-05 18:33:14] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-06 09:46:54] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-08-06 09:47:17] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-08-06 00:00:00' AND '2023-08-06  23:59:59'
+        AND (('2' = '' or '2' is null) or tipoPagamento = '2')
+        AND descricao LIKE '%%'
+[2023-10-15 02:48:23] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-10-15 02:48:30] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-10-15 00:00:00' AND '2023-10-15  23:59:59'
+        AND (('' = '' or '' is null) or tipoPagamento = '')
+        AND descricao LIKE '%%'
+[2023-10-15 02:48:31] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-10-15 00:00:00' AND '2023-10-15  23:59:59'
+        AND (('' = '' or '' is null) or tipoPagamento = '')
+        AND descricao LIKE '%%'
+[2023-10-15 02:50:18] SELECT 
+        id,
+        descricao,
+        tipoPagamento,
+        created_at,
+        pagamento_id,
+        valor 
+    FROM 
+        entrada 
+    ORDER BY
+        id DESC
+    LIMIT 12 offset 0 
+[2023-10-15 03:10:58] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-10-15 00:00:00' AND '2023-10-15  23:59:59'
+        AND (('' = '' or '' is null) or tipoPagamento = '')
+        AND descricao LIKE '%%'

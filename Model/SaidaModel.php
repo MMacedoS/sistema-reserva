@@ -3,12 +3,14 @@
 require_once 'Trait/StandartTrait.php';
 require_once 'Trait/FindTrait.php';
 require_once 'Trait/DateModelTrait.php';
+require_once 'Trait/DataDropTrait.php';
 
 class SaidaModel extends ConexaoModel {
 
     use StandartTrait;
     use FindTrait;
     use DateModelTrait;
+    use DataDropTrait;
     
     protected $conexao;
 
@@ -20,26 +22,26 @@ class SaidaModel extends ConexaoModel {
         $this->conexao = ConexaoModel::conexao();
     }
 
-    public function buscaSaida($off = 0)
-    {
-        if(is_null($off) || empty($off))
-        {
-            return $this->saida($off = 0);
-        } 
-        $dados = explode('_@_', $off);   
+    // public function buscaSaida($off = 0)
+    // {
+    //     if(is_null($off) || empty($off))
+    //     {
+    //         return $this->saida($off = 0);
+    //     } 
+    //     $dados = explode('_@_', $off);   
 
-        if(count($dados) == 1)
-        {
-            $chave = str_replace('page=', '', $dados[0]);
-            return $this->saida($chave);
-        }
+    //     if(count($dados) == 1)
+    //     {
+    //         $chave = str_replace('page=', '', $dados[0]);
+    //         return $this->saida($chave);
+    //     }
 
-        return $this->saidaComParams(
-            $dados[1],
-            $dados[2], 
-            $dados[3]
-        );
-    }
+    //     return $this->saidaComParams(
+    //         $dados[1],
+    //         $dados[2], 
+    //         $dados[3]
+    //     );
+    // }
 
     public function saida($off = 0)
     {
@@ -60,23 +62,22 @@ class SaidaModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
         return [];
     }
 
-    public function saidaComParams($texto = 0, $entrada, $saida)
+    public function saidaComParams($texto = 0, $entrada, $saida, $tipo)
     {
         $entrada = date($entrada . ' 00:00:00');
-        $saida = date($saida . ' H:i:s');
+        $saida = date($saida . ' 23:59:59');
        
         $sql  = "SELECT 
                     id,
                     descricao,
                     tipoPagamento,
                     created_at,
-                    pagamento_id,
                     valor 
                 FROM
                     $this->model
@@ -88,9 +89,21 @@ class SaidaModel extends ConexaoModel {
                 
             $sql.= "
             AND
-               tipoPagamento = $texto                 
+               descricao = $texto                 
             ";
         }
+
+        if(!empty($tipo)){
+                
+            $sql.= "
+            AND
+               tipoPagamento = $tipo                 
+            ";
+        }
+
+        $sql.= "
+            ORDER BY id desc               
+        ";
 
         $cmd  = $this->conexao->query(
             $sql
@@ -98,7 +111,7 @@ class SaidaModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            return $cmd->fetchAll();
         }
 
         return [];
@@ -135,60 +148,14 @@ class SaidaModel extends ConexaoModel {
         }
     }
 
-    public function deleteSaida($id)
-    {
-        $this->model = 'saida';
-
-        $dados = self::findById($id)['data'][0];
-
-        $dados['tabela'] = "saida";
-
-        $appModel = new AppModel();
-        
-        $appModel->insertApagados($dados);
-
-        $cmd  = $this->conexao->query(
-            "DELETE 
-                FROM 
-                saida
-                WHERE
-                    id = $id
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::message(200, 'Saida deletado');
-        }
-
-        return self::message(422, 'Nenhum dado encontrado');
-    }
-
-    public function buscaEntrada($off = 0)
-    {
-        if(is_null($off) || empty($off))
-        {
-            return $this->entrada($off = 0);
-        } 
-        $dados = explode('_@_', $off);   
-
-        if(count($dados) == 1)
-        {
-            $chave = str_replace('page=', '', $dados[0]);
-            return $this->entrada($chave);
-        }
-        return true;
-    }
-
-    public function buscaEntradaByParams($params)
+    public function buscaSaidasByParams($params)
     {
         if(is_null($params) || empty($params))
         {
-            return $this->entrada($off = 0);
+            return $this->saida($off = 0);
         } 
 
-        return $this->entradaComParams(
+        return $this->saidaComParams(
             $params['search'],
             $params['startDate'], 
             $params['endDate'],
@@ -196,123 +163,37 @@ class SaidaModel extends ConexaoModel {
         );
     }
 
-    public function entrada($off = 0)
-    {         
-        $cmd  = $this->conexao->query(
-            "SELECT 
-                id,
-                descricao,
-                tipoPagamento,
-                created_at,
-                pagamento_id,
-                valor 
-            FROM 
-                $this->model
-            ORDER BY
-                id DESC
-            LIMIT 12 offset $off "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            return $cmd->fetchAll();
-        }
-
-        return [];
-    }
-
-    public function entradaComParams($texto = 0, $entrada, $saida, $tipoPagamento)
+    public function deleteById($id)
     {
-        $entrada = date($entrada . ' 00:00:00');
-        $saida = date($saida . ' H:i:s');
-       
-        $sql  = "SELECT 
-             id,
-            descricao,
-            tipoPagamento,
-            created_at,
-            pagamento_id,
-            valor 
-        FROM
-            $this->model
-        WHERE
-            created_at BETWEEN '$entrada' AND '$saida'
-        AND (('$tipoPagamento' = '' or '$tipoPagamento' is null) or tipoPagamento = '$tipoPagamento')
-        AND descricao LIKE '%$texto%'";
-
-        $cmd  = $this->conexao->query(
-            $sql
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            return $cmd->fetchAll();
+        if(is_null($id)) {
+            return null;
         }
+        
+        $entrada = $this->findById($id);
 
-        self::logError($sql);
+        if($entrada) {
+            $this->conexao->beginTransaction();
+            try {      
+                $cmd = $this->conexao->prepare(
+                    "DELETE FROM 
+                        $this->model
+                    WHERE 
+                        id = :id"
+                    );
 
-        return [];
-    }
+                $cmd->bindValue(':id',$id);
+                $cmd->execute();
 
-    public function insertEntrada($dados)
-    {
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "INSERT INTO 
-                    $this->model
-                SET 
-                    valor = :valor, 
-                    descricao = :descricao, 
-                    tipoPagamento = :tipopagamento,
-                    funcionario = :funcionario"
-                );
-
-            $cmd->bindValue(':valor',$dados['valor']);
-            $cmd->bindValue(':descricao',$dados['descricao']);
-            $cmd->bindValue(':tipopagamento',$dados['pagamento']);
-            $cmd->bindValue(':funcionario',$_SESSION['code']);
-            $dados = $cmd->execute();
-
-            $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
-
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
+                
+                self::dropRegister($entrada['data']);
+    
+                $this->conexao->commit();
+                return self::message(201, "Registro deletado!!");
+    
+            } catch (\Throwable $th) {
+                $this->conexao->rollback();
+                return self::message(422, $th->getMessage());
+            }
         }
     }
-
-    public function updateEntrada($dados, $id)
-    {
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "UPDATE 
-                    $this->model
-                SET 
-                    valor = :valor, 
-                    descricao = :descricao, 
-                    tipoPagamento = :tipopagamento,
-                    funcionario = :funcionario
-                WHERE 
-                    id = :id"
-                );
-
-            $cmd->bindValue(':valor',$dados['valor']);
-            $cmd->bindValue(':descricao',$dados['descricao']);
-            $cmd->bindValue(':tipopagamento',$dados['pagamento']);
-            $cmd->bindValue(':funcionario',$_SESSION['code']);
-            $cmd->bindValue(':id',$id);
-            $dados = $cmd->execute();
-
-            $this->conexao->commit();
-            return self::message(201, "dados atualizados!!");
-
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
-        }
-    }
-
 }
