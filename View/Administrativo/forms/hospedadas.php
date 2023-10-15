@@ -131,7 +131,7 @@
                 </button> -->
                 <button class="btn btn-danger close" onclick="sair()"> <span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="modal-body"   
+            <div class="modal-body"  > 
                 <input type="hidden" id="id">
                 <div class="row">
                     <div class="col-sm-6 campos_modal mb-2">
@@ -204,7 +204,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body"   
+            <div class="modal-body"  > 
                 <form action="" method="post">
                     <div class="row">
                         <div class="col-sm-6 mb-2">
@@ -327,7 +327,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body"   
+            <div class="modal-body"   >
                 <form action="" id="form-diarias" method="post">
                     <div class="row">
                         <div class="table-responsive" style="height: 250px">
@@ -375,8 +375,7 @@
                     </div>
                 </form>
             </div>
-        </div>
-        
+        </div>        
     </div>
 </div>
 
@@ -391,7 +390,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body"   
+            <div class="modal-body">   
                 <form action="" id="form-pagamento" method="post">
                     <div class="row">
                         <div class="table-responsive" style="height: 250px">
@@ -519,7 +518,7 @@
             </div>
            
             <form action="" id="formReserva" method="POST">
-                <div class="modal-body"                                
+                <div class="modal-body">                                
                     <div class="form-row">
                         <input type="hidden" disabled id="inp-id" >
                         <input type="hidden" disabled id="opcao" value="" >
@@ -1024,8 +1023,9 @@
         });
 
 
-        $(document).on('click','.Salvar-pagamento',function(){
-            event.preventDefault();
+        $(document).on('click','.Salvar-pagamento',function() {
+            event.preventDefault();            
+            $('.Salvar-pagamento').prop('disabled', true);
             let code=$("#id").val(); 
             id_reserva = code;
             if ($('#valor').val() > 0) {
@@ -1039,7 +1039,10 @@
                     cache: false,
                     success: function(data){
                         if(data.status === 201){
-                        $('.pagamento').click();
+                            $('.pagamento').click();
+                                setInterval(() => {
+                                    $('.Salvar-pagamento').prop('disabled', false);
+                                }, 500);                            
                         }
                     }
                 })  

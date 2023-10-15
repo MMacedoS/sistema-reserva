@@ -1209,3 +1209,12 @@
 [2023-10-15 07:06:19] model
 [2023-10-15 07:06:19] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
 [2023-10-15 07:06:19] entrou no try
+[2023-10-15 15:37:04] model
+[2023-10-15 15:37:04] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-10-15 15:37:04] entrou no try
+[2023-10-15 15:38:38] model
+[2023-10-15 15:38:38] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-10-15 15:38:38] entrou no try
+[2023-10-15 15:39:17] model
+[2023-10-15 15:39:17] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-10-15 15:39:17] entrou no try
