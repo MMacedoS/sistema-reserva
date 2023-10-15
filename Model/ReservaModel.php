@@ -273,6 +273,8 @@ class ReservaModel extends ConexaoModel {
             )";
         }
 
+        $SQL.= " order by id desc";
+
         $cmd  = $this->conexao->query(
             $SQL
         );

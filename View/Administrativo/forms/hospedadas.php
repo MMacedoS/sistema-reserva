@@ -232,7 +232,7 @@
                         <button type="button" class="close mr-4" data-dismiss="modal" aria-label="Close">
                                 X
                         </button>
-                        <button type="button" name="salvar" disabled class="btn btn-primary executar-checkout">Executar</button>
+                        <button type="button" name="salvar" disabled id="btn-checkout" class="btn btn-primary executar-checkout">Executar</button>
                     </div>
                 </form>
             </div>
@@ -878,7 +878,7 @@
         if(total == 0)
         {
             $('#restante').text("Fechamento disponivel");
-            $('#btnSubmit').attr('disabled',false);
+            $('#btn-checkout').attr('disabled',false);
         }
     }
 
