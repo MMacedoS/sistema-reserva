@@ -11,7 +11,28 @@
     .fs{
         font-size: 21px;
     }
+    
+    .modal-static {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+       top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+     }
 
+    .modal-static-content {
+        background-color: #fff;
+        width: 80%;
+        max-width: 400px;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        border-radius: 5px;
+        text-align: center;
+    }
 
     @media screen and (max-width: 767px) {
         .modal-content {
@@ -110,7 +131,7 @@
                 </button> -->
                 <button class="btn btn-danger close" onclick="sair()"> <span aria-hidden="true">&times;</span></button>
             </div>
-            <div class="modal-body" id="">  
+            <div class="modal-body"   
                 <input type="hidden" id="id">
                 <div class="row">
                     <div class="col-sm-6 campos_modal mb-2">
@@ -143,7 +164,7 @@
                    
                 </div>
                 
-                <h6 class="modal-title" id="">Ações</h6>
+                <h6 class="modal-title" Ações</h6>
                 <hr>
                 <div class="row">
                     <div class="col-sm-2 campos_modal text-left mb-2">
@@ -183,7 +204,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="">  
+            <div class="modal-body"   
                 <form action="" method="post">
                     <div class="row">
                         <div class="col-sm-6 mb-2">
@@ -211,7 +232,7 @@
                         <button type="button" class="close mr-4" data-dismiss="modal" aria-label="Close">
                                 X
                         </button>
-                        <button type="button" name="salvar" disabled id="btnSubmit" class="btn btn-primary executar-checkout">Executar</button>
+                        <button type="button" name="salvar" disabled class="btn btn-primary executar-checkout">Executar</button>
                     </div>
                 </form>
             </div>
@@ -231,7 +252,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="">  
+            <div class="modal-body" >  
                 <form action="" id="form-consumo" method="post">
                     <div class="row">
                         <div class="table-responsive" style="height: 250px">
@@ -274,18 +295,18 @@
                     <hr>
                     <div class="form-row">
                         <div class="col-sm-4">
-                            <label for="">Produto</label>
+                            <label >Produto</label>
                             <select name="produto" class="form-control" id="produto">
                                 
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <label for="">quantidade</label>
+                            <label >quantidade</label>
                             <input type="number" step="0" min="0"  value="1" class="form-control" name="quantidade" id="quantidade">
                         </div>
                         <div class="col-sm-4 text-center">
-                            <label for="">&nbsp;</label>
-                            <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar-consumo mt-4"> &#10010; Adicionar consumo</button>
+                            <label >&nbsp;</label>
+                            <button type="submit" name="salvar" class="btn btn-primary Salvar-consumo mt-4"> &#10010; Adicionar consumo</button>
                         </div>
                     </div>
                 </form>
@@ -306,7 +327,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="">  
+            <div class="modal-body"   
                 <form action="" id="form-diarias" method="post">
                     <div class="row">
                         <div class="table-responsive" style="height: 250px">
@@ -340,16 +361,16 @@
                     <hr>
                     <div class="form-row">
                         <div class="col-sm-4">
-                            <label for="">Data</label>
+                            <label >Data</label>
                             <input type="date" class="form-control" name="data" id="dataDiaria">
                         </div>
                         <div class="col-sm-4">
-                            <label for="">Valor</label>
+                            <label >Valor</label>
                             <input type="number" step="0.01" min="0.00"  value="" class="form-control" name="valor" id="valorReserva">
                         </div>
                         <div class="col-sm-4 text-center">
-                            <label for="">&nbsp;</label>
-                            <button type="submit" name="salvar" id="" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
+                            <label >&nbsp;</label>
+                            <button type="submit" name="salvar" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
                         </div>
                     </div>
                 </form>
@@ -370,7 +391,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="">  
+            <div class="modal-body"   
                 <form action="" id="form-pagamento" method="post">
                     <div class="row">
                         <div class="table-responsive" style="height: 250px">
@@ -415,7 +436,7 @@
                     <hr>
                     <div class="form-row">
                         <div class="col-sm-3">
-                            <label for="">Tipo</label>
+                            <label >Tipo</label>
                             <select name="tipo" class="form-control" id="tipo">
                                 <option value="2">Cartão de Crédito</option>
                                 <option value="3">Cartão Débito</option>
@@ -424,16 +445,16 @@
                             </select>
                         </div>
                         <div class="col-sm-3">
-                            <label for="">Valor</label>
+                            <label >Valor</label>
                             <input type="number" step="0.01" min="0.00"  value="0" class="form-control" name="valor" id="valor">
                         </div>
                         <div class="col-sm-3">
-                            <label for="">Descrição</label>
+                            <label >Descrição</label>
                             <input type="text" value="" class="form-control" name="descricao" id="descricao">
                         </div>
                         <div class="col-sm-3 text-center">
-                            <label for="">&nbsp;</label>
-                            <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar-pagamento mt-4"> &#10010; Pagamento</button>
+                            <label >&nbsp;</label>
+                            <button type="submit" name="salvar" class="btn btn-primary Salvar-pagamento mt-4"> &#10010; Pagamento</button>
                         </div>
                     </div>
                 </form>
@@ -443,6 +464,48 @@
     </div>
 </div>
 <!-- editar -->
+
+<!-- cons -->
+    <div id="changeConsumo" class="modal-static">
+        <div class="modal-static-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Alterar Consumo</h2>
+            <form id="swal-form-consumo">
+                <input type="hidden" name="" id="swal_id_consumo">
+                <div class="col-sm-12">
+                    <label>Qtdo<input id="swal-cons-input1" name="quantidade" class="form-control" type="number"></label>
+                </div>
+                <div class="col-sm-12">
+                    <label>Valor<input id="swal-cons-input2" class="form-control" name="valor" placeholder="valor" type="number" step="0.1" min="0"></label>
+                </div>
+                <div class="col-sm-12 float-right">
+                    <button id="saveChangesConsumo" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+<!-- diaria -->
+<div id="changeDiaria" class="modal-static">
+        <div class="modal-static-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Alterar Diária</h2>
+            <form id="swal-form-diaria">
+                <input type="hidden" name="" id="swal_id_diaria">
+                <div class="col-sm-12">
+                    <label>Data<input id="swal-dia-input1" name="data" class="form-control" type="date"></label>
+                </div>
+                <div class="col-sm-12">
+                    <label>Valor<input id="swal-dia-input2" class="form-control" name="valor" placeholder="valor" type="number" step="0.1" min="0"></label>
+                </div>
+                <div class="col-sm-12 float-right">
+                <button id="saveChangesDiaria" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 <!-- editar -->
 <div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
@@ -456,37 +519,37 @@
             </div>
            
             <form action="" id="formReserva" method="POST">
-                <div class="modal-body" id="">                               
+                <div class="modal-body"                                
                     <div class="form-row">
                         <input type="hidden" disabled id="inp-id" >
                         <input type="hidden" disabled id="opcao" value="" >
                         <div class="col-sm-5">
-                            <label for="">Data Entrada</label>
+                            <label >Data Entrada</label>
                             <input type="date" name="entrada" id="inp-entrada" class="form-control">
                         </div>
 
                         <div class="col-sm-5">
-                            <label for="">Data Saida</label>
+                            <label >Data Saida</label>
                             <input type="date" name="saida" id="inp-saida" class="form-control">
                         </div>                                    
                     </div>
                     <div class="form-row" id="div_apartamento">
 
                         <div class="col-sm-8">
-                            <label for="">Hospede</label><br>
+                            <label >Hospede</label><br>
                             <select id="select_hospedes" class="selectized" name="hospedes">
                                
                             </select>
                         </div>
                         <div class="col-sm-4">
-                            <label for="">Apartamentos</label><br>
+                            <label >Apartamentos</label><br>
                                 <select name="apartamento" id="select_apartamentos">                               
                                    
                                 </select>
                         </div>
 
                         <div class="col-sm-2">
-                            <label for="">Tipo</label><br>
+                            <label >Tipo</label><br>
                             <select class="form-control" name="tipo" id="inp-tipo">
                                 <option value="1">Diária</option>
                                 <option value="2">Pacote</option>
@@ -495,7 +558,7 @@
                         </div>
 
                         <div class="col-sm-3">
-                            <label for="">Status</label><br>
+                            <label >Status</label><br>
                             <select class="form-control" name="status" id="inp-status">
                                 <option value="1">Reservada</option>
                                 <option value="2">Confirmada</option>
@@ -505,22 +568,22 @@
                         </div>
 
                         <div class="col-sm-2">
-                            <label for="">Valor</label>
+                            <label >Valor</label>
                             <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
                         </div>
 
                         <div class="col-sm-2">
-                            <label for="">Qtde Hospedes</label>
+                            <label >Qtde Hospedes</label>
                             <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
                         </div>
 
                         <div class="col-sm-3">
-                            <label for="">Placa</label>
+                            <label >Placa</label>
                             <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
                         </div>
 
                         <div class="col-sm-12">
-                            <label for="">observação</label><br>
+                            <label >observação</label><br>
                             <textarea name="observacao" class="form-control" value="tudo certo" id="inp-observacao" cols="30" rows="5"> &nbsp;</textarea>
                         </div>
                     </div>   
@@ -1005,7 +1068,7 @@
 
         $(document).on('click', '.alterar-consumo', function(){
             let code=$(this).attr("id");  
-            let produto;
+            
             id_reserva = code;
             $.ajax({
                 url: url+ "Consumo/getConsumoPorId/" + code ,
@@ -1014,48 +1077,52 @@
                 dataType: 'json     ',
                 success: function(data){
                     if(data.status === 201){
-                        Swal.fire({
-                            title: 'Alterar Consumo',
-                            html:
-                                '<form id="swal-form"><label>Qtdo<input id="swal-input1" name="quantidade" class="swal2-input" type="number" placeholder="quantidade" value="'+data.data[0].quantidade+'" min="1"></label>' +
-                                '<label>Valor<input id="swal-input2" class="swal2-input" name="valor" palceholder="valor" type="number" step="0.1" min="0" value="'+data.data[0].valorUnitario+'"></label></form>',
-                            showCancelButton: true,
-                            focusConfirm: false,
-                            preConfirm: () => {
-                                envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form")));                                  
-                                $('.consumo').click();
-                            }
-                        })
-                        
+                        $('#swal-id_consumo').val(code);
+                        $('#swal-cons-input1').val(data.data[0].quantidade);
+                        $('#swal-cons-input2').val(data.data[0].valorUnitario);
+                        $('#saveChangesDiaria').prop('disabled', false);
+                        $("#changeConsumo").modal('show');
                     }
                 }
             })    
         });
 
-        $(document).on('click', '.alterar-diarias', function(){
+        $(document).on('click', '#saveChangesConsumo', function(event) {
+            event.preventDefault();
+            $('#saveChangesDiaria').prop('disabled', true);
+            let code=$("#swal_id_consumo").val(); 
+            envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form-consumo")));                                  
+            $('.consumo').click();
+        });
+
+        $(document).on('click', '#saveChangesDiaria', function(event) {
+            event.preventDefault();
+            $('#saveChangesDiaria').prop('disabled', true);
+            let code=$("#swal_id_diaria").val(); 
+            envioRequisicaoPostViaAjax('Reserva/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diaria")));                                  
+            $('.diarias').click();
+        });
+
+        $(document).on('click', '.alterar-diarias', function(event){
+            event.stopPropagation();
+
             let code=$(this).attr("id");  
-            let produto;
+
             id_reserva = code;
+            
             $.ajax({
                 url: url+ "Reserva/getDiariasPorId/" + code ,
                 method:'GET',
                 processData: false,
-                dataType: 'json     ',
-                success: function(data){
+                dataType: 'json',
+                success: function(data) {
                     if(data.status === 201){
-                        Swal.fire({
-                            title: 'Alterar Diaria',
-                            html:
-                                '<form id="swal-form-diarias"><label>Data<input id="swal-input1" name="data" class="swal2-input" type="date" value="'+data.data[0].data+'"></label>' +
-                                '<label>Valor<input id="swal-input2" class="swal2-input" name="valor" palceholder="valor" type="number" step="0.1" min="0" value="'+data.data[0].valor+'"></label></form>',
-                            showCancelButton: true,
-                            focusConfirm: false,
-                            preConfirm: () => {
-                                envioRequisicaoPostViaAjax('Reserva/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diarias")));
-                                $('.diarias').click();                                  
-                               
-                            }
-                        })
+                        
+                        $('#swal_id_diaria').val(code);
+                        $('#swal-dia-input1').val(data.data[0].data);
+                        $('#swal-dia-input2').val(data.data[0].valor);
+                        $('#saveChangesDiaria').prop('disabled', false);
+                        $("#changeDiaria").modal('show');                      
                         
                     }
                 }
@@ -1188,4 +1255,6 @@
        });
 
     }
+
+    
 </script>

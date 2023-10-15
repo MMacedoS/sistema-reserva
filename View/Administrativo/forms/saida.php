@@ -321,7 +321,8 @@
     }
 
     $(document).on('click','.Salvar',function(){
-        event.preventDefault();
+        event.preventDefault();        
+        $('.Salvar').prop('disabled', true);
         return createData('<?=ROTA_GERAL?>/Financeiro/insertSaida', new FormData(document.getElementById("form")));
     });  
 
