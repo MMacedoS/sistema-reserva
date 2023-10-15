@@ -64,11 +64,11 @@ class AdministrativoController extends \Controller{
         $this->viewAdmin('mapas',$request,"");
     }
 
-    public function buscaReservas($request =  null)
-    {        
-        $reservas_controller = new ReservaController();
-        return $reservas_controller->buscaReservas($request);
-    }
+    // public function buscaReservas($request =  null)
+    // {        
+    //     $reservas_controller = new ReservaController();
+    //     return $reservas_controller->buscaReservas($request);
+    // }
 
     public function hospedadas($request = null) {
         $this->viewAdmin('hospedadas',$request,"");

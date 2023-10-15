@@ -232,32 +232,26 @@ class ReservaModel extends ConexaoModel {
         }
     }
 
-    public function findReservas($nome, $status, $entrada, $saida)
+    public function findReservas($nome, $entrada, $saida, $status)
     {
-
         $SQL = "SELECT 
-                    r.*, 
-                    h.nome, 
-                    a.numero 
+                   r.id,
+                    h.nome,
+                    r.dataEntrada,
+                    r.dataSaida,
+                    p.numero,
+                    r.status
                 FROM 
                     $this->model r 
-                INNER JOIN
-                    hospede h 
-                ON 
-                    r.hospede_id = h.id
-                LEFT JOIN 
-                    empresa_has_hospede eh
-                ON 
-                    eh.hospede_id = h.id
-                INNER JOIN 
-                    apartamento a 
-                ON 
-                    r.apartamento_id = a.id
+                left join
+                    hospede h on h.id = r.hospede_id
+                left join 
+                    apartamento p on  p.id = r.apartamento_id
                 WHERE
                     r.status LIKE '%$status%' 
                 ";
         
-        if(!empty($entrada)){
+        if(!empty($entrada) && !empty($saida)){
             $SQL.= "
             AND
             (
@@ -284,8 +278,8 @@ class ReservaModel extends ConexaoModel {
         );
 
         if($cmd->rowCount() > 0)
-        {
-            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+        {            
+            return $cmd->fetchAll();
         }
 
         return false;

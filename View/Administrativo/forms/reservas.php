@@ -27,46 +27,32 @@
 <hr>
     <form id="form_search" method="POST">
         <div class="row">              
-            <!-- <div class="col-sm-12 mb-2">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="<=$request?>" aria-describedby="basic-addon2">
-            </div> -->
+            <div class="col-sm-12 mb-2">
+                <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" name="busca" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+            </div>
                 
-                    <!-- <div class="col-sm-3 mb-2">
-                        <input type="date" name="" id="busca_entrada" class="form-control" value="">
-                    </div>
-                    <div class="col-sm-3 mb-2">
-                        <input type="date" name="" id="busca_saida" class="form-control" value="">
-                    </div> -->
-                    <!-- <div class="col-sm-3">
-                        <select name="" id="" class="form-control">
-                            <option value="">Selecione uma empresa</option>
-                            <option value="">Confirmada</option>
-                            <option value="">Hospedadas</option>
-                        </select>
-                    </div>     -->
-                    <!-- <div class="col-sm-3">
-                        <select name="" id="busca_status" class="form-control">
-                            <option value="">Selecione o status</option>
-                            <option value="1">Reservada</option>
-                            <option value="2">Confirmada</option>
-                            <option value="3">Hospedadas</option>
-                            <option value="4">Finalizada</option>
-                            <option value="5">Cancelada</option>
-                        </select>
-                    </div>  
-                    
-                    <div class="col-sm-11 mt-2">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
-                    </div>
-                
-
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button" onclick="pesquisa()">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>   
-                </div> -->
-        </div>
-    
+            <div class="col-sm-3 mb-2">
+                <input type="date" name="dt_entrada" id="busca_entrada" class="form-control" value="">
+            </div>
+            <div class="col-sm-3 mb-2">
+                <input type="date" name="dt_saida" id="busca_saida" class="form-control" value="">
+            </div>
+            <div class="col-sm-3">
+                <select name="status" id="busca_status" class="form-control">
+                    <option value="">Selecione o status</option>
+                    <option value="1">Reservada</option>
+                    <option value="2">Confirmada</option>
+                    <option value="3">Hospedadas</option>
+                    <option value="4">Finalizada</option>
+                    <option value="5">Cancelada</option>
+                </select>
+            </div>     
+            <div class="col-sm-3 input-group-append float-right">
+                <button class="btn btn-primary" type="button" onclick="pesquisa()">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>   
+            </div>
+        </div>    
     </form>
 <hr>
     <div class="row">

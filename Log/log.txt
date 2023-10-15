@@ -1191,3 +1191,9 @@
             created_at BETWEEN '2023-10-15 00:00:00' AND '2023-10-15  23:59:59'
         AND (('' = '' or '' is null) or tipoPagamento = '')
         AND descricao LIKE '%%'
+[2023-10-15 04:52:43] model
+[2023-10-15 04:52:43] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-10-15 04:52:43] entrou no try
+[2023-10-15 04:56:27] model
+[2023-10-15 04:56:27] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-10-15 04:56:27] entrou no try

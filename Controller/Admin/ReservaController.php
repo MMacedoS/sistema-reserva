@@ -15,23 +15,13 @@ class ReservaController extends \Controller{
     }
 
     public function buscaReservas($request =  null)
-    {
-        if(is_null($request)){
-            return $this->reserva_model->findAllReservas('', 0);    
-        }
-        $dados = explode('_@_', $request);   
-
-        if(count($dados) == 1){
-            $chave = str_replace('page=', '', $dados[0]);
-            return $this->reserva_model->findAllReservas('', $chave);    
-        }
-    
-        return $this->reserva_model->findReservas(
-            $dados[0],
-            $dados[1], 
-            $dados[2], 
-            $dados[3]
-        );
+    {    
+        echo json_encode($this->reserva_model->findReservas(
+            $_POST['busca'],
+            $_POST['dt_entrada'], 
+            $_POST['dt_saida'], 
+            $_POST['status']
+        ));
     }
 
     public function buscaReservaPorId($id)

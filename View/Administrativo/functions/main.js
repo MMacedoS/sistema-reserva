@@ -66,17 +66,13 @@
       method: 'POST',
       data: data,
       dataType: 'JSON',
+      processData: false,
       contentType: false,
       cache: false,
-      processData:false,
-      success: function(response) {
+      }).catch(function(error){
+        console.error('Erro ao obter registro:', error);
         hideLoader();
-      },
-      error: function(error) {
-        console.error('Erro ao atualizar registro:', error);
-        hideLoader();
-      }
-    });
+      });
   }
 
   function redirecionarPagina(url) {
