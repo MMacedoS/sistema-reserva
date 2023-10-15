@@ -1077,7 +1077,7 @@
                 dataType: 'json     ',
                 success: function(data){
                     if(data.status === 201){
-                        $('#swal-id_consumo').val(code);
+                        $('#swal_id_consumo').val(code);
                         $('#swal-cons-input1').val(data.data[0].quantidade);
                         $('#swal-cons-input2').val(data.data[0].valorUnitario);
                         $('#saveChangesDiaria').prop('disabled', false);
