@@ -207,4 +207,11 @@ class AdministrativoController extends \Controller{
         return $this->financeiro_controller->buscaSaida($request);
     }
 
+    // Site Admin
+
+    public function bannerSite($request = null)
+    {
+        $this->viewAdmin('Site/banner',$request,"");
+    }
+
 }

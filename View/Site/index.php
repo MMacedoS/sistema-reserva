@@ -11,6 +11,10 @@ require_once "body/services.php";
 
 require_once "body/callout.php";
 
+require_once "body/cards.php";
+
+require_once "body/call_to_images.php";
+
 require_once "body/portfolio.php";
 
 require_once "body/call_to_action.php";

@@ -24,7 +24,7 @@ class Controller {
         $this->url = ROTA_GERAL;
     }
 
-    public function viewSite($view) {
+    public function viewSite($view, $images) {
         require "View/Site/{$view}.php";
     }
 
