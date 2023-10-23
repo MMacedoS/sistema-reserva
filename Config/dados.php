@@ -15,7 +15,7 @@ $servicos = [
 $messagem_bemvindos = "Bem vindo ao seu próximo Quarto!";
 $texto_butao = "clique aqui !";
 $text_portifolio = "Áreas da pousada";
-$link_whats = "https://api.whatsapp.com/send?phone=557591675545";
+$link_whats = "https://api.whatsapp.com/send?phone=7591675545&text=Ola pousada belaVista,gostaria de consultar disponibilidades!";
 $whatsapp = '+55 75 99167-5545';
 
 $cores;

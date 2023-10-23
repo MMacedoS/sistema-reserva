@@ -14,6 +14,12 @@ class Controller {
     use RequestTrait;
     use ErrorLoggingTrait;
 
+    public $images;
+    public $cards;
+    public $color;
+    public $text;
+    public $imagesSite;
+
     protected $site_model;
     protected $disciplina_id;
     protected $background;
@@ -24,7 +30,7 @@ class Controller {
         $this->url = ROTA_GERAL;
     }
 
-    public function viewSite($view, $images) {
+    public function viewSite($view) {
         require "View/Site/{$view}.php";
     }
 

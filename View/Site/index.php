@@ -1,4 +1,5 @@
 <?php
+
 require_once "components/top.php";
 
 require_once "components/menu.php";

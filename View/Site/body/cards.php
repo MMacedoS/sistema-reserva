@@ -7,101 +7,24 @@
                     ?=$text_portifolio?></h2> -->
                 </div>
                 <div class="row gy-4 gx-3">
+                    <?php 
+                        if (isset($this->cards) && is_array($this->cards)){
+                        foreach($this->cards as $card){
+                    ?>
                     <div class="col-lg-6 mr-3">
                         <a class="portfolio-item" href="#!">
                             <div class="caption">
                                 <div class="caption-content">
-                                    <div class="h2">Suite</div>
-                                    <p class="mb-0">Um lapis amarelo com alguns envelopes, e está em uma mesa azul!</p>
-                                    <p><b>R$ 400,00</b> <s>R$ 500,00</s></p>
+                                    <div class="h2"><?=$card['nome']?></div>
+                                    <p class="mb-0"><?=$card['descricao']?></p>
+                                    <p><b>R$ <?=self::valueBr($card['valor_atual'])?></b> <s>R$ <?=self::valueBr($card['valor_anterior'])?></s></p>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/ap01.jpeg" alt="..." />
+                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/Site/Card_APT/<?=$card['imagem']?>" alt="..." />
                         </a>
                     </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Sorvetes</div>
-                                    <p class="mb-0">Painel Azul com um lapís de cor, um clip, e um acessório em formato de sorvete!</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/apt02.jpeg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Morangos</div>
-                                    <p class="mb-0">A vida é como morangos cheia de buracos, mas é uma delícia!</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/apte03.jpeg" alt="..." />
-                        </a>
-                    </div>
-                    
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Espaço de Trabalho</div>
-                                    <p class="mb-0">Um espaço de trabalho amarelo com uma tesoura, lapís 
-                                        e outros objetos.</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/cafe2.jpeg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Espaço de Trabalho</div>
-                                    <p class="mb-0">Um espaço de trabalho amarelo com uma tesoura, lapís 
-                                        e outros objetos.</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/centro.jpeg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Espaço de Trabalho</div>
-                                    <p class="mb-0">Um espaço de trabalho amarelo com uma tesoura, lapís 
-                                        e outros objetos.</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/sala01.jpeg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Espaço de Trabalho</div>
-                                    <p class="mb-0">Um espaço de trabalho amarelo com uma tesoura, lapís 
-                                        e outros objetos.</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/exteno01.jpeg" alt="..." />
-                        </a>
-                    </div>
-                    <div class="col-lg-6">
-                        <a class="portfolio-item" href="#!">
-                            <div class="caption">
-                                <!-- <div class="caption-content">
-                                    <div class="h2">Espaço de Trabalho</div>
-                                    <p class="mb-0">Um espaço de trabalho amarelo com uma tesoura, lapís 
-                                        e outros objetos.</p>
-                                </div> -->
-                            </div>
-                            <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/img/area/cafe.jpeg" alt="..." />
-                        </a>
-                    </div>
+                    <?php }
+                    } ?>
                 </div>
             </div>
         </section>

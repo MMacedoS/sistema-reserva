@@ -12,7 +12,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-sm-8">
-                <h4>Banner</h4>
+                <h4>Lista Color</h4>
             </div>
             <div class="col-sm-4 text-right">
                 <button class="btn btn-primary" id="novo">Adicionar</button>
@@ -25,7 +25,7 @@
         <div class="input-group">
             <div class="col-sm-5 mb-2">
                 <label for="txt_busca">Descrição</label>
-                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descrição do banner" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="ex: primary" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
             <div class="col-sm-3 mb-2">
                 <label for="start_date">Dt. Postagem</label>
@@ -58,28 +58,37 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="labelEntrada">Resgitro de Banner</h5>
+                <h5 class="modal-title" id="labelEntrada">Resgitro de Cores</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="">  
                 <form action="" id="form" method="post" enctype="multipart/form-data">                   
-                    <div class="form-row">
+                    <div class="row">
                         <input type="hidden" name="id" id="id">
-                        <label for="imagem">Selecione uma imagem (JPG, JPEG, PNG):</label>
-                        <input type="file" name="imagem" id="imagem" accept=".jpg, .jpeg, .png" required>
-                        <hr>                       
+                        <div class="col-sm-6">
+                            <label for="name">Descrição</label>
+                            <select id="name" class="form-control" name="name">
+                                <option value="principal">principal</option>
+                                <option value="button">Botões</option>
+                                <option value="text">texto</option>
+                                <option value="secondary">Secundaria</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="color">Cor</label>
+                            <input type="color" class="form-control" id="color" name="color" value="#e66465" />
+                        </div>
+                    </div>
+                    <hr> 
+                    <div class="form-row">
                         <div class="col-sm-12 text-right">
                             <label for="">&nbsp;</label>
                             <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar mt-4"> &#10010; Adicionar</button>
                         </div>
                     </div>
                 </form>
-                <hr>
-                <div class="image-preview" id="imagePreview">
-                    <img src="" alt="Imagem Enviada" id="preview">
-                </div>
             </div>
         </div>        
     </div>
@@ -89,26 +98,12 @@
 <script>
     
     $(document).ready( function () {
-        showData("<?=ROTA_GERAL?>/Site/findAllBanner")
+        showData("<?=ROTA_GERAL?>/Site/findAllColor")
         .then((response) => createTable(response)).then(() => hideLoader());
-
-        $('#imagem').change(function() {
-        const file = this.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            $('#preview').attr('src', e.target.result);
-            $('#imagePreview').show();
-          };
-          reader.readAsDataURL(file);
-        } else {
-          $('#imagePreview').hide();
-        }
-      });
     });
     
     $('#novo').click(function(){
-        $('#exampleModalLabel').text("Cadastro de banner");
+        $('#exampleModalLabel').text("Cadastro de Color");
         $('#modalEntrada').modal('show');        
     });
 
@@ -120,7 +115,7 @@
         data.append('endDate', $('#end_date').val());
         data.append('status', $('#status').val());  
         // Executa a função com base no valor do input
-        showDataWithData("<?=ROTA_GERAL?>/Site/findBannerByParams/",data)
+        showDataWithData("<?=ROTA_GERAL?>/Site/findColorByParams/",data)
         .then((response) => createTable(response));;    
     }
 
@@ -141,7 +136,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Imagem', "status",'Data']; 
+        var thArray = ['Cod', 'Cor', 'Descrição', 'Status', 'Data']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -151,7 +146,7 @@
             var th = document.createElement('th');
             th.textContent = value;
             
-            if (value === 'Imagem' || value === 'Status' || value === 'Cod') {
+            if (value === 'Cor' || value === 'Data' || value === 'Cod') {
                 th.classList.add('d-none', 'd-sm-table-cell');
             }
             headerRow.appendChild(th);
@@ -176,7 +171,7 @@
                             td.textContent = created_at;
                         }
 
-                        if (value === 'Imagem' || value === 'Status' || value === 'Cod') {
+                        if (value === 'Cor' || value === 'Data' || value === 'Cod') {
                             td.classList.add('d-none', 'd-sm-table-cell');
                         }
                         tr.appendChild(td);
@@ -191,10 +186,10 @@
                 var delButton = document.createElement('button');
                 delButton.innerHTML = '<i class="fa fa-trash"></i>';
                 delButton.className = 'btn btn-edit';
-                if(item.pagamento_id !== null) {
-                    editButton.hidden = true;
+                // if(item.pagamento_id !== null) {
+                //     editButton.hidden = true;
                     delButton.hidden = true;
-                } 
+                // } 
                 buttonsTd.appendChild(editButton);
                 buttonsTd.appendChild(delButton);
 
@@ -211,7 +206,8 @@
                 if (item.status === '0') {           
                     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
                     activateButton.title = 'devolvido';
-                } else {
+                } 
+                if (item.status === '1') {
                     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
                     activateButton.title = 'Recebido';
                 }
@@ -221,7 +217,7 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
+                // Chamando a função desejada passando os dados da linha
                 editarRegistro(rowData);
                 });
 
@@ -229,7 +225,7 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
+                // Chamando a função desejada passando os dados da linha
                 deletarRegistro(rowData);
                 });
 
@@ -238,8 +234,9 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
-                activeRegistro(rowData);
+                // Chamando a função desejada passando os dados da linha
+                    deletarRegistro(rowData);
+
                 });
 
                 tr.appendChild(buttonsTd);
@@ -256,34 +253,34 @@
 
     function editarRegistro(rowData)
     {
-        showData("<?=ROTA_GERAL?>/Financeiro/findBannerById/" + rowData[0])
-            .then((response) => prepareModalEditarBanner(response.data));
+        showData("<?=ROTA_GERAL?>/Site/findColorById/" + rowData[0])
+            .then((response) => prepareModalEditarBanner(response));
     }
 
     function deletarRegistro(rowData)
     {
         Swal.fire({
-            title: 'Deseja remover esta banner?',
+            title: 'Deseja remover esta card?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: `Não`,
         }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {                
-                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteBannerById/" + rowData[0]);
-            } else if (result.isDenied) {
+                deleteData("<?=ROTA_GERAL?>/Site/desativarColorById/" + rowData[0]);
+            } 
+            if (result.isDenied) {
                 Swal.fire('nenhuma mudança efetuada', '', 'info')
             }
         })
     }
    
     function prepareModalEditarBanner(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#valor').val(data[0].valor);
-        $('#pagamento').val(data[0].tipoPagamento);
+        $('#name').val(data[0].name);           
+        $('#color').val(data[0].color);
         $('#id').val(data[0].id);
         $('#btnSubmit').text('Atualizar');
-        $('#exampleModalLabel').text("Atualizar Banner");
+        $('#exampleModalLabel').text("Atualizar Color");
         $('#modalEntrada').modal('show');   
     }
 
@@ -292,9 +289,9 @@
         $('.Salvar').prop('disabled', true);
         var id = $('#id').val();
         if(id == '') {
-            return createData('<?=ROTA_GERAL?>/Site/saveBanner', new FormData(document.getElementById("form")));
+            return createData('<?=ROTA_GERAL?>/Site/saveColor', new FormData(document.getElementById("form")));
         }
     
-        return updateData('<?=ROTA_GERAL?>/Siter/atualizarBanner/' + id, new FormData(document.getElementById("form")), id);
+        return updateData('<?=ROTA_GERAL?>/Site/updateColor/' + id, new FormData(document.getElementById("form")), id);
     });   
 </script>

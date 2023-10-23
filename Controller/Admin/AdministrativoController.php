@@ -214,4 +214,29 @@ class AdministrativoController extends \Controller{
         $this->viewAdmin('Site/banner',$request,"");
     }
 
+    public function cardSite($request = null)
+    {
+        $this->viewAdmin('Site/cardApt',$request,"");
+    }
+
+    public function textSite($request = null)
+    {
+        $this->viewAdmin('Site/textSite',$request,"");
+    }
+
+    public function colorSite($request = null)
+    {
+        $this->viewAdmin('Site/colorSite',$request,"");
+    }
+
+    public function imagesSite($request = null)
+    {
+        $this->viewAdmin('Site/imagesSite',$request,"");
+    }
+
+    public function configSite($request = null)
+    {
+        $this->viewAdmin('Site/configSite',$request,"");
+    }
+
 }

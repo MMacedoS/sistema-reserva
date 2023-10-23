@@ -5,14 +5,14 @@
       max-height: 300px;
     }
     img#preview {
-    width: 300px;
+    width: 100%;
 }
 </style>
 <div class="container">    
     <div class="form-group">
         <div class="row">
             <div class="col-sm-8">
-                <h4>Banner</h4>
+                <h4>Lista Imagens</h4>
             </div>
             <div class="col-sm-4 text-right">
                 <button class="btn btn-primary" id="novo">Adicionar</button>
@@ -25,7 +25,7 @@
         <div class="input-group">
             <div class="col-sm-5 mb-2">
                 <label for="txt_busca">Descrição</label>
-                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descrição do banner" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descrição do Images" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
             <div class="col-sm-3 mb-2">
                 <label for="start_date">Dt. Postagem</label>
@@ -58,7 +58,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="labelEntrada">Resgitro de Banner</h5>
+                <h5 class="modal-title" id="labelEntrada">Resgitro de Imagens</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -67,9 +67,12 @@
                 <form action="" id="form" method="post" enctype="multipart/form-data">                   
                     <div class="form-row">
                         <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="imagem_anterior" id="imagem_anterior">
                         <label for="imagem">Selecione uma imagem (JPG, JPEG, PNG):</label>
-                        <input type="file" name="imagem" id="imagem" accept=".jpg, .jpeg, .png" required>
-                        <hr>                       
+                        <input type="file" class="form-control" name="imagem" id="imagem" accept=".jpg, .jpeg, .png" required>                         
+                    </div>
+                    <hr> 
+                    <div class="form-row">
                         <div class="col-sm-12 text-right">
                             <label for="">&nbsp;</label>
                             <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar mt-4"> &#10010; Adicionar</button>
@@ -89,7 +92,7 @@
 <script>
     
     $(document).ready( function () {
-        showData("<?=ROTA_GERAL?>/Site/findAllBanner")
+        showData("<?=ROTA_GERAL?>/Site/findAllImages")
         .then((response) => createTable(response)).then(() => hideLoader());
 
         $('#imagem').change(function() {
@@ -108,7 +111,7 @@
     });
     
     $('#novo').click(function(){
-        $('#exampleModalLabel').text("Cadastro de banner");
+        $('#exampleModalLabel').text("Cadastro de Imagem");
         $('#modalEntrada').modal('show');        
     });
 
@@ -120,7 +123,7 @@
         data.append('endDate', $('#end_date').val());
         data.append('status', $('#status').val());  
         // Executa a função com base no valor do input
-        showDataWithData("<?=ROTA_GERAL?>/Site/findBannerByParams/",data)
+        showDataWithData("<?=ROTA_GERAL?>/Site/findImagesByParams/",data)
         .then((response) => createTable(response));;    
     }
 
@@ -141,7 +144,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Imagem', "status",'Data']; 
+        var thArray = ['Cod', 'Imagem', 'Data']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -151,7 +154,7 @@
             var th = document.createElement('th');
             th.textContent = value;
             
-            if (value === 'Imagem' || value === 'Status' || value === 'Cod') {
+            if (value === 'Data' || value === 'Status' || value === 'Cod') {
                 th.classList.add('d-none', 'd-sm-table-cell');
             }
             headerRow.appendChild(th);
@@ -176,7 +179,7 @@
                             td.textContent = created_at;
                         }
 
-                        if (value === 'Imagem' || value === 'Status' || value === 'Cod') {
+                        if (value === 'Data' || value === 'Status' || value === 'Cod') {
                             td.classList.add('d-none', 'd-sm-table-cell');
                         }
                         tr.appendChild(td);
@@ -191,10 +194,10 @@
                 var delButton = document.createElement('button');
                 delButton.innerHTML = '<i class="fa fa-trash"></i>';
                 delButton.className = 'btn btn-edit';
-                if(item.pagamento_id !== null) {
-                    editButton.hidden = true;
+                // if(item.pagamento_id !== null) {
+                //     editButton.hidden = true;
                     delButton.hidden = true;
-                } 
+                // } 
                 buttonsTd.appendChild(editButton);
                 buttonsTd.appendChild(delButton);
 
@@ -211,7 +214,8 @@
                 if (item.status === '0') {           
                     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
                     activateButton.title = 'devolvido';
-                } else {
+                } 
+                if (item.status === '1') {
                     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
                     activateButton.title = 'Recebido';
                 }
@@ -221,7 +225,7 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
+                // Chamando a função desejada passando os dados da linha
                 editarRegistro(rowData);
                 });
 
@@ -229,7 +233,7 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
+                // Chamando a função desejada passando os dados da linha
                 deletarRegistro(rowData);
                 });
 
@@ -238,8 +242,9 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
-                activeRegistro(rowData);
+                // Chamando a função desejada passando os dados da linha
+                    deletarRegistro(rowData);
+
                 });
 
                 tr.appendChild(buttonsTd);
@@ -256,34 +261,35 @@
 
     function editarRegistro(rowData)
     {
-        showData("<?=ROTA_GERAL?>/Financeiro/findBannerById/" + rowData[0])
-            .then((response) => prepareModalEditarBanner(response.data));
+        showData("<?=ROTA_GERAL?>/Site/findImagesById/" + rowData[0])
+            .then((response) => prepareModalEditarImages(response));
     }
 
     function deletarRegistro(rowData)
     {
         Swal.fire({
-            title: 'Deseja remover esta banner?',
+            title: 'Deseja remover esta card?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: `Não`,
         }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {                
-                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteBannerById/" + rowData[0]);
-            } else if (result.isDenied) {
+                deleteData("<?=ROTA_GERAL?>/Site/desativarImagesById/" + rowData[0]);
+            } 
+            if (result.isDenied) {
                 Swal.fire('nenhuma mudança efetuada', '', 'info')
             }
         })
     }
    
-    function prepareModalEditarBanner(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#valor').val(data[0].valor);
-        $('#pagamento').val(data[0].tipoPagamento);
+    function prepareModalEditarImages(data) {
         $('#id').val(data[0].id);
+        $('#imagem_anterior').val(data[0].imagem);
+        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Images/" + data[0].imagem);
+            $('#imagePreview').show();
         $('#btnSubmit').text('Atualizar');
-        $('#exampleModalLabel').text("Atualizar Banner");
+        $('#exampleModalLabel').text("Atualizar Images");
         $('#modalEntrada').modal('show');   
     }
 
@@ -292,9 +298,9 @@
         $('.Salvar').prop('disabled', true);
         var id = $('#id').val();
         if(id == '') {
-            return createData('<?=ROTA_GERAL?>/Site/saveBanner', new FormData(document.getElementById("form")));
+            return createData('<?=ROTA_GERAL?>/Site/saveImages', new FormData(document.getElementById("form")));
         }
     
-        return updateData('<?=ROTA_GERAL?>/Siter/atualizarBanner/' + id, new FormData(document.getElementById("form")), id);
+        return updateData('<?=ROTA_GERAL?>/Site/updateImages/' + id, new FormData(document.getElementById("form")), id);
     });   
 </script>

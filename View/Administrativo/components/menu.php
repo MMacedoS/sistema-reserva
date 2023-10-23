@@ -127,10 +127,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header"></h6>
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/bannerSite">Imagens Banner</a> 
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/textoSite">Texto</a> 
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/aptsSite">Valores Apts</a> 
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/pousada">Imagens Pousada</a> 
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/config">Configuração Empresa</a>               
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/imagesSite">Imagens Site</a> 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/textSite">Texto</a> 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/cardSite">Valores Apts</a> 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/colorSite">Cor do Site</a> 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/configSite">Dados Configuração</a>               
             </div>
         </div>
     </li>
