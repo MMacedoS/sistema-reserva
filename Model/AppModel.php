@@ -60,6 +60,19 @@ class AppModel extends ConexaoModel {
         return $cmd->fetchAll();
     }
 
+    public function findBannerById($id) 
+    {
+        $cmd = $this->conexao->query(
+            "SELECT 
+                *
+            FROM
+                banner 
+            WHERE id = $id 
+            order by id desc"
+        );
+        return $cmd->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function buscaTodosAptPromo() 
     {
         $cmd = $this->conexao->query(
@@ -121,6 +134,24 @@ class AppModel extends ConexaoModel {
         $cmd->bindValue(':imagem', $params['imagem']);
         $cmd->bindValue(':nome_original', $params['nome_original']); 
         $cmd->bindValue(':status', $params['status']);
+        $cmd->execute();
+
+        return $cmd->fetchAll();
+    }
+
+    public function updateBanner($params) {
+        if(is_null($params)) {
+            return null;
+        }
+
+        $cmd = $this->conexao->prepare(
+            "UPDATE banner set imagem = :imagem, nome_original = :nome_original, status = :status WHERE id = :id"
+        );
+
+        $cmd->bindValue(':imagem', $params['imagem']);
+        $cmd->bindValue(':nome_original', $params['nome_original']); 
+        $cmd->bindValue(':status', $params['status']);
+        $cmd->bindValue(':id', $params['id']);
         $cmd->execute();
 
         return $cmd->fetchAll();

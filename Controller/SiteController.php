@@ -23,8 +23,13 @@ class SiteController extends Controller {
     {
         echo json_encode($this->app_model->buscaTodosBanners());
         return;
-    }   
+    } 
 
+    public function findBannerById ($id)
+    {
+        echo json_encode($this->app_model->findBannerById($id));
+        return;
+    }
     private function findBannerActive() 
     {
         return $this->app_model->buscaBannersAtivos();
@@ -43,6 +48,34 @@ class SiteController extends Controller {
         $create =  $this->app_model->createBanner($banner);
 
         echo json_encode($create);
+    }
+
+    public function updateBanner() 
+    {
+        $diretorio= __DIR__."../../Public/Site/Banner";
+        if (!empty($_FILES['imagem'])) {
+            $cards = self::uploadFileWithHash('imagem', $diretorio);
+       
+            if (is_null($cards)) {
+                echo json_encode("Error uploading");
+                return;
+            }
+
+            if(isset($_POST['imagem_anterior'])) {
+                $diretorio= __DIR__."/../../Public/Site/Banner";
+                self::deleteFile($diretorio, $_POST['imagem_anterior']);
+            }
+        }
+        $cards['id'] = $_POST['id'];
+        
+        $update = $this->app_model->updateBanner($cards);
+
+        if(is_null($update) || $update) {
+            $diretorio= __DIR__."/../../Public/Site/Banner";
+            self::deleteFile($diretorio, $cards['imagem']);
+        }
+
+        echo json_encode($update);
     }
 
     public function findAllCardApt() 
