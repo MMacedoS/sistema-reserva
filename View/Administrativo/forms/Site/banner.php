@@ -67,6 +67,7 @@
                 <form action="" id="form" method="post" enctype="multipart/form-data">                   
                     <div class="form-row">
                         <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="imagem_anterior" id="imagem_anterior">
                         <label for="imagem">Selecione uma imagem (JPG, JPEG, PNG):</label>
                         <input type="file" name="imagem" id="imagem" accept=".jpg, .jpeg, .png" required>
                         <hr>                       
@@ -191,12 +192,12 @@
                 var delButton = document.createElement('button');
                 delButton.innerHTML = '<i class="fa fa-trash"></i>';
                 delButton.className = 'btn btn-edit';
-                if(item.pagamento_id !== null) {
-                    editButton.hidden = true;
+                // if(item.pagamento_id !== null) {
+                    // editButton.hidden = true;
                     delButton.hidden = true;
-                } 
+                // } 
                 buttonsTd.appendChild(editButton);
-                buttonsTd.appendChild(delButton);
+                // buttonsTd.appendChild(delButton);
 
                 // var clearButton = document.createElement('button');
                 // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
@@ -256,8 +257,8 @@
 
     function editarRegistro(rowData)
     {
-        showData("<?=ROTA_GERAL?>/Financeiro/findBannerById/" + rowData[0])
-            .then((response) => prepareModalEditarBanner(response.data));
+        showData("<?=ROTA_GERAL?>/Site/findBannerById/" + rowData[0])
+            .then((response) => prepareModalEditarBanner(response));
     }
 
     function deletarRegistro(rowData)
@@ -278,10 +279,10 @@
     }
    
     function prepareModalEditarBanner(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#valor').val(data[0].valor);
-        $('#pagamento').val(data[0].tipoPagamento);
         $('#id').val(data[0].id);
+        $('#imagem_anterior').val(data[0].imagem);
+        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Banner/" + data[0].imagem);
+            $('#imagePreview').show();
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Banner");
         $('#modalEntrada').modal('show');   
@@ -295,6 +296,6 @@
             return createData('<?=ROTA_GERAL?>/Site/saveBanner', new FormData(document.getElementById("form")));
         }
     
-        return updateData('<?=ROTA_GERAL?>/Siter/atualizarBanner/' + id, new FormData(document.getElementById("form")), id);
+        return updateData('<?=ROTA_GERAL?>/Site/updateBanner/' + id, new FormData(document.getElementById("form")), id);
     });   
 </script>
