@@ -12,7 +12,7 @@
     <div class="form-group">
         <div class="row">
             <div class="col-sm-8">
-                <h4>Banner</h4>
+                <h4>Lista Apts e Promoções</h4>
             </div>
             <div class="col-sm-4 text-right">
                 <button class="btn btn-primary" id="novo">Adicionar</button>
@@ -65,11 +65,32 @@
             </div>
             <div class="modal-body" id="">  
                 <form action="" id="form" method="post" enctype="multipart/form-data">                   
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" name="nome" id="nome">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="valor_atual">Valor Atual</label>
+                            <input type="number" class="form-control" name="valor_atual" id="valor_atual" value="0.00" step="0.01" min="0">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="valor_anterior">Valor anterior</label>
+                            <input type="number" name="valor_anterior" id="valor_anterior" class="form-control">
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="descricao">Descrição</label>
+                            <input type="text" name="descricao" maxlength="150" id="descricao" class="form-control">
+                        </div>
+                    </div>
                     <div class="form-row">
                         <input type="hidden" name="id" id="id">
+                        <input type="hidden" name="imagem_anterior" id="imagem_anterior">
                         <label for="imagem">Selecione uma imagem (JPG, JPEG, PNG):</label>
-                        <input type="file" name="imagem" id="imagem" accept=".jpg, .jpeg, .png" required>
-                        <hr>                       
+                        <input type="file" class="form-control" name="imagem" id="imagem" accept=".jpg, .jpeg, .png" required>                         
+                    </div>
+                    <hr> 
+                    <div class="form-row">
                         <div class="col-sm-12 text-right">
                             <label for="">&nbsp;</label>
                             <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar mt-4"> &#10010; Adicionar</button>
@@ -89,7 +110,7 @@
 <script>
     
     $(document).ready( function () {
-        showData("<?=ROTA_GERAL?>/Site/findAllBanner")
+        showData("<?=ROTA_GERAL?>/Site/findAllCardApt")
         .then((response) => createTable(response)).then(() => hideLoader());
 
         $('#imagem').change(function() {
@@ -141,7 +162,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Imagem', "status",'Data']; 
+        var thArray = ['Cod', 'Nome', 'Preço Atual', 'Preço Antes', 'Data']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -151,7 +172,7 @@
             var th = document.createElement('th');
             th.textContent = value;
             
-            if (value === 'Imagem' || value === 'Status' || value === 'Cod') {
+            if (value === 'Preço Antes' || value === 'Status' || value === 'Cod') {
                 th.classList.add('d-none', 'd-sm-table-cell');
             }
             headerRow.appendChild(th);
@@ -176,7 +197,7 @@
                             td.textContent = created_at;
                         }
 
-                        if (value === 'Imagem' || value === 'Status' || value === 'Cod') {
+                        if (value === 'Preço Antes' || value === 'Status' || value === 'Cod') {
                             td.classList.add('d-none', 'd-sm-table-cell');
                         }
                         tr.appendChild(td);
@@ -191,10 +212,10 @@
                 var delButton = document.createElement('button');
                 delButton.innerHTML = '<i class="fa fa-trash"></i>';
                 delButton.className = 'btn btn-edit';
-                if(item.pagamento_id !== null) {
-                    editButton.hidden = true;
+                // if(item.pagamento_id !== null) {
+                //     editButton.hidden = true;
                     delButton.hidden = true;
-                } 
+                // } 
                 buttonsTd.appendChild(editButton);
                 buttonsTd.appendChild(delButton);
 
@@ -211,7 +232,8 @@
                 if (item.status === '0') {           
                     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
                     activateButton.title = 'devolvido';
-                } else {
+                } 
+                if (item.status === '1') {
                     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
                     activateButton.title = 'Recebido';
                 }
@@ -221,7 +243,7 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
+                // Chamando a função desejada passando os dados da linha
                 editarRegistro(rowData);
                 });
 
@@ -229,7 +251,7 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
+                // Chamando a função desejada passando os dados da linha
                 deletarRegistro(rowData);
                 });
 
@@ -238,8 +260,9 @@
                 var rowData = Array.from(tr.cells).map(function(cell) {
                     return cell.textContent;
                 });
-                // Chame a função desejada passando os dados da linha
-                activeRegistro(rowData);
+                // Chamando a função desejada passando os dados da linha
+                    deletarRegistro(rowData);
+
                 });
 
                 tr.appendChild(buttonsTd);
@@ -256,22 +279,23 @@
 
     function editarRegistro(rowData)
     {
-        showData("<?=ROTA_GERAL?>/Financeiro/findBannerById/" + rowData[0])
-            .then((response) => prepareModalEditarBanner(response.data));
+        showData("<?=ROTA_GERAL?>/Site/findCardAPTById/" + rowData[0])
+            .then((response) => prepareModalEditarBanner(response));
     }
 
     function deletarRegistro(rowData)
     {
         Swal.fire({
-            title: 'Deseja remover esta banner?',
+            title: 'Deseja remover esta card?',
             showDenyButton: true,
             confirmButtonText: 'Sim',
             denyButtonText: `Não`,
         }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {                
-                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteBannerById/" + rowData[0]);
-            } else if (result.isDenied) {
+                deleteData("<?=ROTA_GERAL?>/Site/desativarCardAPTById/" + rowData[0]);
+            } 
+            if (result.isDenied) {
                 Swal.fire('nenhuma mudança efetuada', '', 'info')
             }
         })
@@ -279,9 +303,13 @@
    
     function prepareModalEditarBanner(data) {
         $('#descricao').val(data[0].descricao);           
-        $('#valor').val(data[0].valor);
-        $('#pagamento').val(data[0].tipoPagamento);
+        $('#valor_atual').val(data[0].valor_atual);
+        $('#valor_anterior').val(data[0].valor_anterior);
+        $('#nome').val(data[0].nome);
         $('#id').val(data[0].id);
+        $('#imagem_anterior').val(data[0].imagem);
+        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Card_APT/" + data[0].imagem);
+            $('#imagePreview').show();
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Banner");
         $('#modalEntrada').modal('show');   
@@ -292,9 +320,9 @@
         $('.Salvar').prop('disabled', true);
         var id = $('#id').val();
         if(id == '') {
-            return createData('<?=ROTA_GERAL?>/Site/saveBanner', new FormData(document.getElementById("form")));
+            return createData('<?=ROTA_GERAL?>/Site/saveCardApt', new FormData(document.getElementById("form")));
         }
     
-        return updateData('<?=ROTA_GERAL?>/Siter/atualizarBanner/' + id, new FormData(document.getElementById("form")), id);
+        return updateData('<?=ROTA_GERAL?>/Site/updateCardApt/' + id, new FormData(document.getElementById("form")), id);
     });   
 </script>

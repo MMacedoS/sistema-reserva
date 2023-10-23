@@ -152,4 +152,48 @@ trait GeneralTrait{
     {
         return number_format($value,2,',','.');
     }
+
+    public function uploadFileWithHash($fileInputName, $uploadDirectory)
+    {
+        if (isset($_FILES[$fileInputName])) {
+            $file = $_FILES[$fileInputName];
+
+            // Verifica se houve algum erro no upload
+            if ($file['error'] === UPLOAD_ERR_OK) {
+                // Gere um nome de arquivo único com hash
+                $originalFileName = $file['name'];
+                $fileExtension = pathinfo($originalFileName, PATHINFO_EXTENSION);
+                $hashedFileName = md5(uniqid(rand(), true)) . '.' . $fileExtension;
+
+                // Caminho completo para o arquivo de destino
+                $destinationPath = $uploadDirectory . '/' . $hashedFileName;
+
+                // Realiza o upload do arquivo
+                if (move_uploaded_file($file['tmp_name'], $destinationPath)) {
+                    // Arquivo foi enviado com sucesso, retorne um array com os nomes
+                    return [
+                        'nome_original' => $originalFileName,
+                        'imagem' => $hashedFileName,
+                        'status' => 1
+                    ];
+                } 
+                    return null;
+            } 
+                return null;
+        } 
+         return null;
+    }
+
+    public function deleteFile($uploadDirectory, $hashedFileName) {
+        // Caminho completo para o arquivo a ser excluído
+        $fileToDelete = $uploadDirectory . '/' . $hashedFileName;
+        
+        self::logError($uploadDirectory . '/'.$hashedFileName);
+        // Verifica se o arquivo existe e, em
+        if (file_exists($fileToDelete)) {
+            
+            self::logError(json_encode("apagado"));
+            unlink($fileToDelete);
+        }
+    }
 }

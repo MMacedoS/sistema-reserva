@@ -18,5 +18,5 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="<?=ROTA_GERAL?>/Public/Estilos/css/styles.css" rel="stylesheet" />
     </head>
-    <body id="page-top">
+    <body id="page-top" style="color: <?=$this->color[3]['color']?> !important;">
         <!-- Navigation-->
