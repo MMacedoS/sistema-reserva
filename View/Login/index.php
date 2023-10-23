@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sistema Reserva</title>
-    <link rel="shortcut icon" href="<?=ROTA_GERAL?>/Estilos/image/logo.png">
+    <link rel="shortcut icon" href="<?=ROTA_GERAL?>/Estilos/img/logo.png">
 	<link rel="stylesheet" href="<?=ROTA_GERAL?>/Estilos/css/bootstrap.min.css">
 	<link href="<?=ROTA_GERAL?>/Estilos/css/login.css" rel="stylesheet" id="bootstrap-css">
 
@@ -70,7 +70,7 @@
 
 				<form class="login100-form validate-form" action="<?=ROTA_GERAL?>/Login/logar" method="post">
 					<span class="login100-form-title">
-						<a href="<?=ROTA_GERAL?>"><img src="<?=ROTA_GERAL?>/Estilos/img/image_logo.png" width="150" alt="IMG" id="imagen"></a>
+						<!-- <a href="<?=ROTA_GERAL?>"><img src="<?=ROTA_GERAL?>/Estilos/img/image_logo.png" width="150" alt="IMG" id="imagen"></a> -->
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "email obrigatório: ex@abc.xyz">
