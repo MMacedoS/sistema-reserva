@@ -196,4 +196,18 @@ trait GeneralTrait{
             unlink($fileToDelete);
         }
     }
+
+    public function formatPhoneNumber($number) {
+        $number = preg_replace('/[^0-9]/', '', $number);
+        $length = strlen($number);
+        if ($length == 11) {
+            $number = preg_replace('/(\d{2})(\d{5})(\d{4})/', '($1) $2-$3', $number);
+        } elseif ($length == 10) {
+            $number = preg_replace('/(\d{2})(\d{4})(\d{4})/', '($1) $2-$3', $number);
+        } else {
+            return false;
+        }
+        return $number;
+    }
+    
 }

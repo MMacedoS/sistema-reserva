@@ -3,7 +3,7 @@
 require_once "./Config/autoload.php";
 require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 
-class LoginController {  
+class LoginController extends Controller{  
     use ErrorLoggingTrait;
 
     protected $login_model;
@@ -14,6 +14,11 @@ class LoginController {
         $this->login_model = new LoginModel();
         $this->validLogin();
         $this->url = ROTA_GERAL;
+    }
+
+    public function findParamByParam($param) {
+        $app_model = new AppModel();     
+        return $app_model->buscaParamByParam($param)[0];
     }
 
     public function index() 

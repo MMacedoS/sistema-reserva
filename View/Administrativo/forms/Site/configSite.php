@@ -52,6 +52,7 @@
                                 <option value="whatsapp">WhatsApp</option>
                                 <option value="mes_whatsapp">Mensagem WhatsApp</option>
                                 <option value="mapa">Link Mapa</option>
+                                <option value="nome_site">Titulo do site</option>
                             </select>
                         </div>
                         <div class="col-sm-12">

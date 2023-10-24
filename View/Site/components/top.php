@@ -1,4 +1,5 @@
 <?php require_once __DIR__ . "/../../../Config/dados.php"; ?>
+<?php $dados = $this->findParamByParam('nome_site'); ?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -6,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title><?=$text_principal?></title>
+        <title><?=$dados['valor']?></title>
         <!-- Favicon-->
         <!-- <link rel="icon" type="image/x-icon" href="<=ROTA_GERAL?>/Public/Estilos/assets/favicon.ico" /> -->
         <!-- Font Awesome icons (free version)-->

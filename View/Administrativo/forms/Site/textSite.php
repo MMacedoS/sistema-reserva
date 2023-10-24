@@ -85,7 +85,7 @@
                         </div>
                         <div class="col-sm-12">
                             <label for="texto">texto</label>
-                            <input type="text" class="form-control" id="texto" name="texto" value="" maxlength="200" />
+                            <input type="text" class="form-control" id="texto" name="texto" value="" />
                         </div>
                     </div>
                     <hr> 
