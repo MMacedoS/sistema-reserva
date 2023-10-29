@@ -22,13 +22,16 @@
       }
     }
   </style>
-
+<?php 
+  $color_text = $this->findColorByParam('session_one_text');
+  $color_bg = $this->findColorByParam('session_two_text');
+?>
 <!-- Header-->
 <header class="masthead d-flex align-items-center image-change">
-    <div class="container px-4 px-lg-5 text-center" style="color: <?=$this->color[3]['color']?>;">
+    <div class="container px-4 px-lg-5 text-center" style="color: <?=$color_text['color']?>;">
         <h1 class="mb-1"><?=$this->text[0]['texto']?></h1>
         <h3 class="mb-5"><em><?=$this->text[1]['texto']?></em></h3>
-        <a class="btn btn-primary btn-xl" style="background-color: <?=$this->color[2]['color']?>;" href="#about"><?=$this->text[2]['texto']?></a>
+        <a class="btn btn-primary btn-xl" style="background-color: <?=$color_bg['color']?>;" href="#about"><?=$this->text[2]['texto']?></a>
     </div>
 </header>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -9,7 +9,6 @@ class SiteController extends Controller {
     }
 
     public function index() {
-        $this->color = $this->findColorActive();
         $this->text = $this->findTextActive();
         $this->images = $this->findBannerActive();
         $this->cards = $this->findAptCardActive();
@@ -336,6 +335,10 @@ class SiteController extends Controller {
 
     public function findParamByParam($param) {
         return $this->app_model->buscaParamByParam($param)[0];
+    }
+
+    public function findColorByParam($param) { 
+        return $this->app_model->findColorByParam($param)[0];
     }
 
     public function saveParam () {

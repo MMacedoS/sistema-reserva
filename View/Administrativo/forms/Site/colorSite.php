@@ -70,10 +70,30 @@
                         <div class="col-sm-6">
                             <label for="name">Descrição</label>
                             <select id="name" class="form-control" name="name">
-                                <option value="principal">principal</option>
-                                <option value="button">Botões</option>
-                                <option value="text">texto</option>
-                                <option value="secondary">Secundaria</option>
+                                <option value="session_one_text">Cor Texto Sessão 1</option>
+                                <option value="session_one_bg">Cor area Sessão 1</option>
+                                <option value="session_two_text">Cor Texto Sessão 2</option>
+                                <option value="session_two_bg">Cor area Sessão 2</option>
+                                <option value="session_three_text">Cor Texto Sessão 3</option>
+                                <option value="session_three_bg">Cor area Sessão 3</option>
+                                <option value="session_fuor_text">Cor Texto Sessão 4</option>
+                                <option value="session_fuor_bg_btn">Cor area botão Sessão 4</option>
+                                <option value="session_five_text">Cor Texto Sessão 5</option>
+                                <option value="session_five_bg">Cor area Sessão 5</option>
+                                <option value="session_six_text">Cor Texto Sessão 6</option>
+                                <option value="session_six_bg">Cor area Sessão 6</option>
+                                <option value="session_six_bg_btn">Cor area botão Sessão 6</option>
+                                <option value="session_seven_text">Cor Texto Sessão 7</option>
+                                <option value="session_seven_bg">Cor area Sessão 7</option>
+                                <option value="session_eight_text">Cor Texto Sessão 8</option>
+                                <option value="session_eight_bg">Cor area Sessão 8</option>
+                                <option value="session_eight_bg_btn">Cor area botão Sessão 8</option>                                
+                                <option value="session_nine_text">Cor Texto Sessão 9</option>
+                                <option value="session_nine_bg">Cor area Sessão 9</option>
+                                <option value="session_teen_text">Cor Texto Sessão 10</option>
+                                <option value="session_teen_bg">Cor area Sessão 10</option>
+                                <option value="session_teen_bg_btn">Cor area botão Sessão 10</option>
+                                
                             </select>
                         </div>
                         <div class="col-sm-6">

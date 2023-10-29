@@ -1,4 +1,8 @@
-
+<?php 
+    $dados = $this->findParamByParam('whatsapp');
+    $color_text = $this->findColorByParam('session_seven_text');
+    $color_bg = $this->findColorByParam('session_seven_bg');
+?>
 <style>
     .image-preview {
       display: none;
@@ -18,12 +22,12 @@
     }
 </style>
 <!-- Portfolio-->
- <section class="content-section" id="portfolio" style="background-color: <?=$this->color[0]['color']?> !important; ">
+ <section class="content-section" id="portfolio" style="background-color: <?=$color_bg['color']?> !important; ">
             <div class="container px-4 px-lg-5">
-                <div class="content-section-heading text-center">
+                <!-- <div class="content-section-heading text-center">
                     <h3 class="text-secondary mb-0"></h3>
-                    <h2 class="mb-5"><?=$text_portifolio?></h2>
-                </div>
+                    <h2 class="mb-5"><=$text_portifolio?></h2> -->
+                <!-- </div> -->
                 <div class="row gx-3 gy-4">
                     <?php if (isset($this->imagesSite) && is_array($this->imagesSite)){ 
                         foreach ($this->imagesSite as $key => $value) {

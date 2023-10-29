@@ -13,7 +13,7 @@
                         <a class="social-link rounded-circle text-white" href="#!"><i class="icon-social-github"></i></a>
                     </li> -->
                 </ul>
-                <p class="text-muted small mb-0" style="color: <?=$this->color[3]['color']?> !important;">Copyright &copy; <?=$text_principal?></p>
+                <p class="text-muted small mb-0" style="color: <?=$this->color[3]['color']?> !important;">Copyright &copy; MMS</p>
             </div>
         </footer>
         <!-- Scroll to Top Button-->

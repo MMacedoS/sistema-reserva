@@ -764,4 +764,27 @@ class AppModel extends ConexaoModel {
         return [];
     }
 
+    public function findColorByParam ($params) 
+    {
+        $sql  = "SELECT 
+            color
+        FROM
+            layout_color_site 
+        WHERE
+            name = '$params'
+        ";
+
+        $cmd  = $this->conexao->query(
+            $sql
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        self::logError($sql);
+
+        return [];
+    }
 }
