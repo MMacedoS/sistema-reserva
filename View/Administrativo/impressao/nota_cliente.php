@@ -3,14 +3,20 @@
         width: 15% !important;
     }
 </style>
+<?php 
+    $nome_empresa = $this->findParamByParam('nome_site'); 
+    $endereco_empresa = $this->findParamByParam('nome_site'); 
+    $number_empresa = $this->findParamByParam('whatsapp'); 
+?>
 <div class="container mt-4">
     <div class="column mb-3">
-        <h4 class="text-center">Pousada Bella Vista</h4>    
-        <smail><b>Endereço:</b> Centro Caldas do Jorro S/N Tucano - Bahia</smail>  
-        <small><b>Tel: </b>(75) 9 9287-9269</small>
-        <small><b>E-mail:</b> mauricio@gmail.com</small>
+        <h4 class="text-center"><?=$nome_empresa['valor']?></h4>   
+        <hr> 
+        <p><b>Endereço:</b> <?=$endereco_empresa['valor']?></p>  
+        <p><b>Tel: </b><?=self::formatPhoneNumber($number_empresa['valor'])?></p>
     </div>
-   
+   <hr>
+   <p>Dados Hospedagem</p>
     <div class="container">
         <div class="row">
             <table class="table table-sm mr-4" id="head">
@@ -43,7 +49,7 @@
                         <?= self::prepareDateBr($dados->dataSaida)?>
                         </th>
                         <td>
-                            Vl. Diária
+                            Vl. Hospedagem
                         </td>
                         <th>
                             R$: <?= self::valueBr($dados->valor)?>
@@ -130,14 +136,14 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-4">
-                Consumo + Hospedagem R$ <?= self::valueBr($dados->consumos)?>
+                Consumo + Hospedagem R$ <?= self::valueBr($dados->consumos + $dados->pag)?>
             </div>
             <div class="col-sm-4">
                 Pagamentos Lançados R$ <?= self::valueBr($dados->pag)?>
             </div>
             <div class="col-sm-4">
                 <?php 
-                $total = ($dados->consumos - $dados->pag);
+                $total = (($dados->consumos + $dados->pag) - $dados->pag);
                 
                 if($total < 0){
                     echo 'Ainda resta consumir R$ ' . self::valueBr(
