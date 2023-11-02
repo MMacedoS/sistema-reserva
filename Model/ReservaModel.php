@@ -357,6 +357,56 @@ class ReservaModel extends ConexaoModel {
         
     }
 
+    public function getAllReservas($hospede = '', $dataEntrada = '', $dataSaida = '', $situacao = 1 )
+    {
+        try {
+            $cmd  = $this->conexao->query(
+                "SELECT 
+                    r.id,
+                    r.dataEntrada,
+                    r.dataSaida,
+                    r.tipo,
+                    r.qtde_hosp,
+                    r.status,
+                    r.valor, 
+                    h.nome, 
+                    a.numero 
+                FROM 
+                    $this->model r 
+                INNER JOIN
+                    hospede h 
+                ON 
+                    r.hospede_id = h.id
+                LEFT JOIN 
+                    empresa_has_hospede eh
+                ON 
+                    eh.hospede_id = h.id
+                INNER JOIN 
+                    apartamento a 
+                ON 
+                    r.apartamento_id = a.id
+                WHERE
+                    h.nome LIKE '%$hospede%'
+                 AND
+                    r.status = $situacao   
+                 AND
+                    r.dataEntrada BETWEEN '$dataEntrada' AND '$dataSaida' 
+                ORDER BY
+                    r.id DESC            
+                "
+            );
+    
+            if($cmd->rowCount() > 0)
+            {
+                return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            }
+    
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+        
+    }
+
     public function prepareChangedReserva($id)
     {
         $reserva = self::findById($id);
@@ -1038,6 +1088,42 @@ class ReservaModel extends ConexaoModel {
         $cmd->execute();
 
         return "atualizado configurações";
+    }
+
+    public function findAllCafe()
+    {
+        $cmd  = $this->conexao->query(
+            "SELECT 
+                r.id, 
+                h.nome, 
+                a.numero,
+                r.qtde_hosp 
+            FROM 
+                $this->model r 
+            INNER JOIN
+                hospede h 
+            ON 
+                r.hospede_id = h.id
+            LEFT JOIN 
+                empresa_has_hospede eh
+            ON 
+                eh.hospede_id = h.id
+            INNER JOIN 
+                apartamento a 
+            ON 
+                r.apartamento_id = a.id
+            WHERE
+                r.status = 3
+            "
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+            return $cmd->fetchAll();
+        }
+
+        return [];
+        
     }
 
     public function buscaMapaReservas($startDate,$endDate)

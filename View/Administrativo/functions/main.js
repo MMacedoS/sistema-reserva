@@ -180,6 +180,30 @@
       return res;
   }
 
+  function prepareStatus(value)
+  {
+      var res = "";
+      switch (value) {
+          case '1':
+              res = "Reservada";
+          break;
+          case '2':
+              res = "Confirmada"
+          break;
+          case '3':
+             res =  "Hospedada"
+          break;
+          case '4':
+             res =  "Finalizada"
+          break;
+          case '5':
+            res =  "Cancelada"
+          break;
+      }
+
+      return res;
+  }
+
   function calculaPagamento(data)
     {
         var valor = 0;
@@ -207,3 +231,15 @@
         var control = $select[0].selectize;
         control.setValue(selected);
     }
+
+    function imprimir() {
+      var conteudoDiv = document.getElementById("contents_inputs").innerHTML;
+      var janela = window.open('', '', 'width=600,height=600');
+      janela.document.write('<html><head><title>Impressão</title><style type="text/css" media="print">' +
+      'body { margin: 0;padding: 0;} table {width: 100%; border-collapse: collapse;} table, th, td { border: 1px solid #ccc;}' + 
+      'th, td {padding: 8px;text-align: left;}  tr td:last-child {display: none;}</style></head><body>');
+      janela.document.write(conteudoDiv);
+      janela.document.write('</body></html>');
+      janela.print();
+      janela.close();
+  }

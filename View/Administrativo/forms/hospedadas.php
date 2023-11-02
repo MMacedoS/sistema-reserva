@@ -1196,7 +1196,7 @@
 
     function redirectUrl(params)
     {
-        window.open('<?=ROTA_GERAL?>/Impressao/cliente/' + params, '_blank');
+        window.open('<?=ROTA_GERAL?>/Administrativo/cliente/' + params, '_blank');
     }
 
     function sair(){

@@ -17,10 +17,9 @@
     <div class="form-group">
         <div class="row">
             <div class="col-sm-8">
-                <h4>Movimentações Entrada</h4>
+                <h4>Relação de Movimentos</h4>
             </div>
-            <div class="col-sm-4 text-right">
-                <button class="btn btn-primary" id="novo">Adicionar</button>                
+            <div class="col-sm-4 text-right">           
                 <button class="btn btn-danger" onclick="imprimir()" id="btn">Imprimir</button>
             </div>
         </div>
@@ -29,21 +28,23 @@
     <div class="row">   
         <div class="input-group">
             <div class="col-sm-2 mb-2">
-                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+                <label for="">Descrição</label>
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
             <div class="col-sm-3 mb-2">
+                <label for="">Data Inicial</label>
                 <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
             </div>
             <div class="col-sm-3 mb-2">
+                <label for="">Data Final</label>
                 <input type="date" name="" id="end_date" class="form-control" value="<?=Date('Y-m-d')?>">
             </div>   
             <div class="col-sm-3 mb-2">
+                <label for="">Movimento</label>
                 <select name="" id="status" class="form-control">
-                    <option value="">Selecione o Tipo</option>
-                    <option value="1">Dinhero</option>
-                    <option value="2">Cartão de Crédito</option>
-                    <option value="3">Cartão de Débito</option>
-                    <option value="4">Deposito/PIX</option>
+                    <option value="">Ambos</option>
+                    <option value="1">Entrada</option>
+                    <option value="2">Saida</option>
                 </select>
             </div>  
             <div class="input-group-append float-right">
@@ -57,8 +58,10 @@
     </div>
     <div id="contents_inputs">
         <div class="row">
-            <div class="col-sm-3">Movimentação de Entradas</div>
-            <div class="col-lg-9 col-sm-12 text-info" style="text-align: end" id="total"></div>
+            <div class="col-sm-1">Movimentos</div>
+            <div class="col-sm-4 text-success" style="text-align: end" id="entradaTotal"></div>
+            <div class="col-sm-3 text-danger" style="text-align: end" id="saidaTotal"></div>
+            <div class="col-sm-4 text-info" style="text-align: end" id="total"></div>
         </div>
 
         <!-- <div class="row">
@@ -70,57 +73,12 @@
             </div>
         </div>
     </div>
-
-<!-- editar -->
-<div class="modal fade" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="labelEntrada">Lança Entrada</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="">  
-                <form action="" id="form" method="post">                   
-                    <div class="form-row">
-                        <div class="col-sm-8">
-                            <input type="hidden" name="id" id="id">
-                            <label for="">Descrição</label>
-                            <input type="text" name="descricao" class="form-control" id="descricao">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="">Valor</label>
-                            <input type="number" step="0.01" min="0"  value="0.00" class="form-control" name="valor" id="valor">
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="">Selecione uma forma</label>
-                            <select name="pagamento" id="pagamento" class="form-control">
-                                <option  value="1">Dinhero</option>
-                                <option  value="2">Cartão de Crédito</option>
-                                <option  value="3">Cartão de Débito</option>
-                                <option  value="4">Deposito/PIX</option>
-                            </select>
-                        </div>  
-                        <div class="col-sm-12 text-right">
-                            <label for="">&nbsp;</label>
-                            <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar mt-4"> &#10010; Adicionar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>        
-    </div>
-</div>
-
-<script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
     
     $(document).ready(function(){
-        showData("<?=ROTA_GERAL?>/Financeiro/findAllEntradas")
+        showData("<?=ROTA_GERAL?>/Financeiro/findMovimentos")
         .then((response) => createTable(response)).then(() => hideLoader());
+        hideLoader()
     });
     
     $('#novo').click(function(){
@@ -131,13 +89,14 @@
     function pesquisa() {
         // Obtém o valor do input
         let data = new FormData();
-        data.append('search', $('#txt_busca').val());
+        data.append('description', $('#txt_busca').val());
         data.append('startDate', $('#start_date').val());
         data.append('endDate', $('#end_date').val());
         data.append('status', $('#status').val());  
         // Executa a função com base no valor do input
-        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findEntradasByParams/",data)
-        .then((response) => createTable(response));;    
+        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findMovimentosByParams/",data)
+        .then((response) => createTable(response));;   
+        hideLoader(); 
     }
 
     function destroyTable() {
@@ -154,19 +113,18 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Descrição', 'Tipo de Pagamento', "Data",'Tipo','Valor']; 
+        var thArray = ['Cod', 'Descrição', 'Tipo.', "Movimento",'Valor']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
         var headerRow = document.createElement('tr');
         var totalValue = 0; 
+        var saidaValue = 0; 
+        var entradaValue = 0; 
         thArray.forEach(function(value) {
             var th = document.createElement('th');
             th.textContent = value;
-            
-            if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
-                th.classList.add('d-none', 'd-sm-table-cell');
-            }
+        
             headerRow.appendChild(th);
         });
 
@@ -177,51 +135,38 @@
 
             data.forEach(function(item) {
                 var tr = document.createElement('tr');
-                if (item.created_at) {
-                        created_at = formatDateWithHour(item.created_at);
-                    } 
-
-                totalValue += parseFloat(item[5]);
 
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
-                        td.textContent = item[key];
-                                               
-                        if (item[key] === '1' && value == 'Tipo de Pagamento') {                            
-                            td.textContent = 'Dinhero';
-                        } if (item[key] === '2' && value == 'Tipo de Pagamento') {
-                           
-                            td.textContent = 'Cartão de Crédito';
-                        } if (item[key] === '3' && value == 'Tipo de Pagamento') {
-                            
-                            td.textContent = 'Cartão de Débito';
-                        } if (item[key] === '4' && value == 'Tipo de Pagamento') {
-                            
-                            td.textContent = 'Deposito/PIX';
-                        }
                         // venda
-                        if (item[key] === null && value == 'Tipo') {
-                            td.textContent = 'Venda';
-                        }
-                        if (item[key] !== null && value == 'Tipo') {
-                            td.textContent = 'Hospedagem';
+                        if ('Tipo') {
+                            td.textContent = prepareTipo(item.tipo);
                         }
 
-                        if (value === 'Data') {
-                            td.textContent = created_at;
+                        if (value === 'Movimento') {
+                            if(item.entrada_id) {
+                                entradaValue += parseFloat(item.valor);
+                                td.textContent = "Entrada"; 
+                            }
+                            if(item.saida_id) {
+                                saidaValue += parseFloat(item.valor);
+                                td.textContent = "Saida"; 
+                            }
                         }
 
-                        if (value === 'Valor') {
-                            td.textContent = parseFloat(item[5]).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        if (value === 'Descrição') {
+                            td.textContent = item.descricao;
                         }
 
-                        if (value === 'Dt.Saida') {
-                            td.textContent = dateSaida;
+                        if (value === 'Valor') {  
+                            totalValue += parseFloat(item.valor);                          
+                            td.textContent = parseFloat(item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         }
 
-                        if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
-                            td.classList.add('d-none', 'd-sm-table-cell');
+                        if (value === 'Cod') {
+                            td.textContent = item.id;
                         }
+
                         tr.appendChild(td);
                     });
                                     // Adiciona os botões em cada linha da tabela
@@ -294,8 +239,12 @@
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
 
-            $('#total').text("Total de Entradas " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-          
+            $('#saidaTotal').text("Vl. Saida: " + saidaValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#entradaTotal').text("Vl. Entrada: " + entradaValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            totalValue = entradaValue - saidaValue;
+            $('#total').text("Vl. Total: " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+        
+        hideLoader()
         return table;
     }
 

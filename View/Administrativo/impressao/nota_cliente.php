@@ -8,7 +8,9 @@
     $endereco_empresa = $this->findParamByParam('nome_site'); 
     $number_empresa = $this->findParamByParam('whatsapp'); 
 ?>
-<div class="container mt-4">
+
+<button class="btn btn-danger" onclick="imprimir()" id="btn">Imprimir</button>
+<div id="contents_inputs" class="container mt-4">
     <div class="column mb-3">
         <h4 class="text-center"><?=$nome_empresa['valor']?></h4>   
         <hr> 

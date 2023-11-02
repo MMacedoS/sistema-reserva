@@ -237,4 +237,59 @@ class FinanceiroModel extends ConexaoModel {
 
         return self::message(422, 'Nenhum dado encontrado');
     }
+
+    public function findMovimentosByParams(
+        $descricao = '', 
+        $dataEntrada = '', 
+        $dataSaida = '', 
+        $situacao = '' )
+    {
+        try {
+            $sql = "SELECT 
+                m.id,
+                m.descricao,
+                m.valor,
+                m.tipo,
+                m.entrada_id,
+                m.saida_id
+            FROM 
+                movimento m                 
+            WHERE
+                m.descricao LIKE '%$descricao%'
+            AND
+                m.created_at BETWEEN '$dataEntrada' AND '$dataSaida' 
+            ";
+
+
+            if(!empty($situacao)){
+                if($situacao == 1){
+                    
+                    $sql.= "
+                    AND
+                    m.entrada_id != ''                 
+                    ORDER BY
+                    m.id DESC   
+                    ";
+                }
+
+                if($situacao == 2){
+                    $sql.= "
+                    AND
+                    m.saida_id != '' 
+                    ORDER BY
+                    m.id DESC                 
+                    ";
+                }
+            }
+            $cmd = $this->conexao->query($sql);
+    
+            if($cmd->rowCount() > 0)
+            {
+                return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            }
+    
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+     }
 }

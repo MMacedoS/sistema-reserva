@@ -121,4 +121,22 @@ class ReservaController extends \Controller{
     {
        return $this->reserva_model->gerarDiarias();
     }
+
+    public function findAllCafe() {
+        echo json_encode($this->reserva_model->findAllCafe());
+    }
+
+    public function findAllReservas() {
+        echo json_encode($this->reserva_model->getAllReservas());
+    }
+
+    public function findReservasByParams() {
+        echo json_encode($this->reserva_model->getAllReservas(
+                $_POST['hospede'], 
+                $_POST['startDate'], 
+                $_POST['endDate'], 
+                $_POST['status']
+            )
+        );
+    }
 }
