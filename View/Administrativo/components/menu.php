@@ -115,6 +115,20 @@
         </div>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorio" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-dice-five"></i>
+            <span>Relatório</span>
+        </a>
+        <div id="collapseRelatorio" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/cafe">Café</a>                    
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/reservas">Reservas</a>                  
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/movimentos">Movimentos</a>                 
+            </div>
+        </div>
+    </li>
+
     <?php
     }
     ?>

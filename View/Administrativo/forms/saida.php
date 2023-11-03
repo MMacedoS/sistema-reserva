@@ -21,6 +21,7 @@
             </div>
             <div class="col-sm-4 text-right">
                 <button class="btn btn-primary" id="novo">Adicionar</button>
+                <button class="btn btn-danger" onclick="imprimir()" id="btn">Imprimir</button>
             </div>
         </div>
     </div>
@@ -53,9 +54,16 @@
         </div>
     </div>
 <hr>
+</div>
 
+<div id="contents_inputs">
     <div class="row">
-        <div class="col-lg-12 col-sm-12 text-info text-right" id="total"></div>
+        <div class="col-sm-4">
+            <b>
+                Movimentação de Saidas
+            </b>
+        </div>
+        <div class="col-lg-8 col-sm-8 text-info text-right" id="total"></div>
     </div>
    
     <div class="row">
@@ -64,6 +72,7 @@
         </div>
     </div>  
 </div>
+
 
 <!-- editar -->
 <div class="modal fade" id="modalSaida" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

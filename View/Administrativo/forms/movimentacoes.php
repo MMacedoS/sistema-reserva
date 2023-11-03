@@ -60,6 +60,9 @@
         </div>
     </div>
 <hr>
+    <div class="row mb-3">
+        <b>Movimentação Financeira</b>
+    </div>
     <div class="row">
         <div class="col-lg-4 col-sm-3 text-info">Entrada: R$ <?=self::valueBr(self::calculateEntrada($movimentos));?></div>
         <div class="col-lg-4 col-sm-3 text-danger">Saida: R$ <?=self::valueBr(self::calculateSaida($movimentos));?></div>

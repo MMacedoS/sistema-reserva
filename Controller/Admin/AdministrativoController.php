@@ -4,10 +4,18 @@ class AdministrativoController extends \Controller{
     protected $financeiro_controller;
     protected $apartamento_model;
     protected $produto_model;
+    protected $reserva_model;
+    protected $consumo_model;
+    protected $pagamento_model;
+    protected $app_model;
     
     public function __construct() {
         $this->validPainel();     
-        $this->financeiro_controller = new FinanceiroController();       
+        $this->financeiro_controller = new FinanceiroController();  
+        $this->reserva_model = new ReservaModel();   
+        $this->consumo_model = new ConsumoModel();    
+        $this->pagamento_model = new PagamentoModel();   
+        $this->app_model = new AppModel();       
     }
 
     private function validPainel() {        
@@ -205,6 +213,24 @@ class AdministrativoController extends \Controller{
     public function buscaSaida($request = null)
     {
         return $this->financeiro_controller->buscaSaida($request);
+    }
+
+    public function cliente($request = null)
+    {       
+        $dados = (object)$this->reserva_model->getDadosReservas($request)['data'][0];
+        $consumos = (object)$this->consumo_model->getDadosConsumos($request)['data'];
+        $pagamentos = $this->pagamento_model->getDadosPagamentos($request)['data'];
+        $dados->lista_consumos = $consumos;
+        $dados->pagamentos = $pagamentos;
+        $this->viewImpressao('nota_cliente',$dados);
+    }   
+
+    public function findParamByParam($param) {
+        return $this->app_model->buscaParamByParam($param)[0];
+    }
+
+    public function relacao($params = null) {
+        $this->viewImpressao($params, '');
     }
 
     // Site Admin

@@ -83,4 +83,18 @@ class FinanceiroController extends \Controller{
     {
         echo json_encode($this->entrada_model->updateEntrada($_POST, $id));
     }
+
+    public function findMovimentosByParams() {
+        echo json_encode($this->financeiro_model->findMovimentosByParams(
+            $_POST['description'], 
+            $_POST['startDate'], 
+            $_POST['endDate'], 
+            $_POST['status']
+            )
+        );
+    }
+
+    public function findMovimentos() {
+        echo json_encode($this->financeiro_model->findMovimentosByParams());
+    }
 }

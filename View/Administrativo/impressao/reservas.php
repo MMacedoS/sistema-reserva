@@ -17,10 +17,9 @@
     <div class="form-group">
         <div class="row">
             <div class="col-sm-8">
-                <h4>Movimentações Entrada</h4>
+                <h4>Relação de Reservas</h4>
             </div>
-            <div class="col-sm-4 text-right">
-                <button class="btn btn-primary" id="novo">Adicionar</button>                
+            <div class="col-sm-4 text-right">           
                 <button class="btn btn-danger" onclick="imprimir()" id="btn">Imprimir</button>
             </div>
         </div>
@@ -29,21 +28,26 @@
     <div class="row">   
         <div class="input-group">
             <div class="col-sm-2 mb-2">
-                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+                <label for="">Descrição</label>
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
             <div class="col-sm-3 mb-2">
+                <label for="">Data Inicial</label>
                 <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
             </div>
             <div class="col-sm-3 mb-2">
+                <label for="">Data Final</label>
                 <input type="date" name="" id="end_date" class="form-control" value="<?=Date('Y-m-d')?>">
             </div>   
             <div class="col-sm-3 mb-2">
+                <label for="">Situação</label>
                 <select name="" id="status" class="form-control">
-                    <option value="">Selecione o Tipo</option>
-                    <option value="1">Dinhero</option>
-                    <option value="2">Cartão de Crédito</option>
-                    <option value="3">Cartão de Débito</option>
-                    <option value="4">Deposito/PIX</option>
+                    <option value="">Selecione o status</option>
+                    <option value="1">Reservada</option>
+                    <option value="2">Confirmada</option>
+                    <option value="3">Hospedadas</option>
+                    <option value="4">Finalizada</option>
+                    <option value="5">Cancelada</option>
                 </select>
             </div>  
             <div class="input-group-append float-right">
@@ -57,7 +61,7 @@
     </div>
     <div id="contents_inputs">
         <div class="row">
-            <div class="col-sm-3">Movimentação de Entradas</div>
+            <div class="col-sm-3">Relação de Reservas</div>
             <div class="col-lg-9 col-sm-12 text-info" style="text-align: end" id="total"></div>
         </div>
 
@@ -70,57 +74,12 @@
             </div>
         </div>
     </div>
-
-<!-- editar -->
-<div class="modal fade" id="modalEntrada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="labelEntrada">Lança Entrada</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="">  
-                <form action="" id="form" method="post">                   
-                    <div class="form-row">
-                        <div class="col-sm-8">
-                            <input type="hidden" name="id" id="id">
-                            <label for="">Descrição</label>
-                            <input type="text" name="descricao" class="form-control" id="descricao">
-                        </div>
-                        <div class="col-sm-4">
-                            <label for="">Valor</label>
-                            <input type="number" step="0.01" min="0"  value="0.00" class="form-control" name="valor" id="valor">
-                        </div>
-
-                        <div class="col-sm-6">
-                            <label for="">Selecione uma forma</label>
-                            <select name="pagamento" id="pagamento" class="form-control">
-                                <option  value="1">Dinhero</option>
-                                <option  value="2">Cartão de Crédito</option>
-                                <option  value="3">Cartão de Débito</option>
-                                <option  value="4">Deposito/PIX</option>
-                            </select>
-                        </div>  
-                        <div class="col-sm-12 text-right">
-                            <label for="">&nbsp;</label>
-                            <button type="submit" name="salvar" id="btnSubmit" class="btn btn-primary Salvar mt-4"> &#10010; Adicionar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>        
-    </div>
-</div>
-
-<script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
     
     $(document).ready(function(){
-        showData("<?=ROTA_GERAL?>/Financeiro/findAllEntradas")
+        showData("<?=ROTA_GERAL?>/Reserva/findAllReservas")
         .then((response) => createTable(response)).then(() => hideLoader());
+        hideLoader()
     });
     
     $('#novo').click(function(){
@@ -131,13 +90,14 @@
     function pesquisa() {
         // Obtém o valor do input
         let data = new FormData();
-        data.append('search', $('#txt_busca').val());
+        data.append('hospede', $('#txt_busca').val());
         data.append('startDate', $('#start_date').val());
         data.append('endDate', $('#end_date').val());
         data.append('status', $('#status').val());  
         // Executa a função com base no valor do input
-        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findEntradasByParams/",data)
-        .then((response) => createTable(response));;    
+        showDataWithData("<?=ROTA_GERAL?>/Reserva/findReservasByParams/",data)
+        .then((response) => createTable(response));;   
+        hideLoader(); 
     }
 
     function destroyTable() {
@@ -154,7 +114,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Descrição', 'Tipo de Pagamento', "Data",'Tipo','Valor']; 
+        var thArray = ['Cod', 'Hóspede', 'Apt.', "Data Entrada", "Data Saida",'Tipo', 'Qtde', 'Situação','Vl. Diária']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -163,10 +123,7 @@
         thArray.forEach(function(value) {
             var th = document.createElement('th');
             th.textContent = value;
-            
-            if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
-                th.classList.add('d-none', 'd-sm-table-cell');
-            }
+        
             headerRow.appendChild(th);
         });
 
@@ -180,48 +137,53 @@
                 if (item.created_at) {
                         created_at = formatDateWithHour(item.created_at);
                     } 
-
-                totalValue += parseFloat(item[5]);
-
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
-                        td.textContent = item[key];
-                                               
-                        if (item[key] === '1' && value == 'Tipo de Pagamento') {                            
-                            td.textContent = 'Dinhero';
-                        } if (item[key] === '2' && value == 'Tipo de Pagamento') {
-                           
-                            td.textContent = 'Cartão de Crédito';
-                        } if (item[key] === '3' && value == 'Tipo de Pagamento') {
-                            
-                            td.textContent = 'Cartão de Débito';
-                        } if (item[key] === '4' && value == 'Tipo de Pagamento') {
-                            
-                            td.textContent = 'Deposito/PIX';
-                        }
                         // venda
-                        if (item[key] === null && value == 'Tipo') {
-                            td.textContent = 'Venda';
+                        if (item.tipo == 1 && value == 'Tipo') {
+                            td.textContent = 'Diária';
                         }
-                        if (item[key] !== null && value == 'Tipo') {
-                            td.textContent = 'Hospedagem';
-                        }
-
-                        if (value === 'Data') {
-                            td.textContent = created_at;
+                        if (item.tipo == 2 && value == 'Tipo') {
+                            td.textContent = 'Pacote';
                         }
 
-                        if (value === 'Valor') {
-                            td.textContent = parseFloat(item[5]).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        if (item.tipo == 3 && value == 'Tipo') {
+                            td.textContent = 'Promocional';
                         }
 
-                        if (value === 'Dt.Saida') {
-                            td.textContent = dateSaida;
+                        if (value === 'Data Entrada') {
+                            td.textContent = formatDate(item.dataEntrada);
                         }
 
-                        if (value === 'Descrição' || value === 'Tipo' || value === 'Cod') {
-                            td.classList.add('d-none', 'd-sm-table-cell');
+                        if (value === 'Data Saida') {
+                            td.textContent = formatDate(item.dataSaida);
                         }
+
+                        if (value === 'Vl. Diária') {
+                            totalValue += parseFloat(item.valor);
+                            td.textContent = parseFloat(item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        }
+
+                        if (value === 'Hóspede') {
+                            td.textContent = item.nome;
+                        }
+
+                        if (value === 'Cod') {
+                            td.textContent = item.id;
+                        }
+
+                        if (value === 'Apt.') {
+                            td.textContent = item.numero;
+                        }
+
+                        if (value === 'Qtde') {
+                            td.textContent = item.qtde_hosp;
+                        }
+
+                        if (value === 'Situação') {
+                            td.textContent = prepareStatus(item.status);
+                        }
+
                         tr.appendChild(td);
                     });
                                     // Adiciona os botões em cada linha da tabela
@@ -294,8 +256,9 @@
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
 
-            $('#total').text("Total de Entradas " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-          
+            $('#total').text("Valor Total" + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+        
+        hideLoader()
         return table;
     }
 
