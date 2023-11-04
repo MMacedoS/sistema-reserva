@@ -53,6 +53,10 @@ class ReservaController extends \Controller{
 
     public function buscaHospedadas($request = null)
     {
+        $consulta = strpos('@fechado', $request);
+
+        if($consulta) return $this->reserva_model->buscaReservasConcuidas(explode('@',$consulta));
+
         $reserva = $this->reserva_model->buscaHospedadas($request);
         return $reserva;
     }
