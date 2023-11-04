@@ -84,6 +84,9 @@
             </div>
         </div>
     </div>
+    <div class="row mt-2">
+        Legendas: <span class="bg-warning">sair hoje|Ajustar saida</span>
+    </div>
 <hr>
     <div class="row">        
             <?php
@@ -94,7 +97,7 @@
                         ?>
 
                     <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card <?=$value['dataSaida'] <= date('Y-m-d') ? 'border-left-danger bg-warning' : 'border-left-primary'?> shadow h-100 py-2">
                                 <a href="#" class="hospedadas" id="<?=$value['id']?>">
                                     <div class="card-body">
                                         <div class="row no-gutters align-items-center">
@@ -102,7 +105,7 @@
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 <?= $value['nome']?>
                                                 </div>
-                                                <div class="h5 mb-0 font-weight-bold text-gray-800">APT <?= $value['numero']?></div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800">APT <?=$value['numero']?></div>
                                             </div>
                                             <div class="col-auto">
                                                 <i class="fas fa-door-closed fa-2x text-gray-300"></i>
@@ -748,10 +751,23 @@
         );
         data[0].status == 4 ? $('.ck').hide() : '';
         data[0].status == 4 ? $('.ed').css('display','none') : '';
+        comparaDateMenorAtual(data[0].dataSaida) ? $('.ck').hide() : '';
         $('#consumo').text("R$ " + parseFloat(data[0].consumos).toFixed(2));
         $('#diarias').text("R$ " + parseFloat(data[0].diarias).toFixed(2));
         $('#pagamento').text("R$ " + parseFloat(data[0].pag).toFixed(2));
         $('#modal').modal('show');   
+    }
+
+    function comparaDateMenorAtual(data) {
+        var dataAtual =  moment();
+        var dataComparar = moment(data);
+        console.log(dataComparar);
+        console.log(dataAtual);
+        if (dataComparar.isBefore(dataAtual, 'day')) {
+            return true
+        }
+
+        return false;
     }
 
     function preparaModalHospedadas(data, tipo) 
