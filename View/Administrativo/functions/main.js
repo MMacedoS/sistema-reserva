@@ -163,16 +163,16 @@
   {
       var res = "";
       switch (value) {
-          case '1':
+          case 1:
               res = "Dinheiro";
           break;
-          case '2':
+          case 2:
               res = "Cartão de Crédito"
           break;
-          case '3':
+          case 3:
              res =  "Cartão de Débito"
           break;
-          case '4':
+          case 4:
              res =  "Déposito/PIX"
           break;
       }

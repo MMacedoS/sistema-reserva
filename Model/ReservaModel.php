@@ -611,6 +611,44 @@ class ReservaModel extends ConexaoModel {
         return [];
     }
 
+    public function buscaReservasConcuidas($texto)
+    {
+        $texto = trim($texto[0]);
+
+        $cmd  = $this->conexao->query(
+            "SELECT 
+                r.*, 
+                h.nome, 
+                a.numero 
+            FROM 
+                $this->model r 
+            INNER JOIN
+                hospede h 
+            ON 
+                r.hospede_id = h.id
+            LEFT JOIN 
+                empresa_has_hospede eh
+            ON 
+                eh.hospede_id = h.id
+            INNER JOIN 
+                apartamento a 
+            ON 
+                r.apartamento_id = a.id
+            WHERE
+                h.nome LIKE '%$texto%'         
+            OR 
+                r.id LIKE '%$texto%  
+            "
+        );
+
+        if($cmd->rowCount() > 0)
+        {
+            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return [];        
+    }
+
     public function buscaHospedadas($texto)
     {
         $cmd  = $this->conexao->query(
@@ -635,7 +673,9 @@ class ReservaModel extends ConexaoModel {
             WHERE
                r.status = 3
             AND
-                h.nome LIKE '%$texto%'
+                h.nome LIKE '%$texto%' 
+            OR 
+                r.id = '$texto'
             "
         );
 

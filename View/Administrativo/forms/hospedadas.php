@@ -164,10 +164,10 @@
                    
                 </div>
                 
-                <h6 class="modal-title" Ações</h6>
+                <h6 class="modal-title"> Ações</h6>
                 <hr>
                 <div class="row">
-                    <div class="col-sm-2 campos_modal text-left mb-2">
+                    <div class="col-sm-2 campos_modal text-left mb-2 ck">
                         <button class="btn btn-primary checkout">Check-out</button>
                     </div>
                     <div class="col-sm-2 campos_modal text-left mb-2">
@@ -179,7 +179,7 @@
                     <div class="col-sm-2 campos_modal text-left mb-2">
                         <button class="btn btn-danger diarias">Diarias </button>
                     </div>
-                    <div class="col-sm-2 campos_modal text-left mb-2">
+                    <div class="col-sm-2 campos_modal text-left mb-2 ed">
                         <button class="btn btn-info editar">Editar</button>
                     </div>
                     <div class="col-sm-2 campos_modal text-left mb-2">
@@ -746,6 +746,8 @@
             parseFloat(data[0].consumos),
             parseFloat(data[0].pag)
         );
+        data[0].status == 4 ? $('.ck').hide() : '';
+        data[0].status == 4 ? $('.ed').css('display','none') : '';
         $('#consumo').text("R$ " + parseFloat(data[0].consumos).toFixed(2));
         $('#diarias').text("R$ " + parseFloat(data[0].diarias).toFixed(2));
         $('#pagamento').text("R$ " + parseFloat(data[0].pag).toFixed(2));
@@ -1003,6 +1005,7 @@
                         $('#inp-status').val(data.data[0]['status']);
                         $('#inp-observacao').val(data.data[0]['obs']);
                         $('#inp-placa').val(data.data[0]['placa']);
+                        $('#inp-qtdeHosp').val(data.data[0].qtde_hosp);
                         $('#exampleModalLabel').text("Dados Informativos");
                         $('#modalReserva').modal('show');  
 
