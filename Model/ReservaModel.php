@@ -361,38 +361,55 @@ class ReservaModel extends ConexaoModel {
     {
         try {
             $cmd  = $this->conexao->query(
-                "SELECT 
-                    r.id,
-                    r.dataEntrada,
-                    r.dataSaida,
-                    r.tipo,
-                    r.qtde_hosp,
-                    r.status,
-                    r.valor, 
-                    h.nome, 
-                    a.numero 
-                FROM 
-                    $this->model r 
-                INNER JOIN
-                    hospede h 
-                ON 
-                    r.hospede_id = h.id
-                LEFT JOIN 
-                    empresa_has_hospede eh
-                ON 
-                    eh.hospede_id = h.id
-                INNER JOIN 
-                    apartamento a 
-                ON 
-                    r.apartamento_id = a.id
-                WHERE
-                    h.nome LIKE '%$hospede%'
-                 AND
-                    r.status = $situacao   
-                 AND
-                    r.dataEntrada BETWEEN '$dataEntrada' AND '$dataSaida' 
-                ORDER BY
-                    r.id DESC            
+                "SELECT
+                r.id,
+                r.dataEntrada,
+                r.dataSaida,
+                r.tipo,
+                r.qtde_hosp,
+                r.status,
+                h.nome,
+                a.numero,
+                SUM(COALESCE(d.valor,0)) as valor
+            FROM
+                $this->model r
+            INNER JOIN
+                hospede h
+            ON
+                r.hospede_id = h.id
+            LEFT JOIN
+                empresa_has_hospede eh
+            ON
+                eh.hospede_id = h.id
+            INNER JOIN
+                apartamento a
+            ON
+                r.apartamento_id = a.id
+            LEFT JOIN
+                diarias d
+            ON
+                d.reserva_id = r.id
+            WHERE
+                h.nome LIKE '%$hospede%'               
+                AND (
+                    (
+                        ('$dataEntrada' BETWEEN r.dataEntrada AND r.dataSaida) 
+                        OR
+                        ('$dataSaida' BETWEEN r.dataEntrada AND r.dataSaida)
+                    )
+                    and r.status = '$situacao'
+                )               
+            GROUP BY
+                r.id,
+                r.dataEntrada,
+                r.dataSaida,
+                r.tipo,
+                r.qtde_hosp,
+                r.status,
+                h.nome,
+                a.numero
+            ORDER BY
+                r.id DESC;            
                 "
             );
     
