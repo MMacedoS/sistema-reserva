@@ -38,18 +38,7 @@
             <div class="col-sm-3 mb-2">
                 <label for="">Data Final</label>
                 <input type="date" name="" id="end_date" class="form-control" value="<?=Date('Y-m-d')?>">
-            </div>   
-            <div class="col-sm-3 mb-2">
-                <label for="">Situação</label>
-                <select name="" id="status" class="form-control">
-                    <option value="">Selecione o status</option>
-                    <option value="1">Reservada</option>
-                    <option value="2">Confirmada</option>
-                    <option value="3">Hospedadas</option>
-                    <option value="4">Finalizada</option>
-                    <option value="5">Cancelada</option>
-                </select>
-            </div>  
+            </div> 
             <div class="input-group-append float-right">
                 <button class="btn btn-primary ml-3" type="button" onclick="pesquisa()" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
@@ -77,7 +66,7 @@
 <script>
     
     $(document).ready(function(){
-        showData("<?=ROTA_GERAL?>/Reserva/findAllReservas")
+        showData("<?=ROTA_GERAL?>/Financeiro/findAllPagamento")
         .then((response) => createTable(response)).then(() => hideLoader());
         hideLoader()
     });
@@ -92,10 +81,9 @@
         let data = new FormData();
         data.append('hospede', $('#txt_busca').val());
         data.append('startDate', $('#start_date').val());
-        data.append('endDate', $('#end_date').val());
-        data.append('status', $('#status').val());  
+        data.append('endDate', $('#end_date').val()); 
         // Executa a função com base no valor do input
-        showDataWithData("<?=ROTA_GERAL?>/Reserva/findReservasByParams/",data)
+        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findPagamentoByParams/",data)
         .then((response) => createTable(response));;   
         hideLoader(); 
     }
@@ -114,7 +102,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Hóspede', 'Apt.', "Data Entrada", "Data Saida",'Tipo', 'Qtde', 'Situação','Valor']; 
+        var thArray = ['Cod', 'Hóspede', 'Apt.', "Data Entrada", "Data Saida","Vl. Diária", 'Consumo','Diárias', 'Pagamentos']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -139,18 +127,7 @@
                     } 
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
-                        // venda
-                        if (item.tipo == 1 && value == 'Tipo') {
-                            td.textContent = 'Diária';
-                        }
-                        if (item.tipo == 2 && value == 'Tipo') {
-                            td.textContent = 'Pacote';
-                        }
-
-                        if (item.tipo == 3 && value == 'Tipo') {
-                            td.textContent = 'Promocional';
-                        }
-
+                        
                         if (value === 'Data Entrada') {
                             td.textContent = formatDate(item.dataEntrada);
                         }
@@ -159,8 +136,7 @@
                             td.textContent = formatDate(item.dataSaida);
                         }
 
-                        if (value === 'Valor') {
-                            totalValue += parseFloat(item.valor);
+                        if (value === 'Vl. Diária') {
                             td.textContent = parseFloat(item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         }
 
@@ -176,12 +152,17 @@
                             td.textContent = item.numero;
                         }
 
-                        if (value === 'Qtde') {
-                            td.textContent = item.qtde_hosp;
+                        if (value === 'Consumo') {
+                            td.textContent = parseFloat(item.consumos).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         }
 
-                        if (value === 'Situação') {
-                            td.textContent = prepareStatus(item.status);
+                        if (value === 'Pagamentos') {
+                            totalValue += parseFloat(item.pag);
+                            td.textContent = parseFloat(item.pag).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        }
+
+                        if (value === 'Diárias') {
+                            td.textContent = parseFloat(item.diarias).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         }
 
                         tr.appendChild(td);
@@ -227,7 +208,7 @@
                     return cell.textContent;
                 });
                 // Chame a função desejada passando os dados da linha
-                editarRegistro(rowData);
+                // editarRegistro(rowData);
                 });
 
                 delButton.addEventListener('click', function() {
@@ -235,7 +216,7 @@
                     return cell.textContent;
                 });
                 // Chame a função desejada passando os dados da linha
-                deletarRegistro(rowData);
+                // deletarRegistro(rowData);
                 });
 
                 // Adicionando a ação para o botão "Editar"
@@ -244,7 +225,7 @@
                     return cell.textContent;
                 });
                 // Chame a função desejada passando os dados da linha
-                activeRegistro(rowData);
+                // activeRegistro(rowData);
                 });
 
                 tr.appendChild(buttonsTd);
@@ -256,7 +237,7 @@
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
 
-            $('#total').text("Valor Total" + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#total').text("Valor Total: " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
         
         hideLoader()
         return table;
@@ -307,30 +288,6 @@
                 }
             }
         });
-    }
-
-    function editarRegistro(rowData)
-    {
-        showData("<?=ROTA_GERAL?>/Financeiro/findEntradaById/" + rowData[0])
-            .then((response) => prepareModalEditarEntrada(response.data));
-        console.log(rowData[0]);
-    }
-
-    function deletarRegistro(rowData)
-    {
-        Swal.fire({
-            title: 'Deseja remover esta entrada?',
-            showDenyButton: true,
-            confirmButtonText: 'Sim',
-            denyButtonText: `Não`,
-        }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {                
-                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteEntradaById/" + rowData[0]);
-            } else if (result.isDenied) {
-                Swal.fire('nenhuma mudança efetuada', '', 'info')
-            }
-        })
     }
    
     function prepareModalEditarEntrada(data) {

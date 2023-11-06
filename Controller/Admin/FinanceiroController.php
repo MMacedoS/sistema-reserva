@@ -97,4 +97,17 @@ class FinanceiroController extends \Controller{
     public function findMovimentos() {
         echo json_encode($this->financeiro_model->findMovimentosByParams());
     }
+
+    public function findAllPagamento() {
+        echo json_encode($this->financeiro_model->findPagamentosByParams());
+    }
+
+    public function findPagamentoByParams() {
+        echo json_encode($this->financeiro_model->findPagamentosByParams(
+            $_POST['description'], 
+            $_POST['startDate'], 
+            $_POST['endDate']
+            )
+        );
+    }
 }
