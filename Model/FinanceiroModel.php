@@ -292,4 +292,54 @@ class FinanceiroModel extends ConexaoModel {
             return $th->getMessage();
         }
      }
+
+
+     public function findPagamentosByParams(
+        $descricao = '', 
+        $dataEntrada = '', 
+        $dataSaida = ''
+    ) {
+        try {
+            $sql = "SELECT 
+                r.id,
+                r.dataEntrada,
+                r.dataSaida,
+                r.valor,
+                h.nome, 
+                a.numero,
+                COALESCE((SELECT sum(valorUnitario * quantidade) FROM consumo c where c.reserva_id = r.id), 0) as consumos,
+                COALESCE((SELECT sum(valor) FROM diarias d where d.reserva_id = r.id), 0) as diarias,
+                COALESCE((SELECT sum(p.valorPagamento) FROM pagamento p where p.reserva_id = r.id), 0) as pag
+            FROM 
+                `reserva` r 
+            INNER JOIN 
+                hospede h 
+            on 
+                r.hospede_id = h.id 
+            INNER JOIN 
+                apartamento a 
+            on 
+                a.id = r.apartamento_id 
+            WHERE 
+            r.status = 4 
+            AND
+            h.nome LIKE '%$descricao%'
+            AND
+            (
+                (r.dataEntrada BETWEEN '$dataEntrada' and '$dataSaida')
+                OR
+                (r.dataSaida BETWEEN '$dataEntrada' and '$dataSaida')
+            ); 
+            ";
+            $cmd = $this->conexao->query($sql);
+    
+            if($cmd->rowCount() > 0)
+            {
+                return $cmd->fetchAll(PDO::FETCH_ASSOC);
+            }
+    
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+     }
 }

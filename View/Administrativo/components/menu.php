@@ -125,6 +125,7 @@
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/cafe">Café</a>                    
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/reservas">Reservas</a>                  
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/movimentos">Movimentos</a>                 
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/pagamentos">Relação Hospedagem</a>                 
             </div>
         </div>
     </li>
