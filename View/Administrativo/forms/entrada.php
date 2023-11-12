@@ -40,7 +40,7 @@
             <div class="col-sm-3 mb-2">
                 <select name="" id="status" class="form-control">
                     <option value="">Selecione o Tipo</option>
-                    <option value="1">Dinhero</option>
+                    <option value="1">Dinheiro</option>
                     <option value="2">Cartão de Crédito</option>
                     <option value="3">Cartão de Débito</option>
                     <option value="4">Deposito/PIX</option>
@@ -98,7 +98,7 @@
                         <div class="col-sm-6">
                             <label for="">Selecione uma forma</label>
                             <select name="pagamento" id="pagamento" class="form-control">
-                                <option  value="1">Dinhero</option>
+                                <option  value="1">Dinheiro</option>
                                 <option  value="2">Cartão de Crédito</option>
                                 <option  value="3">Cartão de Débito</option>
                                 <option  value="4">Deposito/PIX</option>
@@ -188,7 +188,7 @@
                         td.textContent = item[key];
                                                
                         if (item[key] === '1' && value == 'Tipo de Pagamento') {                            
-                            td.textContent = 'Dinhero';
+                            td.textContent = 'Dinheiro';
                         } if (item[key] === '2' && value == 'Tipo de Pagamento') {
                            
                             td.textContent = 'Cartão de Crédito';

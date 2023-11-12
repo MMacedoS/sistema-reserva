@@ -26,11 +26,18 @@ class AdministrativoController extends \Controller{
         }       
     }
 
-    public function index() {        
+    public function index() {    
+        $this->active = "";    
         $this->viewAdmin('consultas');
     }
 
+    public function venda() {    
+        $this->active = "venda";    
+        $this->viewAdmin('venda');
+    }
+
     public function apartamentos($request = null) {
+        $this->active = "cadastro";    
         $this->viewAdmin('apartamentos',$request,"");
     }
     
@@ -41,6 +48,7 @@ class AdministrativoController extends \Controller{
     }
 
     public function funcionarios($request = null) {
+        $this->active = "cadastro";    
         $this->viewAdmin('funcionarios',$request,"");
     }
 
@@ -51,6 +59,7 @@ class AdministrativoController extends \Controller{
     }
 
     public function hospedes($request = null) {
+        $this->active = "cadastro";    
         $this->viewAdmin('hospedes',$request,"");
     }
 
@@ -61,14 +70,17 @@ class AdministrativoController extends \Controller{
     }
 
     public function reservas($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('reservas',$request,"");
     }
 
     public function consultas($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('consultas',$request,"");
     }
 
     public function mapas($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('mapas',$request,"");
     }
 
@@ -79,6 +91,7 @@ class AdministrativoController extends \Controller{
     // }
 
     public function hospedadas($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('hospedadas',$request,"");
     }
 
@@ -89,10 +102,12 @@ class AdministrativoController extends \Controller{
     }
 
     public function checkin($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('checkin',$request,"");
     }
 
     public function financeiro($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('checkin',$request,"");
     }
 
@@ -115,10 +130,12 @@ class AdministrativoController extends \Controller{
     }
 
     public function checkout($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('checkout',$request,"");
     }
 
     public function disponiveis($request = null){
+        $this->active = "/";     
         $this->viewAdmin('disponiveis',$request,"");
     }
 
@@ -129,6 +146,7 @@ class AdministrativoController extends \Controller{
     }
 
     public function confirmada($request = null) {
+        $this->active = "reservas";     
         $this->viewAdmin('confirmada',$request,"");
     }
 
@@ -139,6 +157,7 @@ class AdministrativoController extends \Controller{
     }
 
     public function produtos($request = null) {
+        $this->active = "cadastro";     
         $this->viewAdmin('produtos',$request,"");
     }
 
@@ -155,10 +174,12 @@ class AdministrativoController extends \Controller{
     }
 
     public function entradaEstoque($request = null) {
+        $this->active = "estoque";     
         $this->viewAdmin('entradaEstoque',$request,"");
     }
 
     public function estoque($request = null) {
+        $this->active = "estoque";     
         $this->viewAdmin('estoque',$request,"");
     }
 
@@ -187,6 +208,7 @@ class AdministrativoController extends \Controller{
 
     public function movimentacoes($request = null)
     {
+        $this->active = "financeiro";     
         $this->viewAdmin('movimentacoes',$request,"");
     }
 
@@ -197,6 +219,7 @@ class AdministrativoController extends \Controller{
 
     public function entrada($request = null)
     {
+        $this->active = "financeiro";     
         $this->viewAdmin('entrada',$request,"");
     }
 
@@ -207,6 +230,7 @@ class AdministrativoController extends \Controller{
 
     public function saida($request = null)
     {
+        $this->active = "financeiro";     
         $this->viewAdmin('saida',$request,"");
     }
 
@@ -230,6 +254,7 @@ class AdministrativoController extends \Controller{
     }
 
     public function relacao($params = null) {
+        $this->active = "relatorio";     
         $this->viewImpressao($params, '');
     }
 
@@ -237,31 +262,37 @@ class AdministrativoController extends \Controller{
 
     public function bannerSite($request = null)
     {
+        $this->active = "site";     
         $this->viewAdmin('Site/banner',$request,"");
     }
 
     public function cardSite($request = null)
     {
+        $this->active = "site";     
         $this->viewAdmin('Site/cardApt',$request,"");
     }
 
     public function textSite($request = null)
     {
+        $this->active = "site";     
         $this->viewAdmin('Site/textSite',$request,"");
     }
 
     public function colorSite($request = null)
     {
+        $this->active = "site";     
         $this->viewAdmin('Site/colorSite',$request,"");
     }
 
     public function imagesSite($request = null)
     {
+        $this->active = "site";     
         $this->viewAdmin('Site/imagesSite',$request,"");
     }
 
     public function configSite($request = null)
     {
+        $this->active = "site";     
         $this->viewAdmin('Site/configSite',$request,"");
     }
 

@@ -27,7 +27,7 @@
 <hr>
     <div class="row">   
         <div class="input-group">
-            <div class="col-sm-2 mb-2">
+            <div class="col-sm-5 mb-2">
                 <label for="">Descrição</label>
                 <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>

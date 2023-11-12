@@ -16,7 +16,7 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item active">
+    <li class="nav-item <?=$this->active == "" ? 'active' : ''?>">
         <a class="nav-link" href="<?=ROTA_GERAL?>/Administrativo">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Tela Administrativa</span></a>
@@ -30,23 +30,14 @@
         Interface
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Contratos</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/contratos">Contratos Assinados</a>    
-                <a class="collapse-item" target="_blank" href="<=ROTA_GERAL?>/Contrato/contrato_fornecedor.php">Assinar Contrato</a>    
-                <a class="collapse-item" target="_blank" href="<=ROTA_GERAL?>/Contrato/contrato.php">Visualizar Contrato</a>  
-                <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/enviar_email">Enviar E-mail</a> 
-            </div>
-        </div>
-    </li> -->
+    <li class="nav-item <?=$this->active == "venda" ? 'active' : ''?>">
+        <a class="nav-link" href="<?=ROTA_GERAL?>/Administrativo/venda">
+            <i class="fas fa-fw fa-cart-plus"></i>
+            <span>Vendas</span></a>
+    </li>
+
      <!-- Nav Item - Pages Collapse Menu -->
-     <li class="nav-item">
+     <li class="nav-item <?=$this->active == "cadastro" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCad" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Cadastros</span>
@@ -62,7 +53,7 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item <?=$this->active == "estoque" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstoque" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-dice-five"></i>
             <span>Estoque</span>
@@ -83,7 +74,7 @@
     </li>
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
+    <li class="nav-item <?=$this->active == "reservas" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Reservas &</br>&nbsp;&nbsp; Hospedagens </span>
@@ -101,7 +92,7 @@
    <?php 
     if($_SESSION['painel'] == 'Administrador'){
    ?>
-    <li class="nav-item">
+    <li class="nav-item <?=$this->active == "financeiro" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinanceiro" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-dice-five"></i>
             <span>Financeiro</span>
@@ -115,7 +106,7 @@
         </div>
     </li>
 
-    <li class="nav-item">
+    <li class="nav-item <?=$this->active == "relatorio" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorio" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-dice-five"></i>
             <span>Relatório</span>
@@ -133,7 +124,7 @@
     <?php
     }
     ?>
-    <li class="nav-item">
+    <li class="nav-item <?=$this->active == "site" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-chart-area"></i>
             <span>Site</span>

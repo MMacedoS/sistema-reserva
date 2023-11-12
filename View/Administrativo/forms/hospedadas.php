@@ -473,7 +473,7 @@
             <span class="close" id="closeModal">&times;</span>
             <h2>Alterar Consumo</h2>
             <form id="swal-form-consumo">
-                <input type="hidden" name="" id="swal_id_consumo">
+                <input type="hidden" name="swal_id_consumo" id="swal_id_consumo">
                 <div class="col-sm-12">
                     <label>Qtdo<input id="swal-cons-input1" name="quantidade" class="form-control" type="number"></label>
                 </div>
