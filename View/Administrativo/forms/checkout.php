@@ -127,7 +127,7 @@
                         <button type="button" class="close mr-4 btn btn-danger" data-dismiss="modal" aria-label="Close">
                                 X
                         </button>
-                        <button type="button" name="salvar" id="btnSubmit" class="btn btn-primary executar-checkout">Executar</button>
+                        <button type="button" name="salvar" id="btnCK" class="btn btn-primary executar-checkout ck">Executar</button>
                     </div>
                 </form>
             </div>
@@ -221,7 +221,7 @@
     </div>
 </div>
 <!-- editar -->
-
+<script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
 let url = "<?=ROTA_GERAL?>/";
 
@@ -414,6 +414,8 @@ function preparaModalHospedadas(data, tipo)
             parseFloat(data[0].diarias),
             parseFloat(data[0].pag)
         ).toFixed(2);
+        data[0].status == 4 ? $('.ck').hide() : '';
+        comparaDateMenorAtual(data[0].dataSaida) ? $('#btnCK').hide() : '';
         totalConsumos = ( parseFloat(data[0].consumos) + parseFloat(data[0].diarias) );
         if(total > 0) {
             $('#restante').addClass('text-danger');
@@ -492,5 +494,17 @@ function preparaModalHospedadas(data, tipo)
                 }
             })    
         });
+
+    function comparaDateMenorAtual(data) {
+        var dataAtual =  moment();
+        var dataComparar = moment(data);
+        console.log(dataComparar);
+        console.log(dataAtual);
+        if (dataComparar.isBefore(dataAtual, 'day')) {
+            return true
+        }
+
+        return false;
+    }
 
 </script>

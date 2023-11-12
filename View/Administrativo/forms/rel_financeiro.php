@@ -48,7 +48,7 @@
             <div class="col-sm-3 mb-2">
                 <select name="" id="busca_status" class="form-control">
                     <option value="">Selecione o Tipo</option>
-                    <option <?=$status == 1 ? 'selected': '';?> value="1">Dinhero</option>
+                    <option <?=$status == 1 ? 'selected': '';?> value="1">Dinheiro</option>
                     <option <?=$status == 2 ? 'selected': '';?> value="2">Cartão de Crédito</option>
                     <option <?=$status == 3 ? 'selected': '';?> value="3">Cartão de Débito</option>
                     <option <?=$status == 4 ? 'selected': '';?> value="4">Deposito/PIX</option>

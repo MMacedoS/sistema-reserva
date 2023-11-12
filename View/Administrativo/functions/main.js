@@ -44,6 +44,23 @@
     });
   }
 
+    // Função para exibir um registro
+    function updateDataWithData(url, data) {
+      showLoader();
+      return $.ajax({
+        url: url,
+        method:'POST',
+        data: data,
+        contentType: false,
+        cache: false,
+        processData:false,
+        dataType: 'json',
+      }).catch(function(error){
+        console.error('Erro ao obter registro:', error);
+        hideLoader();
+      });
+    }
+
   // Função para exibir um registro
   function showData(url) {
     showLoader();

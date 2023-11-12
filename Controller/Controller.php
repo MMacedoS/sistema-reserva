@@ -14,6 +14,8 @@ class Controller {
     use RequestTrait;
     use ErrorLoggingTrait;
 
+    public $active = "";
+
     public $images;
     public $cards;
     public $color;
