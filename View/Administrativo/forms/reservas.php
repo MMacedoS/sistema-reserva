@@ -160,9 +160,6 @@
     </div>
 </div>
 <!-- editar -->
-
-
-
 </div>
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 
@@ -294,24 +291,6 @@
                 editButton.className = 'btn btn-edit';
                 buttonsTd.appendChild(editButton);
 
-                // var clearButton = document.createElement('button');
-                // clearButton.innerHTML = '<i class="fa fa-trash"></i>';
-                // buttonsTd.appendChild(clearButton);
-
-                // var activateButton = document.createElement('button');
-                // activateButton.innerHTML = '<i class="fa fa-check"></i>';
-                // activateButton.className = 'btn btn-activate';
-                // buttonsTd.appendChild(activateButton);
-
-                // // Verificar o valor e definir o ícone e classe apropriados
-                // if (item.status === '2') {           
-                //     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
-                //     activateButton.title = 'Ocupado';
-                // } else {
-                //     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
-                //     activateButton.title = 'Ativo';
-                // }
-
                 // Adicionando a ação para o botão "Editar"
                 editButton.addEventListener('click', function() {
                 var rowData = Array.from(tr.cells).map(function(cell) {
@@ -320,15 +299,6 @@
                 // Chame a função desejada passando os dados da linha
                 editarRegistro(rowData);
                 });
-
-                // Adicionando a ação para o botão "Editar"
-                // activateButton.addEventListener('click', function() {
-                //     var rowData = Array.from(tr.cells).map(function(cell) {
-                //         return cell.textContent;
-                //     });
-                // // Chame a função desejada passando os dados da linha
-                //     // redirectWithModal(rowData);
-                // });
 
                 tr.appendChild(buttonsTd);
                 tbody.appendChild(tr);                
@@ -435,7 +405,8 @@
         $('#tipo').val(data[0].tipo);
         $('#valor').val(data[0].valor);
         $('#status').val(data[0].status);
-        $('#observacao').val(data[0].obs);
+        $('#observacao').val(data[0].obs);        
+        $('#inp-qtdeHosp').val(data[0].qtde_hosp);
         $('#id').val(data[0].id);
         $('#div_apartamento').removeClass('hide');
         apartamento =  data[0].apartamento_id;
