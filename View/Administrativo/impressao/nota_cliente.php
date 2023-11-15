@@ -18,7 +18,7 @@
         <p><b>Tel: </b><?=self::formatPhoneNumber($number_empresa['valor'])?></p>
     </div>
    <hr>
-   <p>Dados Hospedagem</p>
+   <p><b>Informações:</b></p>
     <div class="container">
         <div class="row">
             <table class="table table-sm mr-4" id="head">
@@ -59,7 +59,39 @@
                     </tr>
                 </thead>
             </table>
-            <h6><b>Consumos</b></h6>
+            <h6><b>Diárias:</b></h6>
+            <table class="table table-sm mt-3 mr-4" id="contents">
+                    <thead>
+                        <td>Data</td>
+                        <td>Valor</td>
+                        <td>Total</td>
+                    </thead>
+                    <tbody>
+                        <?php 
+                            if(!empty($dados->lista_diarias))
+                            {
+                                foreach ($dados->lista_diarias as $key => $value) {?>
+                                    <tr>
+                                        <td>
+                                            <?= self::prepareDateWithTimeBr($value['data'])?>
+                                        </td>                             
+                                        <td>
+                                            <?= self::valueBr($value['valor'])?>
+                                        </td>     
+                                        <td>
+                                            <?= self::valueBr(($value['valor']))?>
+                                        </td>                           
+                                    </tr>     
+                        <?php       }
+                            echo '<tr><td colspan="2" class="text-right">Total </td>
+                            <td>R$ ' . self::valueBr($dados->diarias) . '</td>
+                            </tr>';
+                            
+                            }
+                        ?>
+                    </tbody>
+            </table>
+            <h6><b>Consumos:</b></h6>
             <table class="table table-sm mt-3 mr-4" id="content">
                     <thead>
                         <td>Descrição</td>
@@ -97,7 +129,7 @@
                         ?>
                     </tbody>
             </table>
-            <h6><b>Pagamentos</b></h6>
+            <h6><b>Pagamentos:</b></h6>
             <table class="table table-sm mt-3 mr-4" id="content">
                 <thead>
                     <td>Descrição</td>
@@ -138,21 +170,21 @@
     <div class="container">
         <div class="row mb-2">
             <div class="col-sm-4">
-                Consumo + Hospedagem R$ <?= self::valueBr($dados->consumos + $dados->pag)?>
+                Consumo + Hospedagem: R$ <?= self::valueBr($dados->consumos + $dados->diarias)?>
             </div>
             <div class="col-sm-4">
-                Pagamentos Lançados R$ <?= self::valueBr($dados->pag)?>
+                Pagamentos Lançados: R$ <?= self::valueBr($dados->pag)?>
             </div>
             <div class="col-sm-4">
                 <?php 
-                $total = (($dados->consumos + $dados->pag) - $dados->pag);
+                $total = (($dados->consumos + $dados->diarias) - $dados->pag);
                 
                 if($total < 0){
-                    echo 'Ainda resta consumir R$ ' . self::valueBr(
+                    echo 'Ainda resta consumir: R$ ' . self::valueBr(
                         $total *(-1), 
                        );
                 }else {
-                    echo 'Resta pagar R$ ' . self::valueBr(
+                    echo 'Resta pagar: R$ ' . self::valueBr(
                         $total, 
                         );
                 }
