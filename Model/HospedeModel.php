@@ -155,40 +155,26 @@ class HospedeModel extends ConexaoModel {
     
     public function getAll()
     {
-        self::logError("model");
-        $query = "SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc ";
-        
-        self::logError($query);
+        $query = "SELECT id, nome, cpf, telefone FROM `hospede` order by id desc ";
         try {
             $cmd = $this->conexao->prepare($query);
             $cmd->execute();
             $dados = $cmd->fetchAll();
-            self::logError("entrou no try");
             return $dados;
         } catch (PDOException $e) {
-            // Tratar o erro conforme necessário
-            // Por exemplo, você pode exibir uma mensagem de erro ou registrar o erro em um log
-            self::logError("Ocorreu um erro na consulta: " . $e->getMessage());
             return false;
         }
     }
 
     public function getAllOfSelect()
     {
-        self::logError("model");
         $query = "SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc ";
-        
-        self::logError($query);
         try {
             $cmd = $this->conexao->prepare($query);
             $cmd->execute();
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            self::logError("entrou no try");
             return $dados;
         } catch (PDOException $e) {
-            // Tratar o erro conforme necessário
-            // Por exemplo, você pode exibir uma mensagem de erro ou registrar o erro em um log
-            self::logError("Ocorreu um erro na consulta: " . $e->getMessage());
             return false;
         }
     }

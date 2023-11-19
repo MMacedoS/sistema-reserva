@@ -157,7 +157,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Nome', 'CPF','Endereço', 'Telefone']; 
+        var thArray = ['Cod', 'Nome', 'CPF','Telefone']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
