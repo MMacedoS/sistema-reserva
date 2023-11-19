@@ -52,7 +52,7 @@ class PagamentoModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -74,10 +74,10 @@ class PagamentoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::messageWithData(201, 'pagamentos encontrados', $dados);
+            return self::messageWithData(200, 'pagamentos encontrados', $dados);
         }
 
-        return self::messageWithData(201, 'nenhum dado encontrado', []);
+        return self::messageWithData(200, 'nenhum dado encontrado', []);
     }
 
     public function getRemovePagamento($id){

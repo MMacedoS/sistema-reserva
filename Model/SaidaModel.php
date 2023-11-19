@@ -140,7 +140,7 @@ class SaidaModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -188,7 +188,7 @@ class SaidaModel extends ConexaoModel {
                 self::dropRegister($entrada['data']);
     
                 $this->conexao->commit();
-                return self::message(201, "Registro deletado!!");
+                return self::message(200, "Registro deletado!!");
     
             } catch (\Throwable $th) {
                 $this->conexao->rollback();

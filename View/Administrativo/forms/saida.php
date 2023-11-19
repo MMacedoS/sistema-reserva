@@ -332,7 +332,16 @@
     $(document).on('click','.Salvar',function(){
         event.preventDefault();        
         $('.Salvar').prop('disabled', true);
-        return createData('<?=ROTA_GERAL?>/Financeiro/insertSaida', new FormData(document.getElementById("form")));
+        return createData('<?=ROTA_GERAL?>/Financeiro/insertSaida', new FormData(document.getElementById("form"))).then( (response) => {
+            if(response.status === 200) {
+                showSuccessMessage(response.message);
+                return;
+            }  
+            
+            if(response.status === 422) {
+                showErrorMessage(response.message);
+            }
+        });
     });  
 
 

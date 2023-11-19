@@ -384,7 +384,16 @@
         event.preventDefault();
         $('.Salvar').prop('disabled', true);
         var id = $('#id').val();
-        if(id == '') return createData('<?=ROTA_GERAL?>/Financeiro/salvarEntradas', new FormData(document.getElementById("form")));
+        if(id == '') return createData('<?=ROTA_GERAL?>/Financeiro/salvarEntradas', new FormData(document.getElementById("form"))).then( (response) => {
+            if(response.status === 200) {
+                showSuccessMessage(response.message);
+                return;
+            }  
+            
+            if(response.status === 422) {
+                showErrorMessage(response.message);
+            }
+        });
     
         return updateData('<?=ROTA_GERAL?>/Financeiro/atualizarEntradas/' + id, new FormData(document.getElementById("form")), id);
     });   

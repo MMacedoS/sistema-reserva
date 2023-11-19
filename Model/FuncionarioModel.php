@@ -79,7 +79,7 @@ class FuncionarioModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -124,7 +124,7 @@ class FuncionarioModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados Atualizados!!");
+            return self::message(200, "dados Atualizados!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();

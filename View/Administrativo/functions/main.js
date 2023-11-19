@@ -2,7 +2,7 @@
   // Função para criar um novo registro
   function createData(url, data) {
     showLoader();
-    $.ajax({
+    return $.ajax({
       url: url,
       method: 'POST',
       data: data,
@@ -10,15 +10,9 @@
       contentType: false,
       cache: false,
       processData:false,
-      success: function(response) {
-        showSuccessMessage('Registro criado com sucesso!');
-        hideLoader();
-      },
-      error: function(error) {
-        console.error('Erro ao criar registro:', error);
-        hideLoader();
-        showErrorMessage("Não foi possivel criar o registro");
-      }
+    }).catch(function(error){
+       showErrorMessage("Error creating");
+      hideLoader();
     });
   }
 
@@ -155,7 +149,7 @@
       confirmButtonColor: '#3085d6',
       confirmButtonText: 'Ok'
     }).then(()=>{
-        refreshPage();
+        hideLoader();
     });
   }
   

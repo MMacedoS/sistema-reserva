@@ -373,7 +373,7 @@
                         </div>
                         <div class="col-sm-4 text-center">
                             <label >&nbsp;</label>
-                            <button type="submit" name="salvar" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
+                            <button type="button" name="salvar" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
                         </div>
                     </div>
                 </form>
@@ -643,7 +643,7 @@
               }
           })
           .done(function(data) {
-              if(data.status === 201){
+              if(data.status === 200){
                   return Swal.fire({
                       icon: 'success',
                       title: 'OhoWW...',
@@ -672,7 +672,7 @@
             processData: false,
             dataType: 'json     ',
             success: function(data){
-                if(data.status === 201){
+                if(data.status === 200){
                     preparaModalEditarReserva(data.data);
                 }
             }
@@ -706,7 +706,7 @@
             processData: false,
             dataType: 'json     ',
             success: function(data){
-                if(data.status === 201){
+                if(data.status === 200){
                     preparaModalHospedadas(data.data, tipo);
                 }
             }
@@ -981,7 +981,7 @@
                 processData: false,
                 dataType: 'json     ',
                 success: function(data){
-                    if(data.status === 201){                    
+                    if(data.status === 200){                    
                         data.data.map(element => {
                             var newOption = $('<option value="' + element.id + '">' + element.descricao + '</option>');
                             $("#produto").append(newOption);
@@ -1011,7 +1011,7 @@
                 processData: false,
                 dataType: 'json     ',
                 success: function(data){
-                    if(data.status === 201){
+                    if(data.status === 200){
                         $('#inp-entrada').val(data.data[0]['dataEntrada']);
                         $('#inp-saida').val(data.data[0]['dataSaida']);
                         apartamento =  data.data[0].apartamento_id;
@@ -1019,8 +1019,8 @@
                         $('#inp-tipo').val(data.data[0]['tipo']);
                         $('#inp-valor').val(data.data[0]['valor']);
                         $('#inp-status').val(data.data[0]['status']);
-                        $('#inp-observacao').val(data.data[0]['obs']);
-                        $('#inp-placa').val(data.data[0]['placa']);
+                        $('#inp-observacao').val(data.data[0]['obs'] === null ? 'S/N' : data.data[0]['obs']);
+                        $('#inp-placa').val(data.data[0]['placa'] === null ? 'S/N' : data.data[0]['placa']);
                         $('#inp-qtdeHosp').val(data.data[0].qtde_hosp);
                         $('#exampleModalLabel').text("Dados Informativos");
                         $('#modalReserva').modal('show');  
@@ -1057,7 +1057,7 @@
                     contentType: false,
                     cache: false,
                     success: function(data){
-                        if(data.status === 201){
+                        if(data.status === 200){
                             $('.pagamento').click();
                                 setInterval(() => {
                                     $('.Salvar-pagamento').prop('disabled', false);
@@ -1081,8 +1081,30 @@
                 contentType: false,
 	            cache: false,
                 success: function(data){
-                    if(data.status === 201){
+                    if(data.status === 200){
                        $('.consumo').click();
+                    }
+                }
+            })  
+        });
+
+        $(document).on('click','.Salvar-diarias',function(){
+            $(".Salvar-diarias").prop("disabled", true);
+            event.preventDefault();
+            let code=$("#id").val(); 
+            id_reserva = code;
+            $.ajax({
+                url: url+ 'Diaria/addDiaria/' + code,
+                method:'POST',
+                data: new FormData(document.getElementById("form-diarias")),
+                processData: false,
+                dataType: 'json',
+                contentType: false,
+	            cache: false,
+                success: function(data){
+                    if(data.status === 200){
+                        $(".Salvar-diarias").prop("disabled", false);
+                       $('.diarias').click();
                     }
                 }
             })  
@@ -1098,7 +1120,7 @@
                 processData: false,
                 dataType: 'json     ',
                 success: function(data){
-                    if(data.status === 201){
+                    if(data.status === 200){
                         $('#swal_id_consumo').val(code);
                         $('#swal-cons-input1').val(data.data[0].quantidade);
                         $('#swal-cons-input2').val(data.data[0].valorUnitario);
@@ -1138,7 +1160,7 @@
                 processData: false,
                 dataType: 'json',
                 success: function(data) {
-                    if(data.status === 201){
+                    if(data.status === 200){
                         
                         $('#swal_id_diaria').val(code);
                         $('#swal-dia-input1').val(data.data[0].data);

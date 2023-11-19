@@ -19,7 +19,6 @@ class HospedeModel extends ConexaoModel {
 
     public function prepareInsertHospede($dados)
     {
-
         // $validation = self::requiredParametros($dados);
         $validation = null;
         if(empty($dados['nome']))
@@ -42,10 +41,10 @@ class HospedeModel extends ConexaoModel {
 
     private function verificaHospedesSeExiste($dados)
     {
-        $email = (string)$dados['email'];
+        $cpf = (string)$dados['cpf'];
         $nome = (string)$dados['nome'];
         
-        if (empty($email)) {
+        if (empty($cpf)) {
             return true;    
         }
         
@@ -55,10 +54,11 @@ class HospedeModel extends ConexaoModel {
             FROM
                 $this->model
             WHERE
-                email = '$email'"
+                cpf = '$cpf'
+            and nome = '$nome'"
         );
 
-        if($cmd->rowCount()>0)
+        if($cmd->rowCount() > 0)
         {
             return false;
         }
@@ -96,7 +96,7 @@ class HospedeModel extends ConexaoModel {
             $this->conexao->commit();
             
             // self::logError(json_encode($id));
-            return $id;
+            return self::message(200, "Salvo com sucesso");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -145,7 +145,7 @@ class HospedeModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados Atualizados!!");
+            return self::message(200, "dados Atualizados!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();

@@ -54,7 +54,7 @@ class ConsumoModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -101,7 +101,7 @@ class ConsumoModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -123,10 +123,10 @@ class ConsumoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::messageWithData(201, 'consumo encontrados', $dados);
+            return self::messageWithData(200, 'consumo encontrados', $dados);
         }
 
-        return self::messageWithData(201, 'nenhum dado encontrado', []);
+        return self::messageWithData(200, 'nenhum dado encontrado', []);
     }
 
     
@@ -144,10 +144,10 @@ class ConsumoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::messageWithData(201, 'diarias encontrados', $dados);
+            return self::messageWithData(200, 'diarias encontrados', $dados);
         }
 
-        return self::messageWithData(201, 'nenhum dado encontrado', []);
+        return self::messageWithData(200, 'nenhum dado encontrado', []);
     }
 
     public function getRemoveConsumo($id)

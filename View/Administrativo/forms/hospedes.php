@@ -49,21 +49,21 @@
                         <div class="col-sm-6">
                             <input type="hidden" disabled id="id" >
                             <label for="">Nome</label>
-                            <input type="text" class="form-control" id="nome" name="nome" placeholder="nome do funcionario" required value="">
+                            <input type="text" class="form-control" id="nome" name="nome" required value="">
                         </div>
                         <div class="col-sm-6">
                             <label for="">Email</label>
-                            <input type="email" class="form-control" id="email" name="email" placeholder="email" required value="">
+                            <input type="email" class="form-control" id="email" name="email" required value="">
                         </div>
                     </div>                   
                     <div class="form-row">
                         <div class="col-sm-6">
                             <label for="">CPF</label>
-                            <input type="text" name="cpf" id="cpf"  placeholder="ex: 05555544455" class="form-control">
+                            <input type="text" name="cpf" id="cpf" class="form-control">
                         </div>
                         <div class="col-sm-6">
                             <label for="">Telefone</label>
-                            <input type="text" name="telefone" id="telefone"  placeholder="ex: 75989745632" class="form-control">
+                            <input type="text" name="telefone" id="telefone" class="form-control">
                         </div>                       
                         <div class="col-sm-12">
                             <label for="">Endereço</label>
@@ -283,7 +283,16 @@
     $(document).on('click','.Salvar',function(){
         event.preventDefault();
         var id = $('#id').val();
-        if(id == '') return createData('<?=ROTA_GERAL?>/Hospede/salvarHospedes', new FormData(document.getElementById("form"))).then( (response) => alert(response));
+        if(id == '') return createData('<?=ROTA_GERAL?>/Hospede/salvarHospedes', new FormData(document.getElementById("form"))).then( (response) => {
+            if(response.status === 200) {
+                showSuccessMessage(response.message);
+                return;
+            }  
+            
+            if(response.status === 422) {
+                showErrorMessage(response.message);
+            }
+        });
     
         return updateData('<?=ROTA_GERAL?>/Hospede/atualizarHospedes/' + id, new FormData(document.getElementById("form")), id);
     });
@@ -303,6 +312,24 @@
         // Redireciona para a página de destino
         window.location.href = redirectUrl;
     }
+
+    const telefone = document.getElementById('telefone');
+
+    telefone.addEventListener('input', function(e) {
+    const value = e.target.value;
+    const numbers = value.replace(/\D/g, '');
+    const formatted = numbers.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
+    e.target.value = formatted;
+    });
+
+    const cpf = document.getElementById('cpf');
+
+    cpf.addEventListener('input', function(e) {
+    const value = e.target.value;
+    const numbers = value.replace(/\D/g, '');
+    const formatted = numbers.length > 11 ? numbers.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5') : numbers.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    e.target.value = formatted;
+    });
 
 </script>
 

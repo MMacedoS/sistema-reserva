@@ -193,7 +193,16 @@
 
         $(document).on('click','.Salvar',function(event){
             event.preventDefault();
-            createData(url+'Produto/salvarEntrada', new FormData(document.getElementById("form")));
+            createData(url+'Produto/salvarEntrada', new FormData(document.getElementById("form"))).then( (response) => {
+            if(response.status === 200) {
+                showSuccessMessage(response.message);
+                return;
+            }  
+            
+            if(response.status === 422) {
+                showErrorMessage(response.message);
+            }
+        });
         });
 
         $(document).on('click','.view_data',function(){

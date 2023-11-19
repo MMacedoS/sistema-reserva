@@ -42,7 +42,7 @@ class ProdutoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll();            
-            return self::messageWithData(201, 'produtos encontrados', $dados);
+            return self::messageWithData(200, 'produtos encontrados', $dados);
         }
 
         return '';
@@ -70,7 +70,7 @@ class ProdutoModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -103,7 +103,7 @@ class ProdutoModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "Dados Atualizados!!");
+            return self::message(200, "Dados Atualizados!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -136,7 +136,7 @@ class ProdutoModel extends ConexaoModel {
             $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "Dados Atualizados!!");
+            return self::message(200, "Dados Atualizados!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -171,7 +171,7 @@ class ProdutoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);            
-            return self::messageWithData(201, 'entradas encontrados', $dados);
+            return self::messageWithData(200, 'entradas encontrados', $dados);
         }
 
         return '';
@@ -194,7 +194,7 @@ class ProdutoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll();            
-            return self::messageWithData(201, 'produtos encontrados', $dados);
+            return self::messageWithData(200, 'produtos encontrados', $dados);
         }
 
         return '';
@@ -222,7 +222,7 @@ class ProdutoModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);            
-            return self::messageWithData(201, 'produtos encontrados', $dados);
+            return self::messageWithData(200, 'produtos encontrados', $dados);
         }
 
         return self::messageWithData(200, 'não encontrados', []);
@@ -250,7 +250,7 @@ class ProdutoModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "Dados inseridos!!");
+            return self::message(200, "Dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
