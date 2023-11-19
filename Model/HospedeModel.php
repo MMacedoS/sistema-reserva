@@ -33,7 +33,7 @@ class HospedeModel extends ConexaoModel {
                 return $this->insertHospede($dados); 
             }
 
-            return self::message(422, 'Hospedes existente!');
+            return self::message(422, 'Hospede existente!');
         }
 
         return $validation;
