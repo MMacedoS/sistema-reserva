@@ -447,6 +447,15 @@
                     apartamento = null;
                     hospede = null;
                     window.location.href="<?=ROTA_GERAL?>/Administrativo/Reservas/";
+                }).then( (response) => {
+                    if(response.status === 200) {
+                        showSuccessMessage(response.message);
+                        return;
+                    }  
+                    
+                    if(response.status === 422) {
+                        showErrorMessage(response.message);
+                    }
                 });
             }
         

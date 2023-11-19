@@ -113,7 +113,7 @@ class ReservaModel extends ConexaoModel {
             $dados = $cmd->execute();
 
             $this->conexao->commit();
-            return self::message(201, "dados inseridos!!");
+            return self::message(200, "dados inseridos!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -224,7 +224,7 @@ class ReservaModel extends ConexaoModel {
                 $dados = $cmd->execute();
             $this->calculeReserva($id);
             $this->conexao->commit();
-            return self::message(201, "dados Atualizados!!");
+            return self::message(200, "dados Atualizados!!");
 
         } catch (\Throwable $th) {
             $this->conexao->rollback();
@@ -917,7 +917,7 @@ class ReservaModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::messageWithData(201, 'reserva encontrada', $dados);
+            return self::messageWithData(200, 'reserva encontrada', $dados);
         }
 
         return self::messageWithData(422, 'nehum dado encontrado', []);
@@ -937,7 +937,7 @@ class ReservaModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
             $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::messageWithData(201, 'reserva encontrada', $dados);
+            return self::messageWithData(200, 'reserva encontrada', $dados);
         }
 
         return self::messageWithData(422, 'nehum dado encontrado', []);
@@ -1012,7 +1012,7 @@ class ReservaModel extends ConexaoModel {
         if($cmd->rowCount() > 0)
         {
 
-            return self::messageWithData(201,'Dados encontrados', $cmd->fetchAll(PDO::FETCH_ASSOC));
+            return self::messageWithData(200,'Dados encontrados', $cmd->fetchAll(PDO::FETCH_ASSOC));
         }
 
         return false;

@@ -251,7 +251,16 @@
     $(document).on('click','.Salvar',function(){
         event.preventDefault();
         var id = $('#id').val();
-        if(id == '') return createData('<?=ROTA_GERAL?>/Funcionario/salvarFuncionarios', new FormData(document.getElementById("form")));
+        if(id == '') return createData('<?=ROTA_GERAL?>/Funcionario/salvarFuncionarios', new FormData(document.getElementById("form"))).then( (response) => {
+            if(response.status === 200) {
+                showSuccessMessage(response.message);
+                return;
+            }  
+            
+            if(response.status === 422) {
+                showErrorMessage(response.message);
+            }
+        });
     
         return updateData('<?=ROTA_GERAL?>/Funcionario/atualizarFuncionarios/' + id, new FormData(document.getElementById("form")), id);
     });

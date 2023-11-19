@@ -1221,3 +1221,177 @@
 [2023-10-15 16:20:37] model
 [2023-10-15 16:20:37] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
 [2023-10-15 16:20:37] entrou no try
+[2023-11-19 11:55:33] model
+[2023-11-19 11:55:33] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:55:33] entrou no try
+[2023-11-19 11:56:04] model
+[2023-11-19 11:56:04] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:56:04] entrou no try
+[2023-11-19 11:56:09] model
+[2023-11-19 11:56:09] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:56:09] entrou no try
+[2023-11-19 11:57:07] model
+[2023-11-19 11:57:07] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:57:07] entrou no try
+[2023-11-19 11:57:10] model
+[2023-11-19 11:57:10] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:57:10] entrou no try
+[2023-11-19 11:57:54] model
+[2023-11-19 11:57:54] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:57:54] entrou no try
+[2023-11-19 11:58:28] model
+[2023-11-19 11:58:28] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:58:28] entrou no try
+[2023-11-19 11:58:31] model
+[2023-11-19 11:58:31] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:58:31] entrou no try
+[2023-11-19 11:58:33] model
+[2023-11-19 11:58:33] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:58:33] entrou no try
+[2023-11-19 11:58:42] model
+[2023-11-19 11:58:42] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:58:42] entrou no try
+[2023-11-19 11:58:51] model
+[2023-11-19 11:58:52] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:58:52] entrou no try
+[2023-11-19 11:59:07] model
+[2023-11-19 11:59:07] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:59:07] entrou no try
+[2023-11-19 11:59:08] model
+[2023-11-19 11:59:08] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 11:59:08] entrou no try
+[2023-11-19 12:01:46] model
+[2023-11-19 12:01:46] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:01:46] entrou no try
+[2023-11-19 12:02:01] model
+[2023-11-19 12:02:01] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:02:01] entrou no try
+[2023-11-19 12:03:18] model
+[2023-11-19 12:03:18] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:03:18] entrou no try
+[2023-11-19 12:03:29] model
+[2023-11-19 12:03:29] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:03:29] entrou no try
+[2023-11-19 12:03:53] model
+[2023-11-19 12:03:53] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:03:53] entrou no try
+[2023-11-19 12:04:52] model
+[2023-11-19 12:04:52] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:04:52] entrou no try
+[2023-11-19 12:05:15] model
+[2023-11-19 12:05:15] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:05:15] entrou no try
+[2023-11-19 12:05:28] model
+[2023-11-19 12:05:29] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:05:29] entrou no try
+[2023-11-19 12:12:43] model
+[2023-11-19 12:12:43] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:12:43] entrou no try
+[2023-11-19 12:12:45] model
+[2023-11-19 12:12:45] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:12:45] entrou no try
+[2023-11-19 12:15:13] model
+[2023-11-19 12:15:13] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:15:13] entrou no try
+[2023-11-19 12:16:27] model
+[2023-11-19 12:16:27] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:16:27] entrou no try
+[2023-11-19 12:23:21] model
+[2023-11-19 12:23:21] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:23:21] entrou no try
+[2023-11-19 12:24:19] model
+[2023-11-19 12:24:19] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:24:19] entrou no try
+[2023-11-19 12:26:14] model
+[2023-11-19 12:26:14] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:26:14] entrou no try
+[2023-11-19 12:26:24] model
+[2023-11-19 12:26:24] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:26:24] entrou no try
+[2023-11-19 12:36:28] model
+[2023-11-19 12:36:28] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:36:28] entrou no try
+[2023-11-19 12:36:41] model
+[2023-11-19 12:36:41] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:36:41] entrou no try
+[2023-11-19 12:36:51] model
+[2023-11-19 12:36:51] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:36:51] entrou no try
+[2023-11-19 12:37:27] model
+[2023-11-19 12:37:27] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:37:27] entrou no try
+[2023-11-19 12:38:10] model
+[2023-11-19 12:38:10] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:38:10] entrou no try
+[2023-11-19 12:46:55] model
+[2023-11-19 12:46:55] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 12:46:55] entrou no try
+[2023-11-19 13:11:22] model
+[2023-11-19 13:11:22] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:11:22] entrou no try
+[2023-11-19 13:11:30] model
+[2023-11-19 13:11:30] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:11:30] entrou no try
+[2023-11-19 13:14:39] model
+[2023-11-19 13:14:39] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:14:39] entrou no try
+[2023-11-19 13:14:53] model
+[2023-11-19 13:14:53] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:14:53] entrou no try
+[2023-11-19 13:15:09] model
+[2023-11-19 13:15:09] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:15:09] entrou no try
+[2023-11-19 13:15:37] model
+[2023-11-19 13:15:37] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:15:37] entrou no try
+[2023-11-19 13:16:10] model
+[2023-11-19 13:16:10] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:16:10] entrou no try
+[2023-11-19 13:16:17] model
+[2023-11-19 13:16:17] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:16:17] entrou no try
+[2023-11-19 13:16:27] model
+[2023-11-19 13:16:28] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:16:28] entrou no try
+[2023-11-19 13:17:00] model
+[2023-11-19 13:17:00] SELECT id, nome, cpf, endereco, telefone FROM `hospede` order by id desc 
+[2023-11-19 13:17:00] entrou no try
+[2023-11-19 13:17:20] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-11-19 00:00:00' AND '2023-11-19  23:59:59'
+        AND (('' = '' or '' is null) or tipoPagamento = '')
+        AND descricao LIKE '%%'
+[2023-11-19 13:17:20] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-11-19 00:00:00' AND '2023-11-19  23:59:59'
+        AND (('' = '' or '' is null) or tipoPagamento = '')
+        AND descricao LIKE '%%'
+[2023-11-19 13:17:21] SELECT 
+             id,
+            descricao,
+            tipoPagamento,
+            created_at,
+            pagamento_id,
+            valor 
+        FROM
+            entrada
+        WHERE
+            created_at BETWEEN '2023-11-19 00:00:00' AND '2023-11-19  23:59:59'
+        AND (('' = '' or '' is null) or tipoPagamento = '')
+        AND descricao LIKE '%%'
