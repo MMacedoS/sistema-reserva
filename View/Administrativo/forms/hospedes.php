@@ -248,7 +248,7 @@
 
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
-
+        hideLoader();
         return table;
     }
 
@@ -256,13 +256,14 @@
     {
         showData("<?=ROTA_GERAL?>/Hospede/buscaHospedePorId/" + rowData[0])
             .then((response) => preparaModalEditarHospedes(response.data));
-        console.log(rowData[0]);
+        hideLoader();
     }
 
     function activeRegistro(rowData)
     {
         showData("<?=ROTA_GERAL?>/Hospede/changeStatusHospedes/" + rowData[0])
             .then((response) => showSuccessMessage('Registro atualizado com sucesso!'));
+        hideLoader();
     }
 
     function preparaModalEditarHospedes(data) {
@@ -292,6 +293,8 @@
             if(response.status === 422) {
                 showErrorMessage(response.message);
             }
+            hideLoader();
+            return;
         });
     
         return updateData('<?=ROTA_GERAL?>/Hospede/atualizarHospedes/' + id, new FormData(document.getElementById("form")), id);
