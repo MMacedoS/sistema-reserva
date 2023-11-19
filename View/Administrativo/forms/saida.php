@@ -341,6 +341,9 @@
             if(response.status === 422) {
                 showErrorMessage(response.message);
             }
+            
+            hideLoader();
+            return;
         });
     });  
 

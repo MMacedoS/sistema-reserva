@@ -393,6 +393,9 @@
             if(response.status === 422) {
                 showErrorMessage(response.message);
             }
+            
+            hideLoader();
+            return;
         });
     
         return updateData('<?=ROTA_GERAL?>/Financeiro/atualizarEntradas/' + id, new FormData(document.getElementById("form")), id);
