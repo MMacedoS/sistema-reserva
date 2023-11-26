@@ -11,6 +11,22 @@
     .fs{
         font-size: 21px;
     }
+
+    @media screen and (max-width: 790px) {
+        .modal-dialog {
+            max-width: 100% !important;
+            margin: 1.75rem auto;
+        }
+        .row-mobile {
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+        }
+
+        .card {
+            height: auto;
+            width: 200px;
+        }
+    }
 </style>
 
 <div class="container">    
@@ -83,17 +99,17 @@
            
             <form action="" id="form" method="POST">
                 <div class="modal-body" id="">                               
-                    <div class="form-row">
+                    <div class="form-row row-mobile">
                         <input type="hidden" disabled id="id" >
                         <input type="hidden" disabled id="opcao" value="" >
                         <div class="col-sm-5">
                             <label for="">Data Entrada</label>
-                            <input type="date" name="entrada" id="entrada" class="form-control">
+                            <input type="date" name="entrada" id="entrada" class="form-control" min="<?=Date("Y-m-d")?>">
                         </div>
 
                         <div class="col-sm-5">
                             <label for="">Data Saida</label>
-                            <input type="date" name="saida" id="saida" class="form-control">
+                            <input type="date" name="saida" id="saida" class="form-control" min="<?=self::addDdayInDate(Date("Y-m-d"), 1)?>">
                         </div>
 
                         <div class="col-sm-2 mt-4">
@@ -117,32 +133,36 @@
                                 </select>
                         </div>
 
-                        <div class="col-sm-2">
-                            <label for="">Tipo</label><br>
-                            <select class="form-control" name="tipo" id="tipo">
-                                <option value="1">Diária</option>
-                                <option value="2">Pacote</option>
-                                <option value="3">Promocao</option>
-                            </select>
+                        <div class="row row-mobile ml-2 mb-2 mt-2">
+                            <div class="col-sm-2">
+                                <label for="">Tipo</label><br>
+                                <select class="form-control" name="tipo" id="tipo">
+                                    <option value="1">Diária</option>
+                                    <option value="2">Pacote</option>
+                                    <option value="3">Promocao</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <label for="">Status</label><br>
+                                <select class="form-control" name="status" id="status">
+                                    <option value="1">Reservada</option>
+                                    <option value="2">Confirmada</option>
+                                    <option value="5">Cancelada</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col-sm-4">
-                            <label for="">Status</label><br>
-                            <select class="form-control" name="status" id="status">
-                                <option value="1">Reservada</option>
-                                <option value="2">Confirmada</option>
-                                <option value="5">Cancelada</option>
-                            </select>
-                        </div>
+                        <div class="row row-mobile mt-2 mb-2 ml-2">
+                            <div class="col-sm-6">
+                                <label for="">Valor</label>
+                                <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
+                            </div>
 
-                        <div class="col-sm-6">
-                            <label for="">Valor</label>
-                            <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
-                        </div>
-
-                        <div class="col-sm-2">
-                            <label for="">Qtde Hospedes</label>
-                            <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                            <div class="col-sm-6">
+                                <label for="">Qtde Hospedes</label>
+                                <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                            </div>
                         </div>
 
                         <div class="col-sm-12">
@@ -453,8 +473,6 @@
                 return createData('<?=ROTA_GERAL?>/Reserva/salvarReservas', new FormData(document.getElementById("form"))).then( (response) => {
                     apartamento = null;
                     hospede = null;
-                    window.location.href="<?=ROTA_GERAL?>/Administrativo/Reservas/";
-                }).then( (response) => {
                     if(response.status === 200) {
                         showSuccessMessage(response.message);
                         return;
