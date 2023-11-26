@@ -74,6 +74,7 @@
             </div>
         </div>
     </div>
+<script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>
 <script>
     
     $(document).ready(function(){
@@ -160,8 +161,9 @@
                         }
 
                         if (value === 'Valor') {
-                            totalValue += parseFloat(item.valor);
-                            td.textContent = parseFloat(item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                            let dias = parseInt(moment(item.dataSaida).diff(moment(item.dataEntrada), 'days'));
+                            totalValue += parseFloat(item.valor == 0 ? item.custo * dias : item.valor);
+                            td.textContent = parseFloat(item.valor == 0 ? item.custo * dias : item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         }
 
                         if (value === 'Hóspede') {

@@ -11,7 +11,10 @@
     </div>
 
     <div class="row">        
-        <div class="input-group">
+        <p>
+            <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
+        </p>
+        <div class="input-group collapse" id="collapse-filters">
             <input type="text" class="form-control bg-light border-0 small" placeholder="busca por ..." id="txt_busca" aria-label="Search" value="<?=$request?>" aria-describedby="basic-addon2">
             <div class="input-group-append">
                 <button class="btn btn-primary" type="button" id="btn_busca">

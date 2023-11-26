@@ -21,8 +21,11 @@
     </div>
 <hr>
 
-<div class="row">   
-        <div class="input-group">
+<div class="row">           
+        <p>
+            <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
+        </p>
+        <div class="input-group collapse" id="collapse-filters">
             <div class="col-sm-5 mb-2">
                 <label for="txt_busca">Descrição</label>
                 <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="ex: primary" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">

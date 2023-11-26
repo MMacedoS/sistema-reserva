@@ -71,8 +71,11 @@
     
 <hr>
     <div class="row">   
-        <div class="input-group">         
-            
+        <div class="input-group">   
+        <p>
+            <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
+        </p>
+        <div class="input-group collapse" id="collapse-filters">
             <div class="col-sm-11 mt-2">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome ou cpf" id="txt_busca" aria-label="Search" value="<?=$request?>" aria-describedby="basic-addon2">
             </div>
@@ -82,6 +85,7 @@
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
             </div>
+        </div>
         </div>
     </div>
     <div class="row mt-2">

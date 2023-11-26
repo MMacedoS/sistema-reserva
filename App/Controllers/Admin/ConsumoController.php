@@ -9,7 +9,6 @@ class ConsumoController extends \Controller{
         $this->consumo_model = new ConsumoModel();      
     }
 
-
     public function addConsumo($id)
     {
         $dados = $this->consumo_model->inserirConsumo($_POST, $id);

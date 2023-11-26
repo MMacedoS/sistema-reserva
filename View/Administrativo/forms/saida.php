@@ -27,7 +27,10 @@
     </div>
 <hr>
     <div class="row">   
-        <div class="input-group">
+        <p>
+            <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
+        </p>
+        <div class="input-group collapse" id="collapse-filters">
             <div class="col-sm-2 mb-2">
                 <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
@@ -53,10 +56,10 @@
             </div>
         </div>
     </div>
-<hr>
 </div>
+<hr>
 
-<div id="contents_inputs">
+<div id="contents_inputs ml-3">
     <div class="row">
         <div class="col-sm-4">
             <b>
@@ -132,6 +135,7 @@
      $(document).ready(function(){
         showData("<?=ROTA_GERAL?>/Financeiro/findAllSaidas")
         .then((response) => createTable(response)).then(() => hideLoader());
+        hideLoader();
     });
 
     
@@ -290,7 +294,7 @@
             destinationElement.appendChild(table);
 
         $('#total').text("Total de saidas " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-
+        hideLoader();
         return table;
     }
 

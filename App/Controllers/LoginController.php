@@ -1,6 +1,6 @@
 <?php
 
-require_once "./Config/autoload.php";
+require_once __DIR__ . "/../Config/autoload.php";
 require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 
 class LoginController extends Controller{  
@@ -23,7 +23,7 @@ class LoginController extends Controller{
 
     public function index() 
     {       
-        require 'View/Login/index.php';
+        require __DIR__ . '/../../View/Login/index.php';
     }
 
     private function validLogin() 
