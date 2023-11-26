@@ -334,11 +334,11 @@ class SiteController extends Controller {
     }
 
     public function findParamByParam($param) {
-        return $this->app_model->buscaParamByParam($param)[0];
+        return $this->app_model->buscaParamByParam($param)[0] ?? [];
     }
 
     public function findColorByParam($param) { 
-        return $this->app_model->findColorByParam($param)[0];
+        return $this->app_model->findColorByParam($param)[0] ?? [];
     }
 
     public function saveParam () {

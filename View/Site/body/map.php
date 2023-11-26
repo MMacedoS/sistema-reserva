@@ -6,6 +6,6 @@
 </style>
 <section>
  <div class="map" id="contact">
-    <?=$dados['valor']?>
+    <?=@$dados['valor']?>
  </div>
 </section>
