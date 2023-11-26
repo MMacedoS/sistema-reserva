@@ -13,6 +13,17 @@
       }
       div#calendar {
           height: 81vh;
+          position: relative;
+          z-index: 0;
+      }
+      .fc-daygrid-body.fc-daygrid-body-unbalanced {
+        width: 100% !important;
+      }
+      @media screen and (max-width: 790px) {
+        .fc .fc-toolbar-title {
+            font-size: 17px;
+            margin: 0px;
+        }
       }
     </style>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>

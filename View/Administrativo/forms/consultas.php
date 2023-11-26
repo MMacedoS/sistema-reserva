@@ -25,6 +25,15 @@
         .qtde{
             margin-top:-40px;
         }
+        .row-mobile {
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+        }
+
+        .card {
+            height: auto;
+            width: 200px;
+        }
     }
   </style>
 
@@ -39,7 +48,7 @@
 <!-- <div class="row"> -->
 
 <!-- Earnings (Monthly) Card Example -->
-<div class="row">
+<div class="row row-mobile">
     <div class="col-xl-3 col-md-6 mb-4">
         <div class="card border-left-primary shadow h-100 py-2">
             <a href="<?=ROTA_GERAL?>/Administrativo/hospedadas">

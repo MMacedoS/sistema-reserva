@@ -436,7 +436,7 @@ class AppModel extends ConexaoModel {
         WHERE
             status = 1";
 
-        $cmd  = $this->conexao->query(
+        $cmd = $this->conexao->query(
             $sql
         );
 
