@@ -35,22 +35,25 @@
     }
 
     @media screen and (max-width: 767px) {
+        .modal-dialog {
+            max-width: 100% !important;
+        }
         .modal-content {
             position: relative;
             display: flex;
             flex-direction: column;
-            width: 390px;
+            width: 100%;
             pointer-events: auto;
             background-color: #fff;
             background-clip: padding-box;
             border: 1px solid rgba(0, 0, 0, .2);
             border-radius: .3rem;
             outline: 0;
-            left: -70px;
             }  
             
-            .campos_modal{
-            width: 125px;
+        .campos_modal{
+            width: 110px;
+            font-size: 14px;
         }     
         
         .row-mobile {
