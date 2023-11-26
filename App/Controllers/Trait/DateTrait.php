@@ -6,16 +6,14 @@ trait DateTrait {
     {
         if(is_null($date)){
             $date = new DateTime();
-            date_add(
-                $date,  
+            $date->add(
                 date_interval_create_from_date_string("$intervalo days")
             );
             return $date->format('Y-m-d');
         }  
 
         $date = new DateTime($date);
-        date_add(
-            $date,  
+        $date->add(
             date_interval_create_from_date_string("$intervalo days")
         );
         return $date->format('Y-m-d');
