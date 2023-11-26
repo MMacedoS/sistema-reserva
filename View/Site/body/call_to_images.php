@@ -4,7 +4,7 @@
     $color_text = $this->findColorByParam('session_six_text');
     $color_bg = $this->findColorByParam('session_six_bg');
 ?>
- <section class="content-section bg-primary text-white" id="call_to_image" style="background-color: <?=$color_bg['color']?> !important; color: <?=$color_text['color']?> !important;">
+ <section class="content-section bg-primary text-white" id="call_to_image" style="background-color: <?=@$color_bg['color']?> !important; color: <?=@$color_text['color']?> !important;">
             <div class="container px-4 px-lg-5 text-center">
                 <h2 class="mb-4"><?=$this->text[8]['texto']?></h2>
                 <p> <i class="fab fa-whatsapp"></i> WhatsApp: <?=self::formatPhoneNumber($dados['valor'])?></p>
