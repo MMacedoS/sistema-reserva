@@ -95,7 +95,6 @@ class HospedeModel extends ConexaoModel {
             $id = $this->conexao->lastInsertId();
             $this->conexao->commit();
             
-            // self::logError(json_encode($id));
             return self::message(200, "Salvo com sucesso");
 
         } catch (\Throwable $th) {

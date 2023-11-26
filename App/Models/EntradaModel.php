@@ -106,8 +106,6 @@ class EntradaModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 

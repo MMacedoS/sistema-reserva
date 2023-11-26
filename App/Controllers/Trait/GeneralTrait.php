@@ -188,11 +188,9 @@ trait GeneralTrait{
         // Caminho completo para o arquivo a ser excluído
         $fileToDelete = $uploadDirectory . '/' . $hashedFileName;
         
-        self::logError($uploadDirectory . '/'.$hashedFileName);
         // Verifica se o arquivo existe e, em
         if (file_exists($fileToDelete)) {
             
-            self::logError(json_encode("apagado"));
             unlink($fileToDelete);
         }
     }

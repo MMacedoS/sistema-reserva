@@ -333,8 +333,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -355,8 +353,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -376,8 +372,6 @@ class AppModel extends ConexaoModel {
         {
             return $cmd->fetchAll();
         }
-
-        self::logError($sql);
 
         return [];
     }
@@ -409,8 +403,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -432,8 +424,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -454,8 +444,6 @@ class AppModel extends ConexaoModel {
         {
             return $cmd->fetchAll();
         }
-
-        self::logError($sql);
 
         return [];
     }
@@ -519,8 +507,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -542,8 +528,6 @@ class AppModel extends ConexaoModel {
         {
             return $cmd->fetchAll();
         }
-
-        self::logError($sql);
 
         return [];
     }
@@ -567,8 +551,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -590,8 +572,6 @@ class AppModel extends ConexaoModel {
         {
             return $cmd->fetchAll();
         }
-
-        self::logError($sql);
 
         return [];
     }
@@ -669,8 +649,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -734,8 +712,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll();
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -759,8 +735,6 @@ class AppModel extends ConexaoModel {
             return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        self::logError($sql);
-
         return [];
     }
 
@@ -782,8 +756,6 @@ class AppModel extends ConexaoModel {
         {
             return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
-
-        self::logError($sql);
 
         return [];
     }
