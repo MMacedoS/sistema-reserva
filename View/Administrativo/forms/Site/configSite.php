@@ -116,7 +116,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Cod', 'Parametro', 'Valor']; 
+        var thArray = ['Cod', 'Parametro']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -144,9 +144,9 @@
                         var td = document.createElement('td');
                         td.textContent = item[key];
 
-                        // if (value === 'Data') {
-                        //     td.textContent = created_at;
-                        // }
+                        if (value === 'Valor') {
+                            td.classList.add('d-none', 'd-sm-table-cell');
+                        }
 
                         // if (value === 'Sessão' || value === 'Data' || value === 'Cod') {
                         //     td.classList.add('d-none', 'd-sm-table-cell');

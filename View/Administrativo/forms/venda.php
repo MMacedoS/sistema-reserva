@@ -68,7 +68,10 @@
     </div>
 <hr>
     <div class="row">   
-        <div class="input-group">
+        <p>
+            <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
+        </p>
+        <div class="input-group collapse" id="collapse-filters">
             <div class="col-sm-2 mb-2">
                 <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
@@ -184,7 +187,7 @@
                         </div>
                     </div>
                     <hr>
-                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseChecked" aria-expanded="false" aria-controls="collapseExample" >Concluir venda</button>
+                    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseChecked" aria-expanded="false" aria-controls="collapseExample">Pagamento</button>
 
                     <div class="collapse" id="collapseChecked">
                         <div class="form-row">
@@ -460,7 +463,7 @@
         }).then((data) => {
             $('#produto option').detach();
             showData('<?=ROTA_GERAL?>/Produto/getDadosProdutos').then((data) => {
-                if(data.status === 201){                    
+                if(data.status === 200){                    
                     data.data.map(element => {
                         var newOption = $('<option value="' + element.id + '">' + element.descricao + '</option>');
                         $("#produto").append(newOption);

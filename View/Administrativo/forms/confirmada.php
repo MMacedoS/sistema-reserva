@@ -176,109 +176,6 @@ let url = "<?=ROTA_GERAL?>/";
 var totalConsumos = 0;
  var subTotal = 0;
 
-function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  })
-          });
-      }
-
-    function envioRequisicaoGetViaAjax(controle_metodo) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                
-            }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/checkout">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: "Algo de errado aconteceu!",
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/checkout">Atualizar?</a>'
-            })
-        });
-        return "";
-    }
-
-    function getRequisicaoGetViaAjax(controle_metodo, id) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                if(data.status === 201){
-                    preparaModalHospedadas(data.data, id);
-                }
-            }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/checkout">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: "Algo de errado aconteceu!",
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/checkout">Atualizar?</a>'
-            })
-        });
-        return "";
-    }
-
     function calculaCheckout(consumos, pagamento)
     {        
         return consumos - pagamento;
@@ -332,17 +229,26 @@ $(document).ready(function(){
     
         $(document).on('click', '.hospedadas', function(){     
             var code=$(this).attr("id");       
-            getRequisicaoGetViaAjax('Reserva/getDadosReservas/'+ code, "Checkout");                                           
+            showData('<?=ROTA_GERAL?>/Reserva/getDadosReservas/'+ code).then(function(response) {
+                if (response.status === 200) {
+                    preparaModal(response.data, 'Checkout');
+                }
+            });                                           
         }); 
         
         $(document).on('click', '.executar-checkout', function(){
             var code=$('#idReserva').val();
-            envioRequisicaoGetViaAjax("Reserva/executaCheckout/" + code);  
+            showData("<?=ROTA_GERAL?>Reserva/executaCheckout/" + code).then(function(response) {
+                if (response.status === 200) {
+                    hideLoader();
+                }
+            });  
+            hideLoader();
         });
 
 });
 
-function preparaModalHospedadas(data, tipo) 
+function preparaModal(data, tipo) 
     {
         $('#labelPagamento').text("Adicionar Pagamento");
         $('#idReserva').val(tipo);
@@ -393,7 +299,7 @@ function preparaModalHospedadas(data, tipo)
                         contentType: false,
                         cache: false,
                         success: function(data){
-                            if(data.status === 201){
+                            if(data.status === 200){
                             $('.confirmada').click();
                             }
                         }
@@ -404,7 +310,11 @@ function preparaModalHospedadas(data, tipo)
             $(document).on('click', '.confirmada', function()
             {
                 var code=$(this).attr("id");    
-                getRequisicaoGetViaAjax('Pagamento/getDadosPagamentos/'+ code, code);                       
+                showData('<?=ROTA_GERAL?>/Pagamento/getDadosPagamentos/'+ code).then(function(response) {
+                    if (response.status === 200) {
+                        preparaModal(response.data, code);
+                    }
+                });                       
             });
 
             $(document).on('click', '.remove-pagamento', function(){

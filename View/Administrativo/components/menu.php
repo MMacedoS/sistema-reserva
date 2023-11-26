@@ -47,7 +47,7 @@
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/apartamentos">Apartamentos</a>                    
                 <!-- <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/Empresa">Empresa</a>   -->
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Funcionários</a> 
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/Hospedes">Hospedes</a>    
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/hospedes">Hospedes</a>    
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/produtos">Produto</a>                 
             </div>
         </div>

@@ -26,7 +26,12 @@
     </div>
 <hr>
     <form id="form_search" method="POST">
-        <div class="row">              
+        <div class="row"> 
+        <p>
+            <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
+        </p>
+        <div class="input-group collapse" id="collapse-filters">
+
             <div class="col-sm-12 mb-2">
                 <input type="text" class="form-control bg-light border-0 small" placeholder="busca por nome, cpf" name="busca" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
@@ -52,10 +57,12 @@
                     <i class="fas fa-search fa-sm"></i>
                 </button>   
             </div>
-        </div>    
+        </div>  
+    </div>  
     </form>
 <hr>
     <div class="row">
+        <h4 class="display-6">Lista de reservas</h4>
         <div class="table-responsive ml-3">
             <div id="table"></div>
         </div>

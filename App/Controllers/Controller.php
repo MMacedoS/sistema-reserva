@@ -1,6 +1,6 @@
 <?php
 
-require_once "./Config/autoload.php";
+require_once __DIR__ . "/../Config/autoload.php";
 require_once 'Trait/DateTrait.php';
 require_once 'Trait/GeneralTrait.php';
 require_once 'Trait/RequestTrait.php';
@@ -33,7 +33,7 @@ class Controller {
     }
 
     public function viewSite($view) {
-        require "View/Site/{$view}.php";
+        require __DIR__ . "/../../View/Site/{$view}.php";
     }
 
     public function viewAdmin($view, $request = null, $page = null) {
@@ -53,10 +53,10 @@ class Controller {
             $saida = $dados[3];
         }
 
-        require "View/Administrativo/views.php";
+        require __DIR__ . "/../../View/Administrativo/views.php";
     }
 
     public function viewImpressao($painel, $dados) {
-        require "View/Administrativo/impressao.php";
+        require __DIR__ . "/../../View/Administrativo/impressao.php";
     }
 }

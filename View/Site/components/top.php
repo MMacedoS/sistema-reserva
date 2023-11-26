@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . "/../../../Config/dados.php"; ?>
+<?php require_once __DIR__ . "/../../../App/Config/dados.php"; ?>
 <?php $dados = $this->findParamByParam('nome_site'); ?>
 <!DOCTYPE html>
 <html lang="pt-br">

@@ -228,75 +228,6 @@ let url = "<?=ROTA_GERAL?>/";
 var totalConsumos = 0;
  var subTotal = 0;
 
-function envioRequisicaoPostViaAjax(controle_metodo, dados) {
-          $.ajax({
-              url: url+controle_metodo,
-              method:'POST',
-              data: dados,
-              dataType: 'JSON',
-              contentType: false,
-	          cache: false,
-	          processData:false,
-              success: function(data){
-                  if(data.status === 422){
-                      $('#mensagem').removeClass('text-danger');
-                      $('#mensagem').addClass('text-success');
-                      $('#mensagem').text(data.message);
-                  }
-              }
-          })
-          .done(function(data) {
-              if(data.status === 201){
-                  return Swal.fire({
-                      icon: 'success',
-                      title: 'OhoWW...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  }).then(()=>{
-                    window.location.reload();    
-                })
-              }
-              return Swal.fire({
-                      icon: 'warning',
-                      title: 'ops...',
-                      text: data.message,
-                      footer: '<a href="<?=ROTA_GERAL?>/Administrativo/reservas">Atualizar?</a>'
-                  })
-          });
-      }
-
-    function envioRequisicaoGetViaAjax(controle_metodo) {            
-        $.ajax({
-            url: url+controle_metodo,
-            method:'GET',
-            processData: false,
-            dataType: 'json     ',
-            success: function(data){
-                
-            }
-        })
-        .done(function(data) {
-            if(data.status === 200){
-                return Swal.fire({
-                    icon: 'success',
-                    title: 'OhoWW...',
-                    text: data.message,
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/checkout">Atualizar?</a>'
-                }).then(()=>{
-                    window.location.reload();    
-                })
-            } 
-            if(data.status === 422)           
-                return Swal.fire({
-                    icon: 'warning',
-                    title: 'ops...',
-                    text: "Algo de errado aconteceu!",
-                    footer: '<a href="<?=ROTA_GERAL?>/Administrativo/checkout">Atualizar?</a>'
-            })
-        });
-        return "";
-    }
-
     function getRequisicaoGetViaAjax(controle_metodo, tipo) {            
         $.ajax({
             url: url+controle_metodo,
@@ -345,7 +276,12 @@ $(document).ready(function(){
     
         $(document).on('click', '.hospedadas', function(){     
             var code=$(this).attr("id");       
-            getRequisicaoGetViaAjax('Reserva/getDadosReservas/'+ code, "Checkout");                                           
+            showData('<?=ROTA_GERAL?>/Reserva/getDadosReservas/'+ code).then(function(response){ 
+                if (response.status == 200) {
+                    preparaModalHospedadas(response.data, 'Checkout');
+                }
+            });    
+            hideLoader();                                       
         }); 
         
         $(document).on('click', '.executar-checkout', function(){
@@ -425,8 +361,7 @@ function preparaModalHospedadas(data, tipo)
         $('#restante').addClass('text-success');
         $('#restante').text("Crédito disponivel R$ " + total * (-1));
 
-        if(total == 0)
-        {
+        if(total == 0) {
             $('#restante').text("Fechamento disponivel");
             $('#btnSubmit').attr('disabled',false);
         }
@@ -444,7 +379,6 @@ function preparaModalHospedadas(data, tipo)
                     +'</td>' +
                     '<td>R$ '+parseFloat(element.valorPagamento).toFixed(2)+'</td>' +
                     '<td>'+            
-                        '<a href="#" id="'+element.id+'" class="alterar-pagamento" alt="alterar"><span style="font-size:25px;">&#9997;</span></a> &nbsp;'+
                         '<a href="#" id="'+element.id+'" class="remove-pagamento" >&#10060;</a>'+
                     '</td>'+
                 '</tr>');
@@ -472,7 +406,7 @@ function preparaModalHospedadas(data, tipo)
                     contentType: false,
                     cache: false,
                     success: function(data){
-                        if(data.status === 201){
+                        if(data.status === 200){
                         $('.executar-pagamento').click();
                         }
                     }

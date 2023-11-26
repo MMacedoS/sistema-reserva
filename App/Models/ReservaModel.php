@@ -370,6 +370,7 @@ class ReservaModel extends ConexaoModel {
                 r.status,
                 h.nome,
                 a.numero,
+                r.valor as custo,
                 SUM(COALESCE(d.valor,0)) as valor
             FROM
                 $this->model r
@@ -393,11 +394,11 @@ class ReservaModel extends ConexaoModel {
                 h.nome LIKE '%$hospede%'               
                 AND (
                     (
-                        ('$dataEntrada' BETWEEN r.dataEntrada AND r.dataSaida) 
-                        OR
-                        ('$dataSaida' BETWEEN r.dataEntrada AND r.dataSaida)
+                        (r.dataEntrada BETWEEN '$dataEntrada' AND '$dataSaida') 
+                        or
+                        (r.dataSaida BETWEEN '$dataEntrada' AND '$dataSaida')
                     )
-                    and r.status = '$situacao'
+                    and r.status LIKE '%$situacao%'
                 )               
             GROUP BY
                 r.id,

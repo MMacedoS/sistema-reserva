@@ -51,7 +51,7 @@ class SiteController extends Controller {
 
     public function updateBanner() 
     {
-        $diretorio= __DIR__."../../Public/Site/Banner";
+        $diretorio= __DIR__ . "/../../Public/Site/Banner";
         if (!empty($_FILES['imagem'])) {
             $cards = self::uploadFileWithHash('imagem', $diretorio);
        
@@ -61,7 +61,7 @@ class SiteController extends Controller {
             }
 
             if(isset($_POST['imagem_anterior'])) {
-                $diretorio= __DIR__."/../../Public/Site/Banner";
+                $diretorio= __DIR__ . "/../../Public/Site/Banner";
                 self::deleteFile($diretorio, $_POST['imagem_anterior']);
             }
         }
@@ -70,7 +70,7 @@ class SiteController extends Controller {
         $update = $this->app_model->updateBanner($cards);
 
         if(is_null($update) || $update) {
-            $diretorio= __DIR__."/../../Public/Site/Banner";
+            $diretorio= __DIR__ . "/../../Public/Site/Banner";
             self::deleteFile($diretorio, $cards['imagem']);
         }
 
@@ -114,7 +114,7 @@ class SiteController extends Controller {
 
     public function updateCardApt() 
     {
-        $diretorio= __DIR__."../../Public/Site/Card_APT";
+        $diretorio= __DIR__ . "/../../Public/Site/Card_APT";
         if (!empty($_FILES['imagem'])) {
             $cards = self::uploadFileWithHash('imagem', $diretorio);
        
@@ -124,7 +124,7 @@ class SiteController extends Controller {
             }
 
             if(isset($_POST['imagem_anterior'])) {
-                $diretorio= __DIR__."/../../Public/Site/Card_APT";
+                $diretorio= __DIR__. "/../../Public/Site/Card_APT";
                 self::deleteFile($diretorio, $_POST['imagem_anterior']);
             }
         }
@@ -137,7 +137,7 @@ class SiteController extends Controller {
         $update =  $this->app_model->updateCardApt($cards);
 
         if(is_null($update) || $update) {
-            $diretorio= __DIR__."/../../Public/Site/Card_APT";
+            $diretorio= __DIR__ . "/../../Public/Site/Card_APT";
             self::deleteFile($diretorio, $cards['imagem']);
         }
 
@@ -281,7 +281,7 @@ class SiteController extends Controller {
         $create =  $this->app_model->createImages($cards);
 
         if(is_null($create) || $create) {
-            $diretorio= __DIR__."/../../Public/Site/Images";
+            $diretorio= __DIR__ ."/../../Public/Site/Images";
             self::deleteFile($diretorio, $cards['imagem']);
         }
 
@@ -293,7 +293,7 @@ class SiteController extends Controller {
         $cards = [];
 
         if (!empty($_FILES['imagem'])) {
-            $diretorio= __DIR__."../../Public/Site/Images";
+            $diretorio= __DIR__ . "/../../Public/Site/Images";
             $cards = self::uploadFileWithHash('imagem', $diretorio);
        
             if (is_null($cards)) {
@@ -302,7 +302,7 @@ class SiteController extends Controller {
             }
 
             if(isset($_POST['imagem_anterior'])) {
-                $diretorio= __DIR__."../../Public/Site/Images";
+                $diretorio= __DIR__ . "../../Public/Site/Images";
                 self::deleteFile($diretorio, $_POST['imagem_anterior']);
             }
         }
