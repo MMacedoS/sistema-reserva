@@ -8,6 +8,7 @@ class FinanceiroController extends \Controller{
     protected $saida_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->financeiro_model = new FinanceiroModel(); 
         $this->entrada_model = new EntradaModel();   
         $this->saida_model = new SaidaModel();      

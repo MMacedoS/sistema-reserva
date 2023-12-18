@@ -5,6 +5,7 @@ class ApartamentoController extends \Controller{
     protected $apartamento_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->apartamento_model = new ApartamentoModel();      
     }
 

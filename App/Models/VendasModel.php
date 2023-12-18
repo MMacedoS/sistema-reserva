@@ -44,7 +44,7 @@ class VendasModel extends ConexaoModel {
         $con = $this->model->prepare(
             "INSERT INTO venda set status ='aberta', funcionario = :funcionario, descricao = :descricao"
         );
-        $con->bindValue(':funcionario',$_SESSION['code']);
+        $con->bindValue(':funcionario',$_SESSION['code'], PDO::PARAM_INT);
         $con->bindValue(':descricao',"Consumidor não identificado");
         $con->execute();        
         return $this->checkVendas();

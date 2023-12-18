@@ -29,38 +29,6 @@
 <meta name="google-signin-client_id" content="84165197314-nr5636p86jsp5duuglfnop76jktu2i82.apps.googleusercontent.com">
 </head>
 <body>
-<?php if(isset($_GET['login']) && $_GET['login']==0){ ?>
-
-<p align="center" class="alert-danger">email ou senha sem preencher!</p>
-
-<?php } ?>
-
-<?php if(isset($_GET['login']) && $_GET['login']==1){ ?>
-
-<p align="center"  class="alert-danger">Usuário ou senha inválida!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==3){ ?>
-
-<p align="center"  class="alert-danger">Tempo de espera ultrapassado, tente logar novamente!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==4){ ?>
-
-<p align="center"  class="alert-danger">Tente logar novamente!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==5){ ?>
-
-<p align="center"  class="alert-danger">Você não possui permissão para acessar!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==6){ ?>
-
-<p align="center"  class="alert-danger">Utilize seu email institucional!</p>
-
-<?php } ?>
-
 <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -75,7 +43,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "email obrigatório: ex@abc.xyz">
-						<input class="input100" type="email" name="user" placeholder="Email" value="teste@msgt.com.br">
+						<input class="input100" type="email" name="user" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -83,7 +51,7 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "obrigatório possuir senha">
-						<input class="input100" type="password" name="password" placeholder="senha" value="12345">
+						<input class="input100" type="password" name="password" placeholder="senha">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>

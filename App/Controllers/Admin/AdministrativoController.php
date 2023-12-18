@@ -18,17 +18,9 @@ class AdministrativoController extends \Controller{
         $this->app_model = new AppModel();       
     }
 
-    private function validPainel() {        
-        if ($_SESSION['painel'] != 'Administrador' && $_SESSION['painel'] != 'Recepcao') {   
-            session_start();
-            session_destroy();            
-            return header('Location: '. $this->url .'/Login');            
-        }       
-    }
-
-    public function index() {    
+    public function index() {           
         $this->active = "";    
-        $this->viewAdmin('consultas');
+        $this->viewAdmin('consultas');           
     }
 
     public function venda() {    

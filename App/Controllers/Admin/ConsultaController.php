@@ -6,6 +6,7 @@ class ConsultaController extends Controller {
     
     public function __construct()
     {
+        $this->validPainel(); 
         $this->reservaModel = new ReservaModel();
     }
 

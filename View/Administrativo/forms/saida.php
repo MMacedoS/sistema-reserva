@@ -38,7 +38,7 @@
                 <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
             </div>
             <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="end_date" class="form-control" value="<?=Date('Y-m-d')?>">
+                <input type="date" name="" id="end_date" class="form-control" value="<?=$this->addDdayInDate(Date('Y-m-d'),1)?>">
             </div>   
             <div class="col-sm-3 mb-2">
                 <select name="" id="status" class="form-control">

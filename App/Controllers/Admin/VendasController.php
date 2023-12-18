@@ -5,18 +5,20 @@ class VendasController extends \Controller{
 
     protected $venda_model;
 
-    public function __construct() {
-        $this->venda_model = new VendasModel();      
+    public function __construct() 
+    {
+      $this->validPainel(); 
+      $this->venda_model = new VendasModel();      
     }
 
     public function findAllVendas() { 
-        echo json_encode($this->venda_model->allVenda());
+      echo json_encode($this->venda_model->allVenda());
     }
 
     public function addVenda()
     {
-        $dados = $this->venda_model->createVenda();
-        echo json_encode($dados);
+       $dados = $this->venda_model->createVenda();
+       echo json_encode($dados);
     }
 
     public function getVendasItems($id) {

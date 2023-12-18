@@ -6,6 +6,7 @@ class ConsumoController extends \Controller{
     protected $consumo_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->consumo_model = new ConsumoModel();      
     }
 

@@ -5,6 +5,7 @@ class FuncionarioController extends \Controller{
     protected $funcionario_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->funcionario_model = new FuncionarioModel();      
     }
 

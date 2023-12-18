@@ -13,7 +13,7 @@ class LoginModel extends ConexaoModel
 
         if($cmd->rowCount()>0)
         {
-            $dados=$cmd->fetchAll(PDO::FETCH_ASSOC);
+            $dados=$cmd->fetch(PDO::FETCH_ASSOC);
         }else{
             $dados=array();
         }

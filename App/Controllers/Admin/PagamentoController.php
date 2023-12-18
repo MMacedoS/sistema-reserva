@@ -5,7 +5,9 @@ class PagamentoController extends \Controller{
 
     protected $pagamento_model;
 
-    public function __construct() {
+    public function __construct() 
+    {
+        $this->validPainel(); 
         $this->pagamento_model = new PagamentoModel();      
     }
 

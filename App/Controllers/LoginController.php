@@ -29,7 +29,7 @@ class LoginController extends Controller{
     private function validLogin() 
     {
         if (
-            isset($_SESSION['painel']) || 
+            isset($_SESSION['acesso']) || 
             isset($_SESSION['logado'])
         ) {
             return $this->preparePainel();
@@ -49,7 +49,9 @@ class LoginController extends Controller{
             case 'Recepcao':
                 header('Location: '.$this->url.'/Administrativo');
             break;
-            
+            // default: 
+            //     header('Location: '.$this->url.'/Login');
+            // break;            
         }
     }
 
@@ -60,9 +62,10 @@ class LoginController extends Controller{
             $login
             )
         ) {
-            $_SESSION['code'] = $login[0]['id'];
-            $_SESSION['nome'] = $login[0]['nome'];
-            $_SESSION['painel'] = $login[0]['painel'];
+            $_SESSION['code'] = $login['id'];
+            $_SESSION['nome'] = $login['nome'];
+            $_SESSION['painel'] = $login['painel'];
+            $_SESSION['acesso'] = md5($login['painel'] . date('y-m-d'));
             $_SESSION['logado'] = true;            
         }
         

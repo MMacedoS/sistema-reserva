@@ -5,6 +5,7 @@ class HospedeController extends \Controller{
     protected $hospede_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->hospede_model = new HospedeModel(); 
     }
 

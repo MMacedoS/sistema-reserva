@@ -6,6 +6,7 @@ class DiariaController extends \Controller{
     protected $diarias_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->diarias_model = new DiariasModel();      
     }
 

@@ -15,10 +15,12 @@ class EntradaModel extends ConexaoModel {
     protected $conexao;
 
     protected $model = 'entrada';
+    protected $user = '';
 
     public function __construct() 
     {
         $this->model = 'entrada';
+        $this->user = $_SESSION['code'];
         $this->conexao = ConexaoModel::conexao();
     }
 
@@ -57,22 +59,31 @@ class EntradaModel extends ConexaoModel {
     {         
         $cmd  = $this->conexao->query(
             "SELECT 
-                id,
-                descricao,
-                tipoPagamento,
-                created_at,
-                pagamento_id,
-                valor 
+                e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor 
             FROM 
-                $this->model
+                $this->model e
+            LEFT JOIN pagamento p on p.id = e.pagamento_id
+            LEFT JOIN reserva r on p.reserva_id = r.id
+            LEFT JOIN hospede h on h.id = r.hospede_id
+            LEFT JOIN apartamento a on a.id = r.apartamento_id
+            WHERE 
+                e.funcionario = '$this->user'
             ORDER BY
-                id DESC
+                e.created_at DESC
             LIMIT 12 offset $off "
         );
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll();
+            return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return [];
@@ -84,18 +95,29 @@ class EntradaModel extends ConexaoModel {
         $saida = date($saida . '  23:59:59');
        
         $sql  = "SELECT 
-             id,
-            descricao,
-            tipoPagamento,
-            created_at,
-            pagamento_id,
-            valor 
-        FROM
-            $this->model
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            $this->model e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
         WHERE
-            created_at BETWEEN '$entrada' AND '$saida'
-        AND (('$tipoPagamento' = '' or '$tipoPagamento' is null) or tipoPagamento = '$tipoPagamento')
-        AND descricao LIKE '%$texto%'";
+            e.created_at BETWEEN '$entrada' AND '$saida'
+        AND (('$tipoPagamento' = '' or '$tipoPagamento' is null) or e.tipoPagamento = '$tipoPagamento')
+        AND e.descricao LIKE '%$texto%'
+        AND e.funcionario = '$this->user'
+        ORDER BY
+                e.created_at ASC
+        ";
 
         $cmd  = $this->conexao->query(
             $sql
@@ -103,7 +125,7 @@ class EntradaModel extends ConexaoModel {
 
         if($cmd->rowCount() > 0)
         {
-            return $cmd->fetchAll();
+            return $cmd->fetchAll(PDO::FETCH_ASSOC);
         }
 
         return [];
@@ -126,7 +148,7 @@ class EntradaModel extends ConexaoModel {
             $cmd->bindValue(':valor',$dados['valor']);
             $cmd->bindValue(':descricao',$dados['descricao']);
             $cmd->bindValue(':tipopagamento',$dados['pagamento']);
-            $cmd->bindValue(':funcionario',$_SESSION['code']);
+            $cmd->bindValue(':funcionario',$this->user);
             $dados = $cmd->execute();
 
             $this->conexao->commit();
@@ -157,7 +179,7 @@ class EntradaModel extends ConexaoModel {
             $cmd->bindValue(':valor',$dados['valor']);
             $cmd->bindValue(':descricao',$dados['descricao']);
             $cmd->bindValue(':tipopagamento',$dados['pagamento']);
-            $cmd->bindValue(':funcionario',$_SESSION['code']);
+            $cmd->bindValue(':funcionario',$this->user);
             $cmd->bindValue(':id',$id);
             $dados = $cmd->execute();
 

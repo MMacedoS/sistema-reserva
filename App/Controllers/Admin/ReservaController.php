@@ -5,7 +5,9 @@ class ReservaController extends \Controller{
 
     protected $reserva_model;
 
-    public function __construct() {
+    public function __construct() 
+    {
+        $this->validPainel(); 
         $this->reserva_model = new ReservaModel();      
     }
 

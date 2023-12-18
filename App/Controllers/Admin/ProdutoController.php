@@ -5,7 +5,9 @@ class ProdutoController extends \Controller{
 
     protected $produto_model;
 
-    public function __construct() {
+    public function __construct() 
+    {
+        $this->validPainel(); 
         $this->produto_model = new ProdutoModel();      
     }
 

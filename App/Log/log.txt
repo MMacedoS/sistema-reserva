@@ -1395,3 +1395,11 @@
             created_at BETWEEN '2023-11-19 00:00:00' AND '2023-11-19  23:59:59'
         AND (('' = '' or '' is null) or tipoPagamento = '')
         AND descricao LIKE '%%'
+[2023-11-26 20:20:05] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2023-11-26 20:20:05] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
