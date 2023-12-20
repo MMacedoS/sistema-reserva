@@ -1017,7 +1017,7 @@
         $(document).on('click', '.diarias', function(){
             let code=$("#id").val();  
             id_reserva = code;
-            showData("<?=ROTA_GERAL?>/Reserva/getDadosDiarias/"+ code)
+            showData("<?=ROTA_GERAL?>/Diaria/getDadosDiarias/"+ code)
             .then( (response) => preparaModalHospedadas(response.data, "Diarias"));   
         });
 
@@ -1144,7 +1144,7 @@
                 processData: false,
                 dataType: 'json     ',
                 success: function(data){
-                    if(data.status === 200){
+                    if(data.status === 201){
                         $('#swal_id_consumo').val(code);
                         $('#swal-cons-input1').val(data.data[0].quantidade);
                         $('#swal-cons-input2').val(data.data[0].valorUnitario);
@@ -1159,7 +1159,7 @@
             event.preventDefault();
             $('#saveChangesDiaria').prop('disabled', true);
             let code=$("#swal_id_consumo").val(); 
-            envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form-consumo")));                                  
+            showDataWithData('<?=ROTA_GERAL?>/Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form-consumo")));                                  
             $('.consumo').click();
         });
 
@@ -1167,7 +1167,7 @@
             event.preventDefault();
             $('#saveChangesDiaria').prop('disabled', true);
             let code=$("#swal_id_diaria").val(); 
-            envioRequisicaoPostViaAjax('Reserva/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diaria")));                                  
+            showDataWithData('<?=ROTA_GERAL?>/Diaria/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diaria")));                                  
             $('.diarias').click();
         });
 
@@ -1179,7 +1179,7 @@
             id_reserva = code;
             
             $.ajax({
-                url: url+ "Reserva/getDiariasPorId/" + code ,
+                url: url+ "Diaria/getDiariasPorId/" + code ,
                 method:'GET',
                 processData: false,
                 dataType: 'json',
@@ -1217,7 +1217,7 @@
             let code=$(this).attr("id");  
             id_reserva = code;
             $.ajax({
-                url: url+ "Reserva/getRemoveDiarias/" + code ,
+                url: url+ "Diaria/getRemoveDiarias/" + code ,
                 method:'GET',
                 processData: false,
                 dataType: 'json     ',
