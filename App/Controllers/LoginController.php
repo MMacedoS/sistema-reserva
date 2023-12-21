@@ -72,7 +72,7 @@ class LoginController extends Controller {
             $_SESSION['code'] = $login['id'];
             $_SESSION['nome'] = $login['nome'];
             $_SESSION['painel'] = $login['painel'];
-            $_SESSION['acesso'] = md5($login['painel'] . date('y-m-d'));
+            $_SESSION['acesso'] = md5($login['painel']);
             $_SESSION['logado'] = true;  
             
             echo json_encode(true);          

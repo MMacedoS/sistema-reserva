@@ -107,7 +107,8 @@ class FinanceiroController extends \Controller{
         echo json_encode($this->financeiro_model->findPagamentosByParams(
             $_POST['description'], 
             $_POST['startDate'], 
-            $_POST['endDate']
+            $_POST['endDate'],
+            $_POST['funcionarios']
             )
         );
     }

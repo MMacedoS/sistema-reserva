@@ -47,11 +47,22 @@ class EntradaModel extends ConexaoModel {
             return $this->entrada($off = 0);
         } 
 
+        $funcionario = $params['funcionarios'] == 'todos' ? null : $params['funcionarios'];   
+        
+        if(!is_null($funcionario)) {
+            $funcionario = "AND e.funcionario = '$funcionario'";
+        }
+
+        if($_SESSION['painel'] == 'Recepcao') {
+            $funcionario = "AND e.funcionario = '$this->user'";
+        }
+
         return $this->entradaComParams(
             $params['search'],
             $params['startDate'], 
             $params['endDate'],
-            $params['status']
+            $params['status'],
+            $funcionario
         );
     }
 
@@ -89,7 +100,7 @@ class EntradaModel extends ConexaoModel {
         return [];
     }
 
-    public function entradaComParams($texto = 0, $entrada, $saida, $tipoPagamento)
+    public function entradaComParams($texto = 0, $entrada, $saida, $tipoPagamento, $funcionario)
     {
         $entrada = date($entrada . ' 00:00:00');
         $saida = date($saida . '  23:59:59');
@@ -114,10 +125,12 @@ class EntradaModel extends ConexaoModel {
             e.created_at BETWEEN '$entrada' AND '$saida'
         AND (('$tipoPagamento' = '' or '$tipoPagamento' is null) or e.tipoPagamento = '$tipoPagamento')
         AND e.descricao LIKE '%$texto%'
-        AND e.funcionario = '$this->user'
+        $funcionario
         ORDER BY
                 e.created_at ASC
         ";
+
+        self::logError($sql);
 
         $cmd  = $this->conexao->query(
             $sql

@@ -138,7 +138,9 @@ class FuncionarioModel extends ConexaoModel {
             "SELECT 
                 id,nome, email, painel, status
             FROM
-                $this->model"
+                $this->model
+            WHERE status = 1 
+            order by nome asc"
         );
 
         return $cmd->fetchAll();

@@ -61,7 +61,7 @@ class Controller {
     }
 
     public function validPainel() {        
-        if ($_SESSION['acesso'] != md5('Administrador' . date('y-m-d')) && $_SESSION['acesso'] != md5('Recepcao' . date('y-m-d'))) {   
+        if ($_SESSION['acesso'] != md5('Administrador') && $_SESSION['acesso'] != md5('Recepcao')) {   
             session_start();
             session_destroy();            
             return header('Location: '. $this->url .'/Login');   

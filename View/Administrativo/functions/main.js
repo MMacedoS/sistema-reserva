@@ -256,3 +256,14 @@
       janela.print();
       janela.close();
   }
+
+  function prepareSelector(data, select_id) {
+    
+    data.map((item) =>{
+      let opcao = $('<option>', {
+        value: item.id,
+        text: item.nome
+      });
+      $(select_id).append(opcao);
+    });
+  }

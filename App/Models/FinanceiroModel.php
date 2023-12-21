@@ -13,11 +13,14 @@ class FinanceiroModel extends ConexaoModel {
     protected $conexao;
 
     protected $model = 'movimento';
+    
+    protected $user = '';
 
     public function __construct() 
     {
         $this->model = 'movimento';
-        $this->conexao = ConexaoModel::conexao();
+        $this->conexao = ConexaoModel::conexao();        
+        $this->user = $_SESSION['code'];
     }
 
     public function buscaMovimentos($dados)
@@ -297,8 +300,20 @@ class FinanceiroModel extends ConexaoModel {
      public function findPagamentosByParams(
         $descricao = '', 
         $dataEntrada = '', 
-        $dataSaida = ''
+        $dataSaida = '',
+        $funcionario = ''
     ) {
+
+        $funcionario = $funcionario == 'todos' ? null : $funcionario;   
+        
+        if(!is_null($funcionario)) {
+            $funcionario = "AND r.funcionario = '$funcionario'";
+        }
+
+        if($_SESSION['painel'] == 'Recepcao') {
+            $funcionario = "AND r.funcionario = '$this->user'";
+        }
+
         try {
             $sql = "SELECT 
                 r.id,
@@ -329,7 +344,8 @@ class FinanceiroModel extends ConexaoModel {
                 (r.dataEntrada BETWEEN '$dataEntrada' and '$dataSaida')
                 OR
                 (r.dataSaida BETWEEN '$dataEntrada' and '$dataSaida')
-            ); 
+            )
+            $funcionario 
             ";
             $cmd = $this->conexao->query($sql);
     

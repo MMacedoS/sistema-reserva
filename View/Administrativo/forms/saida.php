@@ -21,7 +21,7 @@
             </div>
             <div class="col-sm-4 text-right">
                 <button class="btn btn-primary" id="novo">Adicionar</button>
-                <button class="btn btn-danger" onclick="imprimir()" id="btn">Imprimir</button>
+                <button class="btn btn-danger" onclick="imprimir()" >Imprimir</button>
             </div>
         </div>
     </div>
@@ -31,24 +31,40 @@
             <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
         </p>
         <div class="input-group collapse" id="collapse-filters">
-            <div class="col-sm-2 mb-2">
-                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+            <div class="col-sm-6 mb-2">
+                <label for="">Descrição</label>
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
-            </div>
-            <div class="col-sm-3 mb-2">
-                <input type="date" name="" id="end_date" class="form-control" value="<?=$this->addDdayInDate(Date('Y-m-d'),1)?>">
-            </div>   
-            <div class="col-sm-3 mb-2">
+              
+            <div class="col-sm-5 mb-2">
+                <label for="">Selecione o Tipo</label>
                 <select name="" id="status" class="form-control">
-                    <option value="">Selecione o Tipo</option>
+                    <option value="">Todos</option>
                     <option value="1">Dinheiro</option>
                     <option value="2">Cartão de Crédito</option>
                     <option value="3">Cartão de Débito</option>
                     <option value="4">Deposito/PIX</option>
                 </select>
+            </div> 
+
+            <div class="col-sm-3 mb-2">
+                <label for="">Data Inicio</label>
+                <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
+            </div>
+            <div class="col-sm-3 mb-2">
+                <label for="">Data Final</label>
+                <input type="date" name="" id="end_date" class="form-control" value="<?=$this->addDdayInDate(Date('Y-m-d'),1)?>">
             </div>  
+            <?php 
+                if($_SESSION['painel'] === 'Administrador') {
+            ?>  
+                <div class="col-sm-5 mb-2">
+                    <label for="">Selecione o Funcionário</label>
+                    <select name="" id="funcionarios" class="form-control">
+                        <option value="todos">Todos</option>
+                    </select>
+                </div>
+            <?php } ?>
             <div class="input-group-append float-right">
                 <button class="btn btn-primary ml-3" type="button" onclick="pesquisa()" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
@@ -59,8 +75,8 @@
 </div>
 <hr>
 
-<div id="contents_inputs ml-3">
-    <div class="row">
+<div id="contents_inputs" class="ml-3">
+    <div class="row pl-2">
         <div class="col-sm-4">
             <b>
                 Movimentação de Saidas
@@ -69,7 +85,7 @@
         <div class="col-lg-8 col-sm-8 text-info text-right" id="total"></div>
     </div>
    
-    <div class="row">
+    <div class="row pl-2">
         <div class="table-responsive ml-3">
             <div id="table"></div>
         </div>
@@ -135,6 +151,10 @@
      $(document).ready(function(){
         showData("<?=ROTA_GERAL?>/Financeiro/findAllSaidas")
         .then((response) => createTable(response)).then(() => hideLoader());
+
+        showData("<?=ROTA_GERAL?>/Funcionario/getAll")
+        .then((response) => prepareSelector(response, "#funcionarios"));
+
         hideLoader();
     });
 
@@ -147,6 +167,11 @@
     function pesquisa() {
         // Obtém o valor do input
         let data = new FormData();
+        let painel = "<?=$_SESSION['painel']?>";
+
+        if (painel === "Administrador") {
+            data.append('funcionarios', $('#funcionarios').val());
+        }
         data.append('search', $('#txt_busca').val());
         data.append('startDate', $('#start_date').val());
         data.append('endDate', $('#end_date').val());

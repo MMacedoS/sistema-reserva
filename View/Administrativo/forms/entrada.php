@@ -34,24 +34,38 @@
             <button type="button" class="btn btn-outline-primary" data-toggle="collapse" data-target="#collapse-filters" aria-expanded="false" aria-controls="collapse-filters">Filtros de buscas</button>
         </p>
         <div class="input-group collapse" id="collapse-filters">
-            <div class="col-sm-2 mb-2">
-                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="descricao" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
+            <div class="col-sm-4 mb-2">
+                <label for="">Descrição</label>
+                <input type="text" class="form-control bg-outline-danger border-0 small" placeholder="" id="txt_busca" aria-label="Search" value="" aria-describedby="basic-addon2">
             </div>
             <div class="col-sm-3 mb-2">
+                <label for="">Data Inicial</label>
                 <input type="date" name="" id="start_date" class="form-control" value="<?=Date('Y-m-d') ?>">
             </div>
             <div class="col-sm-3 mb-2">
+                <label for="">Data Final</label>
                 <input type="date" name="" id="end_date" class="form-control" value="<?=$this->addDdayInDate(Date('Y-m-d'),1)?>">
             </div>   
-            <div class="col-sm-3 mb-2">
+            <div class="col-sm-5 mb-2">
+                <label for="">Selecione um Tipo</label>
                 <select name="" id="status" class="form-control">
-                    <option value="">Selecione o Tipo</option>
+                    <option value="">Todos</option>
                     <option value="1">Dinheiro</option>
                     <option value="2">Cartão de Crédito</option>
                     <option value="3">Cartão de Débito</option>
                     <option value="4">Deposito/PIX</option>
                 </select>
             </div>  
+            <?php 
+                if($_SESSION['painel'] === 'Administrador') {
+            ?>  
+                <div class="col-sm-5 mb-2">
+                    <label for="">Selecione o Funcionário</label>
+                    <select name="" id="funcionarios" class="form-control">
+                        <option value="todos">Todos</option>
+                    </select>
+                </div>
+            <?php } ?>
             <div class="input-group-append float-right">
                 <button class="btn btn-primary ml-3" type="button" onclick="pesquisa()" id="btn_busca">
                     <i class="fas fa-search fa-sm"></i>
@@ -69,8 +83,8 @@
             <div class="col-4">
                 <p>Funcionario: <?=$_SESSION['nome']?></p>
             </div>
-            <div class="col-8 text-center">
-                Período de <?=date('y-m-d')?> á <?=date('y-m-d')?>
+            <div class="col-8 text-center" id="txt_periodo">
+               
             </div>
             <div class="col-3">
                 <p class="pl-2" id="txt_dinheiro"></p>
@@ -146,6 +160,9 @@
     $(document).ready(function(){
         showData("<?=ROTA_GERAL?>/Financeiro/findAllEntradas")
         .then((response) => createTable(response)).then(() => hideLoader());
+
+        showData("<?=ROTA_GERAL?>/Funcionario/getAll")
+        .then((response) => prepareSelector(response, "#funcionarios"));
     });
     
     $('#novo').click(function(){
@@ -156,14 +173,26 @@
     function pesquisa() {
         // Obtém o valor do input
         let data = new FormData();
+
+        let painel = "<?=$_SESSION['painel']?>";
+
+        if (painel === "Administrador") {
+            data.append('funcionarios', $('#funcionarios').val());
+        }
+
         data.append('search', $('#txt_busca').val());
         data.append('startDate', $('#start_date').val());
         data.append('endDate', $('#end_date').val());
         data.append('status', $('#status').val());  
         // Executa a função com base no valor do input
-        showDataWithData("<?=ROTA_GERAL?>/Financeiro/findEntradasByParams/",data)
+
+        showDataWithData(
+            "<?=ROTA_GERAL?>/Financeiro/findEntradasByParams/", data
+        )
         .then((response) => createTable(response));
+
         hideLoader();  
+        $('#txt_periodo').text(' Período de '+ formatDate($('#start_date').val()) +' á ' + formatDate($('#end_date').val()));
     }
 
     function destroyTable() {
@@ -351,10 +380,10 @@
             destinationElement.appendChild(table);
 
             $('#total').text("Total de Entradas " + totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-            $('#txt_dinheiro').text("Total em Dinheiro " + dinheiroValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-            $('#txt_credito').text("Total em C.Crédito " + creditoValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-            $('#txt_debito').text("Total em C.Débito " + debitoValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
-            $('#txt_pix').text("Total em Pix " + pixValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#txt_dinheiro').text("Total Dinheiro " + dinheiroValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#txt_credito').text("Total C.Crédito " + creditoValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#txt_debito').text("Total C.Débito " + debitoValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
+            $('#txt_pix').text("Total Pix " + pixValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }));
             hideLoader();
         return table;
     }
