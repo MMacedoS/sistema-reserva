@@ -442,6 +442,9 @@
                     let form = new FormData();
                     form.append('motivo', motivo);
                     showDataWithData('<?=ROTA_GERAL?>/Vendas/deleteVendas/'+ rowData[0], form);
+
+                    showData("<?=ROTA_GERAL?>/Vendas/findAllVendas")
+                    .then((response) => createTable(response)).then(() => hideLoader());
                 } catch (error) {
                 Swal.showValidationMessage(`
                     Request failed: ${error}
@@ -455,9 +458,6 @@
                 icon: 'success',
                 title: `${result.value}' => registro salvo`
                 });
-
-                showData("<?=ROTA_GERAL?>/Vendas/findAllVendas")
-                .then((response) => createTable(response)).then(() => hideLoader());
             }
         });
     }

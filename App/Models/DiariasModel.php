@@ -53,6 +53,8 @@ class DiariasModel extends ConexaoModel {
                 diarias
             WHERE 
                 reserva_id = $id
+                and status = 1
+            order by id DESC
             "
         );
 
@@ -172,22 +174,28 @@ class DiariasModel extends ConexaoModel {
         }
     }
 
-    public function getRemoveDiarias($id)
+    public function getRemoveDiarias($id, $motivo)
     {
         $this->conexao->beginTransaction();
         try {      
-            $cmd = $this->conexao->prepare(
-                "DELETE FROM
-                    diarias
-                WHERE 
-                    id = :id
-                    "
-                );
-            $cmd->bindValue(':id',$id);
-            $cmd->execute();
-            $this->conexao->commit();
-            return self::message(200, "dados REMOVIDOS!!");
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
+            if (is_null($dados)) {              
+                $this->conexao->rollback();
+                return null;
+            }
+
+            $this->prepareStatusTable('diarias', 0," id = $id");
+            
+            $appModel = new AppModel();        
+            if(!$appModel->insertApagados($dados, $motivo, 'diarias', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
+
+            $this->conexao->commit();
+            return true;
         } catch (\Throwable $th) {
             $this->conexao->rollback();
             return self::message(422, $th->getMessage());

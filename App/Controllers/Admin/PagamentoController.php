@@ -24,9 +24,10 @@ class PagamentoController extends \Controller{
     }
 
     public function getRemovePagamento($code)
-    {
-        $reserva = $this->pagamento_model->getRemovePagamento($code);
-        echo json_encode($reserva);
+    {        
+        $motivos = $_POST['motivo'];
+        $response = $this->pagamento_model->getRemovePagamento($code, $motivos);
+        echo json_encode($response);
     }
 
 }

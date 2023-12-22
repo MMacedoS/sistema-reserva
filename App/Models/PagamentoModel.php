@@ -68,6 +68,8 @@ class PagamentoModel extends ConexaoModel {
                     $this->model
                 WHERE 
                     reserva_id = $id
+                AND status = 1
+                order by id desc
             "
         );
 
@@ -82,29 +84,30 @@ class PagamentoModel extends ConexaoModel {
 
     public function getRemovePagamento($id, $motivo = null){
 
-        $dados = self::findById($id);
+        try {
+            $this->conexao->beginTransaction();
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
-        $dados['tabela'] = "pagamento";
+            if (is_null($dados)) {              
+                $this->conexao->rollback();
+                return null;
+            }
 
-        $appModel = new AppModel();
-        
-        $appModel->insertApagados($dados, $motivo);
+            $this->prepareStatusTable('pagamento', 0," id = $id");
+                        
+            $this->prepareStatusTable('entrada', 0," pagamento_id = $id");
+            
+            $appModel = new AppModel();        
+            if(!$appModel->insertApagados($dados, $motivo, 'pagamento', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
 
-        $cmd  = $this->conexao->query(
-            "DELETE 
-                FROM 
-                $this->model
-                WHERE
-                    id = $id
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::message(200, 'consumo deletado');
+            $this->conexao->commit();
+            return true;
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
         }
-
-        return self::message(422, 'nehum dado encontrado');
     }
 }

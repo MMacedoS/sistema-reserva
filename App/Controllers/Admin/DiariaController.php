@@ -41,9 +41,10 @@ class DiariaController extends \Controller{
     }
 
     public function getRemoveDiarias($id)
-    {
-        $diarias = $this->diarias_model->getRemoveDiarias($id);
-        echo json_encode($diarias);
+    {        
+        $motivos = $_POST['motivo'];
+        $response = $this->diarias_model->getRemoveDiarias($id, $motivos);
+        echo json_encode($response);
     }  
 
 }

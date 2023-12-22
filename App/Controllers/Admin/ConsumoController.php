@@ -36,8 +36,9 @@ class ConsumoController extends \Controller{
 
     public function getRemoveConsumo($code)
     {
-        $consumo = $this->consumo_model->getRemoveConsumo($code);
-        echo json_encode($consumo);
+        $motivos = $_POST['motivo'];
+        $response = $this->consumo_model->getRemoveConsumo($code, $motivos);
+        echo json_encode($response);
     }
 
 }

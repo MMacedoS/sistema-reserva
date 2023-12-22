@@ -1203,49 +1203,98 @@
         $(document).on('click', '.remove-consumo', function(){
             let code=$(this).attr("id");  
             id_reserva = code;
-            $.ajax({
-                url: url+ "Consumo/getRemoveConsumo/" + code ,
-                method:'GET',
-                processData: false,
-                dataType: 'json     ',
-                success: function(data){
-                    if(data.status === 200){
-                       $('.consumo').click();
+           
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                    let form = new FormData();
+                    form.append('motivo', motivo);
+                    showDataWithData('<?=ROTA_GERAL?>/Consumo/getRemoveConsumo/'+ code, form);
+                    $('.consumo').click();
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
                     }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });
                 }
-            })    
+            });
         });
 
         $(document).on('click', '.remove-diarias', function(){
             let code=$(this).attr("id");  
-            id_reserva = code;
-            $.ajax({
-                url: url+ "Diaria/getRemoveDiarias/" + code ,
-                method:'GET',
-                processData: false,
-                dataType: 'json     ',
-                success: function(data){
-                    if(data.status === 200){
-                       $('.diarias').click();
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                        let form = new FormData();
+                        form.append('motivo', motivo);
+                        showDataWithData('<?=ROTA_GERAL?>/Diaria/getRemoveDiarias/'+ code, form);
+                        $('.diarias').click();
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
                     }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });
                 }
-            })    
+            });
         });
 
         $(document).on('click', '.remove-pagamento', function(){
             let code=$(this).attr("id"); 
             id_reserva = code; 
-            $.ajax({
-                url: url+ "Pagamento/getRemovePagamento/" + code ,
-                method:'GET',
-                processData: false,
-                dataType: 'json     ',
-                success: function(data){
-                    if(data.status === 200){
-                       $('.pagamento').click();
+
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                    let form = new FormData();
+                    form.append('motivo', motivo);
+                    showDataWithData('<?=ROTA_GERAL?>/Pagamento/getRemovePagamento/'+ code, form);
+                    $('.pagamento').click();
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
                     }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });
                 }
-            })    
+            });           
         });
 
         $(document).on('click', '.executar-checkout', function(){

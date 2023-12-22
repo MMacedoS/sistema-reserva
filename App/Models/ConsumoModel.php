@@ -46,8 +46,8 @@ class ConsumoModel extends ConexaoModel {
                 );
 
             $cmd->bindValue(':quantidade',$quantidade);
-            $cmd->bindValue(':descricao',$produto[0]['descricao']);
-            $cmd->bindValue(':valor_unitario',$produto['0']['valor']);
+            $cmd->bindValue(':descricao',$produto['descricao']);
+            $cmd->bindValue(':valor_unitario',$produto['valor']);
             $cmd->bindValue(':reserva_id',$reserva_id);
             $cmd->bindValue(':produto_id',$produto_id);
             $cmd->bindValue(':funcionario',$_SESSION['code']);
@@ -117,6 +117,9 @@ class ConsumoModel extends ConexaoModel {
                     $this->model
                 WHERE 
                     reserva_id = $id
+                AND    
+                    status = 1 
+                ORDER BY id DESC
             "
         );
 
@@ -138,6 +141,9 @@ class ConsumoModel extends ConexaoModel {
                 diarias
             WHERE 
                 reserva_id = $id
+            AND
+                status = 1 
+            ORDER BY id DESC
             "
         );
 
@@ -152,30 +158,30 @@ class ConsumoModel extends ConexaoModel {
 
     public function getRemoveConsumo($id, $motivo = null)
     {
-        $dados = self::findById($id) ?? '';
+        $this->conexao->beginTransaction();
+       try {
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
-        $dados['tabela'] = "consumo";
+            if (is_null($dados)) {              
+                $this->conexao->rollback();
+                return null;
+            }
 
-        $appModel = new AppModel();
-        
-        $appModel->insertApagados($dados, $motivo);
-        
-        $cmd  = $this->conexao->query(
-            "DELETE 
-                FROM 
-                $this->model
-                WHERE
-                    id = $id
-            "
-        );
+            $this->prepareStatusTable('consumo', 0," id = $id");
+            
+            $appModel = new AppModel();        
+            if(!$appModel->insertApagados($dados, $motivo, 'consumo', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
 
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::message(200, 'consumo deletado');
-        }
-
-        return self::message(422, 'nehum dado encontrado');
+            $this->conexao->commit();
+            return true;
+       } catch (\Throwable $th) {
+        $this->conexao->rollback();
+        //throw $th;
+       }
     }
 
     public function updateConsumo($dados, $id)

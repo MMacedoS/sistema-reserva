@@ -1,4 +1,4 @@
-
+$.fn.modal.Constructor.prototype._enforceFocus = function() {};
   // Função para criar um novo registro
   function createData(url, data) {
     showLoader();

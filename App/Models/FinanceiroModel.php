@@ -344,9 +344,9 @@ class FinanceiroModel extends ConexaoModel {
                 r.valor,
                 h.nome, 
                 a.numero,
-                COALESCE((SELECT sum(valorUnitario * quantidade) FROM consumo c where c.reserva_id = r.id), 0) as consumos,
-                COALESCE((SELECT sum(valor) FROM diarias d where d.reserva_id = r.id), 0) as diarias,
-                COALESCE((SELECT sum(p.valorPagamento) FROM pagamento p where p.reserva_id = r.id), 0) as pag
+                COALESCE((SELECT sum(valorUnitario * quantidade) FROM consumo c where c.reserva_id = r.id and c.status = 1), 0) as consumos,
+                COALESCE((SELECT sum(valor) FROM diarias d where d.reserva_id = r.id and d.status = 1), 0) as diarias,
+                COALESCE((SELECT sum(p.valorPagamento) FROM pagamento p where p.reserva_id = r.id and p.status = 1), 0) as pag
             FROM 
                 `reserva` r 
             INNER JOIN 
