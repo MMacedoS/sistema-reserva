@@ -215,38 +215,30 @@ class FinanceiroModel extends ConexaoModel {
     {
         $this->model = 'saida';
 
-        $dados = self::findById($id) ?? null;
         $this->conexao->beginTransaction();
-        try {
+       try {
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
-            if(is_null($dados)){
+            if (is_null($dados)) {              
                 $this->conexao->rollback();
                 return null;
             }
 
-            $cmd  = $this->conexao->prepare(
-                "DELETE 
-                    FROM 
-                    saida
-                    WHERE
-                        id = :id
-                "
-            );
-            $cmd->bindValue(':id',$id);
-    
-            if($cmd->execute()) {
-                $appModel = new AppModel();        
-                $appModel->insertApagados($dados, $motivo);
+            $this->prepareStatusTable('saida', 0," id = $id");
+            
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'saida', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
 
-                $this->conexao->commit();
-    
-                return self::message(200, 'Saida deletado');
-            }
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return false;
-        }
-
+            $this->conexao->commit();
+            return true;
+       } catch (\Throwable $th) {
+        $this->conexao->rollback();
+        //throw $th;
+       }
     }
 
     public function findMovimentosByParams(

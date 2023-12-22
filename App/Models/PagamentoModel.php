@@ -98,8 +98,8 @@ class PagamentoModel extends ConexaoModel {
                         
             $this->prepareStatusTable('entrada', 0," pagamento_id = $id");
             
-            $appModel = new AppModel();        
-            if(!$appModel->insertApagados($dados, $motivo, 'pagamento', $id)) {
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'pagamento', $id)) {
                 $this->conexao->rollback();
                 return null;
             };

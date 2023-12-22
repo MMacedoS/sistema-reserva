@@ -188,8 +188,8 @@ class DiariasModel extends ConexaoModel {
 
             $this->prepareStatusTable('diarias', 0," id = $id");
             
-            $appModel = new AppModel();        
-            if(!$appModel->insertApagados($dados, $motivo, 'diarias', $id)) {
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'diarias', $id)) {
                 $this->conexao->rollback();
                 return null;
             };

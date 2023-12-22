@@ -44,7 +44,9 @@ class FinanceiroController extends \Controller{
 
     public function deleteEntradaById($id)
     {
-        echo json_encode($this->entrada_model->deleteById($id));
+        $motivos = $_POST['motivo'];
+        $response = $this->entrada_model->deleteById($id, $motivos);
+        echo json_encode($response);
         return;
     }
 
@@ -76,7 +78,9 @@ class FinanceiroController extends \Controller{
 
     public function deleteSaidaById($id)
     {
-        echo json_encode($this->saida_model->deleteById($id));
+        $motivos = $_POST['motivo'];
+        $response = $this->saida_model->deleteById($id, $motivos);
+        echo json_encode($response);
         return;
     }
 

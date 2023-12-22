@@ -71,7 +71,8 @@ class Route {
             'PagamentoController',
             'ProdutoController',
             'ReservaController',
-            'VendasController'
+            'VendasController',
+            'ApagadosController'
         ];
 
         $allowedMethods = [
@@ -243,7 +244,12 @@ class Route {
             'findParamByParam',
             'findColorByParam',
             'saveParam',
-            'findBannerById'
+            'findBannerById',
+            'apagados',
+            'findAllApagados',
+            'changeStatusApagados',
+            'findById',
+            'changeAllStatusApagados'
         ];
 
         $controllerPath = $this->getControllerPath($this->controller);

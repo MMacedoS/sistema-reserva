@@ -280,8 +280,8 @@ class ProdutoModel extends ConexaoModel {
 
             $cmd->bindValue(':id',$id);
             $cmd->execute();
-            $appModel = new AppModel();        
-            if(!$appModel->insertApagados($dados, $motivo, 'entradaestoque', $id)) {
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'entradaestoque', $id)) {
                 $this->conexao->rollback();
                 return null;
             };

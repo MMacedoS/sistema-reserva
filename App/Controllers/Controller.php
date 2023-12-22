@@ -28,6 +28,7 @@ class Controller {
     protected $disciplina_id;
     protected $background;
     protected $url;
+    protected $apagados;
 
     public function __construct(){
         $this->site_model = new SiteModel();

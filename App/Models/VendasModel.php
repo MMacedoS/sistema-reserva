@@ -149,8 +149,8 @@ class VendasModel extends ConexaoModel {
                         
             $this->prepareStatusTable('entrada', 0," venda_id = $id");
             
-            $appModel = new AppModel();        
-            if(!$appModel->insertApagados($dados, $motivo, 'venda', $id)) {
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'venda', $id)) {
                 $this->conexao->rollback();
                 return null;
             };

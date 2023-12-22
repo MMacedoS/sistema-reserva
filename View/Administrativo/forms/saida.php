@@ -333,20 +333,38 @@
     function deletarRegistro(rowData)
     {
         Swal.fire({
-            title: 'Deseja remover esta saida?',
-            showDenyButton: true,
-            confirmButtonText: 'Sim',
-            denyButtonText: `Não`,
-        }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {                
-                deleteData("<?=ROTA_GERAL?>/Financeiro/deleteSaidaById/" + rowData[0]);
-            } else if (result.isDenied) {
-                Swal.fire('nenhuma mudança efetuada', '', 'info')
-            }
-        })
-    }
+            title: "Deseja remover estes registros? Descreva o motivo...",
+            input: "text",
+            inputAttributes: {
+                autocapitalize: "off"
+            },
+            showCancelButton: true,
+            confirmButtonText: "Sim, desejo",
+            showLoaderOnConfirm: true,
+            preConfirm: async (motivo) => {
+                try {
+                    let form = new FormData();
+                    form.append('motivo', motivo);
+                    showDataWithData('<?=ROTA_GERAL?>/Financeiro/deleteSaidaById/'+ rowData[0], form);
 
+                    showData("<?=ROTA_GERAL?>/Financeiro/findAllSaidas")
+                    .then((response) => createTable(response)).then(() => hideLoader());
+                } catch (error) {
+                Swal.showValidationMessage(`
+                    Request failed: ${error}
+                `);
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                icon: 'success',
+                title: `${result.value}' => registro salvo`
+                });
+            }
+        });
+    }
    
     function prepareModalEditarEntrada(data) {
         $('#descricao').val(data.descricao);           

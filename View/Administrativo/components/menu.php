@@ -297,16 +297,34 @@
                 <!-- Nav Item - Messages -->
                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-envelope fa-fw"></i>
+                    <i class="fa fa-cogs"></i>
                         <!-- Counter - Messages -->
-                        <!-- <span class="badge badge-danger badge-counter">7</span> -->
+                        <span class="badge badge-danger badge-counter"><?=count($this->apagados) ?? ''?></span>
                     </a>
                     <!-- Dropdown - Messages -->
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header">
-                            Message Center
+                            Registros apagados
                         </h6>
-                       
+                        
+                        <?php if (!empty($this->apagados)) { 
+                            foreach ($this->apagados as $value) {
+                            ?>
+                        <a class="dropdown-item d-flex align-items-center" href="<?=ROTA_GERAL?>/Administrativo/apagados">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-primary">
+                                    <i class="fas fa-file-alt text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                
+                                <div class="small text-gray-500"><?=$value['nome_funcionario']?></div>
+                                <span class="font-weight-bold"><?=$value['motivo'] ?? 'não identificado'?></span>
+                            </div>
+                        </a>
+                        <?php }
+                        }
+                        ?>                       
                     </div>
                 </li>
 

@@ -8,6 +8,7 @@ class AdministrativoController extends \Controller{
     protected $consumo_model;
     protected $pagamento_model;
     protected $app_model;
+    protected $apagados_model;
     
     public function __construct() {
         $this->validPainel();     
@@ -15,7 +16,21 @@ class AdministrativoController extends \Controller{
         $this->reserva_model = new ReservaModel();   
         $this->consumo_model = new ConsumoModel();    
         $this->pagamento_model = new PagamentoModel();   
-        $this->app_model = new AppModel();       
+        $this->app_model = new AppModel(); 
+        $this->apagados_model = new ApagadosModel(); 
+        $this->getApagados();      
+    }
+
+    public function getApagados() 
+    {
+        $this->apagados = $this->apagados_model->getApagados();
+    }
+
+    public function apagados($request = null)  
+    {
+        $this->active = "";    
+        $this->viewAdmin('apagados');
+        return;   
     }
 
     public function index() {           

@@ -131,7 +131,6 @@ class ConsumoModel extends ConexaoModel {
 
         return self::messageWithData(200, 'nenhum dado encontrado', []);
     }
-
     
     public function getDadosDiarias($id){
         $cmd  = $this->conexao->query(
@@ -170,8 +169,8 @@ class ConsumoModel extends ConexaoModel {
 
             $this->prepareStatusTable('consumo', 0," id = $id");
             
-            $appModel = new AppModel();        
-            if(!$appModel->insertApagados($dados, $motivo, 'consumo', $id)) {
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'consumo', $id)) {
                 $this->conexao->rollback();
                 return null;
             };

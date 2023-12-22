@@ -87,6 +87,7 @@ class SaidaModel extends ConexaoModel {
                     $this->model
                 WHERE
                     created_at between '$entrada' and '$saida'  
+                    and status = 1 
                     $funcionario
                 ";
 
@@ -179,37 +180,36 @@ class SaidaModel extends ConexaoModel {
         );
     }
 
-    public function deleteById($id)
+    public function deleteById($id, $motivo)
     {
         if(is_null($id)) {
             return null;
         }
         
-        $entrada = $this->findById($id);
-
-        if($entrada) {
+        try {
             $this->conexao->beginTransaction();
-            try {      
-                $cmd = $this->conexao->prepare(
-                    "DELETE FROM 
-                        $this->model
-                    WHERE 
-                        id = :id"
-                    );
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
-                $cmd->bindValue(':id',$id);
-                $cmd->execute();
-
-                
-                self::dropRegister($entrada);
-    
-                $this->conexao->commit();
-                return self::message(200, "Registro deletado!!");
-    
-            } catch (\Throwable $th) {
+            if (is_null($dados)) {              
                 $this->conexao->rollback();
-                return self::message(422, $th->getMessage());
+                return null;
             }
+
+            $this->prepareStatusTable('saida', 0," id = $id");
+            
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'saida', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
+
+            $this->conexao->commit();
+            return true;
+        } catch (\Throwable $th) {   
+            $this->conexao->rollback();         
+            self::logError($th->getMessage(). $th->getLine());
+            return false;
         }
     }
 }
