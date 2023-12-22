@@ -282,9 +282,9 @@
     }
    
     function prepareModalEditarBanner(data) {
-        $('#id').val(data[0].id);
-        $('#imagem_anterior').val(data[0].imagem);
-        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Banner/" + data[0].imagem);
+        $('#id').val(data.id);
+        $('#imagem_anterior').val(data.imagem);
+        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Banner/" + data.imagem);
             $('#imagePreview').show();
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Banner");

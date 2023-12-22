@@ -4,6 +4,7 @@ require_once __DIR__ . "/../Config/autoload.php";
 require_once 'Trait/DateTrait.php';
 require_once 'Trait/GeneralTrait.php';
 require_once 'Trait/RequestTrait.php';
+require_once __DIR__ . '/../Models/Trait/StandartTrait.php';
 
 require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 
@@ -13,6 +14,7 @@ class Controller {
     use DateTrait;
     use RequestTrait;
     use ErrorLoggingTrait;
+    use StandartTrait;
 
     public $active = "";
 

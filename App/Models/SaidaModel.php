@@ -201,7 +201,7 @@ class SaidaModel extends ConexaoModel {
                 $cmd->execute();
 
                 
-                self::dropRegister($entrada['data']);
+                self::dropRegister($entrada);
     
                 $this->conexao->commit();
                 return self::message(200, "Registro deletado!!");

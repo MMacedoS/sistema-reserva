@@ -211,34 +211,42 @@ class FinanceiroModel extends ConexaoModel {
         }
     }
 
-    public function deleteSaida($id)
+    public function deleteSaida($id, $motivo= null)
     {
         $this->model = 'saida';
 
-        $dados = self::findById($id)['data'][0];
+        $dados = self::findById($id) ?? null;
+        $this->conexao->beginTransaction();
+        try {
 
-        $dados['tabela'] = "saida";
+            if(is_null($dados)){
+                $this->conexao->rollback();
+                return null;
+            }
 
-        $appModel = new AppModel();
-        
-        $appModel->insertApagados($dados);
+            $cmd  = $this->conexao->prepare(
+                "DELETE 
+                    FROM 
+                    saida
+                    WHERE
+                        id = :id
+                "
+            );
+            $cmd->bindValue(':id',$id);
+    
+            if($cmd->execute()) {
+                $appModel = new AppModel();        
+                $appModel->insertApagados($dados, $motivo);
 
-        $cmd  = $this->conexao->query(
-            "DELETE 
-                FROM 
-                saida
-                WHERE
-                    id = $id
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::message(200, 'Saida deletado');
+                $this->conexao->commit();
+    
+                return self::message(200, 'Saida deletado');
+            }
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            return false;
         }
 
-        return self::message(422, 'Nenhum dado encontrado');
     }
 
     public function findMovimentosByParams(
@@ -247,6 +255,18 @@ class FinanceiroModel extends ConexaoModel {
         $dataSaida = '', 
         $situacao = '' )
     {
+
+        if($dataEntrada != '' && $dataSaida != '') {
+            $where = "AND
+            m.created_at BETWEEN '$dataEntrada' AND '$dataSaida'";
+        }
+        if ($dataEntrada == '' && $dataSaida == '') {
+            $dataEntrada = date('Y-m-d H:i');
+            $dataSaida = self::addDayInDate(date('Y-m-d H:i'),1);
+            $where = "AND
+            m.created_at BETWEEN '$dataEntrada' AND '$dataSaida'";
+        }
+
         try {
             $sql = "SELECT 
                 m.id,
@@ -259,8 +279,7 @@ class FinanceiroModel extends ConexaoModel {
                 movimento m                 
             WHERE
                 m.descricao LIKE '%$descricao%'
-            AND
-                m.created_at BETWEEN '$dataEntrada' AND '$dataSaida' 
+            $where 
             ";
 
 
@@ -284,6 +303,9 @@ class FinanceiroModel extends ConexaoModel {
                     ";
                 }
             }
+
+            $sql .= "ORDER BY id DESC";
+
             $cmd = $this->conexao->query($sql);
     
             if($cmd->rowCount() > 0)

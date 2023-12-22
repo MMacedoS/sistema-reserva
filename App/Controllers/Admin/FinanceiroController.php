@@ -38,7 +38,7 @@ class FinanceiroController extends \Controller{
 
     public function findEntradaById($id)
     {       
-        echo json_encode($this->entrada_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->entrada_model->findById($id)));
         return;
     }
 

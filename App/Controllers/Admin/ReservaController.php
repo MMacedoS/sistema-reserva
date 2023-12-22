@@ -28,7 +28,7 @@ class ReservaController extends \Controller{
 
     public function buscaReservaPorId($id)
     {
-        echo json_encode($this->reserva_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->reserva_model->findById($id)));
     }
 
     public function salvarReservas() {

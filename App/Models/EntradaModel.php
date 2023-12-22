@@ -226,7 +226,7 @@ class EntradaModel extends ConexaoModel {
                 $cmd->bindValue(':id',$id);
                 $cmd->execute();
 
-                self::dropRegister($entrada['data']);
+                self::dropRegister($entrada);
     
                 $this->conexao->commit();
                 return self::message(200, "Registro deletado!!");

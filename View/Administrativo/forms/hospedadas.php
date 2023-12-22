@@ -566,41 +566,44 @@
                                 </select>
                         </div>
 
-                        <div class="row row-mobile mt-2 mb-2 ml-2">
-                            <div class="col-sm-5">
-                                <label >Tipo</label><br>
-                                <select class="form-control" name="tipo" id="inp-tipo">
-                                    <option value="1">Diária</option>
-                                    <option value="2">Pacote</option>
-                                    <option value="3">Promocao</option>
-                                </select>
+                        <div class="row">
+                            
+                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                <div class="col-sm-6">
+                                    <label >Tipo</label><br>
+                                    <select class="form-control" name="tipo" id="inp-tipo">
+                                        <option value="1">Diária</option>
+                                        <option value="2">Pacote</option>
+                                        <option value="3">Promocao</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label >Status</label><br>
+                                    <select class="form-control" name="status" id="inp-status">
+                                        <option value="1">Reservada</option>
+                                        <option value="2">Confirmada</option>
+                                        <option value="3">Hospedada</option>
+                                        <option value="5">Cancelada</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col-sm-7">
-                                <label >Status</label><br>
-                                <select class="form-control" name="status" id="inp-status">
-                                    <option value="1">Reservada</option>
-                                    <option value="2">Confirmada</option>
-                                    <option value="3">Hospedada</option>
-                                    <option value="5">Cancelada</option>
-                                </select>
-                            </div>
-                        </div>
+                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                <div class="col-sm-4">
+                                    <label >Valor</label>
+                                    <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
+                                </div>
 
-                        <div class="row row-mobile mt-2 mb-2 ml-2">
-                            <div class="col-sm-4">
-                                <label >Valor</label>
-                                <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
-                            </div>
+                                <div class="col-sm-4">
+                                    <label >Qtdo. Hosp.</label>
+                                    <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                                </div>
 
-                            <div class="col-sm-4">
-                                <label >Qtdo. Hosp.</label>
-                                <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label >Placa</label>
-                                <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
+                                <div class="col-sm-4">
+                                    <label >Placa</label>
+                                    <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
+                                </div>
                             </div>
                         </div>
 
@@ -1146,8 +1149,8 @@
                 success: function(data){
                     if(data.status === 201){
                         $('#swal_id_consumo').val(code);
-                        $('#swal-cons-input1').val(data.data[0].quantidade);
-                        $('#swal-cons-input2').val(data.data[0].valorUnitario);
+                        $('#swal-cons-input1').val(data.data.quantidade);
+                        $('#swal-cons-input2').val(data.data.valorUnitario);
                         $('#saveChangesDiaria').prop('disabled', false);
                         $("#changeConsumo").modal('show');
                     }

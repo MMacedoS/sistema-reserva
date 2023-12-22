@@ -21,7 +21,7 @@ class AppModel extends ConexaoModel {
         return $cmd->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insertApagados($dados)
+    public function insertApagados($dados, $motivo = null, $table = null, $id_table = null)
     {
         try {      
             $cmd = $this->conexao->prepare(
@@ -29,19 +29,26 @@ class AppModel extends ConexaoModel {
                     apagado 
                 SET 
                     funcionario = :funcionario, 
-                    dados = :dados
+                    dados = :dados,
+                    motivo = :motivo,
+                    table_reference = :table_reference,
+                    id_table = :id_table
                     "
                 );
 
             $cmd->bindValue(':dados', json_encode($dados));
             $cmd->bindValue(':funcionario',$_SESSION['code']);
+            $cmd->bindValue(':motivo', $motivo);
+            $cmd->bindValue(':table_reference', $table);
+            $cmd->bindValue(':id_table', $id_table);
             $dados = $cmd->execute();
 
            
             return true;
 
         } catch (\Throwable $th) {
-            $this->conexao->rollback();
+            self::logError($th->getMessage(). $th->getLine());
+            return $th->getMessage();
         }
     }
 

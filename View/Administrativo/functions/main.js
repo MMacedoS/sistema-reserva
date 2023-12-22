@@ -109,6 +109,25 @@
     });
   }
 
+  function deleteDataWithData(url, data) {
+    showLoader();
+    $.ajax({
+      url: url,
+      method: 'POST',
+      data: data,
+      processData: false,
+      dataType: 'json',
+      success: function(response) {
+        showSuccessMessage('Registro excluído com sucesso!');
+        hideLoader();
+      },
+      error: function(error) {
+        console.error('Erro ao excluir registro:', error);
+        hideLoader();
+      }
+    });
+  }
+
   function showLoader() {
     $('<div class="spinner"></div>').appendTo('body');
   }

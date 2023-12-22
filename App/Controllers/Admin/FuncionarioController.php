@@ -21,7 +21,7 @@ class FuncionarioController extends \Controller{
 
     public function buscaFuncionarioPorId($id)
     {
-        echo json_encode($this->funcionario_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->funcionario_model->findById($id)));
     }
 
     public function salvarFuncionarios() {

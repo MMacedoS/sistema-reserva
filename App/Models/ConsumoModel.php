@@ -24,7 +24,7 @@ class ConsumoModel extends ConexaoModel {
         $produto_id = $dados['produto'];
         $quantidade =  $dados['quantidade'];
 
-        $produto = $this->produtoModel->findById($produto_id)['data'];
+        $produto = $this->produtoModel->findById($produto_id);
         
         if(empty($produto)) {
             return self::message(422, "produto não encontrado");
@@ -69,7 +69,7 @@ class ConsumoModel extends ConexaoModel {
         $valor = $dados['valor'];
         $reserva_id = $dados['id'];
 
-        $produto = $this->produtoModel->findById($produto_id)['data'];
+        $produto = $this->produtoModel->findById($produto_id);
         
         if(empty($produto)) {
             return self::message(422, "produto não encontrado");
@@ -150,15 +150,15 @@ class ConsumoModel extends ConexaoModel {
         return self::messageWithData(200, 'nenhum dado encontrado', []);
     }
 
-    public function getRemoveConsumo($id)
+    public function getRemoveConsumo($id, $motivo = null)
     {
-        $dados = self::findById($id)['data'][0];
+        $dados = self::findById($id) ?? '';
 
         $dados['tabela'] = "consumo";
 
         $appModel = new AppModel();
         
-        $appModel->insertApagados($dados);
+        $appModel->insertApagados($dados, $motivo);
         
         $cmd  = $this->conexao->query(
             "DELETE 

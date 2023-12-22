@@ -213,7 +213,39 @@
 
         $(document).on('click','.view_data',function(){
             var id = $(this).attr("id");
-            deleteData(url+'Produto/deleteEntrada/' + id);
+            // deleteData(url+'Produto/deleteEntrada/' + id);
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                        let form = new FormData();
+                        form.append('motivo', motivo);
+                        showDataWithData('<?=ROTA_GERAL?>/Produto/deleteEntrada/'+ id, form);
+
+                        showData("<?=ROTA_GERAL?>/Vendas/findAllVendas")
+                        .then((response) => createTable(response)).then(() => hideLoader());
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
+                    }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });                    
+                }
+            });
         }); 
         
     });

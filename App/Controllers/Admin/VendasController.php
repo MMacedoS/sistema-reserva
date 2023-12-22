@@ -52,7 +52,8 @@ class VendasController extends \Controller{
      }
 
      public function deleteVendas($id) {
-        $dados = $this->venda_model->deleteVendaById($id);
+         $motivos = $_POST['motivo'];
+         $dados = $this->venda_model->deleteVendaById($id, $motivos);
         echo json_encode($dados);
      }
 }

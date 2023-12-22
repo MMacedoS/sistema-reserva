@@ -35,4 +35,22 @@ trait StandartTrait {
         }, $array);
     }
 
+    public function prepareStatusTable($table, $status,$where = null)
+    {
+        if(is_null($where)) {
+            return false;
+        }
+
+        $cmd = $this->conexao->prepare(
+            "UPDATE $table SET status = '$status' WHERE $where"
+        );
+
+        if($cmd->execute())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
 }

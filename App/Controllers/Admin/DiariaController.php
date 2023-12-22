@@ -18,7 +18,7 @@ class DiariaController extends \Controller{
 
     public function getDiariaPorId($id)
     {
-        $consumo = $this->diarias_model->findById($id);
+        $consumo = self::messageWithData(201,'Dados encontrados', $this->diarias_model->findById($id));
         echo json_encode($consumo);
     }    
 

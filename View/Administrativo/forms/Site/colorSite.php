@@ -299,9 +299,9 @@
     }
    
     function prepareModalEditarBanner(data) {
-        $('#name').val(data[0].name);           
-        $('#color').val(data[0].color);
-        $('#id').val(data[0].id);
+        $('#name').val(data.name);           
+        $('#color').val(data.color);
+        $('#id').val(data.id);
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Color");
         $('#modalEntrada').modal('show');   

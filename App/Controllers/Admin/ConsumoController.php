@@ -24,7 +24,7 @@ class ConsumoController extends \Controller{
 
     public function getConsumoPorId($id)
     {
-        $consumo = $this->consumo_model->findById($id);
+        $consumo = self::messageWithData(201,'Dados encontrados', $this->consumo_model->findById($id));
         echo json_encode($consumo);
     }
 

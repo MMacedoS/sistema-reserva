@@ -223,7 +223,7 @@ class HospedeModel extends ConexaoModel {
             return self::messageWithData(422, 'hospedes não encontrado', []);
         }
 
-        $hospedes['data'][0]['status'] == '1' ? $status = 0 : $status = 1;
+        $hospedes['status'] == '1' ? $status = 0 : $status = 1;
         return $this->updateStatusHospede(
             $status,
             $id);

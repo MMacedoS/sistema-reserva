@@ -440,6 +440,7 @@
         showData("<?=ROTA_GERAL?>/Financeiro/findEntradaById/" + rowData[0])
             .then((response) => prepareModalEditarEntrada(response.data));
         console.log(rowData[0]);
+        hideLoader();
     }
 
     function deletarRegistro(rowData)
@@ -460,10 +461,10 @@
     }
    
     function prepareModalEditarEntrada(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#valor').val(data[0].valor);
-        $('#pagamento').val(data[0].tipoPagamento);
-        $('#id').val(data[0].id);
+        $('#descricao').val(data.descricao);           
+        $('#valor').val(data.valor);
+        $('#pagamento').val(data.tipoPagamento);
+        $('#id').val(data.id);
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Entrada");
         $('#modalEntrada').modal('show');   

@@ -113,7 +113,7 @@ class ProdutoModel extends ConexaoModel {
 
     public function prepareChangedProduto($id)
     {
-        $data = (object)$this->findById($id)['data'];
+        $data = (object)$this->findById($id);
 
         if(empty($data)){
             return false;
@@ -164,8 +164,7 @@ class ProdutoModel extends ConexaoModel {
                 where 
                     p.descricao like '%$filter_prefix1%'
                 ORDER BY 
-                    p.descricao
-                ASC"
+                    en.id DESC"
         );
 
         if($cmd->rowCount() > 0)
@@ -258,10 +257,19 @@ class ProdutoModel extends ConexaoModel {
         }
     }
 
-    public function deleteEntrada($id)
+    public function deleteEntrada($id, $motivo)
     {
+        $this->model = 'entradaestoque';
         $this->conexao->beginTransaction();
-        try {      
+        try {  
+            
+            $dados = $this->findById($id);
+
+            if (is_null($dados)){
+                $this->conexao->rollback();
+                return null;
+            }
+            
             $cmd = $this->conexao->prepare(
                 "DELETE FROM
                     entradaestoque
@@ -269,8 +277,14 @@ class ProdutoModel extends ConexaoModel {
                     id = :id
                     "
                 );
+
             $cmd->bindValue(':id',$id);
-            $dados = $cmd->execute();
+            $cmd->execute();
+            $appModel = new AppModel();        
+            if(!$appModel->insertApagados($dados, $motivo, 'entradaestoque', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
 
             $this->conexao->commit();
             return self::message(200, "Dado deletado!!");

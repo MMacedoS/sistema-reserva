@@ -246,11 +246,11 @@
     }
 
     function preparaModalEditarApartamentos(data) {
-        $('#apartamento').val(data[0].numero);
-        $('#descricao').val(data[0].descricao);           
-        $('#tipo').val(data[0].tipo);
-        $('#status').val(data[0].status);
-        $('#id').val(data[0].id);
+        $('#apartamento').val(data.numero);
+        $('#descricao').val(data.descricao);           
+        $('#tipo').val(data.tipo);
+        $('#status').val(data.status);
+        $('#id').val(data.id);
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar apartamentos");
         $('#modalApartamentos').modal('show');   

@@ -134,13 +134,13 @@ class DiariasModel extends ConexaoModel {
     {
         $reserva = self::findById($id);
             
-        if($reserva['data'][0]['status'] == 3) {
+        if($reserva['status'] == 3) {
             $this->removerValoresDiaria($id);
 
             $this->inserirValoresDiaria(
-                $reserva['data'][0]['dataEntrada'], 
-                $reserva['data'][0]['dataSaida'], 
-                $reserva['data'][0]['valor'] ,
+                $reserva['dataEntrada'], 
+                $reserva['dataSaida'], 
+                $reserva['valor'] ,
                  $id
              );
 

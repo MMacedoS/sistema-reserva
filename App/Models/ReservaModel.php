@@ -393,12 +393,12 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'reserva não encontrado', []);
         }
 
-        $reserva['data'][0]['status'] == '1' ? $status = 5 : $status = 1;
+        $reserva['status'] == '1' ? $status = 5 : $status = 1;
         
         return $this->updateStatusReserva(
                 $status,
                 $id,
-                $reserva['data'][0]['apartamento_id']
+                $reserva['apartamento_id']
             );
     }
 
@@ -466,28 +466,28 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'reserva não encontrado', []);
         }
        
-        $apartamento = $this->apartamento_model->findById($reserva['data'][0]['apartamento_id']);
+        $apartamento = $this->apartamento_model->findById($reserva['apartamento_id']);
 
-        if($apartamento['data'][0]['status'] != 1) {
+        if($apartamento['status'] != 1) {
             return self::messageWithData(422, 'Apartamento não esta disponivel', []);
         }
 
-        $qtde_dias = self::countDaysInReserva((object)$reserva['data'][0]);
+        $qtde_dias = self::countDaysInReserva((object)$reserva);
 
         $diariaModel =  new DiariasModel();
             $diariaModel->calculeReserva($id);
 
         $diariaModel->inserirValoresDiaria(
-           $reserva['data'][0]['dataEntrada'], 
-           $reserva['data'][0]['dataSaida'], 
-           $reserva['data'][0]['valor'] ,
+           $reserva['dataEntrada'], 
+           $reserva['dataSaida'], 
+           $reserva['valor'] ,
             $id
         );
 
         return $this->updateStatusReserva(
             3,
             $id,
-            $apartamento['data'][0]['id']
+            $apartamento['id']
         );
     }
 
@@ -677,7 +677,7 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'reserva não encontrado', []);
         }
 
-        $apartamento = $this->apartamento_model->findById($reserva['data'][0]['apartamento_id'])['data'][0]['id'];
+        $apartamento = $this->apartamento_model->findById($reserva['apartamento_id'])['id'];
 
         return $this->updateStatusCheckoutReserva(
             4,

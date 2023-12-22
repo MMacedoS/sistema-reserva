@@ -24,7 +24,7 @@ class HospedeController extends \Controller{
 
     public function buscaHospedePorId($id)
     {
-        echo json_encode($this->hospede_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->hospede_model->findById($id)));
     }
 
     public function salvarHospedes() {

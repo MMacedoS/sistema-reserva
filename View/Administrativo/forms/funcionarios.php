@@ -240,12 +240,12 @@
     }
 
     function preparaModalEditarFuncionarios(data) {
-        $('#nome').val(data[0].nome);
-        $('#email').val(data[0].email);           
-        $('#painel').val(data[0].painel);
-        $('#status').val(data[0].status);
+        $('#nome').val(data.nome);
+        $('#email').val(data.email);           
+        $('#painel').val(data.painel);
+        $('#status').val(data.status);
         // $('#senha').attr('disabled','disabled');
-        $('#id').val(data[0].id);
+        $('#id').val(data.id);
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar Funcionarios");
         $('#modalFuncionarios').modal('show');   

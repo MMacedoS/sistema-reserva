@@ -320,10 +320,10 @@
     }
    
     function prepareModalEditarEntrada(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#valor').val(data[0].valor);
-        $('#pagamento').val(data[0].tipoPagamento);
-        $('#id').val(data[0].id);
+        $('#descricao').val(data.descricao);           
+        $('#valor').val(data.valor);
+        $('#pagamento').val(data.tipoPagamento);
+        $('#id').val(data.id);
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Entrada");
         $('#modalEntrada').modal('show');   

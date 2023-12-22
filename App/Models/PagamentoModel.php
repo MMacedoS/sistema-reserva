@@ -80,15 +80,15 @@ class PagamentoModel extends ConexaoModel {
         return self::messageWithData(200, 'nenhum dado encontrado', []);
     }
 
-    public function getRemovePagamento($id){
+    public function getRemovePagamento($id, $motivo = null){
 
-        $dados = self::findById($id)['data'][0];
+        $dados = self::findById($id);
 
         $dados['tabela'] = "pagamento";
 
         $appModel = new AppModel();
         
-        $appModel->insertApagados($dados);
+        $appModel->insertApagados($dados, $motivo);
 
         $cmd  = $this->conexao->query(
             "DELETE 

@@ -4,7 +4,7 @@
 trait FindTrait{
     public function findById($id)
     {
-        $cmd = $this->conexao->query(
+        $cmd = $this->conexao->prepare(
             "SELECT 
                 *
             FROM
@@ -14,12 +14,37 @@ trait FindTrait{
             "
         );
 
+        $cmd->execute();
+
         if($cmd->rowCount() > 0)
         {
 
-            return self::messageWithData(201,'Dados encontrados', $cmd->fetchAll(PDO::FETCH_ASSOC));
+            return $cmd->fetch(PDO::FETCH_ASSOC);
         }
 
         return false;
+    }
+
+    public function findAll($params) 
+    {
+        $cmd = $this->conexao->prepare(
+            "SELECT 
+                *
+            FROM
+                $this->model
+            WHERE
+                $params
+            "
+        );
+
+        $cmd->execute();
+
+        if($cmd->rowCount() > 0)
+        {
+
+            return $cmd->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        return null;
     }
 }

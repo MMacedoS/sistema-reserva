@@ -270,15 +270,15 @@
     }
 
     function preparaModalEditarHospedes(data) {
-        $('#nome').val(data[0].nome);
-        $('#email').val(data[0].email);         
-        $('#cpf').val(data[0].cpf);         
-        $('#telefone').val(data[0].telefone);          
-        $('#endereco').val(data[0].endereco);
-        $('#tipo').val(data[0].tipo);
-        $('#empresa').val(data[0].empresa);
-        $('#status').val(data[0].status);
-        $('#id').val(data[0].id);
+        $('#nome').val(data.nome);
+        $('#email').val(data.email);         
+        $('#cpf').val(data.cpf);         
+        $('#telefone').val(data.telefone);          
+        $('#endereco').val(data.endereco);
+        $('#tipo').val(data.tipo);
+        $('#empresa').val(data.empresa);
+        $('#status').val(data.status);
+        $('#id').val(data.id);
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar Hospedes");
         $('#modal').modal('show');   
