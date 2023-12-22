@@ -8,6 +8,7 @@ class FinanceiroController extends \Controller{
     protected $saida_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->financeiro_model = new FinanceiroModel(); 
         $this->entrada_model = new EntradaModel();   
         $this->saida_model = new SaidaModel();      
@@ -37,13 +38,15 @@ class FinanceiroController extends \Controller{
 
     public function findEntradaById($id)
     {       
-        echo json_encode($this->entrada_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->entrada_model->findById($id)));
         return;
     }
 
     public function deleteEntradaById($id)
     {
-        echo json_encode($this->entrada_model->deleteById($id));
+        $motivos = $_POST['motivo'];
+        $response = $this->entrada_model->deleteById($id, $motivos);
+        echo json_encode($response);
         return;
     }
 
@@ -75,7 +78,9 @@ class FinanceiroController extends \Controller{
 
     public function deleteSaidaById($id)
     {
-        echo json_encode($this->saida_model->deleteById($id));
+        $motivos = $_POST['motivo'];
+        $response = $this->saida_model->deleteById($id, $motivos);
+        echo json_encode($response);
         return;
     }
 
@@ -106,7 +111,8 @@ class FinanceiroController extends \Controller{
         echo json_encode($this->financeiro_model->findPagamentosByParams(
             $_POST['description'], 
             $_POST['startDate'], 
-            $_POST['endDate']
+            $_POST['endDate'],
+            $_POST['funcionarios']
             )
         );
     }

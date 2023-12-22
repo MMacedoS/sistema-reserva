@@ -566,41 +566,44 @@
                                 </select>
                         </div>
 
-                        <div class="row row-mobile mt-2 mb-2 ml-2">
-                            <div class="col-sm-5">
-                                <label >Tipo</label><br>
-                                <select class="form-control" name="tipo" id="inp-tipo">
-                                    <option value="1">Diária</option>
-                                    <option value="2">Pacote</option>
-                                    <option value="3">Promocao</option>
-                                </select>
+                        <div class="row">
+                            
+                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                <div class="col-sm-6">
+                                    <label >Tipo</label><br>
+                                    <select class="form-control" name="tipo" id="inp-tipo">
+                                        <option value="1">Diária</option>
+                                        <option value="2">Pacote</option>
+                                        <option value="3">Promocao</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label >Status</label><br>
+                                    <select class="form-control" name="status" id="inp-status">
+                                        <option value="1">Reservada</option>
+                                        <option value="2">Confirmada</option>
+                                        <option value="3">Hospedada</option>
+                                        <option value="5">Cancelada</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col-sm-7">
-                                <label >Status</label><br>
-                                <select class="form-control" name="status" id="inp-status">
-                                    <option value="1">Reservada</option>
-                                    <option value="2">Confirmada</option>
-                                    <option value="3">Hospedada</option>
-                                    <option value="5">Cancelada</option>
-                                </select>
-                            </div>
-                        </div>
+                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                <div class="col-sm-4">
+                                    <label >Valor</label>
+                                    <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
+                                </div>
 
-                        <div class="row row-mobile mt-2 mb-2 ml-2">
-                            <div class="col-sm-4">
-                                <label >Valor</label>
-                                <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
-                            </div>
+                                <div class="col-sm-4">
+                                    <label >Qtdo. Hosp.</label>
+                                    <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                                </div>
 
-                            <div class="col-sm-4">
-                                <label >Qtdo. Hosp.</label>
-                                <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
-                            </div>
-
-                            <div class="col-sm-4">
-                                <label >Placa</label>
-                                <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
+                                <div class="col-sm-4">
+                                    <label >Placa</label>
+                                    <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
+                                </div>
                             </div>
                         </div>
 
@@ -1017,7 +1020,7 @@
         $(document).on('click', '.diarias', function(){
             let code=$("#id").val();  
             id_reserva = code;
-            showData("<?=ROTA_GERAL?>/Reserva/getDadosDiarias/"+ code)
+            showData("<?=ROTA_GERAL?>/Diaria/getDadosDiarias/"+ code)
             .then( (response) => preparaModalHospedadas(response.data, "Diarias"));   
         });
 
@@ -1144,10 +1147,10 @@
                 processData: false,
                 dataType: 'json     ',
                 success: function(data){
-                    if(data.status === 200){
+                    if(data.status === 201){
                         $('#swal_id_consumo').val(code);
-                        $('#swal-cons-input1').val(data.data[0].quantidade);
-                        $('#swal-cons-input2').val(data.data[0].valorUnitario);
+                        $('#swal-cons-input1').val(data.data.quantidade);
+                        $('#swal-cons-input2').val(data.data.valorUnitario);
                         $('#saveChangesDiaria').prop('disabled', false);
                         $("#changeConsumo").modal('show');
                     }
@@ -1159,7 +1162,7 @@
             event.preventDefault();
             $('#saveChangesDiaria').prop('disabled', true);
             let code=$("#swal_id_consumo").val(); 
-            envioRequisicaoPostViaAjax('Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form-consumo")));                                  
+            showDataWithData('<?=ROTA_GERAL?>/Consumo/updateConsumo/'+ code, new FormData(document.getElementById("swal-form-consumo")));                                  
             $('.consumo').click();
         });
 
@@ -1167,7 +1170,7 @@
             event.preventDefault();
             $('#saveChangesDiaria').prop('disabled', true);
             let code=$("#swal_id_diaria").val(); 
-            envioRequisicaoPostViaAjax('Reserva/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diaria")));                                  
+            showDataWithData('<?=ROTA_GERAL?>/Diaria/updateDiaria/'+ code, new FormData(document.getElementById("swal-form-diaria")));                                  
             $('.diarias').click();
         });
 
@@ -1179,7 +1182,7 @@
             id_reserva = code;
             
             $.ajax({
-                url: url+ "Reserva/getDiariasPorId/" + code ,
+                url: url+ "Diaria/getDiariasPorId/" + code ,
                 method:'GET',
                 processData: false,
                 dataType: 'json',
@@ -1200,49 +1203,98 @@
         $(document).on('click', '.remove-consumo', function(){
             let code=$(this).attr("id");  
             id_reserva = code;
-            $.ajax({
-                url: url+ "Consumo/getRemoveConsumo/" + code ,
-                method:'GET',
-                processData: false,
-                dataType: 'json     ',
-                success: function(data){
-                    if(data.status === 200){
-                       $('.consumo').click();
+           
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                    let form = new FormData();
+                    form.append('motivo', motivo);
+                    showDataWithData('<?=ROTA_GERAL?>/Consumo/getRemoveConsumo/'+ code, form);
+                    $('.consumo').click();
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
                     }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });
                 }
-            })    
+            });
         });
 
         $(document).on('click', '.remove-diarias', function(){
             let code=$(this).attr("id");  
-            id_reserva = code;
-            $.ajax({
-                url: url+ "Reserva/getRemoveDiarias/" + code ,
-                method:'GET',
-                processData: false,
-                dataType: 'json     ',
-                success: function(data){
-                    if(data.status === 200){
-                       $('.diarias').click();
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                        let form = new FormData();
+                        form.append('motivo', motivo);
+                        showDataWithData('<?=ROTA_GERAL?>/Diaria/getRemoveDiarias/'+ code, form);
+                        $('.diarias').click();
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
                     }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });
                 }
-            })    
+            });
         });
 
         $(document).on('click', '.remove-pagamento', function(){
             let code=$(this).attr("id"); 
             id_reserva = code; 
-            $.ajax({
-                url: url+ "Pagamento/getRemovePagamento/" + code ,
-                method:'GET',
-                processData: false,
-                dataType: 'json     ',
-                success: function(data){
-                    if(data.status === 200){
-                       $('.pagamento').click();
+
+            Swal.fire({
+                title: "Deseja remover estes registros? Descreva o motivo...",
+                input: "text",
+                showCancelButton: true,
+                confirmButtonText: "Sim, desejo",
+                showLoaderOnConfirm: true,
+                preConfirm: async (motivo) => {
+                    try {
+                    let form = new FormData();
+                    form.append('motivo', motivo);
+                    showDataWithData('<?=ROTA_GERAL?>/Pagamento/getRemovePagamento/'+ code, form);
+                    $('.pagamento').click();
+                    } catch (error) {
+                    Swal.showValidationMessage(`
+                        Request failed: ${error}
+                    `);
                     }
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    icon: 'success',
+                    title: `${result.value}' => registro salvo`
+                    });
                 }
-            })    
+            });           
         });
 
         $(document).on('click', '.executar-checkout', function(){

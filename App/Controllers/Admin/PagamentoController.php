@@ -5,7 +5,9 @@ class PagamentoController extends \Controller{
 
     protected $pagamento_model;
 
-    public function __construct() {
+    public function __construct() 
+    {
+        $this->validPainel(); 
         $this->pagamento_model = new PagamentoModel();      
     }
 
@@ -22,9 +24,10 @@ class PagamentoController extends \Controller{
     }
 
     public function getRemovePagamento($code)
-    {
-        $reserva = $this->pagamento_model->getRemovePagamento($code);
-        echo json_encode($reserva);
+    {        
+        $motivos = $_POST['motivo'];
+        $response = $this->pagamento_model->getRemovePagamento($code, $motivos);
+        echo json_encode($response);
     }
 
 }

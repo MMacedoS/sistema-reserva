@@ -5,6 +5,7 @@ class FuncionarioController extends \Controller{
     protected $funcionario_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->funcionario_model = new FuncionarioModel();      
     }
 
@@ -20,7 +21,7 @@ class FuncionarioController extends \Controller{
 
     public function buscaFuncionarioPorId($id)
     {
-        echo json_encode($this->funcionario_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->funcionario_model->findById($id)));
     }
 
     public function salvarFuncionarios() {

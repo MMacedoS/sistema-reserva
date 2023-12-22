@@ -138,7 +138,9 @@ class FuncionarioModel extends ConexaoModel {
             "SELECT 
                 id,nome, email, painel, status
             FROM
-                $this->model"
+                $this->model
+            WHERE status = 1 
+            order by nome asc"
         );
 
         return $cmd->fetchAll();
@@ -178,7 +180,7 @@ class FuncionarioModel extends ConexaoModel {
             return self::messageWithData(422, 'Funcionario não encontrado', []);
         }
 
-        $funcionario['data'][0]['status'] == '1' ? $funcionario = 0 : $funcionario = 1;
+        $funcionario['status'] == '1' ? $funcionario = 0 : $funcionario = 1;
         return $this->updateStatusFuncionario(
             $funcionario,
             $id);

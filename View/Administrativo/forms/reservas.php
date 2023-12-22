@@ -133,36 +133,40 @@
                                 </select>
                         </div>
 
-                        <div class="row row-mobile ml-2 mb-2 mt-2">
-                            <div class="col-sm-2">
-                                <label for="">Tipo</label><br>
-                                <select class="form-control" name="tipo" id="tipo">
-                                    <option value="1">Diária</option>
-                                    <option value="2">Pacote</option>
-                                    <option value="3">Promocao</option>
-                                </select>
+                        <div class="row">
+
+                            <div class="col-sm-6 row row-mobile ml-2 mb-2 mt-2">
+                                <div class="col-sm-6">
+                                    <label for="">Tipo</label><br>
+                                    <select class="form-control" name="tipo" id="tipo">
+                                        <option value="1">Diária</option>
+                                        <option value="2">Pacote</option>
+                                        <option value="3">Promocao</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label for="">Status</label><br>
+                                    <select class="form-control" name="status" id="status">
+                                        <option value="1">Reservada</option>
+                                        <option value="2">Confirmada</option>
+                                        <option value="5">Cancelada</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="col-sm-4">
-                                <label for="">Status</label><br>
-                                <select class="form-control" name="status" id="status">
-                                    <option value="1">Reservada</option>
-                                    <option value="2">Confirmada</option>
-                                    <option value="5">Cancelada</option>
-                                </select>
-                            </div>
-                        </div>
+                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                <div class="col-sm-6">
+                                    <label for="">Valor</label>
+                                    <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
+                                </div>
 
-                        <div class="row row-mobile mt-2 mb-2 ml-2">
-                            <div class="col-sm-6">
-                                <label for="">Valor</label>
-                                <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="valor">
+                                <div class="col-sm-6">
+                                    <label for="">Qtde Hospedes</label>
+                                    <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                                </div>
                             </div>
 
-                            <div class="col-sm-6">
-                                <label for="">Qtde Hospedes</label>
-                                <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
-                            </div>
                         </div>
 
                         <div class="col-sm-12">
@@ -427,20 +431,20 @@
 
     function preparaModalEditarReserva(data) 
     {
-        $('#entrada').val(data[0].dataEntrada);
-        $('#saida').val(data[0].dataSaida);
-        $('#tipo').val(data[0].tipo);
-        $('#valor').val(data[0].valor);
-        $('#status').val(data[0].status);
-        $('#observacao').val(data[0].obs);        
-        $('#inp-qtdeHosp').val(data[0].qtde_hosp);
-        $('#id').val(data[0].id);
+        $('#entrada').val(data.dataEntrada);
+        $('#saida').val(data.dataSaida);
+        $('#tipo').val(data.tipo);
+        $('#valor').val(data.valor);
+        $('#status').val(data.status);
+        $('#observacao').val(data.obs);        
+        $('#inp-qtdeHosp').val(data.qtde_hosp);
+        $('#id').val(data.id);
         $('#div_apartamento').removeClass('hide');
-        apartamento =  data[0].apartamento_id;
-        hospede = data[0].hospede_id;
+        apartamento =  data.apartamento_id;
+        hospede = data.hospede_id;
         buscaApartamento(
-            data[0].dataEntrada, 
-            data[0].dataSaida           
+            data.dataEntrada, 
+            data.dataSaida           
         );
         
         $('#btnSubmit').addClass('Atualizar');

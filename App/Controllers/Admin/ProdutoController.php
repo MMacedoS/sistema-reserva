@@ -5,7 +5,9 @@ class ProdutoController extends \Controller{
 
     protected $produto_model;
 
-    public function __construct() {
+    public function __construct() 
+    {
+        $this->validPainel(); 
         $this->produto_model = new ProdutoModel();      
     }
 
@@ -25,7 +27,7 @@ class ProdutoController extends \Controller{
 
     public function buscaProdutoPorId($id)
     {
-        echo json_encode($this->produto_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->produto_model->findById($id)));
     }
 
     public function salvarProdutos() {
@@ -67,6 +69,8 @@ class ProdutoController extends \Controller{
 
     public function deleteEntrada($id)
     {
-        echo json_encode($this->produto_model->deleteEntrada($id));
+        $motivos = $_POST['motivo'];
+        $dados = $this->produto_model->deleteEntrada($id, $motivos);
+        echo json_encode($dados);
     }
 }

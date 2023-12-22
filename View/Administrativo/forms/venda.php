@@ -224,8 +224,7 @@
                     </div>
                 </form>
             </div>
-        </div>
-        
+        </div>        
     </div>
 </div>
 
@@ -326,13 +325,20 @@
                         
                         if (item.tipoPagamento === '1' && value == 'Tipo') {
                             td.textContent = 'Dinheiro';
-                        } if (item.tipoPagamento === '2' && value == 'Tipo') {
+                        } 
+                        
+                        if (item.tipoPagamento === '2' && value == 'Tipo') {
                             td.textContent = 'Cartão de Crédito';
-                        } if (item.tipoPagamento === '3' && value == 'Tipo') {
+                        } 
+                        
+                        if (item.tipoPagamento === '3' && value == 'Tipo') {
                             td.textContent = 'Cartão de Débito';
-                        } if (item.tipoPagamento === '4' && value == 'Tipo') {
+                        } 
+                        
+                        if (item.tipoPagamento === '4' && value == 'Tipo') {
                             td.textContent = 'Deposito/PIX';
                         }
+
                         if (item.tipoPagamento === null && value == 'Tipo') {
                             td.textContent = '----';
                         }
@@ -423,18 +429,37 @@
     function deletarRegistro(rowData)
     {
         Swal.fire({
-            title: 'Deseja remover esta saida?',
-            showDenyButton: true,
-            confirmButtonText: 'Sim',
-            denyButtonText: `Não`,
-        }).then((result) => {
-                /* Read more about isConfirmed, isDenied below */
-            if (result.isConfirmed) {             
-                deleteData('<?=ROTA_GERAL?>/Vendas/deleteVendas/'+ rowData[0]);
-            } else if (result.isDenied) {
-                Swal.fire('nenhuma mudança efetuada', '', 'info')
+            title: "Deseja remover estes registros? Descreva o motivo...",
+            input: "text",
+            inputAttributes: {
+                autocapitalize: "off"
+            },
+            showCancelButton: true,
+            confirmButtonText: "Sim, desejo",
+            showLoaderOnConfirm: true,
+            preConfirm: async (motivo) => {
+                try {
+                    let form = new FormData();
+                    form.append('motivo', motivo);
+                    showDataWithData('<?=ROTA_GERAL?>/Vendas/deleteVendas/'+ rowData[0], form);
+
+                    showData("<?=ROTA_GERAL?>/Vendas/findAllVendas")
+                    .then((response) => createTable(response)).then(() => hideLoader());
+                } catch (error) {
+                Swal.showValidationMessage(`
+                    Request failed: ${error}
+                `);
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                icon: 'success',
+                title: `${result.value}' => registro salvo`
+                });
             }
-        })
+        });
     }
    
     function prepareModalEditarVenda(data) {

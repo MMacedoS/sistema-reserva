@@ -236,11 +236,11 @@
     }
 
     function preparaModalEditarProdutos(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#tipo').val(data[0].tipo);
-        $('#status').val(data[0].status);
-        $('#valor').val(data[0].valor);
-        $('#id').val(data[0].id);
+        $('#descricao').val(data.descricao);           
+        $('#tipo').val(data.tipo);
+        $('#status').val(data.status);
+        $('#valor').val(data.valor);
+        $('#id').val(data.id);
         $('#btnSubmit').addClass('Atualizar');
         $('#exampleModalLabel').text("Atualizar Produtos|Serviços");
         $('#modalProdutos').modal('show');   

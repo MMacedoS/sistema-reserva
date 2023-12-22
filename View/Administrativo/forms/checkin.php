@@ -61,7 +61,13 @@
                                                     array_reverse(
                                                         explode('-', $value['dataEntrada'])
                                                     ));?>
-                                                </div>                      
+                                                </div>
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Saida:
+                                                <?php echo implode('/',
+                                                    array_reverse(
+                                                        explode('-', $value['dataSaida'])
+                                                    ));?>
+                                                </div>                        
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Codigo:
                                                 <?= $value['id']?>
                                                 </div> 

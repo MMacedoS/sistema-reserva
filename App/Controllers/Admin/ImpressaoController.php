@@ -9,6 +9,7 @@ class ImpressaoController extends \Controller{
 
     public function __construct() 
     {        
+        $this->validPainel(); 
         $this->reserva_model = new ReservaModel();   
         $this->consumo_model = new ConsumoModel();    
         $this->pagamento_model = new PagamentoModel();   

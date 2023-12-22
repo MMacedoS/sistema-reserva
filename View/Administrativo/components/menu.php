@@ -61,7 +61,7 @@
         <div id="collapseEstoque" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
             <?php 
-                if($_SESSION['painel'] == 'Administrador'){
+                if($_SESSION['painel'] === 'Administrador'){
             ?>
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/entradaEstoque">Entrada</a>                    
                 <!-- <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/Empresa">Empresa</a>   -->
@@ -89,9 +89,6 @@
         </div>
     </li>
 
-   <?php 
-    if($_SESSION['painel'] == 'Administrador'){
-   ?>
     <li class="nav-item <?=$this->active == "financeiro" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFinanceiro" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-dice-five"></i>
@@ -100,8 +97,15 @@
         <div id="collapseFinanceiro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/entrada">Entrada</a>                    
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/movimentacoes">Movimentos</a>                  
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/saida">Saida</a>                 
+            <?php 
+                if($_SESSION['painel'] == 'Administrador'){
+            ?>
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/movimentacoes">Movimentos</a>               
+                                
+            <?php } ?>    
+                                  
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/saida">Saida</a>   
+                
             </div>
         </div>
     </li>
@@ -113,17 +117,22 @@
         </a>
         <div id="collapseRelatorio" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/cafe">Café</a>                    
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/cafe">Café</a>   
+                <?php 
+                    if($_SESSION['painel'] == 'Administrador'){
+                ?>                 
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/reservas">Reservas</a>                  
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/movimentos">Movimentos</a>                 
+                <?php } ?>
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/relacao/pagamentos">Relação Hospedagem</a>                 
             </div>
         </div>
     </li>
 
-    <?php
-    }
+    <?php 
+        if($_SESSION['painel'] == 'Administrador'){
     ?>
+
     <li class="nav-item <?=$this->active == "site" ? 'active' : ''?>">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios" aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-chart-area"></i>
@@ -141,6 +150,8 @@
             </div>
         </div>
     </li>
+
+    <?php } ?>
     
     <div class="text-center d-none d-md-inline mb-3">
         <?php         
@@ -286,16 +297,34 @@
                 <!-- Nav Item - Messages -->
                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-envelope fa-fw"></i>
+                    <i class="fa fa-cogs"></i>
                         <!-- Counter - Messages -->
-                        <!-- <span class="badge badge-danger badge-counter">7</span> -->
+                        <span class="badge badge-danger badge-counter"><?=count($this->apagados) ?? ''?></span>
                     </a>
                     <!-- Dropdown - Messages -->
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                         <h6 class="dropdown-header">
-                            Message Center
+                            Registros apagados
                         </h6>
-                       
+                        
+                        <?php if (!empty($this->apagados)) { 
+                            foreach ($this->apagados as $value) {
+                            ?>
+                        <a class="dropdown-item d-flex align-items-center" href="<?=ROTA_GERAL?>/Administrativo/apagados">
+                            <div class="mr-3">
+                                <div class="icon-circle bg-primary">
+                                    <i class="fas fa-file-alt text-white"></i>
+                                </div>
+                            </div>
+                            <div>
+                                
+                                <div class="small text-gray-500"><?=$value['nome_funcionario']?></div>
+                                <span class="font-weight-bold"><?=$value['motivo'] ?? 'não identificado'?></span>
+                            </div>
+                        </a>
+                        <?php }
+                        }
+                        ?>                       
                     </div>
                 </li>
 

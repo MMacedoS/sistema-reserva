@@ -121,31 +121,6 @@ class ReservaModel extends ConexaoModel {
         }
     }
 
-    private function inserirValoresDiaria($dataInicial, $dataFinal, $valor, $idReserva) {
-        $dataAtual = new DateTime($dataInicial);
-        $dataFim = new DateTime($dataFinal);
-
-        while ($dataAtual < $dataFim) {
-            $valorData = $dataAtual->format('Y-m-d');
-
-            $cmd = $this->conexao->prepare(
-                "INSERT INTO 
-                    diarias
-                SET 
-                    reserva_id = :reserva_id, 
-                    data = :data, 
-                    valor = :valor
-                    "
-                );
-
-            $cmd->bindValue(':reserva_id', $idReserva);
-            $cmd->bindValue(':data', $valorData);
-            $cmd->bindValue(':valor', $valor);
-            $cmd->execute();
-            $dataAtual->modify('+1 day');
-        }
-    }
-
     private function removerValoresDiaria($idReserva) {
         $cmd = $this->conexao->prepare(
             "DELETE FROM
@@ -167,23 +142,6 @@ class ReservaModel extends ConexaoModel {
         }
 
         return $validation;
-    }
-
-    private function calculeReserva(int $id)
-    {
-        $reserva = self::findById($id);
-            
-        if($reserva['data'][0]['status'] == 3) {
-            $this->removerValoresDiaria($id);
-
-            $this->inserirValoresDiaria(
-                $reserva['data'][0]['dataEntrada'], 
-                $reserva['data'][0]['dataSaida'], 
-                $reserva['data'][0]['valor'] ,
-                 $id
-             );
-
-         }
     }
 
     private function updateReserva($dados, int $id)
@@ -222,7 +180,9 @@ class ReservaModel extends ConexaoModel {
                 $cmd->bindValue(':qtde_hosp',$dados['qtde_hosp']);
                 $cmd->bindValue(':id',$id);
                 $dados = $cmd->execute();
-            $this->calculeReserva($id);
+            
+            $diariaModel =  new DiariasModel();
+            $diariaModel->calculeReserva($id);
             $this->conexao->commit();
             return self::message(200, "dados Atualizados!!");
 
@@ -433,12 +393,12 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'reserva não encontrado', []);
         }
 
-        $reserva['data'][0]['status'] == '1' ? $status = 5 : $status = 1;
+        $reserva['status'] == '1' ? $status = 5 : $status = 1;
         
         return $this->updateStatusReserva(
                 $status,
                 $id,
-                $reserva['data'][0]['apartamento_id']
+                $reserva['apartamento_id']
             );
     }
 
@@ -506,25 +466,28 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'reserva não encontrado', []);
         }
        
-        $apartamento = $this->apartamento_model->findById($reserva['data'][0]['apartamento_id']);
+        $apartamento = $this->apartamento_model->findById($reserva['apartamento_id']);
 
-        if($apartamento['data'][0]['status'] != 1) {
+        if($apartamento['status'] != 1) {
             return self::messageWithData(422, 'Apartamento não esta disponivel', []);
         }
 
-        $qtde_dias = self::countDaysInReserva((object)$reserva['data'][0]);
+        $qtde_dias = self::countDaysInReserva((object)$reserva);
 
-        $this->inserirValoresDiaria(
-           $reserva['data'][0]['dataEntrada'], 
-           $reserva['data'][0]['dataSaida'], 
-           $reserva['data'][0]['valor'] ,
+        $diariaModel =  new DiariasModel();
+            $diariaModel->calculeReserva($id);
+
+        $diariaModel->inserirValoresDiaria(
+           $reserva['dataEntrada'], 
+           $reserva['dataSaida'], 
+           $reserva['valor'] ,
             $id
         );
 
         return $this->updateStatusReserva(
             3,
             $id,
-            $apartamento['data'][0]['id']
+            $apartamento['id']
         );
     }
 
@@ -714,7 +677,7 @@ class ReservaModel extends ConexaoModel {
             return self::messageWithData(422, 'reserva não encontrado', []);
         }
 
-        $apartamento = $this->apartamento_model->findById($reserva['data'][0]['apartamento_id'])['data'][0]['id'];
+        $apartamento = $this->apartamento_model->findById($reserva['apartamento_id'])['id'];
 
         return $this->updateStatusCheckoutReserva(
             4,
@@ -924,229 +887,36 @@ class ReservaModel extends ConexaoModel {
         return self::messageWithData(422, 'nehum dado encontrado', []);
     }
 
-    public function getDadosDiarias($id){
-        $cmd  = $this->conexao->query(
-            "SELECT 
-               *
-            FROM 
-                diarias 
-            WHERE 
-                reserva_id = $id
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::messageWithData(200, 'reserva encontrada', $dados);
-        }
-
-        return self::messageWithData(422, 'nehum dado encontrado', []);
-    }
-
-    public function updateDiarias($dados, $id)
-    {
-        $valor = $dados['valor'];
-        $data =  $dados['data'];
-        
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "UPDATE 
-                    diarias
-                SET 
-                    data = :data, 
-                    valor = :valor
-                WHERE 
-                    id = :id
-                    "
-                );
-
-            $cmd->bindValue(':data',$data);
-            $cmd->bindValue(':valor',$valor);
-            $cmd->bindValue(':id',$id);
-            $dados = $cmd->execute();
-
-            $this->conexao->commit();
-            return self::message(200, "dados atualizados!!");
-
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
-        }
-    }
-
-    public function getRemoveDiarias($id)
-    {
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "DELETE FROM
-                    diarias
-                WHERE 
-                    id = :id
-                    "
-                );
-            $cmd->bindValue(':id',$id);
-            $cmd->execute();
-            $this->conexao->commit();
-            return self::message(200, "dados REMOVIDOS!!");
-
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
-        }
-    }
-
-    public function findDiariasById($id)
-    {
-        $cmd = $this->conexao->query(
-            "SELECT 
-                *
-            FROM
-                diarias
-            WHERE
-                id = $id
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-
-            return self::messageWithData(200,'Dados encontrados', $cmd->fetchAll(PDO::FETCH_ASSOC));
-        }
-
-        return false;
-    }
-
-    public function gerarDiarias()
-    {
-        $cmd  = $this->conexao->query(
-            "SELECT 
-                *
-            FROM 
-                configuracao
-            WHERE 
-                parametro = 'gerar_diaria'
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC)[0]['valor'];
-            // var_dump(strtotime(Date('Y-m-d 17:00:00')), strtotime(Date('Y-m-d H:i:s')));
-            if (strtotime($dados) < strtotime(Date('Y-m-d H:i:s'))) {
-                $this->verificaGerarDiarias($dados);
-            }
-
-            return true;
-        }
-        
-    }
-    
-    private function verificaGerarDiarias($param)
-    {
-        $cmd  = $this->conexao->query(
-            "SELECT 
-                id,
-                valor,
-                gerarDiaria
-            FROM 
-                reserva
-            WHERE 
-                status = 3
-            AND
-                tipo = 1
-            AND
-                gerarDiaria <= '$param'
-            "
-        );
-       
-        if($cmd->rowCount() > 0)
-        {           
-            $data = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return $this->prepareGerarDiarias($data, $param);
-        }
-
-        return $this->updateConfiguracaoGerarDiaria(self::addDayInDate(Date('Y-m-d 16:00:00'), 1));
-    }
-
-    private function prepareGerarDiarias($dados, $param)
-    {
-        if(empty($dados))
-        {
-            return null;
-        }
-
-        foreach ($dados as $key => $value) {
-            $dias = round((strtotime(Date('Y-m-d H:i:s')) - strtotime($value['gerarDiaria']))/86400);
-
-            if($dias < 1){
-                $dias = 1;
-            }
-
-            for ($i=1; $i <= $dias; $i++) { 
-                $this->insertDiariaConsumo($value, self::addDayInDate($param, $i -1 ));
-                $this->updateGerarDiaria($value['id'], self::addDayInDate($param, $i));
-
-                $this->updateConfiguracaoGerarDiaria(self::addDayInDate($param, $i));
-            }            
-        }
-
-        return "atalizações consumos feitas";
-    }
-
     private function insertDiariaConsumo($value, $data)
     {        
         $this->consumo_model->insertDiaria($value, $data);
     }
 
-    private function updateGerarDiaria($id, $data)
-    {
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "UPDATE 
-                    $this->model 
-                SET 
-                    gerarDiaria = :gerarDiaria
-                WHERE 
-                    id = :id"
-                );
-            $cmd->bindValue(':gerarDiaria',$data);
-            $cmd->bindValue(':id',$id);
-            $dados = $cmd->execute();
+    // private function updateGerarDiaria($id, $data)
+    // {
+    //     $this->conexao->beginTransaction();
+    //     try {      
+    //         $cmd = $this->conexao->prepare(
+    //             "UPDATE 
+    //                 $this->model 
+    //             SET 
+    //                 gerarDiaria = :gerarDiaria
+    //             WHERE 
+    //                 id = :id"
+    //             );
+    //         $cmd->bindValue(':gerarDiaria',$data);
+    //         $cmd->bindValue(':id',$id);
+    //         $dados = $cmd->execute();
 
-            $this->conexao->commit();
+    //         $this->conexao->commit();
             
-            return self::messageWithData(200, "dados Atualizados!!", []);
+    //         return self::messageWithData(200, "dados Atualizados!!", []);
 
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
-        }
-    }
-
-
-    private function updateConfiguracaoGerarDiaria($data)
-    {
-        $cmd  = $this->conexao->prepare(
-            "UPDATE 
-                configuracao
-            SET 
-              valor = :data 
-            WHERE 
-                parametro = :param
-            "
-        );
-
-        $cmd->bindValue(':data',$data);
-        $cmd->bindValue(':param',"gerar_diaria");
-
-        $cmd->execute();
-
-        return "atualizado configurações";
-    }
+    //     } catch (\Throwable $th) {
+    //         $this->conexao->rollback();
+    //         return self::message(422, $th->getMessage());
+    //     }
+    // }
 
     public function findAllCafe()
     {

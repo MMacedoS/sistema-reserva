@@ -27,40 +27,9 @@
 
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="google-signin-client_id" content="84165197314-nr5636p86jsp5duuglfnop76jktu2i82.apps.googleusercontent.com">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
-<?php if(isset($_GET['login']) && $_GET['login']==0){ ?>
-
-<p align="center" class="alert-danger">email ou senha sem preencher!</p>
-
-<?php } ?>
-
-<?php if(isset($_GET['login']) && $_GET['login']==1){ ?>
-
-<p align="center"  class="alert-danger">Usuário ou senha inválida!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==3){ ?>
-
-<p align="center"  class="alert-danger">Tempo de espera ultrapassado, tente logar novamente!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==4){ ?>
-
-<p align="center"  class="alert-danger">Tente logar novamente!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==5){ ?>
-
-<p align="center"  class="alert-danger">Você não possui permissão para acessar!</p>
-
-<?php } ?>
-<?php if(isset($_GET['login']) && $_GET['login']==6){ ?>
-
-<p align="center"  class="alert-danger">Utilize seu email institucional!</p>
-
-<?php } ?>
-
 <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -75,7 +44,7 @@
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "email obrigatório: ex@abc.xyz">
-						<input class="input100" type="email" name="user" placeholder="Email" value="teste@msgt.com.br">
+						<input class="input100" type="email" id="user" placeholder="Email">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-envelope" aria-hidden="true"></i>
@@ -83,28 +52,30 @@
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "obrigatório possuir senha">
-						<input class="input100" type="password" name="password" placeholder="senha" value="12345">
+						<input class="input100" type="password" id="password" placeholder="senha">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
 						</span>
 					</div>
+
+					<div id='recaptcha' class="g-recaptcha" data-sitekey="6LeV0jYpAAAAAGWoi1W7GOHfIJXZvBeQtUPeDMR7"></div>
 					
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button type="button" class="login100-form-btn" id="enviar">
 							Entrar
 						</button>
 					</div>
 					
 
-					<div class="text-center p-t-12">
+					<!-- <div class="text-center p-t-12">
 						<span class="txt1">
 							Esqueceu sua
 						</span>
 						<a class="txt2" data-toggle="modal" data-target="#modal-senha" href="#">
 							senha?
 						</a>
-					</div>
+					</div> -->
 					<br>
 					<!--<p>Acesso Institucional</p>-->
 					<!--<div class="g-signin2" data-onsuccess="onSignIn"></div>-->
@@ -140,13 +111,25 @@
 	</div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
-	<script src="js/login.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script>
+	$('#enviar').click(function(){
+		let recaptcha = grecaptcha.getResponse();
+		if (recaptcha == '') {
+			return false;
+		}
+
+		let dados = {
+			user: $('#user').val(),
+			password: $('#password').val(),
+			recaptcha: recaptcha
+		}
+
+		$.post('<?=ROTA_GERAL?>/Login/logar',dados).then(function(response) {
+				window.location.reload();
+		});
+	});
 // document.getElementById('olho').addEventListener('mousedown', function() {
 //   document.getElementById('pass').type = 'text';
 // });

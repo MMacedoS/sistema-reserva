@@ -54,8 +54,8 @@
     <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
     <script src="<?= ROTA_GERAL . '/View/Administrativo/functions/main.js'?>"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
+    <!-- Inclua este link no head da sua página -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
 <link
       rel="stylesheet"

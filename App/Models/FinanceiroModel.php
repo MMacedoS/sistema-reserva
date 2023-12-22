@@ -13,11 +13,14 @@ class FinanceiroModel extends ConexaoModel {
     protected $conexao;
 
     protected $model = 'movimento';
+    
+    protected $user = '';
 
     public function __construct() 
     {
         $this->model = 'movimento';
-        $this->conexao = ConexaoModel::conexao();
+        $this->conexao = ConexaoModel::conexao();        
+        $this->user = $_SESSION['code'];
     }
 
     public function buscaMovimentos($dados)
@@ -208,34 +211,34 @@ class FinanceiroModel extends ConexaoModel {
         }
     }
 
-    public function deleteSaida($id)
+    public function deleteSaida($id, $motivo= null)
     {
         $this->model = 'saida';
 
-        $dados = self::findById($id)['data'][0];
+        $this->conexao->beginTransaction();
+       try {
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
-        $dados['tabela'] = "saida";
+            if (is_null($dados)) {              
+                $this->conexao->rollback();
+                return null;
+            }
 
-        $appModel = new AppModel();
-        
-        $appModel->insertApagados($dados);
+            $this->prepareStatusTable('saida', 0," id = $id");
+            
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'saida', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
 
-        $cmd  = $this->conexao->query(
-            "DELETE 
-                FROM 
-                saida
-                WHERE
-                    id = $id
-            "
-        );
-
-        if($cmd->rowCount() > 0)
-        {
-            $dados = $cmd->fetchAll(PDO::FETCH_ASSOC);
-            return self::message(200, 'Saida deletado');
-        }
-
-        return self::message(422, 'Nenhum dado encontrado');
+            $this->conexao->commit();
+            return true;
+       } catch (\Throwable $th) {
+        $this->conexao->rollback();
+        //throw $th;
+       }
     }
 
     public function findMovimentosByParams(
@@ -244,6 +247,18 @@ class FinanceiroModel extends ConexaoModel {
         $dataSaida = '', 
         $situacao = '' )
     {
+
+        if($dataEntrada != '' && $dataSaida != '') {
+            $where = "AND
+            m.created_at BETWEEN '$dataEntrada' AND '$dataSaida'";
+        }
+        if ($dataEntrada == '' && $dataSaida == '') {
+            $dataEntrada = date('Y-m-d H:i');
+            $dataSaida = self::addDayInDate(date('Y-m-d H:i'),1);
+            $where = "AND
+            m.created_at BETWEEN '$dataEntrada' AND '$dataSaida'";
+        }
+
         try {
             $sql = "SELECT 
                 m.id,
@@ -256,8 +271,7 @@ class FinanceiroModel extends ConexaoModel {
                 movimento m                 
             WHERE
                 m.descricao LIKE '%$descricao%'
-            AND
-                m.created_at BETWEEN '$dataEntrada' AND '$dataSaida' 
+            $where 
             ";
 
 
@@ -281,6 +295,9 @@ class FinanceiroModel extends ConexaoModel {
                     ";
                 }
             }
+
+            $sql .= "ORDER BY id DESC";
+
             $cmd = $this->conexao->query($sql);
     
             if($cmd->rowCount() > 0)
@@ -297,8 +314,20 @@ class FinanceiroModel extends ConexaoModel {
      public function findPagamentosByParams(
         $descricao = '', 
         $dataEntrada = '', 
-        $dataSaida = ''
+        $dataSaida = '',
+        $funcionario = ''
     ) {
+
+        $funcionario = $funcionario == 'todos' ? null : $funcionario;   
+        
+        if(!is_null($funcionario)) {
+            $funcionario = "AND r.funcionario = '$funcionario'";
+        }
+
+        if($_SESSION['painel'] == 'Recepcao') {
+            $funcionario = "AND r.funcionario = '$this->user'";
+        }
+
         try {
             $sql = "SELECT 
                 r.id,
@@ -307,9 +336,9 @@ class FinanceiroModel extends ConexaoModel {
                 r.valor,
                 h.nome, 
                 a.numero,
-                COALESCE((SELECT sum(valorUnitario * quantidade) FROM consumo c where c.reserva_id = r.id), 0) as consumos,
-                COALESCE((SELECT sum(valor) FROM diarias d where d.reserva_id = r.id), 0) as diarias,
-                COALESCE((SELECT sum(p.valorPagamento) FROM pagamento p where p.reserva_id = r.id), 0) as pag
+                COALESCE((SELECT sum(valorUnitario * quantidade) FROM consumo c where c.reserva_id = r.id and c.status = 1), 0) as consumos,
+                COALESCE((SELECT sum(valor) FROM diarias d where d.reserva_id = r.id and d.status = 1), 0) as diarias,
+                COALESCE((SELECT sum(p.valorPagamento) FROM pagamento p where p.reserva_id = r.id and p.status = 1), 0) as pag
             FROM 
                 `reserva` r 
             INNER JOIN 
@@ -329,7 +358,8 @@ class FinanceiroModel extends ConexaoModel {
                 (r.dataEntrada BETWEEN '$dataEntrada' and '$dataSaida')
                 OR
                 (r.dataSaida BETWEEN '$dataEntrada' and '$dataSaida')
-            ); 
+            )
+            $funcionario 
             ";
             $cmd = $this->conexao->query($sql);
     

@@ -4,6 +4,7 @@ require_once __DIR__ . "/../Config/autoload.php";
 require_once 'Trait/DateTrait.php';
 require_once 'Trait/GeneralTrait.php';
 require_once 'Trait/RequestTrait.php';
+require_once __DIR__ . '/../Models/Trait/StandartTrait.php';
 
 require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 
@@ -13,6 +14,7 @@ class Controller {
     use DateTrait;
     use RequestTrait;
     use ErrorLoggingTrait;
+    use StandartTrait;
 
     public $active = "";
 
@@ -26,6 +28,7 @@ class Controller {
     protected $disciplina_id;
     protected $background;
     protected $url;
+    protected $apagados;
 
     public function __construct(){
         $this->site_model = new SiteModel();
@@ -58,5 +61,14 @@ class Controller {
 
     public function viewImpressao($painel, $dados) {
         require __DIR__ . "/../../View/Administrativo/impressao.php";
+    }
+
+    public function validPainel() {        
+        if ($_SESSION['acesso'] != md5('Administrador') && $_SESSION['acesso'] != md5('Recepcao')) {   
+            session_start();
+            session_destroy();            
+            return header('Location: '. $this->url .'/Login');   
+            var_dump($_SESSION['painel']);         
+        }       
     }
 }

@@ -56,6 +56,12 @@
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                                 <?= $value['nome']?>
                                                 </div>
+                                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Entrada:
+                                                <?php echo implode('/',
+                                                    array_reverse(
+                                                        explode('-', $value['dataEntrada'])
+                                                    ));?>
+                                                </div> 
                                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Saida:
                                                 <?php echo implode('/',
                                                     array_reverse(

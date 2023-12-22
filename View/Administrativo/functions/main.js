@@ -1,4 +1,4 @@
-
+$.fn.modal.Constructor.prototype._enforceFocus = function() {};
   // Função para criar um novo registro
   function createData(url, data) {
     showLoader();
@@ -96,6 +96,25 @@
     $.ajax({
       url: url,
       method: 'DELETE',
+      processData: false,
+      dataType: 'json',
+      success: function(response) {
+        showSuccessMessage('Registro excluído com sucesso!');
+        hideLoader();
+      },
+      error: function(error) {
+        console.error('Erro ao excluir registro:', error);
+        hideLoader();
+      }
+    });
+  }
+
+  function deleteDataWithData(url, data) {
+    showLoader();
+    $.ajax({
+      url: url,
+      method: 'POST',
+      data: data,
       processData: false,
       dataType: 'json',
       success: function(response) {
@@ -245,12 +264,25 @@
 
     function imprimir() {
       var conteudoDiv = document.getElementById("contents_inputs").innerHTML;
-      var janela = window.open('', '', 'width=600,height=600');
+      var janela = window.open('', '', 'width=1000,height=600');
       janela.document.write('<html><head><title>Impressão</title><style type="text/css" media="print">' +
-      'body { margin: 0;padding: 0;} table {width: 100%; border-collapse: collapse;} table, th, td { border: 1px solid #ccc;}' + 
-      'th, td {padding: 8px;text-align: left;}  tr td:last-child {display: none;}</style></head><body>');
+      'body { margin: 0;padding: 0;} table {width: 100% !important; border-collapse: collapse;} table, th, td { border: 1px solid #ccc;}' + 
+      'th, td {padding: 8px;text-align: left;}  tr td:last-child {display: none;} ' + 
+      ' .row {display: flex;flex-wrap: wrap;margin-right: -0.75rem; margin-left: -0.75rem;} .col-12 {flex: 0 0 100%; max-width: 100%;} .col-4 { flex: 0 0 33.33333%;  max-width: 33.33333%;  } .col-8 {flex: 0 0 66.66667%; max-width: 66.66667%; } .text-center {  text-align: center!important;} .col-3 { flex: 0 0 25%; max-width: 25%;} ' + 
+      '.pl-2, .px-2 { padding-left: 0.75rem!important;  } .w-100 {width: 100% !important;}</style></head><body>');
       janela.document.write(conteudoDiv);
       janela.document.write('</body></html>');
       janela.print();
       janela.close();
+  }
+
+  function prepareSelector(data, select_id) {
+    
+    data.map((item) =>{
+      let opcao = $('<option>', {
+        value: item.id,
+        text: item.nome
+      });
+      $(select_id).append(opcao);
+    });
   }

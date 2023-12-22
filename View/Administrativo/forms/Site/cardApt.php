@@ -305,13 +305,13 @@
     }
    
     function prepareModalEditarBanner(data) {
-        $('#descricao').val(data[0].descricao);           
-        $('#valor_atual').val(data[0].valor_atual);
-        $('#valor_anterior').val(data[0].valor_anterior);
-        $('#nome').val(data[0].nome);
-        $('#id').val(data[0].id);
-        $('#imagem_anterior').val(data[0].imagem);
-        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Card_APT/" + data[0].imagem);
+        $('#descricao').val(data.descricao);           
+        $('#valor_atual').val(data.valor_atual);
+        $('#valor_anterior').val(data.valor_anterior);
+        $('#nome').val(data.nome);
+        $('#id').val(data.id);
+        $('#imagem_anterior').val(data.imagem);
+        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Card_APT/" + data.imagem);
             $('#imagePreview').show();
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Banner");

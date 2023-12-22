@@ -13,16 +13,18 @@ class VendasModel extends ConexaoModel {
     use DataDropTrait;
     
     protected $model;
+    protected $conexao;
 
     protected $table;
 
     public function __construct () {
         $this->table = "venda";
-        $this->model = ConexaoModel::conexao();
+        $this->model = "venda";
+        $this->conexao = ConexaoModel::conexao();
     }
 
     public function allVenda() {
-        $con = $this->model->query(
+        $con = $this->conexao->query(
             "SELECT *, 
                 (
                     SELECT SUM(vi.quantidade * p.valor) AS valor_venda
@@ -41,24 +43,24 @@ class VendasModel extends ConexaoModel {
             return $vendas;
         }
         
-        $con = $this->model->prepare(
+        $con = $this->conexao->prepare(
             "INSERT INTO venda set status ='aberta', funcionario = :funcionario, descricao = :descricao"
         );
-        $con->bindValue(':funcionario',$_SESSION['code']);
+        $con->bindValue(':funcionario',$_SESSION['code'], PDO::PARAM_INT);
         $con->bindValue(':descricao',"Consumidor não identificado");
         $con->execute();        
         return $this->checkVendas();
     }
 
     private function checkVendas() {
-        $con = $this->model->query(
+        $con = $this->conexao->query(
             "SELECT *
             FROM `venda` v where v.status ='aberta'");        
         return $con->fetch(); 
     }
 
     public function getVendasItemsByVendas($id) {
-        $con = $this->model->query(
+        $con = $this->conexao->query(
             "SELECT 
                 p.descricao,
                 p.valor,
@@ -71,7 +73,7 @@ class VendasModel extends ConexaoModel {
     }
 
     public function getVendasItemsById($id) {
-        $con = $this->model->query(
+        $con = $this->conexao->query(
             "SELECT 
                 id,
                 quantidade
@@ -83,7 +85,7 @@ class VendasModel extends ConexaoModel {
         if (empty($data)) {
             return null;
         }
-        $con = $this->model->prepare("UPDATE `vendas_itens` SET quantidade = :quantidade WHERE id = :id");
+        $con = $this->conexao->prepare("UPDATE `vendas_itens` SET quantidade = :quantidade WHERE id = :id");
         $con->bindValue(':quantidade',$data['quantidade']);
         $con->bindValue(':id',$data['swal_id_item']);
         return $con->execute();
@@ -93,7 +95,7 @@ class VendasModel extends ConexaoModel {
         if (empty($data)) {
             return null;
         }
-        $con = $this->model->prepare("INSERT INTO `vendas_itens` SET produto_id = :produto, venda_id = :venda, status = :status, quantidade = :quantidade");
+        $con = $this->conexao->prepare("INSERT INTO `vendas_itens` SET produto_id = :produto, venda_id = :venda, status = :status, quantidade = :quantidade");
         $con->bindValue(':quantidade',$data['quantidade']);
         $con->bindValue(':venda',$data['id_venda']);
         $con->bindValue(':produto',$data['produto']);
@@ -105,7 +107,7 @@ class VendasModel extends ConexaoModel {
         if (empty($data)) {
             return null;
         }
-        $con = $this->model->prepare("UPDATE `venda` SET descricao = :descricao, valor = :valor, tipoPagamento = :tipo, status = :status WHERE id = :id");
+        $con = $this->conexao->prepare("UPDATE `venda` SET descricao = :descricao, valor = :valor, tipoPagamento = :tipo, status = :status WHERE id = :id");
         $con->bindValue(':descricao',$data['descricao']);
         $con->bindValue(':valor',$data['valor']);
         $con->bindValue(':tipo',$data['tipo']);
@@ -117,7 +119,7 @@ class VendasModel extends ConexaoModel {
     public function deleteItensById($id) 
     {             
         try {
-            $con = $this->model->prepare("DELETE FROM `vendas_itens` WHERE id = :id");
+            $con = $this->conexao->prepare("DELETE FROM `vendas_itens` WHERE id = :id");
             $con->bindValue(':id',$id);
             $con->execute();
             return true;
@@ -128,16 +130,37 @@ class VendasModel extends ConexaoModel {
         }
     }
 
-    public function deleteVendaById($id)
-    {              
+    public function deleteVendaById($id, $motivo)
+    {  
+            
         try {
-            $con = $this->model->prepare("DELETE FROM venda WHERE id = :id");
-            $con->bindValue(':id',$id);
-            $con->execute();
+            $this->conexao->beginTransaction();
+            $dados = $this->findById($id);
+            self::logError(json_encode($dados));
+            $dados = $dados ?? null;
+
+            if (is_null($dados)) {              
+                $this->conexao->rollback();
+                return null;
+            }
+
+            $this->prepareStatusTable('vendas_itens', 0," venda_id = $id");
+            $this->prepareStatusTable('venda', 'cancelada', "id = $id");
+                        
+            $this->prepareStatusTable('entrada', 0," venda_id = $id");
+            
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'venda', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
+
+            $this->conexao->commit();
             return true;
-        } catch (\Throwable $th) {
+        } catch (\Throwable $th) {   
+            $this->conexao->rollback();         
+            self::logError($th->getMessage(). $th->getLine());
             return false;
-            //throw $th;
         }
     }
 }

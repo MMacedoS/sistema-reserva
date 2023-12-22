@@ -15,11 +15,13 @@ class SaidaModel extends ConexaoModel {
     protected $conexao;
 
     protected $model = 'saida';
+    protected $user = null;
 
     public function __construct() 
     {
         $this->model = 'saida';
         $this->conexao = ConexaoModel::conexao();
+        $this->user = $_SESSION['painel'];
     }
 
     // public function buscaSaida($off = 0)
@@ -54,7 +56,9 @@ class SaidaModel extends ConexaoModel {
                 created_at,
                 valor 
             FROM
-                $this->model
+                $this->model 
+            WHERE 
+                funcionario = '$this->user' 
             ORDER BY
                 id DESC
             LIMIT 12 offset $off "
@@ -68,7 +72,7 @@ class SaidaModel extends ConexaoModel {
         return [];
     }
 
-    public function saidaComParams($texto = 0, $entrada, $saida, $tipo)
+    public function saidaComParams($texto = 0, $entrada, $saida, $tipo, $funcionario)
     {
         $entrada = date($entrada . ' 00:00:00');
         $saida = date($saida . ' 23:59:59');
@@ -82,7 +86,9 @@ class SaidaModel extends ConexaoModel {
                 FROM
                     $this->model
                 WHERE
-                    created_at between '$entrada' and '$saida' 
+                    created_at between '$entrada' and '$saida'  
+                    and status = 1 
+                    $funcionario
                 ";
 
         if(!empty($texto)){
@@ -155,45 +161,55 @@ class SaidaModel extends ConexaoModel {
             return $this->saida($off = 0);
         } 
 
+        $funcionario = $params['funcionarios'] == 'todos' ? null : $params['funcionarios'];   
+        
+        if(!is_null($funcionario)) {
+            $funcionario = "AND funcionario = '$funcionario'";
+        }
+
+        if($_SESSION['painel'] == 'Recepcao') {
+            $funcionario = "AND funcionario = '$this->user'";
+        }
+
         return $this->saidaComParams(
             $params['search'],
             $params['startDate'], 
             $params['endDate'],
-            $params['status']
+            $params['status'], 
+            $funcionario            
         );
     }
 
-    public function deleteById($id)
+    public function deleteById($id, $motivo)
     {
         if(is_null($id)) {
             return null;
         }
         
-        $entrada = $this->findById($id);
-
-        if($entrada) {
+        try {
             $this->conexao->beginTransaction();
-            try {      
-                $cmd = $this->conexao->prepare(
-                    "DELETE FROM 
-                        $this->model
-                    WHERE 
-                        id = :id"
-                    );
+            $dados = $this->findById($id);
+            $dados = $dados ?? null;
 
-                $cmd->bindValue(':id',$id);
-                $cmd->execute();
-
-                
-                self::dropRegister($entrada['data']);
-    
-                $this->conexao->commit();
-                return self::message(200, "Registro deletado!!");
-    
-            } catch (\Throwable $th) {
+            if (is_null($dados)) {              
                 $this->conexao->rollback();
-                return self::message(422, $th->getMessage());
+                return null;
             }
+
+            $this->prepareStatusTable('saida', 0," id = $id");
+            
+            $apagadosModel = new ApagadosModel();        
+            if(!$apagadosModel->insertApagados($dados, $motivo, 'saida', $id)) {
+                $this->conexao->rollback();
+                return null;
+            };
+
+            $this->conexao->commit();
+            return true;
+        } catch (\Throwable $th) {   
+            $this->conexao->rollback();         
+            self::logError($th->getMessage(). $th->getLine());
+            return false;
         }
     }
 }

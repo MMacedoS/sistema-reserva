@@ -5,6 +5,7 @@ class ApartamentoController extends \Controller{
     protected $apartamento_model;
 
     public function __construct() {
+        $this->validPainel(); 
         $this->apartamento_model = new ApartamentoModel();      
     }
 
@@ -19,7 +20,7 @@ class ApartamentoController extends \Controller{
 
     public function buscaApartamentoPorId($id)
     {
-        echo json_encode($this->apartamento_model->findById($id));
+        echo json_encode(self::messageWithData(201,'Dados encontrados', $this->apartamento_model->findById($id)));
     }
 
     public function salvarApartamentos() {
