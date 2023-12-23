@@ -163,11 +163,14 @@
                         
                         if (item[key] === '1' && value === 'Status') {
                             td.textContent = 'Disponível';
-                        } if (item[4] === '2' && value === 'Status') {
+                        } 
+                        if (item[4] === '2' && value === 'Status') {
                             td.textContent = 'Ocupado';
-                        } if (item[4] === '3' && value === 'Status') {
+                        } 
+                        if (item[4] === '3' && value === 'Status') {
                             td.textContent = 'Sujo';
-                        } if (item[4] === '4' && value === 'Status') {
+                        } 
+                        if (item[4] === '4' && value === 'Status') {
                             td.textContent = 'Inativo';
                         }
 
@@ -197,7 +200,8 @@
                 if (item.status === '2') {           
                     activateButton.querySelector('i').className = 'fa fa-times-circle text-danger';
                     activateButton.title = 'Ocupado';
-                } else {
+                } 
+                if (item.status !== '2') {
                     activateButton.querySelector('i').className = 'fa fa-check-circle text-success';
                     activateButton.title = 'Ativo';
                 }
@@ -236,7 +240,6 @@
     {
         showData("<?=ROTA_GERAL?>/Apartamento/buscaApartamentoPorId/" + rowData[0])
             .then((response) => preparaModalEditarApartamentos(response.data));
-        console.log(rowData[0]);
     }
 
     function activeRegistro(rowData)

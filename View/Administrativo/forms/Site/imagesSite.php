@@ -284,9 +284,9 @@
     }
    
     function prepareModalEditarImages(data) {
-        $('#id').val(data.id);
-        $('#imagem_anterior').val(data.imagem);
-        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Images/" + data.imagem);
+        $('#id').val(data[0].id);
+        $('#imagem_anterior').val(data[0].imagem);
+        $('#preview').attr('src', "<?=ROTA_GERAL?>/Public/Site/Images/" + data[0].imagem);
             $('#imagePreview').show();
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Images");

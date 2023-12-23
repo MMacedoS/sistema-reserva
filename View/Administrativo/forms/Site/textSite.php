@@ -282,9 +282,9 @@
     }
    
     function prepareModalEditarBanner(data) {
-        $('#sessao').val(data.sessao);           
-        $('#texto').val(data.texto);
-        $('#id').val(data.id);
+        $('#sessao').val(data[0].sessao);           
+        $('#texto').val(data[0].texto);
+        $('#id').val(data[0].id);
         $('#btnSubmit').text('Atualizar');
         $('#exampleModalLabel').text("Atualizar Texto");
         $('#modalEntrada').modal('show');   

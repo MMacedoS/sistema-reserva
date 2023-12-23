@@ -386,11 +386,15 @@
                 // editButton.className = 'btn btn-edit';
 
                 // buttonsTd.appendChild(editButton);
-                buttonsTd.appendChild(delButton);              
+                buttonsTd.appendChild(delButton);  
+                
+                if(item.status == 'cancelada') {
+                    delButton.hidden = true;
+                } 
 
                 // Adicionando a ação para o botão "deletar"
                 delButton.addEventListener('click', function() {
-                var rowData = Array.from(tr.cells).map(function(cell) {
+                var rowData = Array.from(tr.cells).map(function(cell) {                    
                     return cell.textContent;
                 });
                 // Chame a função desejada passando os dados da linha
