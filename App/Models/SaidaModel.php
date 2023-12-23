@@ -21,7 +21,7 @@ class SaidaModel extends ConexaoModel {
     {
         $this->model = 'saida';
         $this->conexao = ConexaoModel::conexao();
-        $this->user = $_SESSION['painel'];
+        $this->user = $_SESSION['code'];
     }
 
     // public function buscaSaida($off = 0)

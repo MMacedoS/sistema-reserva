@@ -61,7 +61,7 @@
                 <div class="col-sm-5 mb-2">
                     <label for="">Selecione o Funcionário</label>
                     <select name="" id="funcionarios" class="form-control">
-                        <option value="todos">Todos</option>
+                        <option selected value="todos">Todos</option>
                     </select>
                 </div>
             <?php } ?>
