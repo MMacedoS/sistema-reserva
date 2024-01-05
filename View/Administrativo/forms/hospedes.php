@@ -312,7 +312,7 @@
     }
 
     function redirectWithModal(rowData) {
-        var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/Reservas/index"; 
+        var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/reservas/index"; 
             redirectUrl += "?hospede=" + rowData[0]  + '&showModal=true';
         
         // Redireciona para a página de destino

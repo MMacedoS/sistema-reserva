@@ -405,7 +405,6 @@ class ReservaModel extends ConexaoModel {
 
     private function updateStatusReserva($status, $id, $apartamento)
     {
-        $this->conexao->beginTransaction();
         try {      
             $cmd = $this->conexao->prepare(
                 "UPDATE 
@@ -415,18 +414,16 @@ class ReservaModel extends ConexaoModel {
                 WHERE 
                     id = :id"
                 );
-            $cmd->bindValue(':status',$status);
-            $cmd->bindValue(':id',$id);
-            $dados = $cmd->execute();
+            $cmd->bindValue(':status', $status);
+            $cmd->bindValue(':id', $id);
+            $cmd->execute();
             
             $this->apartamento_model->prepareChangedApartamentoStatus($apartamento, 2);
-
-            $this->conexao->commit();
             
             return self::messageWithData(200, "dados Atualizados!!", []);
 
         } catch (\Throwable $th) {
-            $this->conexao->rollback();
+            $this->logError($th->getMessage());
             return self::message(422, $th->getMessage());
         }
     }
@@ -461,35 +458,39 @@ class ReservaModel extends ConexaoModel {
 
     public function prepareCheckinReserva($id)
     {
-        $reserva = self::findById($id);
+        try {
+            $this->conexao->beginTransaction();
+            $reserva = self::findById($id);
 
-        if(is_null($reserva)) {
-            return self::messageWithData(422, 'reserva não encontrado', []);
+            if(is_null($reserva)) {
+                $this->conexao->rollback();
+                return self::messageWithData(422, 'reserva não encontrado', []);
+            }
+            
+            $this->model = 'apartamento';
+            $apartamento = $this->apartamento_model->findById($reserva['apartamento_id']);
+
+            if($apartamento['status'] != 1) {
+                $this->conexao->rollback();
+                return self::messageWithData(422, 'Apartamento não esta disponivel', []);
+            }
+
+            $res = $this->updateStatusReserva(
+                3,
+                $id,
+                $apartamento['id']
+            );
+
+            $diariaModel =  new DiariasModel();
+            // $diariaModel->calculeReserva($id);
+            $this->conexao->commit();
+
+            return $res;
+        } catch (\Throwable $th) {
+            $this->conexao->rollback();
+            $this->logError($th->getMessage());
+            //throw $th;
         }
-       
-        $apartamento = $this->apartamento_model->findById($reserva['apartamento_id']);
-
-        if($apartamento['status'] != 1) {
-            return self::messageWithData(422, 'Apartamento não esta disponivel', []);
-        }
-
-        $qtde_dias = self::countDaysInReserva((object)$reserva);
-
-        $diariaModel =  new DiariasModel();
-            $diariaModel->calculeReserva($id);
-
-        $diariaModel->inserirValoresDiaria(
-           $reserva['dataEntrada'], 
-           $reserva['dataSaida'], 
-           $reserva['valor'] ,
-            $id
-        );
-
-        return $this->updateStatusReserva(
-            3,
-            $id,
-            $apartamento['id']
-        );
     }
 
     public function apartamentoDisponiveisPorData($dataStart, $dataEnd)

@@ -134,6 +134,7 @@ class DiariasModel extends ConexaoModel {
 
     public function calculeReserva(int $id)
     {
+        $this->model = 'reserva';
         $reserva = self::findById($id);
             
         if($reserva['status'] == 3) {
@@ -143,13 +144,13 @@ class DiariasModel extends ConexaoModel {
                 $reserva['dataEntrada'], 
                 $reserva['dataSaida'], 
                 $reserva['valor'] ,
-                 $id
+                 $id,
+                $reserva['tipo']
              );
-
          }
     }
 
-    public function inserirValoresDiaria($dataInicial, $dataFinal, $valor, $idReserva) {
+    public function inserirValoresDiaria($dataInicial, $dataFinal, $valor, $idReserva, $tipo = 1) {
         $dataAtual = new DateTime($dataInicial);
         $dataFim = new DateTime($dataFinal);
 
@@ -171,6 +172,9 @@ class DiariasModel extends ConexaoModel {
             $cmd->bindValue(':valor', $valor);
             $cmd->execute();
             $dataAtual->modify('+1 day');
+            if($tipo != 1) {
+                break;
+            }
         }
     }
 

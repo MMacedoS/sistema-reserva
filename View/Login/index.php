@@ -37,7 +37,7 @@
 					<a href="<?=ROTA_GERAL?>"><img src="<?=ROTA_GERAL?>/Estilos/img/img-01.png" alt="IMG bag" id="imagen"></a>
 				</div>
 
-				<form class="login100-form validate-form" action="<?=ROTA_GERAL?>/Login/logar" method="post">
+				<form class="login100-form validate-form" action="" method="post">
 					<span class="login100-form-title">
 						<!-- <a href="<=ROTA_GERAL?>"><img src="<=ROTA_GERAL?>/Estilos/img/image_logo.png" width="150" alt="IMG" id="imagen"></a> -->
 						<?=$dados['valor'] ?>

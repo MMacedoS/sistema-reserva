@@ -160,6 +160,10 @@
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
                         td.textContent = item[key];
+
+                        if (item.numero && value === 'Numero') {
+                            td.textContent = 'Apt. ' + item.numero;
+                        } 
                         
                         if (item[key] === '1' && value === 'Status') {
                             td.textContent = 'Disponível';
@@ -232,6 +236,7 @@
 
             var destinationElement = document.getElementById('table');
             destinationElement.appendChild(table);
+            hideLoader();
 
         return table;
     }
