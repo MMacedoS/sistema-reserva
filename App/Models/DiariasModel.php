@@ -2,11 +2,13 @@
 
 require_once 'Trait/StandartTrait.php';
 require_once 'Trait/FindTrait.php';
+require_once 'Trait/DateModelTrait.php';
 
 class DiariasModel extends ConexaoModel {
 
     use StandartTrait;
     use FindTrait;
+    use DateTrait;
     
     protected $conexao;
 
@@ -142,7 +144,7 @@ class DiariasModel extends ConexaoModel {
 
             $this->inserirValoresDiaria(
                 $reserva['dataEntrada'], 
-                $reserva['dataSaida'], 
+                $this->addDayInDate(Date('Y-m-d'), 1), 
                 $reserva['valor'] ,
                  $id,
                 $reserva['tipo']
