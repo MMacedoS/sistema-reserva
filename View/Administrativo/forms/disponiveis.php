@@ -192,7 +192,7 @@
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/Reservas/index"; 
+                    var redirectUrl = "<?=ROTA_GERAL?>/Administrativo/reservas/index"; 
                         redirectUrl += "?apartamento=" + code  + '&showModal=true';
                     
                     // Redireciona para a página de destino
