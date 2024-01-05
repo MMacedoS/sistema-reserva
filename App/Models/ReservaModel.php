@@ -405,6 +405,7 @@ class ReservaModel extends ConexaoModel {
 
     private function updateStatusReserva($status, $id, $apartamento)
     {
+        $this->model = 'reserva';
         try {      
             $cmd = $this->conexao->prepare(
                 "UPDATE 
@@ -482,7 +483,7 @@ class ReservaModel extends ConexaoModel {
             );
 
             $diariaModel =  new DiariasModel();
-            // $diariaModel->calculeReserva($id);
+            $diariaModel->calculeReserva($id);
             $this->conexao->commit();
 
             return $res;
