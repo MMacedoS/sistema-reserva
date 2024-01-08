@@ -8,7 +8,14 @@ class ReservaController extends \Controller{
     public function __construct() 
     {
         $this->validPainel(); 
-        $this->reserva_model = new ReservaModel();      
+        $this->reserva_model = new ReservaModel(); 
+        $this->atualizaDiaria();     
+    }
+
+    public function atualizaDiaria()
+    {
+        $diarias_model = new DiariasModel();
+        $diarias_model->obterReservasHospedadas();
     }
 
     public function getAll() {

@@ -411,7 +411,8 @@ class ReservaModel extends ConexaoModel {
                 "UPDATE 
                     $this->model 
                 SET 
-                    status = :status
+                    status = :status,
+                    gerarDiaria = now()
                 WHERE 
                     id = :id"
                 );

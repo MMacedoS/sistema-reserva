@@ -19,31 +19,119 @@ class DiariasModel extends ConexaoModel {
         $this->conexao = ConexaoModel::conexao();
     }
 
+    public function obterReservasHospedadas() 
+    {
+        try{
+            $query = "SELECT id, gerarDiaria, valor FROM reserva WHERE status = 3 AND tipo = 1";
+
+            // Prepara a consulta
+            $stmt = $this->conexao->prepare($query);
+
+            // Executa a consulta
+            $stmt->execute();
+
+            // Retorna os resultados como um array associativo
+            $reservas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $this->atualizarGerarDiaria($reservas);
+            
+        }
+        catch(PDOException $e) {
+            return null;
+        }
+    }
+
+    function atualizarGerarDiaria($reservas) 
+    {
+        try {
+            foreach ($reservas as $reserva) {
+                $id = $reserva['id'];
+                $gerarDiaria = $reserva['gerarDiaria'];
+                $valor = $reserva['valor'];
+    
+                // Verifica se gerarDiaria está 24 horas antes da data e hora atual
+                $dataAtual = new DateTime();
+                $dataAtual->sub(new DateInterval('P1D')); // Subtrai 1 dia da data atual
+    
+                $dataGerarDiaria = new DateTime($gerarDiaria);
+
+                $diferencaDias = $dataGerarDiaria->diff(new DateTime())->days;
+    
+                if ($diferencaDias > 1) {
+                    for ($i = 0; $i < $diferencaDias; $i++) {
+                        $data = $dataGerarDiaria->add(new DateInterval('P1D'));
+
+                        $this->inserirDiaria(
+                            [
+                            'valor' => $valor,
+                            'data' => $data->format('Y-m-d')
+                            ],
+                            $id
+                        );
+                    //Atualiza o gerarDiaria para a data e hora atual
+                    $query = "UPDATE reserva SET gerarDiaria = :data WHERE id = :id";
+    
+                    // Prepara a atualização
+                    $stmt = $this->conexao->prepare($query);
+    
+                    // Atribui valores aos parâmetros da consulta
+                    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+                    $stmt->bindParam(':data', $data->format('Y-m-d H:i:s'));
+    
+                    // Executa a atualização
+                    $stmt->execute();
+                    
+                    }
+                }
+            }
+        } catch (\Throwable $th) {
+            self::logError($th->getMessage() . $th->getLine());
+        }
+    }
+
     public function inserirDiaria($dados, $reserva_id)
     {
-        $this->conexao->beginTransaction();
-        try {      
-            $cmd = $this->conexao->prepare(
-                "INSERT INTO 
-                    $this->model 
-                SET 
-                    reserva_id = :reserva_id, 
-                    data = :data, 
-                    valor = :valor
-                    "
-                );
 
-            $cmd->bindValue(':reserva_id',$reserva_id);
-            $cmd->bindValue(':data',$dados['data']);
-            $cmd->bindValue(':valor',$dados['valor']);
-            $dados = $cmd->execute();
+        $query = "SELECT COUNT(*) as registros FROM diarias WHERE data = :data and id = :id";
 
-            $this->conexao->commit();
-            return self::message(200, "dados inseridos!!");
+        // Prepara a consulta
+        $stmt = $this->conexao->prepare($query);
 
-        } catch (\Throwable $th) {
-            $this->conexao->rollback();
-            return self::message(422, $th->getMessage());
+        // Atribui valores aos parâmetros da consulta
+        $stmt->bindValue(':data', $dados['data']);
+        $stmt->bindValue(':id', $reserva_id);
+
+        // Executa a consulta
+        $stmt->execute();
+
+        // Obtém o resultado
+        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($resultado['registros'] < 1) {
+            $this->conexao->beginTransaction();
+            try {      
+                $cmd = $this->conexao->prepare(
+                    "INSERT INTO 
+                        $this->model 
+                    SET 
+                        reserva_id = :reserva_id, 
+                        data = :data, 
+                        valor = :valor
+                        "
+                    );
+
+                $cmd->bindValue(':reserva_id',$reserva_id);
+                $cmd->bindValue(':data',$dados['data']);
+                $cmd->bindValue(':valor',$dados['valor']);
+                $dados = $cmd->execute();
+
+                $this->conexao->commit();
+                return self::message(200, "dados inseridos!!");
+
+            } catch (\Throwable $th) {
+                $this->conexao->rollback();
+                
+            }
         }
     }
     
@@ -140,8 +228,6 @@ class DiariasModel extends ConexaoModel {
         $reserva = self::findById($id);
             
         if($reserva['status'] == 3) {
-            $this->removerValoresDiaria($id);
-
             $this->inserirValoresDiaria(
                 $reserva['dataEntrada'], 
                 $this->addDayInDate(Date('Y-m-d'), 1), 
@@ -158,21 +244,13 @@ class DiariasModel extends ConexaoModel {
 
         while ($dataAtual < $dataFim) {
             $valorData = $dataAtual->format('Y-m-d');
-
-            $cmd = $this->conexao->prepare(
-                "INSERT INTO 
-                    diarias
-                SET 
-                    reserva_id = :reserva_id, 
-                    data = :data, 
-                    valor = :valor
-                    "
-                );
-
-            $cmd->bindValue(':reserva_id', $idReserva);
-            $cmd->bindValue(':data', $valorData);
-            $cmd->bindValue(':valor', $valor);
-            $cmd->execute();
+            $this->inserirDiaria(
+                [
+                'data'  => $valorData,
+                'valor' => $valor
+                ],
+                $idReserva
+            );
             $dataAtual->modify('+1 day');
             if($tipo != 1) {
                 break;
