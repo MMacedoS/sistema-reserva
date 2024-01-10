@@ -57,7 +57,7 @@ class DiariasModel extends ConexaoModel {
 
                 $diferencaDias = $dataGerarDiaria->diff(new DateTime())->days;
     
-                if ($diferencaDias > 1) {
+		if ($diferencaDias > 0) {
                     for ($i = 0; $i < $diferencaDias; $i++) {
                         $data = $dataGerarDiaria->add(new DateInterval('P1D'));
 

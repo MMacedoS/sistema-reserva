@@ -1403,3 +1403,4247 @@
                 Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
                 No Arquivo:/var/www/html/App/Control/Conexao.php<br
                 Na linha:22
+[2023-12-22 21:02:14] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-01-22 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-22 21:28:39] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2022-12-22 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '2'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-22 21:28:47] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2022-12-22 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '2'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-22 21:39:11] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-22 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '8'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-22 21:39:13] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-22 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '8'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 07:51:23] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 07:59:28] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 08:00:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 08:15:15] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 08:15:21] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 08:29:34] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '2'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 08:30:09] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-01-23 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '2'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 12:59:00] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 13:53:29] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 13:56:26] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 14:05:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 14:16:46] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-23  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-23 20:57:19] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 06:03:53] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-24 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 06:07:00] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-24 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 06:07:09] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 06:41:40] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-23 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 12:54:15] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-24 00:00:00' AND '2023-12-24  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 15:48:34] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-24 00:00:00' AND '2023-12-25  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-24 15:50:45] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-24 00:00:00' AND '2023-12-25  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-25 05:57:02] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-25 00:00:00' AND '2023-12-26  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-25 05:57:12] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-24 00:00:00' AND '2023-12-26  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-25 13:30:42] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-25 00:00:00' AND '2023-12-25  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-25 13:54:25] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-25 00:00:00' AND '2023-12-25  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-25 21:01:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-25 00:00:00' AND '2023-12-26  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-26 14:09:44] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-26 00:00:00' AND '2023-12-26  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-26 14:13:30] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-26 00:00:00' AND '2023-12-26  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-26 18:23:25] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-26 00:00:00' AND '2023-12-27  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-26 18:23:27] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-26 00:00:00' AND '2023-12-27  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-26 20:59:41] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-26 00:00:00' AND '2023-12-27  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-26 21:15:29] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-26 00:00:00' AND '2023-12-27  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-27 19:50:09] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-27 00:00:00' AND '2023-12-27  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-27 21:14:28] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-27 00:00:00' AND '2023-12-28  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-28 13:45:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-28 00:00:00' AND '2023-12-28  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-28 13:48:36] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-28 00:00:00' AND '2023-12-28  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 06:43:11] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 06:43:17] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-28 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 06:43:56] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 06:44:01] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-28 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 06:44:35] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-28 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 13:39:58] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-29  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 13:57:20] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-29  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 20:53:07] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-29  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 20:53:34] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 20:53:35] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 20:54:22] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 20:55:48] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-29 20:59:51] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-30 06:40:35] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-29 00:00:00' AND '2023-12-31  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-30 14:10:41] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-30 00:00:00' AND '2023-12-30  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-30 20:59:21] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-30 00:00:00' AND '2023-12-31  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-31 06:48:50] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-30 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-31 12:57:22] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2023-12-31  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-31 16:03:54] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-31 21:09:30] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-30 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2023-12-31 21:09:45] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 00:47:47] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 05:24:27] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 06:31:20] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 06:31:27] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 06:31:37] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-30 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 06:32:06] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2023-12-31 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 09:17:22] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-01 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 13:45:41] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-01 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 14:13:10] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-01 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 14:14:21] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-01 00:00:00' AND '2024-01-01  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-01 20:59:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-01 00:00:00' AND '2024-01-02  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-02 06:44:47] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-01 00:00:00' AND '2024-01-03  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-02 20:29:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-02 00:00:00' AND '2024-01-03  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-02 20:58:29] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-02 00:00:00' AND '2024-01-03  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-03 06:36:42] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-02 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-03 06:36:48] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-03 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-03 06:37:01] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-02 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-03 14:03:45] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-03 00:00:00' AND '2024-01-03  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-03 20:56:56] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-03 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 06:46:17] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-04 00:00:00' AND '2024-01-05  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 06:46:21] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-03 00:00:00' AND '2024-01-05  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 06:46:57] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-03 00:00:00' AND '2024-01-05  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 13:52:59] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-04 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 21:01:12] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-04 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 21:01:24] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-04 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-04 21:01:24] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-04 00:00:00' AND '2024-01-04  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 08:41:41] ERRO: #2006<br>
+                Mensagem:SQLSTATE[HY000] [2006] MySQL server has gone away<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:41] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:42] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:41:46] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:48] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:48] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:48] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:49] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:51] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:52] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:53] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 08:47:54] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-05 14:00:29] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-05  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 14:00:32] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-05  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 14:36:06] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 20:22:43] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 20:23:38] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 20:55:21] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 21:08:39] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-05 21:29:47] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:14:32] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:14:39] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:14:43] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:14:43] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:14:44] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:14:45] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:15:45] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 06:43:19] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 14:06:28] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 16:27:07] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-06  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 20:58:22] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 21:00:33] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 21:01:13] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-06 21:04:04] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 06:47:15] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-06 00:00:00' AND '2024-01-08  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 06:47:28] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-05 00:00:00' AND '2024-01-08  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 12:57:05] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 15:07:26] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-08  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 15:07:29] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-08  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 15:56:42] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 20:30:46] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-07 21:00:24] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-07  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-08 06:42:17] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-07 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-08 14:02:56] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-08 00:00:00' AND '2024-01-08  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '7'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-08 20:59:59] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-08 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 06:37:50] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-08 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '6'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 09:10:00] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 17:21:40] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-08 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 18:18:43] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 18:18:44] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 18:18:46] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 18:18:47] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-09  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 19:23:26] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 21:00:08] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-09 21:00:12] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-09 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-10 07:44:21] ERRO: #2006<br>
+                Mensagem:SQLSTATE[HY000] [2006] MySQL server has gone away<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2006<br>
+                Mensagem:SQLSTATE[HY000] [2006] MySQL server has gone away<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2006<br>
+                Mensagem:SQLSTATE[HY000] [2006] MySQL server has gone away<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2006<br>
+                Mensagem:SQLSTATE[HY000] [2006] MySQL server has gone away<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:21] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] Connection refused<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 07:44:22] ERRO: #2002<br>
+                Mensagem:SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution<br>
+                No Arquivo:/var/www/html/App/Control/Conexao.php<br
+                Na linha:22
+[2024-01-10 16:49:18] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-10 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '13'
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-10 17:34:16] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-10 00:00:00' AND '2024-01-10  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        
+        ORDER BY
+                e.created_at ASC
+        
+[2024-01-10 19:44:41] SELECT 
+            e.id,
+                e.descricao,
+                e.tipoPagamento,
+                r.id as reserva_code,
+                h.nome as Hospede,
+                a.numero as apt,
+                e.created_at,
+                e.pagamento_id,
+                e.valor  
+        FROM 
+            entrada e
+        LEFT JOIN pagamento p on p.id = e.pagamento_id
+        LEFT JOIN reserva r on p.reserva_id = r.id
+        LEFT JOIN hospede h on h.id = r.hospede_id
+        LEFT JOIN apartamento a on a.id = r.apartamento_id
+        WHERE
+            e.created_at BETWEEN '2024-01-10 00:00:00' AND '2024-01-11  23:59:59'
+        AND (('' = '' or '' is null) or e.tipoPagamento = '')
+        AND e.descricao LIKE '%%'
+        AND e.funcionario = '12'
+        ORDER BY
+                e.created_at ASC
+        

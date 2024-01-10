@@ -399,11 +399,12 @@ class ReservaModel extends ConexaoModel {
         return $this->updateStatusReserva(
                 $status,
                 $id,
-                $reserva['apartamento_id']
+		$reserva['apartamento_id'],
+		$reserva['valor']
             );
     }
 
-    private function updateStatusReserva($status, $id, $apartamento)
+    private function updateStatusReserva($status, $id, $apartamento, $valor_reserva = 100)
     {
         $this->model = 'reserva';
         try {      
@@ -412,16 +413,28 @@ class ReservaModel extends ConexaoModel {
                     $this->model 
                 SET 
                     status = :status,
-                    gerarDiaria = now()
+                    gerarDiaria = :data
                 WHERE 
                     id = :id"
                 );
-            $cmd->bindValue(':status', $status);
+	    $cmd->bindValue(':status', $status);
+	    $cmd->bindValue(':data', Date('Y-m-d 15:00:00'));
             $cmd->bindValue(':id', $id);
             $cmd->execute();
             
             $this->apartamento_model->prepareChangedApartamentoStatus($apartamento, 2);
-            
+
+	    if ($status == 3) {
+	    $diaria_model = new DiariasModel();
+	    $diaria_model->inserirDiaria(
+                            [
+                            'valor' => $valor_reserva,
+                            'data' => Date('Y-m-d')
+                            ],
+                            $id
+	    );
+	    }
+
             return self::messageWithData(200, "dados Atualizados!!", []);
 
         } catch (\Throwable $th) {
