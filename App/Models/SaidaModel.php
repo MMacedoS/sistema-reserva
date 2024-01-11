@@ -58,7 +58,8 @@ class SaidaModel extends ConexaoModel {
             FROM
                 $this->model 
             WHERE 
-                funcionario = '$this->user' 
+                funcionario = '$this->user'                             
+               AND status = 1
             ORDER BY
                 id DESC
             LIMIT 12 offset $off "

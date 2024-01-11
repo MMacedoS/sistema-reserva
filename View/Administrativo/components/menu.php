@@ -46,7 +46,11 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/apartamentos">Apartamentos</a>                    
                 <!-- <a class="collapse-item" href="<=ROTA_GERAL?>/Administrativo/Empresa">Empresa</a>   -->
-                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Funcionários</a> 
+                <?php 
+                    if($_SESSION['painel'] == 'Administrador'){
+                ?>
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/funcionarios">Funcionários</a>
+                <?php }?> 
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/hospedes">Hospedes</a>    
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/produtos">Produto</a>                 
             </div>
@@ -295,6 +299,9 @@
                     </a>
                   </li>
                 <!-- Nav Item - Messages -->
+                <?php 
+                    if($_SESSION['painel'] == 'Administrador'){
+                ?>
                 <li class="nav-item dropdown no-arrow mx-1">
                     <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-cogs"></i>
@@ -327,7 +334,9 @@
                         ?>                       
                     </div>
                 </li>
-
+                <?php 
+                    }
+                ?>
                 <div class="topbar-divider d-none d-sm-block"></div>
 
                 <!-- Nav Item - User Information -->

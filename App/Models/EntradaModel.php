@@ -86,7 +86,8 @@ class EntradaModel extends ConexaoModel {
             LEFT JOIN hospede h on h.id = r.hospede_id
             LEFT JOIN apartamento a on a.id = r.apartamento_id
             WHERE 
-                e.funcionario = '$this->user'
+                e.funcionario = '$this->user'            
+               AND e.status = 1
             ORDER BY
                 e.created_at DESC
             LIMIT 12 offset $off "
@@ -124,7 +125,8 @@ class EntradaModel extends ConexaoModel {
         WHERE
             e.created_at BETWEEN '$entrada' AND '$saida'
         AND (('$tipoPagamento' = '' or '$tipoPagamento' is null) or e.tipoPagamento = '$tipoPagamento')
-        AND e.descricao LIKE '%$texto%'
+        AND e.descricao LIKE '%$texto%' 
+        AND e.status = 1 
         $funcionario
         ORDER BY
                 e.created_at ASC

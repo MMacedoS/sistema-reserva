@@ -7,9 +7,9 @@ require_once __DIR__ . "/../Trait/ErrorLoggingTrait.php";
 class Conexao {
     
     private const SERVIDOR = 'mysql';
-    private const BANCO = 'belavistapousada';
-    private const USUARIO = 'kamaur_pousada';
-    private const SENHA ='@kamaur2711';
+    private const BANCO = 'pousada';
+    private const USUARIO = 'root';
+    private const SENHA ='12345';
     public $pdo;
 
     use ErrorLoggingTrait;

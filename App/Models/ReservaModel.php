@@ -399,8 +399,7 @@ class ReservaModel extends ConexaoModel {
         return $this->updateStatusReserva(
                 $status,
                 $id,
-		$reserva['apartamento_id'],
-		$reserva['valor']
+		        $reserva['apartamento_id']
             );
     }
 
@@ -493,7 +492,8 @@ class ReservaModel extends ConexaoModel {
             $res = $this->updateStatusReserva(
                 3,
                 $id,
-                $apartamento['id']
+                $apartamento['id'],
+                $reserva['valor']
             );
 
             $diariaModel =  new DiariasModel();
