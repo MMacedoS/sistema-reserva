@@ -14,4 +14,4 @@
 .htaccess
 index.php
 **/Public
-**/Control
+**/App/Control/Conexao.php
