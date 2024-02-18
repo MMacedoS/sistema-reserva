@@ -13,3 +13,5 @@
 /anexos
 .htaccess
 index.php
+**/Public
+**/Control
