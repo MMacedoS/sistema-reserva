@@ -1,5 +1,5 @@
-   <!-- Page Wrapper -->
-   <div id="wrapper">
+<!-- Page Wrapper -->
+<div id="wrapper">
 
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -314,24 +314,26 @@
                             Registros apagados
                         </h6>
                         
-                        <?php if (!empty($this->apagados)) { 
-                            foreach ($this->apagados as $value) {
-                            ?>
-                        <a class="dropdown-item d-flex align-items-center" href="<?=ROTA_GERAL?>/Administrativo/apagados">
-                            <div class="mr-3">
-                                <div class="icon-circle bg-primary">
-                                    <i class="fas fa-file-alt text-white"></i>
+                        <div class="dropdown-content">
+                            <?php if (!empty($this->apagados)) { 
+                                foreach ($this->apagados as $value) {
+                                ?>
+                            <a class="dropdown-item d-flex align-items-center" href="<?=ROTA_GERAL?>/Administrativo/apagados">
+                                <div class="mr-3">
+                                    <div class="icon-circle bg-primary">
+                                        <i class="fas fa-file-alt text-white"></i>
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                
-                                <div class="small text-gray-500"><?=$value['nome_funcionario']?></div>
-                                <span class="font-weight-bold"><?=$value['motivo'] ?? 'não identificado'?></span>
-                            </div>
-                        </a>
-                        <?php }
-                        }
-                        ?>                       
+                                <div>
+                                    
+                                    <div class="small text-gray-500"><?=$value['nome_funcionario']?></div>
+                                    <span class="font-weight-bold"><?=$value['motivo'] ?? 'não identificado'?></span>
+                                </div>
+                            </a>
+                            <?php }
+                            }
+                            ?>          
+                        </div>             
                     </div>
                 </li>
                 <?php 

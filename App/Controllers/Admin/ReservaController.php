@@ -84,7 +84,8 @@ class ReservaController extends \Controller{
 
     public function changeCheckinReservas($code)
     {
-        $reserva = $this->reserva_model->prepareCheckinReserva($code);
+        $placa = empty($_POST) ? null : $_POST['placa'];
+        $reserva = $this->reserva_model->prepareCheckinReserva($code, $placa);
         echo json_encode($reserva);
     }
 

@@ -13,6 +13,8 @@
     }
 </style>
 
+<form action="" id="formCheckin" method="post"></form>
+
 <div class="container">    
     <div class="form-group">
         <div class="row">
@@ -302,14 +304,29 @@
             event.preventDefault();
             var code=$(this).attr("id");
             Swal.fire({
-                title: 'Deseja fazer o check-in esta reserva? reserva:'+ code,
+                title: 'Deseja fazer o check-in desta reserva? \n código da reserva: '+ code + "\n Caso possua veículo, adicione a placa",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
                 showDenyButton: true,
                 confirmButtonText: 'Sim',
                 denyButtonText: `Não`,
+                preConfirm: async (data) => {
+                    try {                                              
+                        $('#formCheckin').append('<input type="hidden" name="placa" value="'+ data +'"/>');
+
+                        updateData("<?=ROTA_GERAL?>/Reserva/changeCheckinReservas/" + code, 
+                        new FormData(document.getElementById("formCheckin"))
+                        );
+                    } catch (e) {
+
+                    }
+                }
             }).then((result) => {
                 /* Read more about isConfirmed, isDenied below */
                 if (result.isConfirmed) {
-                    envioRequisicaoGetViaAjax('Reserva/changeCheckinReservas/'+ code);
+                    // envioRequisicaoGetViaAjax('Reserva/changeCheckinReservas/'+ code);
                 } else if (result.isDenied) {
                     Swal.fire('nenhuma mudança efetuada', '', 'info')
                 }

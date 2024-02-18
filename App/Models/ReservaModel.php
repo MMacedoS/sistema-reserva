@@ -416,23 +416,23 @@ class ReservaModel extends ConexaoModel {
                 WHERE 
                     id = :id"
                 );
-	    $cmd->bindValue(':status', $status);
-	    $cmd->bindValue(':data', Date('Y-m-d 15:00:00'));
+	        $cmd->bindValue(':status', $status);
+	        $cmd->bindValue(':data', Date('Y-m-d 15:00:00'));
             $cmd->bindValue(':id', $id);
             $cmd->execute();
             
             $this->apartamento_model->prepareChangedApartamentoStatus($apartamento, 2);
 
-	    if ($status == 3) {
-	    $diaria_model = new DiariasModel();
-	    $diaria_model->inserirDiaria(
-                            [
-                            'valor' => $valor_reserva,
-                            'data' => Date('Y-m-d')
-                            ],
-                            $id
-	    );
-	    }
+            if ($status == 3) {
+                $diaria_model = new DiariasModel();
+                $diaria_model->inserirDiaria(
+                    [
+                        'valor' => $valor_reserva,
+                        'data' => Date('Y-m-d')
+                    ],
+                    $id
+                );
+	        }
 
             return self::messageWithData(200, "dados Atualizados!!", []);
 
@@ -470,7 +470,7 @@ class ReservaModel extends ConexaoModel {
         }
     }
 
-    public function prepareCheckinReserva($id)
+    public function prepareCheckinReserva($id, $placa)
     {
         try {
             $this->conexao->beginTransaction();
@@ -496,6 +496,13 @@ class ReservaModel extends ConexaoModel {
                 $reserva['valor']
             );
 
+            if(is_null($res)) {
+                $this->conexao->rollback();
+                return "reserva não atualizada";
+            }
+
+            $this->updatePlacaByReservaId($id, $placa);
+
             $diariaModel =  new DiariasModel();
             $diariaModel->calculeReserva($id);
             $this->conexao->commit();
@@ -506,6 +513,13 @@ class ReservaModel extends ConexaoModel {
             $this->logError($th->getMessage());
             //throw $th;
         }
+    }
+
+    public function updatePlacaByReservaId($id, $placa)
+    {
+        $cmd = $this->conexao->query(
+            "UPDATE reserva set placa = '$placa' WHERE id = '$id'"
+        );
     }
 
     public function apartamentoDisponiveisPorData($dataStart, $dataEnd)

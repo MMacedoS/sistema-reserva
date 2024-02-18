@@ -22,6 +22,35 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+   @media screen and (min-width:800px) {
+      .dropdown-content  {
+        overflow-y: auto;
+        height: 50vh;
+      }
+
+      .wrapper {
+        height: 100vh !important;
+      } 
+      
+      .navbar-nav {
+        position: fixed;
+        z-index: 4;
+        top: 0;
+      }
+
+      #content-wrapper {
+        margin-left: 14rem !important;
+      }
+
+      .navbar {
+        position: fixed !important;
+        z-index: 3 !important;
+      }
+      .container-fluid {
+        margin-top: 100px !important;
+      }
+   }
   </style>
 
     <!-- Bootstrap core JavaScript-->

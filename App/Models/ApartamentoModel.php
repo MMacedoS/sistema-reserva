@@ -168,6 +168,12 @@ class ApartamentoModel extends ConexaoModel {
             return self::messageWithData(422, 'apartamento não encontrado', []);
         }
 
+        $reserva = $this->conexao->query("SELECT count(*) as total FROM reserva WHERE apartamento_id = $id AND status = 3");   
+        $reserva = $reserva->fetch();
+        if($reserva['total'] > 0) {
+            return "Existe ".$reserva['total'];
+        }
+
         return $this->updateStatusApartamento($status, $id);
     }
 
