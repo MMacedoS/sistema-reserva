@@ -133,7 +133,7 @@
         if (existingTable) {
             existingTable.remove();
         }
-        var thArray = ['Numero', 'Descrição','Tipo','Status']; 
+        var thArray = ['Código','Numero', 'Descrição','Tipo','Status']; 
         var table = document.createElement('table');
         table.className = 'table table-sm mr-4 mt-3';
         var thead = document.createElement('thead');
@@ -161,6 +161,10 @@
                 thArray.forEach(function(value, key) {
                         var td = document.createElement('td');
                         td.textContent = item[key];
+
+                        if (item.id && value === 'Código') {
+                            td.textContent = item.id;
+                        } 
 
                         if (item.numero && value === 'Numero') {
                             td.textContent = 'Apt. ' + item.numero;

@@ -496,7 +496,7 @@ class ReservaModel extends ConexaoModel {
                 $reserva['valor']
             );
 
-            if(is_null($res)) {
+            if($res['status'] === 422) {
                 $this->conexao->rollback();
                 return "reserva não atualizada";
             }

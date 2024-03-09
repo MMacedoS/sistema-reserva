@@ -108,6 +108,7 @@ class PagamentoModel extends ConexaoModel {
             return true;
         } catch (\Throwable $th) {
             $this->conexao->rollback();
+            return $th->getMessage();
         }
     }
 }
