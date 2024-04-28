@@ -498,7 +498,7 @@ class ReservaModel extends ConexaoModel {
 
             if($res['status'] === 422) {
                 $this->conexao->rollback();
-                return "reserva não atualizada";
+                return self::messageWithData(422, 'reserva não esta atualizada', []);;
             }
 
             $this->updatePlacaByReservaId($id, $placa);
@@ -511,6 +511,7 @@ class ReservaModel extends ConexaoModel {
         } catch (\Throwable $th) {
             $this->conexao->rollback();
             $this->logError($th->getMessage());
+            return self::messageWithData(422, 'reserva não foi atualizada', []);
             //throw $th;
         }
     }

@@ -316,9 +316,31 @@
                     try {                                              
                         $('#formCheckin').append('<input type="hidden" name="placa" value="'+ data +'"/>');
 
-                        updateData("<?=ROTA_GERAL?>/Reserva/changeCheckinReservas/" + code, 
+                        updateDataWithData("<?=ROTA_GERAL?>/Reserva/changeCheckinReservas/" + code, 
                         new FormData(document.getElementById("formCheckin"))
-                        );
+                        ).then((res) => {
+                            if(res.message === 'Apartamento não esta disponivel') {
+                                showErrorMessage(res.message);
+                                return;
+                            }
+                            if(res.message === 'reserva não esta atualizada') {
+                                showErrorMessage(res.message);
+                                return;
+                            }
+
+                            if(res.message === 'Registro atualizado com sucesso!') {
+                                showSuccessMessage(res.message);
+                                return;
+                            }
+
+                            if(res.message === 'dados Atualizados!!') {
+                                showSuccessMessage(res.message);
+                                return;
+                            }
+
+                            showWarningMessage(res.message);
+                            return;
+                        } );
                     } catch (e) {
 
                     }
