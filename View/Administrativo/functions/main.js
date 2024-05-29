@@ -176,33 +176,41 @@ $.fn.modal.Constructor.prototype._enforceFocus = function() {};
     location.reload(true);
   }
   
-  
-  function formatDate(value)
-  {
-      const date = value.split('-');
-      return ''+date[2]+ '/' + date[1] + '/' + date[0];
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', options);
+  }
+
+  function formatCurrency(value) {
+      return  parseFloat(value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  }
+
+  function formatDateTime(value) {
+    const date = value.split('-');
+        return ''+date[2]+ '/' + date[1] + '/' + date[0];
   }
 
   function formatDateWithHour(value)
   {
       const date = value.split(' ');
-      return formatDate(date[0]) + ' ' + date[1];
+      return formatDateTime(date[0]) + ' ' + date[1];
   }
 
   function prepareTipo(value)
   {
       var res = "";
       switch (value) {
-          case 1:
+          case '1':
               res = "Dinheiro";
           break;
-          case 2:
+          case '2':
               res = "Cartão de Crédito"
           break;
-          case 3:
+          case '3':
              res =  "Cartão de Débito"
           break;
-          case 4:
+          case '4':
              res =  "Déposito/PIX"
           break;
       }

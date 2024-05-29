@@ -88,6 +88,7 @@
                 <h6 class="collapse-header"></h6>
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/reservas">Criar</a>
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/consultas">Consultar</a>  
+                <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/nota-cliente-reserva">Nota Cliente</a>  
                 <a class="collapse-item" href="<?=ROTA_GERAL?>/Administrativo/mapas">Mapas</a>                
             </div>
         </div>

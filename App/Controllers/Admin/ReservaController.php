@@ -124,4 +124,10 @@ class ReservaController extends \Controller{
             )
         );
     }
+
+    public function buscaAllReservaPorId($id)
+    {
+        $reserva = $this->reserva_model->getAllDadosReservasById($id);
+        echo json_encode($reserva);
+    }
 }

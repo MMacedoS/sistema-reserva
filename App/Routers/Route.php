@@ -27,7 +27,7 @@ class Route {
             if (count($urlParts) > 1) {
                 array_shift($urlParts);
 
-                $this->method = isset($urlParts[0]) ? $urlParts[0] : 'index';
+                $this->method = isset($urlParts[0]) ? $this->kebabToCamelCase($urlParts[0]) : 'index';
                 array_shift($urlParts);
 
                 $this->parameters = $urlParts;                
@@ -249,7 +249,9 @@ class Route {
             'findAllApagados',
             'changeStatusApagados',
             'findById',
-            'changeAllStatusApagados'
+            'changeAllStatusApagados',
+            'notaClienteReserva',
+            'buscaAllReservaPorId'
         ];
 
         $controllerPath = $this->getControllerPath($this->controller);
@@ -284,5 +286,9 @@ class Route {
         }
 
         return '';
+    }
+
+    function kebabToCamelCase($string) {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $string))));
     }
 }

@@ -21,7 +21,7 @@
                                 <div class="caption-content" style="color: <?=$color_text['color']?> !important;">
                                     <div class="h2"><?=$card['nome']?></div>
                                     <p class="mb-0"><?=$card['descricao']?></p>
-                                    <p><b>R$ <?=self::valueBr($card['valor_atual'])?></b> <s>R$ <?=self::valueBr($card['valor_anterior'])?></s></p>
+                                    <p><b>R$ <?=self::valueBr($card['valor_atual'])?></b></p>
                                 </div>
                             </div>
                             <img class="img-fluid" src="<?=ROTA_GERAL?>/Public/Site/Card_APT/<?=$card['imagem']?>" alt="..." />

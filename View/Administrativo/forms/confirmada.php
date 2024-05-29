@@ -139,7 +139,12 @@
                     </div>
                     <hr>
                     <div class="form-row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
+                            <label for="date">Data lançamento</label>
+                            <input type="date" name="data" id="data" class="form-control">
+                        </div>
+
+                        <div class="col-sm-4">
                             <label for="">Tipo</label>
                             <select name="tipo" class="form-control" id="tipo">
                                 <option value="2">Cartão de Crédito</option>
@@ -148,11 +153,11 @@
                                 <option value="1">Dinheiro</option>
                             </select>
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <label for="">Valor</label>
                             <input type="number" step="0.01" min="0.00"  value="0" class="form-control" name="valor" id="valor">
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-sm-9">
                             <label for="">Descrição</label>
                             <input type="text" value="" class="form-control" name="descricao" id="descricao">
                         </div>

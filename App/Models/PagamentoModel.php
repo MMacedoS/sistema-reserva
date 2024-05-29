@@ -22,10 +22,16 @@ class PagamentoModel extends ConexaoModel {
         $tipo = $dados['tipo'];
         $valor =  $dados['valor'];
         $descricao =  $dados['descricao'];
+        $data = $dados['data'];
 
         if(empty($descricao))
         {
             $descricao = "Pagamento referente a reserva $reserva_id";
+        }
+
+        if(empty($data))
+        {
+            $data = Date('Y-m-d');
         }
 
         $this->conexao->beginTransaction();
@@ -45,7 +51,7 @@ class PagamentoModel extends ConexaoModel {
 
             $cmd->bindValue(':tipo',$tipo);
             $cmd->bindValue(':descricao',$descricao);
-            $cmd->bindValue(':dataPagamento', Date('Y-m-d'));
+            $cmd->bindValue(':dataPagamento', $data);
             $cmd->bindValue(':valor',$valor);
             $cmd->bindValue(':reserva_id',$reserva_id);
             $cmd->bindValue(':funcionario',$_SESSION['code']);

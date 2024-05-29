@@ -919,6 +919,136 @@ class ReservaModel extends ConexaoModel {
         return self::messageWithData(422, 'nehum dado encontrado', []);
     }
 
+    public function getAllDadosReservasById($id)
+    {
+        $queryReserva = "
+        SELECT 
+            r.*, 
+            h.nome, 
+            a.numero,
+            COALESCE(consumos.totalConsumo, 0) AS consumos,
+            COALESCE(diarias.totalDiarias, 0) AS diarias,
+            COALESCE(pag.totalPagamentos, 0) AS pag,
+            ((COALESCE(consumos.totalConsumo, 0) + COALESCE(diarias.totalDiarias, 0)) - ( COALESCE(pag.totalPagamentos, 0))) AS subtotal
+        FROM 
+            `reserva` r 
+        INNER JOIN 
+            hospede h 
+        ON 
+            r.hospede_id = h.id 
+        INNER JOIN 
+            apartamento a 
+        ON 
+            a.id = r.apartamento_id 
+        LEFT JOIN (
+            SELECT reserva_id, SUM(valorUnitario * quantidade) AS totalConsumo
+            FROM consumo
+            WHERE status = 1
+            GROUP BY reserva_id
+        ) consumos
+        ON 
+            r.id = consumos.reserva_id
+        LEFT JOIN (
+            SELECT reserva_id, SUM(valor) AS totalDiarias
+            FROM diarias
+            WHERE status = 1
+            GROUP BY reserva_id
+        ) diarias
+        ON 
+            r.id = diarias.reserva_id
+        LEFT JOIN (
+            SELECT reserva_id, SUM(valorPagamento) AS totalPagamentos
+            FROM pagamento
+            WHERE status = 1
+            GROUP BY reserva_id
+        ) pag
+        ON 
+            r.id = pag.reserva_id
+        WHERE 
+            r.id = :id
+    ";
+    
+    // Preparando e executando a consulta principal
+    $cmd = $this->conexao->prepare($queryReserva);
+    $cmd->bindParam(':id', $id, PDO::PARAM_INT);
+    $cmd->execute();
+    
+    if ($cmd->rowCount() > 0) {
+        $reserva = $cmd->fetch(PDO::FETCH_ASSOC);
+    
+        // Consulta para Detalhes dos Consumos
+        $queryConsumos = "
+            SELECT 
+                descricao, 
+                valorUnitario, 
+                quantidade, 
+                (valorUnitario * quantidade) AS total
+            FROM 
+                consumo 
+            WHERE 
+                reserva_id = :id 
+                AND status = 1
+        ";
+    
+        $cmdConsumos = $this->conexao->prepare($queryConsumos);
+        $cmdConsumos->bindParam(':id', $id, PDO::PARAM_INT);
+        $cmdConsumos->execute();
+        $consumos = $cmdConsumos->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($consumos)) {
+            $this->logError("Debug Consumos: Não há consumos para a reserva ID {$id}");
+        }
+    
+        // Consulta para Detalhes das Diárias
+        $queryDiarias = "
+            SELECT 
+                data, 
+                valor                     
+            FROM 
+                diarias
+            WHERE 
+                reserva_id = :id 
+                AND status = 1
+        ";
+        $cmdDiarias = $this->conexao->prepare($queryDiarias);
+        $cmdDiarias->bindParam(':id', $id, PDO::PARAM_INT);
+        $cmdDiarias->execute();
+        $diarias = $cmdDiarias->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($diarias)) {
+            $this->logError("Debug Diarias: Não há diárias para a reserva ID {$id}");
+        }
+    
+        // Consulta para Detalhes dos Pagamentos
+        $queryPagamentos = "
+            SELECT 
+                dataPagamento, 
+                valorPagamento, 
+                tipoPagamento
+            FROM 
+                pagamento 
+            WHERE 
+                reserva_id = :id 
+                AND status = 1
+        ";
+        $cmdPagamentos = $this->conexao->prepare($queryPagamentos);
+        $cmdPagamentos->bindParam(':id', $id, PDO::PARAM_INT);
+        $cmdPagamentos->execute();
+        $pagamentos = $cmdPagamentos->fetchAll(PDO::FETCH_ASSOC);
+        if (empty($pagamentos)) {
+            $this->logError("Debug Pagamentos: Não há pagamentos para a reserva ID {$id}");
+        }
+    
+        // Incluindo os detalhes dos consumos, diárias e pagamentos na resposta
+        $reserva['consumosDetalhados'] = $consumos;
+        $reserva['diariasDetalhados'] = $diarias;
+        $reserva['pagamentosDetalhados'] = $pagamentos;
+
+        return self::messageWithData(200, 'Reserva encontrada', $reserva);
+        } 
+
+        return self::messageWithData(404, 'Reserva não encontrada', []);
+
+    }
+
     private function insertDiariaConsumo($value, $data)
     {        
         $this->consumo_model->insertDiaria($value, $data);

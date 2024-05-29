@@ -91,6 +91,12 @@ class AdministrativoController extends \Controller{
         $this->viewAdmin('mapas',$request,"");
     }
 
+    public function notaClienteReserva($request = null)  
+    {
+        $this->active = "reservas";  
+        $this->viewAdmin('nota-cliente-reservas',$request,"");
+    }
+
     // public function buscaReservas($request =  null)
     // {        
     //     $reservas_controller = new ReservaController();
