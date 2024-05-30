@@ -136,25 +136,15 @@
                     <hr>
                     <div class="nota-section">
                         <h5>Dados da Reserva</h5>
-                        <div class="row">
-                        <div class="col-md-6"><strong>Reserva ID:</strong> <span id="apartamentoId"></span></div>
-                        <div class="col-md-6"><strong>Número do Apartamento:</strong> <span id="apartamentoNumero"></span></div>
+                        <div class="row ml-2">
+                            <div class="col-md-4"><strong>Reserva ID:</strong> <br><span id="apartamentoId"></span></div>
+                            <div class="col-md-4"><strong>Número do Apartamento:</strong> <br><span id="apartamentoNumero"></span></div>
+                            <div class="col-md-4"><strong>Data da Reserva:</strong> <br><span id="dataReserva"></span></div>
                         </div>
-                        <div class="row">
-                        <div class="col-md-6"><strong>Data da Reserva:</strong> <span id="dataReserva"></span></div>
-                        <div class="col-md-6"><strong>Data de Entrada:</strong> <span id="dataEntrada"></span></div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-6"><strong>Data de Saída:</strong> <span id="dataSaida"></span></div>
-                        <div class="col-md-6"><strong>Funcionário:</strong> <span id="funcionario"></span></div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-6"><strong>Gerar Diária:</strong> <span id="gerarDiaria"></span></div>
-                        <div class="col-md-6"><strong>Status:</strong> <span id="status"></span></div>
-                        </div>
-                        <div class="row">
-                        <div class="col-md-6"><strong>Tipo:</strong> <span id="tipo"></span></div>
-                        <div class="col-md-6"><strong>Quantidade de Hóspedes:</strong> <span id="qtdeHosp"></span></div>
+                        <div class="row ml-2">                            
+                            <div class="col-md-4"><strong>Data de Entrada:</strong> <br><span id="dataEntrada"></span></div>
+                            <div class="col-md-4"><strong>Data de Saída:</strong> <br><span id="dataSaida"></span></div>
+                            <div class="col-md-4"><strong>Quantidade de Hóspedes:</strong> <br><span id="qtdeHosp"></span></div>
                         </div>
                     </div>
 
@@ -162,7 +152,7 @@
                     <hr>
                     <div class="nota-section">
                         <h5>Consumo</h5>
-                        <div id="consumoDetalhado" class="container">
+                        <div id="consumoDetalhado" class="container ml-2">
                         <!-- Exemplo de item de consumo -->
                         <!-- <div class="col-md-12"><strong>Descrição:</strong> Bebidas no Bar - <strong>Total:</strong> 50,00</div> -->
                         </div>
@@ -170,7 +160,7 @@
                     <hr>
                     <div class="nota-section">
                         <h5>Diarias</h5>
-                        <div id="diariaDetalhado" class="container">
+                        <div id="diariaDetalhado" class="container ml-2">
                         <!-- Exemplo de item de consumo -->
                         <!-- <div class="col-md-12"><strong>Descrição:</strong> Bebidas no Bar - <strong>Total:</strong> 50,00</div> -->
                         </div>
@@ -193,19 +183,22 @@
                         <h5>Subtotal</h5>
                         <div class="row">
                             <div class="col-md-6"><strong>Total Consumos:</strong></div>
-                            <div class="col-md-6"><span id="totalConsumos"></span></div>
+                            <div class="col-md-6 text-right"><span id="totalConsumos"></span></div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-md-6"><strong>Total Diárias:</strong></div>
-                            <div class="col-md-6"><span id="totalDiarias"></span></div>
+                            <div class="col-md-6 text-right"><span id="totalDiarias"></span></div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-md-6"><strong>Total Pagamentos:</strong></div>
-                            <div class="col-md-6"><span id="totalPag"></span></div>
+                            <div class="col-md-6 text-right"><span id="totalPag"></span></div>
                         </div>
+                        <br>
                         <div class="row">
                             <div class="col-md-6"><strong>Subtotal:</strong></div>
-                            <div class="col-md-6"><strong><span id="subtotal"></span></strong></div>
+                            <div class="col-md-6 text-right"><strong><span id="subtotal"></span></strong></div>
                         </div>
                     </div>
 
@@ -235,7 +228,7 @@
     $(document).ready(function() {
         $('#hospedes').selectize({});
         $('#apartamento').selectize({});
-        showData("<?=ROTA_GERAL?>/Reserva/getAll")
+        showData("<?=ROTA_GERAL?>/Reserva/get-all-nota")
         .then((response) => createTable(response))
         .then(() => hideLoader());  
     });
@@ -395,9 +388,6 @@
         document.getElementById('dataReserva').textContent = formatDate(reserva.dataReserva);
         document.getElementById('dataEntrada').textContent = formatDate(reserva.dataEntrada);
         document.getElementById('dataSaida').textContent = formatDate(reserva.dataSaida);
-        document.getElementById('funcionario').textContent = reserva.funcionario;
-        document.getElementById('status').textContent = reserva.status;
-        document.getElementById('tipo').textContent = reserva.tipo;
         document.getElementById('qtdeHosp').textContent = reserva.qtde_hosp;
 
         // Detalhes do Consumo
@@ -412,7 +402,7 @@
             <div class="col-sm-5"><strong>Descrição:</strong>${consumo.descricao}</div>            
             <div class="col-sm-2"><strong>Vl.Unit:</strong> ${formatCurrency(consumo.valorUnitario)}</div>
             <div class="col-sm-2"><strong>qtdo.:</strong> ${consumo.quantidade}</div>
-            <div class="col-sm-3"><strong>Tl.:</strong> ${formatCurrency(consumo.total)}</div>
+            <div class="col-sm-3 text-right"><strong>Tl.:</strong> ${formatCurrency(consumo.total)}</div>
             `;
             consumoDetalhado.appendChild(consumoDiv);
         });
@@ -427,7 +417,7 @@
             pagamentoDiv.innerHTML = `
             <div class="col-sm-5 ml-2"><strong>Data:</strong> ${formatDate(pagamento.dataPagamento)}</div>            
             <div class="col-sm-3">${prepareTipo(pagamento.tipoPagamento)}</div>
-            <div class="col-sm-3"><strong>Valor:</strong> ${formatCurrency(pagamento.valorPagamento)}</div>
+            <div class="col-sm-3 text-right"><strong>Valor:</strong> ${formatCurrency(pagamento.valorPagamento)}</div>
             `;
             pagamentoDetalhado.appendChild(pagamentoDiv);
         });
@@ -442,7 +432,7 @@
             // Configurando o conteúdo HTML da div
             diariaDiv.innerHTML = `
                 <div class="col-sm-6"><strong>Diária:</strong> ${formatDate(diaria.data)}</div>
-                <div class="col-sm-6"><strong>Valor:</strong> ${formatCurrency(diaria.valor)}</div>
+                <div class="col-sm-6 text-right"><strong>Valor:</strong> ${formatCurrency(diaria.valor)}</div>
             `;
             
             // Adicionando a div ao elemento pai
@@ -550,6 +540,14 @@
                                 margin-left: -10px;
                             }
 
+                            .text-center {
+                                text-align: center;
+                            }
+
+                            .text-right {
+                                text-align: right;
+                            }
+
                             .col-md-6, .col-sm-6, .col-md-12 {
                                 padding-right: 10px;
                                 padding-left: 10px;
@@ -558,6 +556,26 @@
                             .col-md-6 {
                                 flex: 0 0 50%;
                                 max-width: 50%;
+                            }
+
+                            .col-sm-5 {
+                                flex: 0 0 41.66667%;
+                                max-width: 41.66667%;
+                            }
+
+                            .col-sm-2 {
+                                flex: 0 0 16.66667%;
+                                max-width: 16.66667%;
+                            }
+
+                            .col-sm-4 {
+                                flex: 0 0 33.3%;
+                                max-width: 33.3%;
+                            }
+
+                            .col-sm-3 {
+                                flex: 0 0 25%;
+                                max-width: 25%;
                             }
 
                             .col-md-12 {
@@ -646,8 +664,8 @@
             `);
             printWindow.document.close();
             printWindow.focus();
-            // printWindow.print();
-            // printWindow.close();
+            printWindow.print();
+            printWindow.close();
         }
 
 </script>

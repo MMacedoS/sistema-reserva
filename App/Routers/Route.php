@@ -251,7 +251,8 @@ class Route {
             'findById',
             'changeAllStatusApagados',
             'notaClienteReserva',
-            'buscaAllReservaPorId'
+            'buscaAllReservaPorId',
+            'getAllNota'
         ];
 
         $controllerPath = $this->getControllerPath($this->controller);

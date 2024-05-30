@@ -23,6 +23,11 @@ class ReservaController extends \Controller{
         echo json_encode($reservas);
     }
 
+    public function getAllNota() {
+        $reservas = $this->reserva_model->findReservas('','','',3);
+        echo json_encode($reservas);
+    }
+
     public function buscaReservas($request =  null)
     {    
         echo json_encode($this->reserva_model->findReservas(
