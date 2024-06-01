@@ -139,355 +139,349 @@
             ?>       
     </div>    
 
-<!-- editar -->
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Dados da Hospedagem</h5>
-                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button> -->
-                <button class="btn btn-danger close" onclick="sair()"> <span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body"  > 
-                <input type="hidden" id="id">
-                <div class="row">
-                    <div class="col-sm-6 campos_modal mb-2">
-                        Hospedes: <p id="hospede"></p>
-                    </div>
-                    <div class="col-sm-3 campos_modal mb-2">
-                        Codigo: <p id="codigo"></p>
-                    </div>
-                    <div class="col-sm-3 campos_modal mb-2">
-                        Apartamento: <p id="apartamento"></p>
-                    </div>                    
-                    <div class="col-sm-4 campos_modal mb-2">
-                        Data Entrada: <p id="entrada"></p>
-                    </div>
-                    <div class="col-sm-4 campos_modal mb-2">
-                        Data Saida: <p id="saida"></p>
-                    </div>
-                    <div class="col-sm-4 campos_modal mb-2">
-                        Valor da Diaria: <p id="diaria"></p>
-                    </div>
-                    <div class="col-sm-4 campos_modal mb-2">
-                        Consumo: <p id="consumo"></p>
-                    </div>
-                    <div class="col-sm-4 campos_modal mb-2">
-                        Diarias: <p id="diarias"></p>
-                    </div>
-                    <div class="col-sm-4 campos_modal mb-2">
-                        Pagamento: <p id="pagamento"></p>
-                    </div>
-                   
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Dados da Hospedagem</h5>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button> -->
+                    <button class="btn btn-danger close" onclick="sair()"> <span aria-hidden="true">&times;</span></button>
                 </div>
-                
-                <h6 class="modal-title"> Ações</h6>
-                <hr>
-                <div class="row">
-                    <div class="col-sm-2 campos_modal text-left mb-2 ck">
-                        <button class="btn btn-primary checkout">Check-out</button>
+                <div class="modal-body"  > 
+                    <input type="hidden" id="id">
+                    <div class="row">
+                        <div class="col-sm-6 campos_modal mb-2">
+                            Hospedes: <p id="hospede"></p>
+                        </div>
+                        <div class="col-sm-3 campos_modal mb-2">
+                            Codigo: <p id="codigo"></p>
+                        </div>
+                        <div class="col-sm-3 campos_modal mb-2">
+                            Apartamento: <p id="apartamento"></p>
+                        </div>                    
+                        <div class="col-sm-4 campos_modal mb-2">
+                            Data Entrada: <p id="entrada"></p>
+                        </div>
+                        <div class="col-sm-4 campos_modal mb-2">
+                            Data Saida: <p id="saida"></p>
+                        </div>
+                        <div class="col-sm-4 campos_modal mb-2">
+                            Valor da Diaria: <p id="diaria"></p>
+                        </div>
+                        <div class="col-sm-4 campos_modal mb-2">
+                            Consumo: <p id="consumo"></p>
+                        </div>
+                        <div class="col-sm-4 campos_modal mb-2">
+                            Diarias: <p id="diarias"></p>
+                        </div>
+                        <div class="col-sm-4 campos_modal mb-2">
+                            Pagamento: <p id="pagamento"></p>
+                        </div>
+                    
                     </div>
-                    <div class="col-sm-2 campos_modal text-left mb-2">
-                        <button class="btn btn-success pagamento">Pagamento </button>
-                    </div>
-                    <div class="col-sm-2 campos_modal text-left mb-2">
-                        <button class="btn btn-warning consumo">Consumo </button>
-                    </div>
-                    <div class="col-sm-2 campos_modal text-left mb-2">
-                        <button class="btn btn-danger diarias">Diarias </button>
-                    </div>
-                    <div class="col-sm-2 campos_modal text-left mb-2 ed">
-                        <button class="btn btn-info editar">Editar</button>
-                    </div>
-                    <div class="col-sm-2 campos_modal text-left mb-2">
-                        <button type="button" class="btn btn-dart imprimir text-danger">Imprimir</button>
+                    
+                    <h6 class="modal-title"> Ações</h6>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-2 campos_modal text-left mb-2 ck">
+                            <button class="btn btn-primary checkout">Check-out</button>
+                        </div>
+                        <div class="col-sm-2 campos_modal text-left mb-2">
+                            <button class="btn btn-success pagamento">Pagamento </button>
+                        </div>
+                        <div class="col-sm-2 campos_modal text-left mb-2">
+                            <button class="btn btn-warning consumo">Consumo </button>
+                        </div>
+                        <div class="col-sm-2 campos_modal text-left mb-2">
+                            <button class="btn btn-danger diarias">Diarias </button>
+                        </div>
+                        <div class="col-sm-2 campos_modal text-left mb-2 ed">
+                            <button class="btn btn-info editar">Editar</button>
+                        </div>
+                        <div class="col-sm-2 campos_modal text-left mb-2">
+                            <button type="button" class="btn btn-dart imprimir text-danger">Imprimir</button>
+                        </div>
                     </div>
                 </div>
             </div>
+            
         </div>
-        
     </div>
-</div>
-<!-- editar -->
 
-<!-- editar -->
-<div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Deseja realizar o Check-out</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <div class="modal fade" id="modalCheckout" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Deseja realizar o Check-out</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"  > 
+                    <form action="" method="post">
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                Hospedes: <p id="nomeHospede"></p>
+                            </div>
+                            <div class="col-sm-3 mb-2">
+                                Codigo: <p id="codigoReserva"></p>
+                            </div>
+                            <div class="col-sm-3 mb-2">
+                                Apartamento: <p id="numeroApartamento"></p>
+                            </div>          
+                            
+                            <div class="col-sm-4 mb-2">
+                                Valor: <p id="totalHospedagem"></p>
+                            </div>
+                            <div class="col-sm-4 mb-2">
+                                Valor Pago: <p id="totalPago"></p>
+                            </div>
+                            <div class="col-sm-4 mb-2">
+                                <p id="restante"></p>
+                            </div>   
+                        </div>
+                        <hr>
+                        <div class="modal-footer">
+                            <button type="button" class="close mr-4" data-dismiss="modal" aria-label="Close">
+                                    X
+                            </button>
+                            <button type="button" name="salvar" disabled id="btn-checkout" class="btn btn-primary executar-checkout">Executar</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="modal-body"  > 
-                <form action="" method="post">
-                    <div class="row">
-                        <div class="col-sm-6 mb-2">
-                            Hospedes: <p id="nomeHospede"></p>
-                        </div>
-                        <div class="col-sm-3 mb-2">
-                            Codigo: <p id="codigoReserva"></p>
-                        </div>
-                        <div class="col-sm-3 mb-2">
-                            Apartamento: <p id="numeroApartamento"></p>
-                        </div>          
-                        
-                        <div class="col-sm-4 mb-2">
-                            Valor: <p id="totalHospedagem"></p>
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            Valor Pago: <p id="totalPago"></p>
-                        </div>
-                        <div class="col-sm-4 mb-2">
-                            <p id="restante"></p>
-                        </div>   
-                    </div>
-                    <hr>
-                    <div class="modal-footer">
-                        <button type="button" class="close mr-4" data-dismiss="modal" aria-label="Close">
-                                X
-                        </button>
-                        <button type="button" name="salvar" disabled id="btn-checkout" class="btn btn-primary executar-checkout">Executar</button>
-                    </div>
-                </form>
-            </div>
+            
         </div>
-        
     </div>
-</div>
-<!-- editar -->
-<!-- editar -->
-<div class="modal fade" id="modalConsumo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="labelConsumo">Lança consumo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" >  
-                <form action="" id="form-consumo" method="post">
-                    <div class="row">
-                        <div class="table-responsive" style="height: 250px">
-                            <table class="table bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Produto
-                                        </th>
-                                        <th class="d-none d-sm-table-cell">
-                                            Data
-                                        </th>
-                                        <th>
-                                            Quantidade
-                                        </th>
-                                        <th class="d-none d-sm-table-cell">
-                                            valor Unitario
-                                        </th>
-                                        <th class="d-none d-sm-table-cell">
-                                            Total
-                                        </th>
-                                        <th>
-                                            Ações
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="listaConsumo">
 
-                                </tbody>
-                            </table>
-                           
-                        </div>       
-                        <div class="col-sm-6 text-right">
-                            <small class="text-end">Registro(s) <span id="numeroConsumo">0</span></small> 
-                        </div> 
-                        <div class="col-sm-6 text-right">
-                            <small class="text-end">Total R$ <span id="totalConsumo"></span></small> 
-                        </div>      
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-sm-4">
-                            <label >Produto</label>
-                            <select name="produto" class="form-control" id="produto">
-                                
-                            </select>
+    <div class="modal fade" id="modalConsumo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="labelConsumo">Lança consumo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" >  
+                    <form action="" id="form-consumo" method="post">
+                        <div class="row">
+                            <div class="table-responsive" style="height: 250px">
+                                <table class="table bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Produto
+                                            </th>
+                                            <th class="d-none d-sm-table-cell">
+                                                Data
+                                            </th>
+                                            <th>
+                                                Quantidade
+                                            </th>
+                                            <th class="d-none d-sm-table-cell">
+                                                valor Unitario
+                                            </th>
+                                            <th class="d-none d-sm-table-cell">
+                                                Total
+                                            </th>
+                                            <th>
+                                                Ações
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaConsumo">
+
+                                    </tbody>
+                                </table>
+                            
+                            </div>       
+                            <div class="col-sm-6 text-right">
+                                <small class="text-end">Registro(s) <span id="numeroConsumo">0</span></small> 
+                            </div> 
+                            <div class="col-sm-6 text-right">
+                                <small class="text-end">Total R$ <span id="totalConsumo"></span></small> 
+                            </div>      
                         </div>
-                        <div class="col-sm-4">
-                            <label >quantidade</label>
-                            <input type="number" step="0" min="0"  value="1" class="form-control" name="quantidade" id="quantidade">
+                        <hr>
+                        <div class="form-row">
+                            <div class="col-sm-4">
+                                <label >Produto</label>
+                                <select name="produto" class="form-control" id="produto">
+                                    
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label >quantidade</label>
+                                <input type="number" step="0" min="0"  value="1" class="form-control" name="quantidade" id="quantidade">
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <label >&nbsp;</label>
+                                <button type="submit" name="salvar" class="btn btn-primary Salvar-consumo mt-4"> &#10010; Adicionar consumo</button>
+                            </div>
                         </div>
-                        <div class="col-sm-4 text-center">
-                            <label >&nbsp;</label>
-                            <button type="submit" name="salvar" class="btn btn-primary Salvar-consumo mt-4"> &#10010; Adicionar consumo</button>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
+            
         </div>
-        
     </div>
-</div>
-<!-- editar -->
+    <!-- editar -->
 
-<div class="modal fade" id="modalDiarias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="labelConsumo">Lança Diarias</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body"   >
-                <form action="" id="form-diarias" method="post">
-                    <div class="row">
-                        <div class="table-responsive" style="height: 250px">
-                            <table class="table bordered">
-                                <thead>
-                                    <tr>
-                                        <th >
-                                            Data
-                                        </th>
-                                        <th >
-                                            Valor
-                                        </th>
-                                        <th>
-                                            Ações
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="listaDiarias">
+    <div class="modal fade" id="modalDiarias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="labelConsumo">Lança Diarias</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body"   >
+                    <form action="" id="form-diarias" method="post">
+                        <div class="row">
+                            <div class="table-responsive" style="height: 250px">
+                                <table class="table bordered">
+                                    <thead>
+                                        <tr>
+                                            <th >
+                                                Data
+                                            </th>
+                                            <th >
+                                                Valor
+                                            </th>
+                                            <th>
+                                                Ações
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaDiarias">
 
-                                </tbody>
-                            </table>
-                           
-                        </div>       
-                        <div class="col-sm-6 text-right">
-                            <small class="text-end">Registro(s) <span id="numeroDiarias">0</span></small> 
-                        </div> 
-                        <div class="col-sm-6 text-right">
-                            <small class="text-end">Total R$ <span id="totalDiarias"></span></small> 
-                        </div>      
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-sm-4">
-                            <label >Data</label>
-                            <input type="date" class="form-control" name="data" id="dataDiaria">
+                                    </tbody>
+                                </table>
+                            
+                            </div>       
+                            <div class="col-sm-6 text-right">
+                                <small class="text-end">Registro(s) <span id="numeroDiarias">0</span></small> 
+                            </div> 
+                            <div class="col-sm-6 text-right">
+                                <small class="text-end">Total R$ <span id="totalDiarias"></span></small> 
+                            </div>      
                         </div>
-                        <div class="col-sm-4">
-                            <label >Valor</label>
-                            <input type="number" step="0.01" min="0.00"  value="" class="form-control" name="valor" id="valorReserva">
+                        <hr>
+                        <div class="form-row">
+                            <div class="col-sm-4">
+                                <label >Data</label>
+                                <input type="date" class="form-control" name="data" id="dataDiaria">
+                            </div>
+                            <div class="col-sm-4">
+                                <label >Valor</label>
+                                <input type="number" step="0.01" min="0.00"  value="" class="form-control" name="valor" id="valorReserva">
+                            </div>
+                            <div class="col-sm-4 text-center">
+                                <label >&nbsp;</label>
+                                <button type="button" name="salvar" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
+                            </div>
                         </div>
-                        <div class="col-sm-4 text-center">
-                            <label >&nbsp;</label>
-                            <button type="button" name="salvar" class="btn btn-primary Salvar-diarias mt-4"> &#10010; Adicionar</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>        
-    </div>
-</div>
-
-<!-- editar -->
-<div class="modal fade" id="modalPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="labelPagamento">Lançar Pagamento</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">   
-                <form action="" id="form-pagamento" method="post">
-                    <div class="row">
-                        <div class="table-responsive" style="height: 250px">
-                            <table class="table bordered">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Data Lco.
-                                        </th>
-                                        <th class="d-none d-sm-table-cell">
-                                            Descrição
-                                        </th>
-                                        <th class="d-none d-sm-table-cell">
-                                            Tipo
-                                        </th>
-                                        <th>
-                                            Valor
-                                        </th>
-                                        <th>
-                                            Ações
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody id="listaPagamento">
-
-                                </tbody>
-                            </table>
-                           
-                        </div>    
-                        <div class="col-sm-3 text-right text-success">
-                            <small class="text-end">Registro(s) <span id="numeroPagamento">0</span></small> 
-                        </div> 
-
-                        <div class="col-sm-3 text-right text-danger">
-                            <small class="text-end">Consumos(s) R$ <span id="totalConsumos"></span> </small> 
-                        </div>   
-
-                        <div class="col-sm-6 text-right">
-                            <small class="text-end">Total R$ <span id="totalPagamento"></span></small> 
-                        </div>      
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-sm-4">
-                            <label for="data">Data Lançamento</label>
-                            <input type="date" name="data" id="data" class="form-control" require>
-                        </div>
-                        <div class="col-sm-4">
-                            <label >Tipo</label>
-                            <select name="tipo" class="form-control" id="tipo">
-                                <option value="2">Cartão de Crédito</option>
-                                <option value="3">Cartão Débito</option>
-                                <option value="4">Déposito/PIX</option>
-                                <option value="1">Dinheiro</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <label >Valor</label>
-                            <input type="number" step="0.01" min="0.00"  value="0" class="form-control" name="valor" id="valor">
-                        </div>
-                        <div class="col-sm-9">
-                            <label >Descrição</label>
-                            <input type="text" value="" class="form-control" name="descricao" id="descricao">
-                        </div>
-                        <div class="col-sm-3 text-center">
-                            <label >&nbsp;</label>
-                            <button type="submit" name="salvar" class="btn btn-primary Salvar-pagamento mt-4"> &#10010; Pagamento</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+                </div>
+            </div>        
         </div>
-        
     </div>
-</div>
-<!-- editar -->
 
+    <!-- editar -->
+    <div class="modal fade" id="modalPagamento" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="labelPagamento">Lançar Pagamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">   
+                    <form action="" id="form-pagamento" method="post">
+                        <div class="row">
+                            <div class="table-responsive" style="height: 250px">
+                                <table class="table bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Data Lco.
+                                            </th>
+                                            <th class="d-none d-sm-table-cell">
+                                                Descrição
+                                            </th>
+                                            <th class="d-none d-sm-table-cell">
+                                                Tipo
+                                            </th>
+                                            <th>
+                                                Valor
+                                            </th>
+                                            <th>
+                                                Ações
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="listaPagamento">
+
+                                    </tbody>
+                                </table>
+                            
+                            </div>    
+                            <div class="col-sm-3 text-right text-success">
+                                <small class="text-end">Registro(s) <span id="numeroPagamento">0</span></small> 
+                            </div> 
+
+                            <div class="col-sm-3 text-right text-danger">
+                                <small class="text-end">Consumos(s) R$ <span id="totalConsumos"></span> </small> 
+                            </div>   
+
+                            <div class="col-sm-6 text-right">
+                                <small class="text-end">Total R$ <span id="totalPagamento"></span></small> 
+                            </div>      
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="col-sm-4">
+                                <label for="data">Data Lançamento</label>
+                                <input type="date" name="data" id="data" class="form-control" require>
+                            </div>
+                            <div class="col-sm-4">
+                                <label >Tipo</label>
+                                <select name="tipo" class="form-control" id="tipo">
+                                    <option value="2">Cartão de Crédito</option>
+                                    <option value="3">Cartão Débito</option>
+                                    <option value="4">Déposito/PIX</option>
+                                    <option value="1">Dinheiro</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label >Valor</label>
+                                <input type="number" step="0.01" min="0.00"  value="0" class="form-control" name="valor" id="valor">
+                            </div>
+                            <div class="col-sm-9">
+                                <label >Descrição</label>
+                                <input type="text" value="" class="form-control" name="descricao" id="descricao">
+                            </div>
+                            <div class="col-sm-3 text-center">
+                                <label >&nbsp;</label>
+                                <button type="submit" name="salvar" class="btn btn-primary Salvar-pagamento mt-4"> &#10010; Pagamento</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>        
+        </div>
+    </div>
+<!-- editar -->
 <!-- cons -->
     <div id="changeConsumo" class="modal-static">
         <div class="modal-static-content">
@@ -507,10 +501,9 @@
             </form>
         </div>
     </div>
-
     
 <!-- diaria -->
-<div id="changeDiaria" class="modal-static">
+    <div id="changeDiaria" class="modal-static">
         <div class="modal-static-content">
             <span class="close" id="closeModal">&times;</span>
             <h2>Alterar Diária</h2>
@@ -529,109 +522,109 @@
         </div>
     </div>
 
-<!-- editar -->
-<div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Atualização da Reserva</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-           
-            <form action="" id="formReserva" method="POST">
-                <div class="modal-body">                                
-                    <div class="form-row row-mobile">
-                        <input type="hidden" disabled id="inp-id" >
-                        <input type="hidden" disabled id="opcao" value="" >
-                        <div class="col-sm-5">
-                            <label >Data Entrada</label>
-                            <input type="date" name="entrada" id="inp-entrada" class="form-control">
-                        </div>
+    <!-- editar -->
+    <div class="modal fade" id="modalReserva" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Atualização da Reserva</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            
+                <form action="" id="formReserva" method="POST">
+                    <div class="modal-body">                                
+                        <div class="form-row row-mobile">
+                            <input type="hidden" disabled id="inp-id" >
+                            <input type="hidden" disabled id="opcao" value="" >
+                            <div class="col-sm-5">
+                                <label >Data Entrada</label>
+                                <input type="date" name="entrada" id="inp-entrada" class="form-control">
+                            </div>
 
-                        <div class="col-sm-5">
-                            <label >Data Saida</label>
-                            <input type="date" name="saida" id="inp-saida" class="form-control">
-                        </div>                                    
-                    </div>
-                    <div class="form-row" id="div_apartamento">
-                        <div class="col-sm-8">
-                            <label >Hospede</label><br>
-                            <select id="select_hospedes" class="selectized" name="hospedes">
-                               
-                            </select>
+                            <div class="col-sm-5">
+                                <label >Data Saida</label>
+                                <input type="date" name="saida" id="inp-saida" class="form-control">
+                            </div>                                    
                         </div>
-                        <div class="col-sm-4">
-                            <label >Apartamentos</label><br>
-                                <select name="apartamento" id="select_apartamentos">                               
-                                   
+                        <div class="form-row" id="div_apartamento">
+                            <div class="col-sm-8">
+                                <label >Hospede</label><br>
+                                <select id="select_hospedes" class="selectized" name="hospedes">
+                                
                                 </select>
-                        </div>
-
-                        <div class="row">
-                            
-                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
-                                <div class="col-sm-6">
-                                    <label >Tipo</label><br>
-                                    <select class="form-control" name="tipo" id="inp-tipo">
-                                        <option value="1">Diária</option>
-                                        <option value="2">Pacote</option>
-                                        <option value="3">Promocao</option>
+                            </div>
+                            <div class="col-sm-4">
+                                <label >Apartamentos</label><br>
+                                    <select name="apartamento" id="select_apartamentos">                               
+                                    
                                     </select>
+                            </div>
+
+                            <div class="row">
+                                
+                                <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                    <div class="col-sm-6">
+                                        <label >Tipo</label><br>
+                                        <select class="form-control" name="tipo" id="inp-tipo">
+                                            <option value="1">Diária</option>
+                                            <option value="2">Pacote</option>
+                                            <option value="3">Promocao</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label >Status</label><br>
+                                        <select class="form-control" name="status" id="inp-status">
+                                            <option value="1">Reservada</option>
+                                            <option value="2">Confirmada</option>
+                                            <option value="3">Hospedada</option>
+                                            <option value="5">Cancelada</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="col-sm-6">
-                                    <label >Status</label><br>
-                                    <select class="form-control" name="status" id="inp-status">
-                                        <option value="1">Reservada</option>
-                                        <option value="2">Confirmada</option>
-                                        <option value="3">Hospedada</option>
-                                        <option value="5">Cancelada</option>
-                                    </select>
+                                <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
+                                    <div class="col-sm-4">
+                                        <label >Valor</label>
+                                        <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label >Qtdo. Hosp.</label>
+                                        <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label >Placa</label>
+                                        <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-sm-6 row row-mobile mt-2 mb-2 ml-2">
-                                <div class="col-sm-4">
-                                    <label >Valor</label>
-                                    <input type="number" class="form-control" onchange="valores()" name="valor" step="0.01" min="0.00" value="" id="inp-valor">
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label >Qtdo. Hosp.</label>
-                                    <input type="number" class="form-control" name="qtde_hosp" step="1" min="1" value="2" id="inp-qtdeHosp">
-                                </div>
-
-                                <div class="col-sm-4">
-                                    <label >Placa</label>
-                                    <input type="text" class="form-control" name="placa" value="S/N" id="inp-placa">
-                                </div>
+                            <div class="col-sm-12">
+                                <label >observação</label><br>
+                                <textarea name="observacao" class="form-control" value="tudo certo" id="inp-observacao" cols="30" rows="5"> &nbsp;</textarea>
                             </div>
-                        </div>
+                        </div>   
 
-                        <div class="col-sm-12">
-                            <label >observação</label><br>
-                            <textarea name="observacao" class="form-control" value="tudo certo" id="inp-observacao" cols="30" rows="5"> &nbsp;</textarea>
-                        </div>
-                    </div>   
-
-                    <small>
-                        <div align="center" class="mt-1" id="mensagem"></div>
-                        <div align="right" class="mt-1 fs" id="valores"></div>
-                    </small>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" id="sair" data-dismiss="modal">Fechar</button>
-                    <button type="button" name="salvar" id="btnSubmit" class="btn btn-primary SalvarReserva">Salvar</button>
-                </div>
-            </form>        
+                        <small>
+                            <div align="center" class="mt-1" id="mensagem"></div>
+                            <div align="right" class="mt-1 fs" id="valores"></div>
+                        </small>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="sair" data-dismiss="modal">Fechar</button>
+                        <button type="button" name="salvar" id="btnSubmit" class="btn btn-primary SalvarReserva">Salvar</button>
+                    </div>
+                </form>        
+            </div>
+            
         </div>
-        
     </div>
-</div>
-<!-- editar -->
+    <!-- editar -->
 
 </div>
 <script src="<?=ROTA_GERAL?>/Estilos/js/moment.js"></script>

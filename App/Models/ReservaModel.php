@@ -689,6 +689,8 @@ class ReservaModel extends ConexaoModel {
                 h.nome LIKE '%$texto%' 
             OR 
                 r.id = '$texto'
+            
+            order by a.numero asc
             "
         );
 
@@ -750,7 +752,8 @@ class ReservaModel extends ConexaoModel {
                AND
                 dataEntrada >= DATE_SUB(curdate(), INTERVAL 1 DAY)
             AND
-                h.nome LIKE '%$nome%'
+                h.nome LIKE '%$nome%' 
+            order by a.numero asc
             "
         );
 
@@ -789,7 +792,8 @@ class ReservaModel extends ConexaoModel {
                AND
                 dataSaida <= curdate()
             AND
-                h.nome LIKE '%$nome%'
+                h.nome LIKE '%$nome%' 
+            order by a.numero asc
             "
         );
 
@@ -828,7 +832,8 @@ class ReservaModel extends ConexaoModel {
             AND
                 h.nome LIKE '%$nome%'
             AND 
-                dataEntrada LIKE '%$nome%'
+                dataEntrada LIKE '%$nome%' 
+            order by a.numero asc
             "
         );
 
@@ -873,7 +878,8 @@ class ReservaModel extends ConexaoModel {
                AND
                 YEAR(dataEntrada) = YEAR(CURDATE())
             AND
-                h.nome LIKE '%$nome%'
+                h.nome LIKE '%$nome%' 
+            order by a.numero asc
             "
         );
 

@@ -1,4 +1,8 @@
-
+<?php 
+    $nome_empresa = $this->findParamByParam('nome_site')['valor'] ?? 'Pousada'; 
+    $endereco_empresa = $this->findParamByParam('endereco_empresa')['valor'] ?? ''; 
+    $number_empresa = $this->findParamByParam('whatsapp')['valor'] ?? '';  
+?>
 <style>
     .hide{
         visibility: hidden;
@@ -118,8 +122,9 @@
                 <!-- Header do Hotel -->
                     <div class="nota-header text-center">
                         <!-- <img src="logo.png" alt="Logo do Hotel" style="max-width: 100px;"> -->
-                        <h1>Pousada Bela Vista</h1>
-                        <p>Rua Josete Tuvo, Caldas do Jorro - Tucano-BA, Bahia, CEP 48793-000</p>
+                        <h1><?=$nome_empresa?></h1>
+                        <p>Endereço: <?=$endereco_empresa?></p>
+                        <p>WhatsApp: <?=$number_empresa?></p>
                     </div>
 
                     <!-- Dados do Hóspede -->
@@ -137,14 +142,14 @@
                     <div class="nota-section">
                         <h5>Dados da Reserva</h5>
                         <div class="row ml-2">
-                            <div class="col-md-4"><strong>Reserva ID:</strong> <br><span id="apartamentoId"></span></div>
-                            <div class="col-md-4"><strong>Número do Apartamento:</strong> <br><span id="apartamentoNumero"></span></div>
-                            <div class="col-md-4"><strong>Data da Reserva:</strong> <br><span id="dataReserva"></span></div>
+                            <div class="col-sm-4"><strong>Reserva ID:</strong> <br><span id="apartamentoId"></span></div>
+                            <div class="col-sm-4"><strong>Número do Apartamento:</strong> <br><span id="apartamentoNumero"></span></div>
+                            <div class="col-sm-4"><strong>Data da Reserva:</strong> <br><span id="dataReserva"></span></div>
                         </div>
                         <div class="row ml-2">                            
-                            <div class="col-md-4"><strong>Data de Entrada:</strong> <br><span id="dataEntrada"></span></div>
-                            <div class="col-md-4"><strong>Data de Saída:</strong> <br><span id="dataSaida"></span></div>
-                            <div class="col-md-4"><strong>Quantidade de Hóspedes:</strong> <br><span id="qtdeHosp"></span></div>
+                            <div class="col-sm-4"><strong>Data de Entrada:</strong> <br><span id="dataEntrada"></span></div>
+                            <div class="col-sm-4"><strong>Data de Saída:</strong> <br><span id="dataSaida"></span></div>
+                            <div class="col-sm-4"><strong>Quantidade de Hóspedes:</strong> <br><span id="qtdeHosp"></span></div>
                         </div>
                     </div>
 
@@ -424,6 +429,7 @@
         
         // Detalhes dos Diarias
         const diariaDetalhado = document.getElementById('diariaDetalhado');
+        diariaDetalhado.innerHTML = '';
         reserva.diariasDetalhados.forEach(diaria => {
             // Criação da div para cada diária
             const diariaDiv = document.createElement('div');
@@ -553,7 +559,7 @@
                                 padding-left: 10px;
                             }
 
-                            .col-md-6 {
+                            .col-md-6, .col-sm-6{
                                 flex: 0 0 50%;
                                 max-width: 50%;
                             }
