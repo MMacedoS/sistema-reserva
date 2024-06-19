@@ -144,7 +144,7 @@ class DiariasModel extends ConexaoModel {
             WHERE 
                 reserva_id = $id
                 and status = 1
-            order by id DESC
+            order by data DESC
             "
         );
 

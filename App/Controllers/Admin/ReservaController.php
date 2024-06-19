@@ -12,6 +12,12 @@ class ReservaController extends \Controller{
         $this->atualizaDiaria();     
     }
 
+    public function atualizaDiariaNotExists($reservaId)
+    {
+        $reservaService = new ReservaService();
+        $reservaService->criarDiarias($reservaId);
+    } 
+
     public function atualizaDiaria()
     {
         $diarias_model = new DiariasModel();
@@ -102,6 +108,8 @@ class ReservaController extends \Controller{
 
     public function getDadosReservas($code)
     {
+        
+        $this->atualizaDiariaNotExists($code);
         $reserva = $this->reserva_model->getDadosReservas($code);
         echo json_encode($reserva);
     }

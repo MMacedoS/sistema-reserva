@@ -320,66 +320,68 @@ class ReservaModel extends ConexaoModel {
     public function getAllReservas($hospede = '', $dataEntrada = '', $dataSaida = '', $situacao = 1 )
     {
         try {
-            $cmd  = $this->conexao->query(
-                "SELECT
-                r.id,
-                r.dataEntrada,
-                r.dataSaida,
-                r.tipo,
-                r.qtde_hosp,
-                r.status,
-                h.nome,
-                a.numero,
-                r.valor as custo,
-                SUM(COALESCE(d.valor,0)) as valor
-            FROM
-                $this->model r
-            INNER JOIN
-                hospede h
-            ON
-                r.hospede_id = h.id
-            LEFT JOIN
-                empresa_has_hospede eh
-            ON
-                eh.hospede_id = h.id
-            INNER JOIN
-                apartamento a
-            ON
-                r.apartamento_id = a.id
-            LEFT JOIN
-                diarias d
-            ON
-                d.reserva_id = r.id
-            WHERE
-                h.nome LIKE '%$hospede%'               
-                AND (
-                    (
-                        (r.dataEntrada BETWEEN '$dataEntrada' AND '$dataSaida') 
-                        or
-                        (r.dataSaida BETWEEN '$dataEntrada' AND '$dataSaida')
+          
+            if ($this->conexao === null) {
+                throw new Exception("Database connection is not established.");
+            }
+            
+            $query = "
+                SELECT
+                    r.id,
+                    r.dataEntrada,
+                    r.dataSaida,
+                    r.tipo,
+                    r.qtde_hosp,
+                    r.status,
+                    h.nome,
+                    a.numero,
+                    r.valor AS custo,
+                    SUM(COALESCE(d.valor, 0)) AS valor
+                FROM
+                    $this->model r
+                INNER JOIN
+                    hospede h ON r.hospede_id = h.id
+                INNER JOIN
+                    apartamento a ON r.apartamento_id = a.id
+                LEFT JOIN
+                    diarias d ON d.reserva_id = r.id AND d.status = 1
+                WHERE
+                    h.nome LIKE :hospede
+                    AND (
+                        (r.dataEntrada BETWEEN :dataEntrada AND :dataSaida)
+                        OR
+                        (r.dataSaida BETWEEN :dataEntrada AND :dataSaida)
                     )
-                    and r.status LIKE '%$situacao%'
-                )
-                AND d.status = 1               
-            GROUP BY
-                r.id,
-                r.dataEntrada,
-                r.dataSaida,
-                r.tipo,
-                r.qtde_hosp,
-                r.status,
-                h.nome,
-                a.numero
-            ORDER BY
-                r.id DESC;            
-                "
-            );
-    
-            if($cmd->rowCount() > 0)
-            {
+                    AND r.status LIKE :situacao
+                GROUP BY
+                    r.id,
+                    r.dataEntrada,
+                    r.dataSaida,
+                    r.tipo,
+                    r.qtde_hosp,
+                    r.status,
+                    h.nome,
+                    a.numero
+                ORDER BY
+                    r.id DESC
+            ";
+            
+            $cmd = $this->conexao->prepare($query);
+            $hospedeParam = "%$hospede%";
+            $situacaoParam = "%$situacao%";
+            $cmd->bindParam(':hospede', $hospedeParam, PDO::PARAM_STR);
+            $cmd->bindParam(':dataEntrada', $dataEntrada, PDO::PARAM_STR);
+            $cmd->bindParam(':dataSaida', $dataSaida, PDO::PARAM_STR);
+            $cmd->bindParam(':situacao', $situacaoParam, PDO::PARAM_STR);
+            $cmd->execute();
+            
+            if ($cmd->rowCount() > 0) {
                 return $cmd->fetchAll(PDO::FETCH_ASSOC);
             }
-    
+            
+            return []; 
+          
+
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

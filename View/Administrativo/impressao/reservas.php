@@ -160,10 +160,15 @@
                             td.textContent = formatDate(item.dataSaida);
                         }
 
-                        if (value === 'Valor') {
+                        if (value === 'Valor' && item.tipo == 1) {
                             let dias = parseInt(moment(item.dataSaida).diff(moment(item.dataEntrada), 'days'));
                             totalValue += parseFloat(item.valor == 0 ? item.custo * dias : item.valor);
                             td.textContent = parseFloat(item.valor == 0 ? item.custo * dias : item.valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        }
+
+                        if (value === 'Valor' && item.tipo == 2) {                           
+                            totalValue += parseFloat(item.custo);
+                            td.textContent = parseFloat(item.custo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                         }
 
                         if (value === 'Hóspede') {

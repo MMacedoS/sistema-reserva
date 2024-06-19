@@ -390,7 +390,7 @@
         // Dados da Reserva
         document.getElementById('apartamentoId').textContent = reserva.id;
         document.getElementById('apartamentoNumero').textContent = reserva.numero;
-        document.getElementById('dataReserva').textContent = formatDate(reserva.dataReserva);
+        document.getElementById('dataReserva').textContent = formatDate(reserva.dataEntrada);
         document.getElementById('dataEntrada').textContent = formatDate(reserva.dataEntrada);
         document.getElementById('dataSaida').textContent = formatDate(reserva.dataSaida);
         document.getElementById('qtdeHosp').textContent = reserva.qtde_hosp;

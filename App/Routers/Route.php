@@ -252,7 +252,8 @@ class Route {
             'changeAllStatusApagados',
             'notaClienteReserva',
             'buscaAllReservaPorId',
-            'getAllNota'
+            'getAllNota',
+            'atualizaDiariaNotExists'
         ];
 
         $controllerPath = $this->getControllerPath($this->controller);

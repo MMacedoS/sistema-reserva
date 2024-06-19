@@ -177,9 +177,11 @@ $.fn.modal.Constructor.prototype._enforceFocus = function() {};
   }
   
   function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR', options);
+    const date = dateString.split('-');
+        return ''+date[2]+ '/' + date[1] + '/' + date[0];
+    // const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    // const date = new Date(dateString);
+    // return date.toLocaleDateString('pt-BR', options);
   }
 
   function formatCurrency(value) {

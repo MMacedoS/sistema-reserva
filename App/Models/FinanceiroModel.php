@@ -52,8 +52,9 @@ class FinanceiroModel extends ConexaoModel {
                 FROM
                     $this->model
                 WHERE
-                    created_at between '$entrada' and '$saida' ";
-
+                    created_at between '$entrada' and '$saida' 
+                
+                and status = 1";
 
         if(!empty($texto)){
             if($texto == 1){
@@ -91,6 +92,7 @@ class FinanceiroModel extends ConexaoModel {
                 * 
             FROM
                 $this->model
+            where status = 1
             ORDER BY
                 id DESC
 
