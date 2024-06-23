@@ -1,0 +1,12 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        },
+        "files": [
+            "src/env/app.php"
+        ]
+    },
+    "require": {
+    }
+}

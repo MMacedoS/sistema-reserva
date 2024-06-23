@@ -1,9 +1,7 @@
 <?php
 
-header('Content-Type: text/html; charset=utf-8');
-define('ROTA_GERAL', "http://$_SERVER[HTTP_HOST]");
+require 'vendor/autoload.php';
 
-require __DIR__ . "/App/Config/autoload.php";
+$router = require 'src/Routers/web.php';
 
-$route = new Route();
-$route->run();
+$router->init();
