@@ -13,11 +13,13 @@
         </ol>
        <!-- Breadcrumb end -->
     </div>
-    <div class="col-2 col-xl-6">
-        <div class="float-end">
-         <a href="\apartamento\criar" class="btn btn-outline-primary" > + </a>
+    <?php if (hasPermission('cadastrar apartamentos')) { ?>
+        <div class="col-2 col-xl-6">
+            <div class="float-end">
+            <a href="\apartamento\criar" class="btn btn-outline-primary" > + </a>
+            </div>
         </div>
-    </div>
+    <? } ?>
 </div>
     <!-- Row end -->
 <? if(isset($success)){?>
@@ -46,7 +48,9 @@
                                     <th>Apartamento</th>
                                     <th>Categoria</th>
                                     <th>Situação</th>
-                                    <th>Actions</th>
+                                    <?php if (hasPermission('editar apartamentos') || hasPermission('deletar apartamentos')) { ?>
+                                        <th>Actions</th>
+                                    <? }?>
                                 </tr>
                             </thead>
                             
@@ -61,7 +65,7 @@
                                         <?=$apartamento->category?>
                                         </td>
                                         <td>    
-                                            <div class="d-flex align-items-center">
+                                            <div class="d-flex align-items-end text-end">
                                                 <? if($apartamento->status == 0) { ?>
                                                     <i class="icon-circle1 me-2 text-danger fs-5"></i>
                                                     Impedido
@@ -80,12 +84,22 @@
                                                 <? } ?>
                                             </div>
                                         </td>
+                                        <?php if (hasPermission('editar apartamentos') || hasPermission('deletar apartamentos')) { ?>
                                         <td class="d-flex">
-                                        <a class="btn btn-outline-primary btn-sm mb-1 me-2" href="/apartamento/<?=$apartamento->uuid?>/editar">
-                                            <i class="icon-edit"></i>
-                                        </a>
+                                        <?php if (hasPermission('editar apartamentos')) { ?>
+                                            <a class="mb-1 me-2 mt-1" href="/apartamento/<?=$apartamento->uuid?>/editar">
+                                                <div class="border p-2 rounded-3">
+                                                    <span class="fs-5 icon-edit"></span>
+                                                </div>
+                                            </a>
+                                        <? } ?>
+                                        <?php if (hasPermission('deletar apartamentos')) { ?>
                                             <form action="/apartamento/<?=$apartamento->uuid?>/deletar" method="post">                                            
-                                                <button class="btn btn-outline-danger btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal_<?=$apartamento->uuid?>"> <i class="icon-trash"></i></button>
+                                                <button class="btn btn-outline btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal_<?=$apartamento->uuid?>"> 
+                                                    <div class="border p-2 rounded-3">
+                                                        <span class="fs-5 text-danger icon-trash"></span>
+                                                    </div>
+                                                </button>
                                                 <div class="modal fade" id="exampleModal_<?=$apartamento->uuid?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -105,7 +119,9 @@
                                                     </div>
                                                 </div>
                                             </form>
+                                        <? } ?>
                                         </td>
+                                    <? } ?>
                                     </tr>
                             <? } ?>
                             </tbody>

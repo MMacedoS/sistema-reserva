@@ -4,9 +4,11 @@
             "App\\": "src/"
         },
         "files": [
-            "src/env/app.php"
+            "src/env/app.php",
+            "src/Utils/helpers.php"
         ]
     },
     "require": {
+        "firebase/php-jwt": "^6.10"
     }
 }

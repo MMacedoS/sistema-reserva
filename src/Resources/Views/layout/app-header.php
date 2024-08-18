@@ -21,10 +21,10 @@
                   <div class="header-actions col">
 
                     <!-- Search container start -->
-                    {{-- <div class="search-container d-none d-lg-block">
+                    <!-- {{-- <div class="search-container d-none d-lg-block">
                       <input type="text" id="search" class="form-control" placeholder="Search" />
                       <i class="icon-search"></i>
-                    </div> --}}
+                    </div> --}} -->
                     <!-- Search container end -->
 
                     <div class="d-sm-flex d-none align-items-center gap-2">
@@ -62,20 +62,24 @@
                     </div>
                     <div class="dropdown ms-3">
                       <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
-                        href="#!" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        role="button" data-bs-toggle="dropdown" aria-expanded="false">
                          <img src="<?=URL_PREFIX?>/Public/assets/images/user2.png" class="rounded-2 img-3x" alt="Bootstrap Gallery" />
                         <div class="ms-2 text-truncate d-lg-block d-none text-white">
-                          <span class="d-flex opacity-50 small">Admin</span>
-                          <span>Name</span>
+                          <span class="d-flex opacity-50 small">
+                            <?=$_SESSION['user']->name?>
+                          </span>
+                          <span>
+                          <?=$_SESSION['user']->email?>
+                          </span>
                         </div>
                       </a>
                       <div class="dropdown-menu dropdown-menu-end">
-                        <!-- {{-- <div class="header-action-links">
-                          <a class="dropdown-item" href="profile.html"><i
-                              class="icon-user border border-primary text-primary"></i>Profile</a>
-                          <a class="dropdown-item" href="settings.html"><i
-                              class="icon-settings border border-danger text-danger"></i>Settings</a>
-                        </div> --}} -->
+                        <div class="header-action-links">
+                          <a class="dropdown-item" href="/perfil/<?=$_SESSION['user']->uuid?>"><i
+                              class="icon-user border border-primary text-primary"></i>Perfil</a>
+                          <!-- <a class="dropdown-item" href="settings.html"><i
+                              class="icon-settings border border-danger text-danger"></i>Settings</a> -->
+                        </div> 
                         <div class="mx-3 mt-2 d-grid">
                           <a href="{{route('logout')}}" class="btn btn-outline-danger">Logout</a>
                         </div>

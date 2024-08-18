@@ -21,58 +21,79 @@
                                 </li>
                             </ul>
                         </li>
-
-                        <li class="nav-item dropdown <?=$active === 'hospedagens' ? 'active-link': ''?>">
+                        <?php if (hasPermission('visualizar hospedagens')) { ?>
+                        <li class="nav-item dropdown <=$active === 'hospedagens' ? 'active-link': ''?>">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="icon-add_task"></i>Hospedagens
                             </a>
                             <ul class="dropdown-menu">
+                            <?php if (hasPermission('visualizar apartamentos')) { ?>
                                 <li>
                                     <a class="dropdown-item" href="\apartamento\">
                                         <span>Apartamentos</span>
                                     </a>
                                 </li>
+                            <?php } ?>
+                            <?php if (hasPermission('visualizar clientes')) { ?>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.board')}}">
-                                        <span>Consumos</span>
+                                    <a class="dropdown-item" href="\cliente\">
+                                        <span>Clientes</span>
                                     </a>
                                 </li>
+
+                            <?php } if (hasPermission('visualizar mapas')) { ?>
                                 <li>
                                     <a class="dropdown-item" href="{{route('admin.informations')}}">
-                                        <span>Mapas</span>
+                                        <span>Mapa de Reservas</span>
                                     </a>
                                 </li>
+                            <?php } if (hasPermission('visualizar reservas')) { ?>
                                 <li>
                                     <a class="dropdown-item" href="{{route('admin.partner')}}">
                                         <span>Reservas</span>
                                     </a>
                                 </li>
+                            <?php } if (hasPermission('visualizar nota Cliente')) { ?>
                                 <li>
                                     <a class="dropdown-item" href="{{route('admin.informations')}}">
                                         <span>Nota Cliente</span>
                                     </a>
                                 </li>
+                            <?php } ?>
                             </ul>
                         </li>
 
+                        <?php } ?>
+                        <?php if (hasPermission('visualizar cadastro')) { ?>
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="icon-add_task"></i>Cadastro
                             </a>
                             <ul class="dropdown-menu">
+                                
+                            <?php if (hasPermission('criar usuários')) { ?>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('users')}}">
+                                    <a class="dropdown-item" href="/usuario/">
                                         <span>Usuário</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="/permissao/">
+                                        <span>Permissões</span>
+                                    </a>
+                                </li>
+                            <?php } ?>
                             </ul>
                         </li>
+                        <?php } ?>
+                        <?php if (hasPermission('visualizar afiliados')) { ?>
                         <li class="nav-item">
                             <a class="nav-link" href=""><i class="icon-supervised_user_circle"></i> Afiliados
                             </a>
                         </li>
+                        <? } ?>
                         <li class="nav-item">
-                            <a class="nav-link text-warning" href="{{route('logout')}}">Sair</a>
+                            <a class="nav-link text-warning" href="/logout">Sair</a>
                         </li>
                     </ul>
                 </div>

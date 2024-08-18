@@ -7,20 +7,14 @@ namespace Composer\Autoload;
 class ComposerStaticInit7a5fbd8b5a8da14cb9093785c03b15e4
 {
     public static $files = array (
-        '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
-        'c15d4a1253e33e055d05e547c61dcb71' => __DIR__ . '/..' . '/smarty/smarty/src/functions.php',
         'e20dc96720d010fd270ac492c6732f70' => __DIR__ . '/../..' . '/src/env/app.php',
+        'bff91a780c719327e5ca6dc2232bfb4b' => __DIR__ . '/../..' . '/src/Utils/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'S' => 
+        'F' => 
         array (
-            'Symfony\\Polyfill\\Mbstring\\' => 26,
-            'Smarty\\' => 7,
-        ),
-        'L' => 
-        array (
-            'League\\Plates\\' => 14,
+            'Firebase\\JWT\\' => 13,
         ),
         'A' => 
         array (
@@ -29,17 +23,9 @@ class ComposerStaticInit7a5fbd8b5a8da14cb9093785c03b15e4
     );
 
     public static $prefixDirsPsr4 = array (
-        'Symfony\\Polyfill\\Mbstring\\' => 
+        'Firebase\\JWT\\' => 
         array (
-            0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
-        ),
-        'Smarty\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/smarty/smarty/src',
-        ),
-        'League\\Plates\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/league/plates/src',
+            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
         ),
         'App\\' => 
         array (

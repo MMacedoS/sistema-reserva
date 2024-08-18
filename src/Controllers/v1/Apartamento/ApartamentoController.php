@@ -2,20 +2,19 @@
 
 namespace App\Controllers\v1\Apartamento;
 
-use App\Config\Router;
+use App\Controllers\Controller;
 use App\Repositories\Apartamento\ApartamentoRepository;
 use App\Request\Request;
 use App\Utils\Paginator;
 use App\Utils\Validator;
 
-class ApartamentoController
+class ApartamentoController extends Controller
 {
     protected $apartamentoRepository;
-    private $router;
 
     public function __construct()
     {        
-        $this->router = new Router();
+        parent::__construct();
         $this->apartamentoRepository = new ApartamentoRepository();
     }
 

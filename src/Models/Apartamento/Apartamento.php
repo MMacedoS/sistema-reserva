@@ -12,6 +12,7 @@ class Apartamento {
     public $uuid;
     public $name;
     public $description;
+    public $id_usuario;
     public $category;
     public $status;
     public $created_at;
@@ -26,6 +27,7 @@ class Apartamento {
         $apartamento->id = $data['id'] ?? null;
         $apartamento->uuid = $data['uuid'] ?? $this->generateUUID();
         $apartamento->name = $data['name'];
+        $apartamento->id_usuario = $data['id_usuario'] ?? null;
         $apartamento->description = $data['description'];
         $apartamento->category = $data['category'];
         $apartamento->status = $data['status'];        

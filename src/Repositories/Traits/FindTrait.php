@@ -1,8 +1,5 @@
 <?php
  namespace App\Repositories\Traits;
-
-use App\Models\Apartamento\Apartamento;
-
 trait FindTrait{
     public function findById($id)
     {
