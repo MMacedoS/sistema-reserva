@@ -59,7 +59,7 @@ class UsuarioRepository {
         }
     }
 
-    public function update(int $id, array $data)
+    public function update(array $data, int $id)
     {
         $user = $this->model->create(
             $data
@@ -75,22 +75,21 @@ class UsuarioRepository {
                     status = :status 
                 WHERE id = :id"
             );
+
             $updated = $stmt->execute([
-                'id' => $id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'status' => $user->status
+                ':id' => $id,
+                ':name' => $user->name,
+                ':email' => $user->email,
+                ':status' => $user->status
             ]);
 
-            if (!$updated) {                
+            if (!$updated) {        
                 $this->conn->rollBack();
                 return null;
             }
             $this->conn->commit();
             return $this->findById($id);
         } catch (\Throwable $th) {
-            var_dump($th->getMessage());
-            die;
             $this->conn->rollBack();
             return null;
         }

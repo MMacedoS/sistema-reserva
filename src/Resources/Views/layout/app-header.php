@@ -81,7 +81,7 @@
                               class="icon-settings border border-danger text-danger"></i>Settings</a> -->
                         </div> 
                         <div class="mx-3 mt-2 d-grid">
-                          <a href="{{route('logout')}}" class="btn btn-outline-danger">Logout</a>
+                          <a href="/logout" class="btn btn-outline-danger">Logout</a>
                         </div>
                       </div>
                     </div>

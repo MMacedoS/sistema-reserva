@@ -7,6 +7,7 @@ use App\Controllers\v1\Customer\ClienteController;
 use App\Controllers\v1\Dashboard\DashboardController;
 use App\Controllers\v1\Permission\PermissaoController;
 use App\Controllers\v1\Profile\UsuarioController;
+use App\Controllers\v1\Reservate\ReservaController;
 
 $router = new Router();
 $auth = new Auth();
@@ -15,6 +16,7 @@ $apartamentoController = new ApartamentoController();
 $usuarioController = new UsuarioController(); 
 $permissaoController = new PermissaoController();
 $clienteController = new ClienteController();
+$reservaController = new ReservaController();
 
 $router->create('GET', '/dashboard', [$dashboardController, 'index'], $auth);
 
@@ -53,6 +55,17 @@ $router->create('POST', '/cliente/add/', [$clienteController, 'store'], $auth);
 $router->create('GET', '/cliente/criar', [$clienteController, 'create'], $auth);
 $router->create('GET', '/cliente/{request}', [$clienteController, 'index'], $auth);
 $router->create('GET', '/cliente/', [$clienteController, 'index'], $auth);
+
+$router->create('POST', '/reserva/{id}/deletar', [$reservaController, 'delete'], $auth);
+$router->create('GET', '/reserva/{id}/editar', [$reservaController, 'edit'], $auth);
+$router->create('POST', '/reserva/{id}/upt', [$reservaController, 'update'], $auth);
+$router->create('POST', '/reserva/add/', [$reservaController, 'store'], $auth);
+$router->create('GET', '/reserva/criar', [$reservaController, 'create'], $auth);
+$router->create('GET', '/reserva/{request}', [$reservaController, 'index'], $auth);
+$router->create('GET', '/reserva/', [$reservaController, 'index'], $auth);
+$router->create('POST', '/reserva/apartamentos', [$reservaController, 'findAvailableApartments'], $auth);
+$router->create('GET', '/maps', [$reservaController, 'maps'], $auth);
+$router->create('POST', '/maps', [$reservaController, 'reserve_by_maps'], $auth);
 
 $router->create('GET', '/', [$usuarioController, 'login'], null);
 $router->create('POST', '/login', [$usuarioController, 'auth']);

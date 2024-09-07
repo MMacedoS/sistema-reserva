@@ -10,7 +10,7 @@
                 </li>
                 <li class="breadcrumb-item">
                     <i class="fs-3 icon-archive lh-1"></i>
-                    <a href="/cliente/" class="text-decoration-none">clientes</a>
+                    <a href="/reserva/" class="text-decoration-none">Reservas</a>
                 </li>
                 <li class="breadcrumb-item">Atualizar</li>
             </ol>
@@ -18,14 +18,21 @@
         </div>
         <div class="col-2 col-xl-6">
             <div class="float-end">
-                <a href="/cliente/" class="btn btn-outline-primary" > Voltar </a>
+                <a href="/reserva/" class="btn btn-outline-primary" > Voltar </a>
             </div>
         </div>
     </div>
     <!-- Row end -->
-    <form action="/cliente/<?=$cliente->uuid?>/upt" method="post" enctype="multipart/form-data">   
+    <form action="/reserva/<?=$data['reserve']->uuid?>/upt" method="post" enctype="multipart/form-data">   
         <div class="row gx-3">
             <? include_once('_forms.php');?>
         </div>
     </form>
 <?php require_once __DIR__ . '/../layout/bottom.php'; ?>
+
+<script defer>   
+    $(document).ready(function() { 
+        $('#dt_checkout').change();
+        selecionarItem(8);
+    });  
+</script>

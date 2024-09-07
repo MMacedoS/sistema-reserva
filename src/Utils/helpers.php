@@ -26,3 +26,29 @@ if (!function_exists('hasPermission')) {
         return false;
     }
 }
+
+if (!function_exists('getCustomers')) {    
+    function getCustomers($data) {
+        if (is_array($data)) {
+            $names = '';
+            foreach ($data as $customer) {
+                $names.= $customer->name; 
+                if(count($data) > 1) {
+                    $names .= ' | ';
+                }
+            }
+            return $names;
+        }
+        return "Não identificado";
+    }
+}
+
+if (!function_exists('brDate')) {    
+    function brDate($date) {
+        if (!is_null($date)) {
+            $date = implode('/', array_reverse(explode('-', $date)));
+            return $date;
+        }
+        return "Não identificado";
+    }
+}

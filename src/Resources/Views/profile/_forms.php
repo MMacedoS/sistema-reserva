@@ -51,7 +51,7 @@
     <div class="card-body">
       <div class="m-0">
         <label class="form-label">Telefone de contato</label>
-        <input type="tel" step="0" min="1" class="form-control" name="telefone" placeholder="digite aqui" value="<?=$usuario->name ?? ''?>" />
+        <input type="tel" step="0" min="1" class="form-control" name="telefone" placeholder="digite aqui" value="<?=$usuario->address ?? ''?>" />
       </div>
     </div>
   </div>
@@ -62,7 +62,7 @@
     <div class="card-body">
       <div class="m-0">
         <label class="form-label">Endereço</label>
-        <input type="text" step="0" min="1" class="form-control" name="name" placeholder="digite aqui" value="<?=$usuario->name ?? ''?>" />
+        <input type="text" step="0" min="1" class="form-control" name="address" placeholder="digite aqui" value="<?=$usuario->address ?? ''?>" />
       </div>
     </div>
   </div>

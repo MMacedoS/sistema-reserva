@@ -106,8 +106,8 @@ class UsuarioController extends Controller
                 ]
             );
         } 
-        
-        $updated = $this->usuarioRepository->update($usuario->id, $data);
+
+        $updated = $this->usuarioRepository->update($data, $usuario->id);
         
         if(is_null($updated)) {            
         return $this->router->view('profile/edit', ['active' => 'register', 'danger' => true]);

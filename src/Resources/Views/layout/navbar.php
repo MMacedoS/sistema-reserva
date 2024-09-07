@@ -43,13 +43,13 @@
 
                             <?php } if (hasPermission('visualizar mapas')) { ?>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.informations')}}">
+                                    <a class="dropdown-item" href="\maps\">
                                         <span>Mapa de Reservas</span>
                                     </a>
                                 </li>
                             <?php } if (hasPermission('visualizar reservas')) { ?>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('admin.partner')}}">
+                                    <a class="dropdown-item" href="\reserva\">
                                         <span>Reservas</span>
                                     </a>
                                 </li>

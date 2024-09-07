@@ -129,4 +129,6 @@ $(document).ready(function() {
 		var formattedPhone = telefone.replace(/^(\d{2})(\d{1})(\d{4,5})(\d{4})$/, '($1) $2 $3-$4');
 		$(this).val(formattedPhone);
 	});
+
+	$('#customers').select2();
   });

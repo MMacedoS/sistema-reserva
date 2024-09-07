@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Controllers\v1\Customer;
+namespace App\Controllers\v1\Reservate;
 
 use App\Controllers\Controller;
+use App\Repositories\Apartamento\ApartamentoRepository;
+use App\Repositories\Customer\ClienteRepository;
 use App\Repositories\Reservate\ReservaRepository;
 use App\Request\Request;
 use App\Utils\Paginator;
@@ -11,12 +13,15 @@ use App\Utils\Validator;
 class ReservaController extends Controller
 {
     protected $reservaRepository;
-    protected $permissaoRepository;
+    protected $clienteRepository;    
+    protected $apartamentoRepository;
 
     public function __construct()
     {   
         parent::__construct();
-        $this->reservaRepository = new ReservaRepository();
+        $this->reservaRepository = new ReservaRepository();        
+        $this->clienteRepository = new ClienteRepository();
+        $this->apartamentoRepository = new ApartamentoRepository();
     }
 
     public function index(Request $request) {
@@ -35,18 +40,18 @@ class ReservaController extends Controller
     }
 
     public function create() {
-        return $this->router->view('reservate/create', ['active' => 'register']);
+        $clientes = $this->clienteRepository->all();
+        return $this->router->view('reservate/create', ['active' => 'register', 'customers' => $clientes]);
     }
 
     public function store(Request $request) {
         $data = $request->getBodyParams();
 
         $validator = new Validator($data);
-
         $rules = [
             'dt_checkin' => 'required',
             'dt_checkout' => 'required',
-            'id_apartamento' => 'required',
+            'apartament' => 'required',
             'status' => 'required',
             'customers' => 'required',
         ];
@@ -60,6 +65,8 @@ class ReservaController extends Controller
                 ]
             );
         } 
+
+        $data['id_usuario'] = 1;
         
         $created = $this->reservaRepository->create($data);
 
@@ -71,33 +78,41 @@ class ReservaController extends Controller
     }
 
     public function edit(Request $request, $id) {
-        $cliente = $this->reservaRepository->findByUuid($id);
+        $reserva = $this->reservaRepository->findByUuid($id);
         
-        if (is_null($cliente)) {
-            return $this->router->view('customer/', ['active' => 'register', 'danger' => true]);
+        if (is_null($reserva)) {
+            return $this->router->view('reservate/', ['active' => 'register', 'danger' => true]);
         }
 
-        return $this->router->view('customer/edit', ['active' => 'register', 'cliente' => $cliente]);
+        $reserva = $this->reservaRepository->findByIdWithCustomers($reserva->id);        
+
+        $clientes = $this->clienteRepository->all();
+
+        return $this->router->view('reservate/edit', [
+            'active' => 'register', 
+            'data' => [
+                'reserve' => $reserva, 
+                'customers' => $clientes
+            ]
+        ]);
     }
 
     public function update(Request $request, $id) {
-        $cliente = $this->reservaRepository->findByUuid($id);
-
-        if (is_null($cliente)) {
-            return $this->router->view('cliente/', ['active' => 'register', 'danger' => true]);
-        }
-
+        $reserve = $this->reservaRepository->findByUuid($id);
         $data = $request->getBodyParams();
 
         $validator = new Validator($data);
-
         $rules = [
-            'name' => 'required|min:1|max:45'
+            'dt_checkin' => 'required',
+            'dt_checkout' => 'required',
+            'apartament' => 'required',
+            'status' => 'required',
+            'customers' => 'required',
         ];
 
         if (!$validator->validate($rules)) {
             return $this->router->view(
-                'customer/edit', 
+                'reservate', 
                 [
                     'active' => 'register', 
                     'errors' => $validator->getErrors()
@@ -105,24 +120,89 @@ class ReservaController extends Controller
             );
         } 
         
-        // $updated = $this->reservaRepository->update($cliente->id, $data);
+        $data['id_usuario'] = 1;
         
-        // if(is_null($updated)) {            
-        // return $this->router->view('customer/edit', ['active' => 'register', 'danger' => true]);
-        // }
+        $updated = $this->reservaRepository->update($data, $reserve->id);
 
-        return $this->router->redirect('cliente/');
+        if(is_null($updated)) {            
+        return $this->router->view('reservate/edit', ['active' => 'register', 'danger' => true]);
+        }
+
+        return $this->router->redirect('reserva/');
     }
 
     public function delete(Request $request, $id) {
         $cliente = $this->reservaRepository->findByUuid($id);
         
         if (is_null($cliente)) {
-            return $this->router->view('customer/', ['active' => 'register', 'danger' => true]);
+            return $this->router->view('reserva/', ['active' => 'register', 'danger' => true]);
         }
 
         $cliente = $this->reservaRepository->delete($cliente->id);
 
-        return $this->router->redirect('cliente/');
+        return $this->router->redirect('reserva/');
+    }
+
+    public function findAvailableApartments(Request $request) 
+    {
+        $data = $request->getBodyParams();
+        
+        $checkin = $data['dt_checkin'];
+        $checkout = $data['dt_checkout'];
+        $reservaId = isset($data['reserve']) ? $data['reserve'] : null;
+
+        $errors = [];
+
+        // Verifica se o check-in está presente e é uma data válida
+        if (empty($checkin) || !strtotime($checkin)) {
+            $errors['dt_checkin'] = 'A data de check-in é obrigatória e deve ser uma data válida.';
+        }
+    
+        // Verifica se o check-out está presente e é uma data válida
+        if (empty($checkout) || !strtotime($checkout)) {
+            $errors['dt_checkout'] = 'A data de check-out é obrigatória e deve ser uma data válida.';
+        }
+    
+        // Verifica se a data de check-out é posterior à data de check-in
+        if (!empty($checkin) && !empty($checkout) && strtotime($checkout) < strtotime($checkin)) {
+            $errors['dt_checkout'] = 'A data de check-out deve ser posterior à data de check-in.';
+        }
+    
+        // Verifica se o reservaId é um número inteiro, caso esteja presente
+        if ($reservaId !== '' && !filter_var($reservaId, FILTER_VALIDATE_INT)) {
+            $errors['reserva_id'] = 'O ID da reserva deve ser um número inteiro válido.';
+        }
+    
+        // Se houver erros de validação, retorna os erros
+        if (!empty($errors)) {
+            echo json_encode(['errors' => $errors]);
+            return;
+        }
+
+        $apartamentosDisponiveis = $this->apartamentoRepository->findAvailableApartments($checkin, $checkout);
+
+        if ($reservaId !== '') {
+            $apartament =  $this->apartamentoRepository->findApartmentByIdReserve($reservaId);
+
+            if (!is_null($apartament)) {
+                $apartamentosDisponiveis[] = $apartament;
+            }
+        }
+        
+        echo json_encode($apartamentosDisponiveis);
+        exit;
+    }
+
+    public function maps() {
+        return $this->router->view('reservate/maps', ['active' => 'register']);
+    }
+
+    public function reserve_by_maps(Request $request) {
+        $data = $request->getBodyParams();
+        $dados = $this->reservaRepository->buscaMapaReservas($data['start'], $data['end']);        
+        echo json_encode(
+            $dados
+        );
+        exit;
     }
 }

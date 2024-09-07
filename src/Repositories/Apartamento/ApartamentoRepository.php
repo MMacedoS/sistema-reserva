@@ -118,6 +118,65 @@ class ApartamentoRepository {
 
     }
 
+    public function findAvailableApartments($checkin, $checkout) 
+    {
+        $stmt = $this->conn
+        ->prepare(
+            "SELECT a.id, a.name
+            FROM apartamentos a
+            WHERE a.status != 0
+            AND a.id NOT IN (
+                SELECT r.id_apartamento
+                FROM reservas r
+                WHERE r.status <= 3
+                AND (
+                    (r.dt_checkin >= :checkin and r.dt_checkin < :checkout)
+                    OR 
+                    (r.dt_checkout > :checkin and r.dt_checkout <= :checkout)
+                    OR 
+                    (dt_checkin <= :checkin and r.dt_checkout >= :checkout)
+                )
+            )"
+        );
+        $stmt->bindParam(':checkin', $checkin);
+        $stmt->bindParam(':checkout', $checkout);
+        $stmt->bindParam(':reserva_id', $reservaId);
 
+        // Executa a consulta
+        $stmt->execute();
+        $apartamentos = $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);
 
+        if (is_null($apartamentos)) {
+            return null;
+        }
+
+        return $apartamentos;
+    }
+
+    public function findApartmentByIdReserve(int $idReservation)
+    {
+        $stmt = $this->conn->prepare(
+            "SELECT a.id, a.name
+            FROM apartamentos a
+            INNER JOIN reservas r ON a.id = r.id_apartamento
+            WHERE r.id = :idReservation"
+        );
+    
+        // Vincula o parâmetro :idReservation à consulta
+        $stmt->bindParam(':idReservation', $idReservation, \PDO::PARAM_INT);
+    
+        // Executa a consulta
+        $stmt->execute();
+    
+        // Recupera o resultado como um objeto da classe especificada
+        $apartamento = $stmt->fetch(\PDO::FETCH_OBJ);
+    
+        // Verifica se algum apartamento foi encontrado
+        if ($apartamento === false) {
+            return null;  // Retorna null se não encontrar o apartamento
+        }
+    
+        return $apartamento;  // Retorna o apartamento encontrado
+    }
+    
 }
