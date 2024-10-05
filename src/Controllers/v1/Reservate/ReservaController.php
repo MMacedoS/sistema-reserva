@@ -52,7 +52,8 @@ class ReservaController extends Controller
             'dt_checkin' => 'required',
             'dt_checkout' => 'required',
             'apartament' => 'required',
-            'status' => 'required',
+            'status' => 'required',           
+            'amount' => 'required',
             'customers' => 'required',
         ];
 
@@ -106,18 +107,13 @@ class ReservaController extends Controller
             'dt_checkin' => 'required',
             'dt_checkout' => 'required',
             'apartament' => 'required',
-            'status' => 'required',
+            'status' => 'required',            
+            'amount' => 'required',
             'customers' => 'required',
         ];
 
         if (!$validator->validate($rules)) {
-            return $this->router->view(
-                'reservate', 
-                [
-                    'active' => 'register', 
-                    'errors' => $validator->getErrors()
-                ]
-            );
+            return $this->router->redirect('reserva/');
         } 
         
         $data['id_usuario'] = 1;
@@ -132,13 +128,13 @@ class ReservaController extends Controller
     }
 
     public function delete(Request $request, $id) {
-        $cliente = $this->reservaRepository->findByUuid($id);
+        $reserve = $this->reservaRepository->findByUuid($id);
         
-        if (is_null($cliente)) {
+        if (is_null($reserve)) {
             return $this->router->view('reserva/', ['active' => 'register', 'danger' => true]);
         }
 
-        $cliente = $this->reservaRepository->delete($cliente->id);
+        $reserve = $this->reservaRepository->delete($reserve->id);
 
         return $this->router->redirect('reserva/');
     }
@@ -191,6 +187,47 @@ class ReservaController extends Controller
         
         echo json_encode($apartamentosDisponiveis);
         exit;
+    }
+
+    public function checkin(Request $request) 
+    {
+        $reservas = $this->reservaRepository->allCheckin();
+        $perPage = 10;
+        $currentPage = $request->getParam('page') ? (int)$request->getParam('page') : 1;
+        $paginator = new Paginator($reservas, $perPage, $currentPage);
+        $paginatedBoards = $paginator->getPaginatedItems();
+
+        $data = [
+            'reservas' => $paginatedBoards,
+            'links' => $paginator->links()
+        ];
+
+        return $this->router->view('reservate/checkin', ['active' => 'register', 'data' => $data]);
+    }
+
+    public function executeCkeckin(Request $request, string $id) 
+    {
+        $reserve = $this->reservaRepository->findByUuid($id);
+        
+        if (is_null($reserve)) {
+            echo json_encode(["status" => 422, "message" => "not found reserve!"]);
+        }
+
+        $reserve->status = 'Hospedada';
+
+        $updated = $this->reservaRepository->updateToCheckin($reserve, $reserve->id);
+
+        if (is_null($updated)) {
+            echo json_encode(["status" => 422, "message" => "not Sucessfully updated"]);
+        }
+
+        echo json_encode(["status" => 200, "message" => "Sucessfully updated"]);
+        exit;
+    }
+
+    public function checkout(Request $request) 
+    {
+
     }
 
     public function maps() {

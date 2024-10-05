@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div class="col-lg-6 col-sm-6 col-12">
+<div class="col-lg-4 col-sm-4 col-12">
   <div class="card mb-3">
     <div class="card-body">
       <div class="m-0">
@@ -33,7 +33,7 @@
   </div>
 </div>
 
-<div class="col-lg-6 col-sm-6 col-12">
+<div class="col-lg-4 col-sm-4 col-12">
   <div class="card mb-3">
     <div class="card-body">
       <div class="m-0">
@@ -59,6 +59,18 @@
             <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Finalizada') { echo 'selected';} ?>>
             Finalizada
           </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-lg-4 col-sm-4 col-12">
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="m-0">
+        <label class="form-label">Valor</label>
+        <input type="number" class="form-control" name="amount" step="0.01" min="0.00" id="amount" value="<?=$data['reserve']->amount ?? 150?>">
         </select>
       </div>
     </div>

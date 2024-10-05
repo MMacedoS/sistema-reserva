@@ -7,6 +7,7 @@ use App\Controllers\v1\Customer\ClienteController;
 use App\Controllers\v1\Dashboard\DashboardController;
 use App\Controllers\v1\Permission\PermissaoController;
 use App\Controllers\v1\Profile\UsuarioController;
+use App\Controllers\v1\Reservate\DiariaController;
 use App\Controllers\v1\Reservate\ReservaController;
 
 $router = new Router();
@@ -17,6 +18,7 @@ $usuarioController = new UsuarioController();
 $permissaoController = new PermissaoController();
 $clienteController = new ClienteController();
 $reservaController = new ReservaController();
+$diariaController = new DiariaController();
 
 $router->create('GET', '/dashboard', [$dashboardController, 'index'], $auth);
 
@@ -64,8 +66,13 @@ $router->create('GET', '/reserva/criar', [$reservaController, 'create'], $auth);
 $router->create('GET', '/reserva/{request}', [$reservaController, 'index'], $auth);
 $router->create('GET', '/reserva/', [$reservaController, 'index'], $auth);
 $router->create('POST', '/reserva/apartamentos', [$reservaController, 'findAvailableApartments'], $auth);
+$router->create('GET', '/checkin/reserva', [$reservaController, 'checkin'], $auth);
+$router->create('POST', '/checkin/{id}/reserva', [$reservaController, 'executeCkeckin'], $auth);
+$router->create('GET', '/reserva/checkout', [$reservaController, 'checkout'], $auth);
 $router->create('GET', '/maps', [$reservaController, 'maps'], $auth);
 $router->create('POST', '/maps', [$reservaController, 'reserve_by_maps'], $auth);
+
+$router->create('POST', '/reservas/{token}/diarias/atualizar',[$diariaController, 'generateDaily']);
 
 $router->create('GET', '/', [$usuarioController, 'login'], null);
 $router->create('POST', '/login', [$usuarioController, 'auth']);

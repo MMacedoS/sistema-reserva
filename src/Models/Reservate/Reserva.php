@@ -15,6 +15,7 @@ class Reserva {
     public $id_usuario;
     public $dt_checkin;
     public $dt_checkout;
+    public $amount;
     public $status;
     public $customers;
     public $created_at;
@@ -33,7 +34,8 @@ class Reserva {
         $reserva->apartament = $data['apartament'] ?? null;
         $reserva->dt_checkin = $data['dt_checkin'];
         $reserva->status = $data['status']; 
-        $reserva->dt_checkout = $data['dt_checkout'];                      
+        $reserva->dt_checkout = $data['dt_checkout'];    
+        $reserva->amount = $data['amount'];                      
         $reserva->customers = $data['customers'] ?? null;  
         $reserva->created_at = $data['created_at'] ?? null;
         $reserva->updated_at = $data['updated_at'] ?? null;

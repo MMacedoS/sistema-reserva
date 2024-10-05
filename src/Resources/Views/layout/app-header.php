@@ -9,7 +9,7 @@
 
                   <!-- App brand starts -->
                   <div class="app-brand">
-                    <a href="/" class="text-light d-md-block fs-1 fw-bold">
+                    <a href="/dashboard/" class="text-light d-md-block fs-1 fw-bold">
                         <img src="<?=URL_PREFIX?>/Public/assets/images/logo-ligth-rm-bg.png" class="img-fluid dash-logo" alt="Admin Dashboard" />
                     </a>
                   </div>

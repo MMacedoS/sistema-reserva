@@ -15,7 +15,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item current-page" href="{{route('dashboard')}}">
+                                    <a class="dropdown-item current-page" href="/dashboard/analytics">
                                         <span>Analytics</span>
                                     </a>
                                 </li>
@@ -51,6 +51,12 @@
                                 <li>
                                     <a class="dropdown-item" href="\reserva\">
                                         <span>Reservas</span>
+                                    </a>
+                                </li>
+                            <?php } if (hasPermission('visualizar reservas')) { ?>
+                                <li>
+                                    <a class="dropdown-item" href="\checkin\reserva\">
+                                        <span>Checkin</span>
                                     </a>
                                 </li>
                             <?php } if (hasPermission('visualizar nota Cliente')) { ?>

@@ -9,6 +9,7 @@
         ]
     },
     "require": {
-        "firebase/php-jwt": "^6.10"
+        "firebase/php-jwt": "^6.10",
+        "monolog/monolog": "^2.9"
     }
 }

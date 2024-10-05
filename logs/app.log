@@ -1,0 +1,8 @@
+[2024-09-08T18:38:10.703540+00:00] app_logger.INFO: Iniciando a ação no SomeController [] []
+[2024-09-08T18:38:10.762652+00:00] app_logger.INFO: {"count":"0"} [] []
+[2024-09-08T18:38:10.767466+00:00] app_logger.INFO: {"count":"0"} [] []
+[2024-09-08T18:38:10.770803+00:00] app_logger.INFO: Diárias atualizadas com sucesso. [] []
+[2024-09-08T18:38:18.225349+00:00] app_logger.INFO: Iniciando a ação no SomeController [] []
+[2024-09-08T18:38:18.267560+00:00] app_logger.INFO: {"count":"0"} [] []
+[2024-09-08T18:38:18.273049+00:00] app_logger.INFO: {"count":"0"} [] []
+[2024-09-08T18:38:18.275984+00:00] app_logger.INFO: Diárias atualizadas com sucesso. [] []

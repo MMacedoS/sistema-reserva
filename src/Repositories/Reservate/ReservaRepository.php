@@ -62,6 +62,7 @@ class ReservaRepository {
                     id_apartamento,
                     dt_checkin,
                     dt_checkout,
+                    amount,
                     status,
                     id_usuario
                 ) VALUES (
@@ -69,6 +70,7 @@ class ReservaRepository {
                     :id_apartamento,
                     :data_checkin,
                     :data_checkout,
+                    :amount,
                     :status_reserva,
                     :id_usuario
                 )
@@ -79,6 +81,7 @@ class ReservaRepository {
                 ':id_apartamento' => $reserva->id_apartamento,
                 ':data_checkin' => $reserva->dt_checkin,
                 ':data_checkout' => $reserva->dt_checkout,
+                ':amount' => $reserva->amount,
                 ':status_reserva' => $reserva->status,
                 ':id_usuario' => $reserva->id_usuario,
                 ':uuid' => $reserva->uuid
@@ -155,6 +158,7 @@ class ReservaRepository {
                     id_apartamento = :id_apartamento,
                     dt_checkin = :dt_checkin,
                     dt_checkout = :dt_checkout,
+                    amount = :amount,
                     status = :status,
                     id_usuario = :id_usuario
                 WHERE id = :id"
@@ -165,6 +169,7 @@ class ReservaRepository {
                 ':id_apartamento' => $reserve->id_apartamento,
                 ':dt_checkin' => $reserve->dt_checkin,
                 ':dt_checkout' => $reserve->dt_checkout,
+                ':amount' => $reserve->amount,
                 ':status' => $reserve->status,
                 ':id_usuario' => $reserve->id_usuario
             ]);
@@ -262,5 +267,101 @@ class ReservaRepository {
         } catch (\Throwable $th) {
             return $th->getMessage();
         }
+    }
+
+    public function allCheckin (array $params = null)
+    {
+        $stmt = $this->conn->query(
+            "SELECT 
+                r.*, a.name as apartament,
+                (
+                    SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'id_guest', h.id,
+                            'name', h.name,
+                            'is_primary', rh.is_primary
+                        )
+                    )
+                    FROM clientes h
+                    JOIN reserva_hospedes rh ON h.id = rh.id_hospede
+                    WHERE rh.id_reserva = r.id
+                ) AS customers
+            FROM 
+                " . self::TABLE . " r
+            LEFT JOIN apartamentos a ON a.id = r.id_apartamento
+            WHERE r.dt_checkin BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 DAY) AND CURDATE()
+              AND r.status IN ('Confirmada', 'Reservada')
+            ORDER BY 
+                r.dt_checkin ASC"
+        );
+        
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);        
+    }
+
+    public function updateToCheckin($reserve, int $id)
+    {
+        $this->conn->beginTransaction();
+        try {
+            $stmt = $this->conn
+            ->prepare(
+                "UPDATE " . self::TABLE . "
+                    set 
+                    id_apartamento = :id_apartamento,
+                    dt_checkin = :dt_checkin,
+                    dt_checkout = :dt_checkout,
+                    amount = :amount,
+                    status = :status,
+                    id_usuario = :id_usuario
+                WHERE id = :id"
+            );
+
+            $updated = $stmt->execute([
+                'id' => $id,
+                ':id_apartamento' => $reserve->id_apartamento,
+                ':dt_checkin' => $reserve->dt_checkin,
+                ':dt_checkout' => $reserve->dt_checkout,
+                ':amount' => $reserve->amount,
+                ':status' => $reserve->status,
+                ':id_usuario' => $reserve->id_usuario
+            ]);
+
+            if (!$updated) {                
+                $this->conn->rollBack();
+                return null;
+            }
+            $this->conn->commit();
+            return $this->findById($id);
+        } catch (\Throwable $th) {
+            $this->conn->rollBack();
+            return null;
+        }
+    }
+
+    public function allByHospedated()
+    {
+        $stmt = $this->conn->query(
+            "SELECT 
+                r.*, a.name as apartament,
+                (
+                    SELECT JSON_ARRAYAGG(
+                        JSON_OBJECT(
+                            'id_guest', h.id,
+                            'name', h.name,
+                            'is_primary', rh.is_primary
+                        )
+                    )
+                    FROM clientes h
+                    JOIN reserva_hospedes rh ON h.id = rh.id_hospede
+                    WHERE rh.id_reserva = r.id
+                ) AS customers
+            FROM 
+                " . self::TABLE . " r
+            
+            LEFT JOIN apartamentos a ON a.id = r.id_apartamento
+            WHERE r.status = 'Hospedada'
+            ORDER BY 
+                r.dt_checkin ASC
+        ");
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);        
     }
 }
