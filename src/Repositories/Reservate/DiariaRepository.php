@@ -5,8 +5,6 @@ namespace App\Repositories\Reservate;
 use App\Config\Database;
 use App\Models\Reservate\Diaria;
 use App\Repositories\Traits\FindTrait;
-use App\Utils\LoggerHelper;
-use PDO;
 
 class DiariaRepository {
     const CLASS_NAME = Diaria::class;
@@ -24,13 +22,38 @@ class DiariaRepository {
         $this->reservaRepository = new ReservaRepository();
     }
 
-    public function all()
+    public function all(array $params)
     {
-        $stmt = $this->conn->query(
-            "SELECT * FROM " . self::TABLE . " 
-            WHERE status != 0 ORDER BY dt_daily ASC
-        ");
-        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);        
+        $sql = "
+        SELECT 
+           *
+        FROM " . self::TABLE . " 
+        ";
+        
+        $conditions = [];
+        $bindings = [];
+
+        if (isset($params['status'])) {
+            $conditions[] = "status = :status";
+            $bindings[':status'] = $params['status'];
+        }
+
+        if (isset($params['reserve_id'])) {
+            $conditions[] = "id_reserva = :reserve_id";
+            $bindings[':reserve_id'] = $params['reserve_id'];
+        }
+
+        if (count($conditions) > 0) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $sql .= " ORDER BY  dt_daily DESC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->execute($bindings);
+
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);   
     }
 
     public function create(array $data)
@@ -139,36 +162,39 @@ class DiariaRepository {
         if (empty($reservates)) {
             return null;
         }
-        
-        $now = new \DateTime();
 
-        foreach ($reservates as $reserve) {
+        try {            
+            $now = new \DateTime();
+            $diaries_generate = 0;
+            foreach ($reservates as $reserve) {
+                $daily_last =  $this->getLastDaily($reserve->id);
+                $dt_daily_last = $daily_last ? new \DateTime($daily_last->dt_daily) : new \DateTime($reserve->dt_checkin);
 
-            $daily_last =  $this->getLastDaily($reserve->id);
-            $dt_daily_last = $daily_last ? new \DateTime($daily_last->dt_daily) : new \DateTime($reserve->dt_checkin);
-
-            while ($dt_daily_last <= $now) {
-
-                if ($this->hasExistDaily($reserve->id, $dt_daily_last->format('Y-m-d'))) {
-                    continue;
+                while ($dt_daily_last <= $now) {
+                    if (!$this->hasExistDaily($reserve->id, $dt_daily_last->format('Y-m-d'))) {
+                        $data = [
+                            'id_reserva' => $reserve->id,
+                            'amount' => $reserve->amount,
+                            'dt_daily' => $dt_daily_last->format('Y-m-d'),
+                            'id_usuario' => 1 
+                        ];
+                
+                        $created = $this->create($data);
+                
+                        if (is_null($created)) {
+                            break; 
+                        }
+                            
+                        $diaries_generate++;
+                    }
+                    
+                    $dt_daily_last->modify("+1 day");
                 }
-
-                $data = [
-                    'id_reserva' => $reserve->id,
-                    'amount' => $reserve->amount,
-                    'dt_daily' => $dt_daily_last->format('Y-m-d'),
-                    'id_usuario' => 1 
-                ];
-
-                $created = $this->create($data);
-
-                if (is_null($created)) {
-                    break;
-                }
-
-                $dt_daily_last->modify("+1 day");
             }
-        }
+            return $diaries_generate . " diarias geradas ";
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }     
     }
 
     private function getLastDaily(int $daily)
@@ -177,7 +203,7 @@ class DiariaRepository {
             ->prepare(
                 "SELECT * FROM " . self::TABLE . "  WHERE id_reserva = :id ORDER BY dt_daily"
             );
-        $stmt->bindParam(':id', $idReserva, \PDO::PARAM_INT);
+        $stmt->bindParam(':id', $daily, \PDO::PARAM_INT);
         $stmt->execute();
         
         $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, self::CLASS_NAME);
@@ -193,15 +219,13 @@ class DiariaRepository {
                      AND dt_daily = :data_diaria";
         
         $stmtCheck = $this->conn->prepare($sqlCheck);
-        $stmtCheck->bindParam(':id_reserva', $idReserva, \PDO::PARAM_INT);
-        $stmtCheck->bindParam(':data_diaria', $dataDiaria, \PDO::PARAM_STR);
+        $stmtCheck->bindParam(':id_reserva', $id_reserve, \PDO::PARAM_INT);
+        $stmtCheck->bindParam(':data_diaria', $dt_daily, \PDO::PARAM_STR);
         $stmtCheck->execute();
 
         $resultCheck = $stmtCheck->fetch(\PDO::FETCH_ASSOC);
         
-        LoggerHelper::logInfo(json_encode($resultCheck));
         if ($resultCheck['count'] > 0) {
-            // Se já existe uma diária para essa data, evitar duplicidade
             return true;
         }
 

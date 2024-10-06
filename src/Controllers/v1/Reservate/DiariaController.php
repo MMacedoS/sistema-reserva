@@ -4,6 +4,7 @@ namespace App\Controllers\v1\Reservate;
 
 use App\Controllers\Controller;
 use App\Repositories\Reservate\DiariaRepository;
+use App\Repositories\Reservate\ReservaRepository;
 use App\Request\Request;
 use App\Utils\LoggerHelper;
 use App\Utils\Paginator;
@@ -14,27 +15,44 @@ class DiariaController extends Controller
     protected $diariaRepository;
     protected $clienteRepository;    
     protected $apartamentoRepository;
+    protected $reservaRepository;
 
     public function __construct()
     {   
         parent::__construct();
-        $this->diariaRepository = new DiariaRepository();        
+        $this->diariaRepository = new DiariaRepository();    
+        $this->reservaRepository = new ReservaRepository();      
     }
 
-    // public function index(Request $request) {
-    //     $reserva = $this->reservaRepository->all();
-    //     $perPage = 10;
-    //     $currentPage = $request->getParam('page') ? (int)$request->getParam('page') : 1;
-    //     $paginator = new Paginator($reserva, $perPage, $currentPage);
-    //     $paginatedBoards = $paginator->getPaginatedItems();
+    public function index(Request $request) {
+        $reserva = $this->reservaRepository->allHosted();
+        $perPage = 10;
+        $currentPage = $request->getParam('page') ? (int)$request->getParam('page') : 1;
+        $paginator = new Paginator($reserva, $perPage, $currentPage);
+        $paginatedBoards = $paginator->getPaginatedItems();
 
-    //     $data = [
-    //         'reservas' => $paginatedBoards,
-    //         'links' => $paginator->links()
-    //     ];
+        $data = [
+            'reservas' => $paginatedBoards,
+            'links' => $paginator->links()
+        ];
 
-    //     return $this->router->view('reservate/index', ['active' => 'register', 'data' => $data]);
-    // }
+        return $this->router->view('diaries/index', ['active' => 'consumos', 'data' => $data]);
+    }
+
+    public function indexJsonByReservaUuid(Request $request, $id) {
+        $reserva = $this->reservaRepository->findByUuid($id);
+
+        if (!$reserva) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'Reserva não encontrada.']);
+            return;
+        }
+
+        $diarias = $this->diariaRepository->all(['reserve_id' => $reserva->id, 'status' => '1']);  
+        
+        echo json_encode($diarias);
+        exit();
+    }
 
     // public function create() {
     //     $clientes = $this->clienteRepository->all();
@@ -248,6 +266,9 @@ class DiariaController extends Controller
             die;
         }       
         
-        $this->diariaRepository->generateDaily();
+        $genetrate = $this->diariaRepository->generateDaily();
+        LoggerHelper::logInfo($genetrate);
+        echo json_encode(["status" => 200, "message" => json_encode($genetrate)]);
+        exit();
     }
 }

@@ -5,27 +5,29 @@ namespace App\Utils;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-class LoggerHelper {
+class LoggerHelper
+{
     private static $logger;
 
-    public static function init() {
-        // Crie uma instância do logger
-        self::$logger = new Logger('app_logger');
-
-        // Crie um manipulador que gravará os logs em um arquivo
-        $logFile = __DIR__ . '/../../logs/app.log'; // Altere o caminho conforme necessário
-        self::$logger->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+    // Inicializa o logger, caso ainda não tenha sido instanciado
+    private static function initLogger()
+    {
+        if (is_null(self::$logger)) {
+            self::$logger = new Logger('app_logger');
+            $logFile = __DIR__ . '/../../logs/app.log';
+            self::$logger->pushHandler(new StreamHandler($logFile, Logger::DEBUG));
+        }
     }
 
-    public static function logInfo($message) {
+    public static function logInfo($message)
+    {
+        self::initLogger();
         self::$logger->info($message);
     }
 
-    public static function logWarning($message) {
-        self::$logger->warning($message);
-    }
-
-    public static function logError($message) {
+    public static function logError($message)
+    {
+        self::initLogger();
         self::$logger->error($message);
     }
 }

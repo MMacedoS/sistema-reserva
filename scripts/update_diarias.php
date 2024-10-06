@@ -6,15 +6,10 @@ require 'vendor/autoload.php';
 
 use App\Services\DiariaServices;
 
-LoggerHelper::init();
-
 try {
     $reservaService = new DiariaServices();
-    
-    // Chama o método para gerar as diárias
-    $reservaService->generateDaily();
 
-    LoggerHelper::logInfo('Diárias atualizadas com sucesso.');
+    $reservaService->generateDaily();
 
 } catch (\Exception $e) {
     LoggerHelper::logError('Erro ao atualizar diárias: ' . $e->getMessage());

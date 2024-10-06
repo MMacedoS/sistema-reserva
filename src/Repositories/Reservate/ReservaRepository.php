@@ -49,6 +49,59 @@ class ReservaRepository {
         return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);        
     }
 
+    public function allHosted(array $params = [ 'status' => 'Hospedada'])
+    {
+        $sql = "
+        SELECT 
+            r.*, a.name as apartament,
+            (
+                SELECT JSON_ARRAYAGG(
+                    JSON_OBJECT(
+                        'id_guest', h.id,
+                        'name', h.name,
+                        'is_primary', rh.is_primary
+                    )
+                )
+                FROM clientes h
+                JOIN reserva_hospedes rh ON h.id = rh.id_hospede
+                WHERE rh.id_reserva = r.id
+            ) AS customers
+        FROM " . self::TABLE . " r
+        LEFT JOIN apartamentos a ON a.id = r.id_apartamento
+        ";
+        
+        $conditions = [];
+        $bindings = [];
+
+        if (isset($params['status'])) {
+            $conditions[] = "r.status = :status";
+            $bindings[':status'] = $params['status'];
+        }
+
+        if (isset($params['apartament_id'])) {
+            $conditions[] = "r.id_apartamento = :apartament_id";
+            $bindings[':apartament_id'] = $params['apartament_id'];
+        }
+
+        if (isset($params['date_start']) && isset($params['date_end'])) {
+            $conditions[] = "r.dt_checkin BETWEEN :date_start AND :date_end";
+            $bindings[':date_start'] = $params['date_start'];
+            $bindings[':date_end'] = $params['date_end'];
+        }
+
+        if (count($conditions) > 0) {
+            $sql .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        $sql .= " ORDER BY apartament ASC";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $stmt->execute($bindings);
+
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);      
+    }
+
     public function create(array $data)
     {   
         $reserva = $this->model->create(

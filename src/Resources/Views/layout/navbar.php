@@ -70,6 +70,40 @@
                         </li>
 
                         <?php } ?>
+                        <li class="nav-item dropdown <?=$active === 'consumos' ? 'active-link': ''?>">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="icon-now_widgets"></i> Consumos
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item current-page" href="/consumos/diaria">
+                                        <span>Diárias</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item current-page" href="/consumos/produto">
+                                        <span>Produtos</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item current-page" href="/consumos/venda">
+                                        <span>Venda Livre</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown <?=$active === 'financeiro' ? 'active-link': ''?>">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="icon-soap"></i> Financeiro
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item current-page" href="/dashboard/analytics">
+                                        <span>Analytics</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                         <?php if (hasPermission('visualizar cadastro')) { ?>
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
