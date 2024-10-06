@@ -119,20 +119,15 @@
 	  // Função para excluir um registro
 	  function deleteData(url) {
 		showLoader();
-		$.ajax({
+		return $.ajax({
 		  url: url,
 		  method: 'DELETE',
 		  contentType: 'application/json',
-		  dataType: 'json',
-		  success: function(response) {
-			showSuccessMessage('Registro excluído com sucesso!');
+		  dataType: 'json'
+		}).catch(function(error){
+			console.error('Erro ao obter registro:', error);
 			hideLoader();
-		  },
-		  error: function(error) {
-			console.error('Erro ao excluir registro:', error);
-			hideLoader();
-		  }
-		});
+		  });
 	  }
 	
 	  function deleteDataWithData(url, data) {
@@ -170,7 +165,6 @@
 		  confirmButtonColor: '#3085d6',
 		  confirmButtonText: 'Ok'
 		}).then(()=>{
-			refreshPage();
 		});
 	  }
 
@@ -192,7 +186,6 @@
 		  confirmButtonColor: '#3085d6',
 		  confirmButtonText: 'Ok'
 		}).then(()=>{
-			refreshPage();
 		});
 	  }
 	  

@@ -115,6 +115,7 @@
             <hr>
             <div class="container mt-2">
                 <form action="" id="form_inserir" method="post">
+                    <input type="hidden" name="id" id="id" disabled>
                     <div class="row gx-3">
                         <div class="col-6">
                             <input type="date" name="dt_daily" id="dt_daily" class="form-control" value="<?=date('Y-m-d')?>">
@@ -154,8 +155,8 @@
             tr += `<td>${value.amount}</td>`;            
             tr += `<td>${date_daily[2]}/${date_daily[1]}/${date_daily[0]}</td>`;
             tr += `<td>
-                <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><span class="icon-edit"></span></a>
-                <a class="btn btn-danger"><span class="icon-trash"></span></a>
+                <a class="btn btn-primary" onclick="editar('${value.uuid}')"><span class="icon-edit"></span></a>
+                <a class="btn btn-danger" onclick="deleteItem('${value.uuid}')"><span class="icon-trash"></span></a>
             </td>`;
             tr += `<td> <input type="checkbox" onclick="checkBox()"; class="form-check m-0" value="${value.uuid}" /></td>`;
             tr += `</tr>`;
@@ -213,7 +214,16 @@
             }).then((result) => {
             if (result.isConfirmed) {
                 let params = $('#checkAll').val();
-                deleteData(`/consumos/reserva/${params}/diarias?data=${values}`);
+                deleteData(`/consumos/reserva/${params}/diarias?data=${values}`)
+                .then((result) => {
+                    showMessage(result, 'success');
+                    showData(`/consumos/reserva/${params}/diarias`)
+                    .then((result) => {
+                        $('#checkAll').val(params);
+                        list(result)
+                        $('#modalDiaries').modal('show');
+                    });
+                });
             }
         });
     });
@@ -224,7 +234,21 @@
 
     $('#btn_inserir').click(function() {
         let params = $('#checkAll').val();
-        createData(`/consumos/reserva/${params}/diarias`, new FormData(document.getElementById("form_inserir"),))
+        let id = $('#id').val();
+        if (id === '') {
+            createData(`/consumos/reserva/${params}/diarias`, new FormData(document.getElementById("form_inserir"),))
+            .then((result) => {
+                showMessage(result, 'success');
+                showData(`/consumos/reserva/${params}/diarias`)
+                .then((result) => {
+                    $('#checkAll').val(params);
+                    list(result)
+                    $('#modalDiaries').modal('show');
+                });
+            });
+            return;
+        }
+        updateDataWithData(`/consumos/reserva/${params}/diarias/${id}`, new FormData(document.getElementById("form_inserir"),))
         .then((result) => {
             showMessage(result, 'success');
             showData(`/consumos/reserva/${params}/diarias`)
@@ -235,5 +259,45 @@
             });
         });
     });
+
+    function editar(item) 
+    {   
+        let params = $('#checkAll').val();
+        showData(`/consumos/reserva/${params}/diarias/${item}`)
+        .then((result) => {
+           $('#id').val(item);
+           $('#dt_daily').val(result.dt_daily);
+           $('#amount').val(result.amount);
+           $('#btn_inserir').text('Atualizar Diária');       
+        });
+    }
+
+    
+    function deleteItem(item) {
+      Swal.fire({
+            title: "Tem certeza que deseja deletar estes dados?",
+            text: "A deleção é irrevesivel, não consiguirá reater estes daddos novamente",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, deletar!",
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+            if (result.isConfirmed) {
+                let params = $('#checkAll').val();
+                deleteData(`/consumos/reserva/${params}/diarias/${item}`)
+                .then((result) => {
+                    showMessage(result, 'success');
+                    showData(`/consumos/reserva/${params}/diarias`)
+                    .then((result) => {
+                        $('#checkAll').val(params);
+                        list(result)
+                        $('#modalDiaries').modal('show');
+                    });
+                });
+            }
+        });
+    }
 
 </script>

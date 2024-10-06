@@ -115,20 +115,16 @@ class DiariaRepository {
             ->prepare(
                 "UPDATE " . self::TABLE . "
                     set 
-                    id_reserva = :id_reserva,
                     dt_daily = :dt_daily,
                     amount = :amount,
-                    status = :status,
                     id_usuario = :id_usuario
                 WHERE id = :id"
             );
 
             $updated = $stmt->execute([
                 'id' => $id,
-                ':id_reserva' => $diaria->id_reserva,
                 ':dt_daily' => $diaria->dt_daily,
                 ':amount' => $diaria->amount,
-                ':status' => $diaria->status,
                 ':id_usuario' => $diaria->id_usuario
             ]);
 

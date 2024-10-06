@@ -94,42 +94,109 @@ class DiariaController extends Controller
     //     return $this->router->redirect('reserva/');
     // }
 
-    public function storeByJson(Request $request, $id) {
-            $data = $request->getBodyParams();
+    public function storeByJson(Request $request, $reserva_id) 
+    {
+        $data = $request->getBodyParams();
+        $validator = new Validator($data);
+        $rules = [
+            'dt_daily' => 'required',           
+            'amount' => 'required',
+        ];
     
-            $validator = new Validator($data);
-            $rules = [
-                'dt_daily' => 'required',           
-                'amount' => 'required',
-            ];
-    
-            if (!$validator->validate($rules)) {
-                http_response_code(404); 
-                echo json_encode(['error' => 'dados invalidos.']);
-                return;
-            } 
-    
-            $reserve = $this->reservaRepository->findByUuid($id);
-        
-            if (!$reserve) {
-                http_response_code(404); 
-                echo json_encode(['error' => 'Reserva não encontrada.']);
-                return;
-            }     
-
-            $data['id_reserva'] = $reserve->id;
-            $data['id_usuario'] = 1;
-            
-            $created = $this->diariaRepository->create($data);
-    
-            if(is_null($created)) {            
-                http_response_code(404); 
-                echo json_encode(['error' => 'Reserva não encontrada.']);
-                return;
-            }
-    
-            echo json_encode(['title' => "sucesso!" ,'message' => 'diaria criada']);
+        if (!$validator->validate($rules)) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'dados invalidos.']);
             exit();
+       } 
+    
+        $reserve = $this->reservaRepository->findByUuid($reserva_id);
+        
+        if (!$reserve) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'Reserva não encontrada.']);
+            return;
+        }     
+
+        $data['id_reserva'] = $reserve->id;
+        $data['id_usuario'] = 1;
+           
+        $created = $this->diariaRepository->create($data);
+    
+        if(is_null($created)) {            
+            http_response_code(404); 
+            echo json_encode(['error' => 'Reserva não encontrada.']);
+            return;
+        }
+    
+        echo json_encode(['title' => "sucesso!" ,'message' => 'diaria criada']);
+        exit();
+    }
+
+    public function showByJson(Request $request, $reserve ,$id) 
+    {
+        $reserve = $this->reservaRepository->findByUuid($reserve);
+        
+        if (!$reserve) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'Reserva não encontrada.']);
+            return;
+        }     
+        
+        $diaria = $this->diariaRepository->findByUuid($id);
+        
+        if (!$diaria) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'diaria não encontrada.']);
+            return;
+        }    
+        
+        echo json_encode($diaria);
+        exit();        
+    }
+
+    public function updateByJson(Request $request, $reserva_id, $id) 
+    {
+        $data = $request->getBodyParams();
+        $validator = new Validator($data);
+        $rules = [
+            'dt_daily' => 'required',           
+            'amount' => 'required'
+        ];
+    
+        if (!$validator->validate($rules)) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'dados invalidos.']);
+            return;
+       } 
+
+       $reserve = $this->reservaRepository->findByUuid($reserva_id);
+        
+       if (!$reserve) {
+           http_response_code(404); 
+           echo json_encode(['error' => 'Reserva não encontrada.']);
+           return;
+       }     
+    
+        $diaria = $this->diariaRepository->findByUuid($id);
+        
+        if (!$diaria) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'diaria não encontrada.']);
+            return;
+        }     
+
+        $data['id_usuario'] = $_SESSION['user']->id;
+           
+        $updated = $this->diariaRepository->update($data, $diaria->id);
+    
+        if(is_null($updated)) {            
+            http_response_code(404); 
+            echo json_encode(['error' => 'diaria não atualizada.']);
+            return;
+        }
+    
+        echo json_encode(['title' => "sucesso!" ,'message' => 'diaria atualizada']);
+        exit();
     }
 
     // public function edit(Request $request, $id) {
@@ -181,7 +248,7 @@ class DiariaController extends Controller
     //     return $this->router->redirect('reserva/');
     // }
 
-    public function destroy(Request $request, $id) {
+    public function destroyAll(Request $request, $id) {
         $reserve = $this->reservaRepository->findByUuid($id);
         $data = $request->getQueryParams();
         
@@ -193,6 +260,35 @@ class DiariaController extends Controller
         
         $params = explode(',', $data['data']);
         $deleted = $this->diariaRepository->deleteAll($params);
+
+        echo json_encode($deleted);
+        exit();
+    }
+
+    public function destroy(Request $request, $reserva_id, $id) {
+
+        $reserve = $this->reservaRepository->findByUuid($reserva_id);
+        if (!$reserve) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'Reserva não encontrada.']);
+            return;
+        }        
+        
+        $diaria = $this->diariaRepository->findByUuid($id);
+        
+        if (!$diaria) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'diaria não encontrada.']);
+            return;
+        }     
+
+        $deleted = $this->diariaRepository->delete($diaria->id);
+
+        if (!$deleted) {
+            http_response_code(422); 
+            echo json_encode(['title' => 'Erro ao deleletar', 'message' => 'diaria não apagada.']);
+            return;
+        }     
 
         echo json_encode($deleted);
         exit();

@@ -77,7 +77,10 @@ $router->create('GET', '/reservas/{token}/diarias/atualizar',[$diariaController,
 $router->create('GET', '/consumos/diaria', [$diariaController, 'index'], $auth);
 $router->create('GET', '/consumos/reserva/{id}/diarias', [$diariaController, 'indexJsonByReservaUuid'], $auth);
 $router->create('POST', '/consumos/reserva/{id}/diarias', [$diariaController, 'storeByJson'], $auth);
-$router->create('DELETE', '/consumos/reserva/{id}/diarias', [$diariaController, 'destroy'], $auth);
+$router->create('GET', '/consumos/reserva/{id}/diarias/{diaria_id}', [$diariaController, 'showByJson'], $auth);
+$router->create('POST', '/consumos/reserva/{id}/diarias/{diaria_id}', [$diariaController, 'updateByJson'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/diarias/{diaria_id}', [$diariaController, 'destroy'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/diarias', [$diariaController, 'destroyAll'], $auth);
 
 $router->create('GET', '/', [$usuarioController, 'login'], null);
 $router->create('POST', '/login', [$usuarioController, 'auth']);
