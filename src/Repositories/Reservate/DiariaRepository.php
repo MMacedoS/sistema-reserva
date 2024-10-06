@@ -5,6 +5,7 @@ namespace App\Repositories\Reservate;
 use App\Config\Database;
 use App\Models\Reservate\Diaria;
 use App\Repositories\Traits\FindTrait;
+use App\Utils\LoggerHelper;
 
 class DiariaRepository {
     const CLASS_NAME = Diaria::class;
@@ -154,6 +155,24 @@ class DiariaRepository {
         return $deleted;
 
     }
+
+    public function deleteAll(array $params) 
+    {
+        if (empty($params)) {
+            return false; 
+        }
+
+        $placeholders = rtrim(str_repeat('?,', count($params)), ','); 
+    
+        $stmt = $this->conn->prepare(
+            "UPDATE " . self::TABLE . " SET status = 0 WHERE uuid IN ($placeholders)"
+        );
+    
+        $deleted = $stmt->execute($params);
+        
+        return $deleted; 
+    }
+    
 
     public function generateDaily() 
     {

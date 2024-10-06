@@ -39,7 +39,8 @@ class DiariaController extends Controller
         return $this->router->view('diaries/index', ['active' => 'consumos', 'data' => $data]);
     }
 
-    public function indexJsonByReservaUuid(Request $request, $id) {
+    public function indexJsonByReservaUuid(Request $request, $id) 
+    {
         $reserva = $this->reservaRepository->findByUuid($id);
 
         if (!$reserva) {
@@ -93,6 +94,44 @@ class DiariaController extends Controller
     //     return $this->router->redirect('reserva/');
     // }
 
+    public function storeByJson(Request $request, $id) {
+            $data = $request->getBodyParams();
+    
+            $validator = new Validator($data);
+            $rules = [
+                'dt_daily' => 'required',           
+                'amount' => 'required',
+            ];
+    
+            if (!$validator->validate($rules)) {
+                http_response_code(404); 
+                echo json_encode(['error' => 'dados invalidos.']);
+                return;
+            } 
+    
+            $reserve = $this->reservaRepository->findByUuid($id);
+        
+            if (!$reserve) {
+                http_response_code(404); 
+                echo json_encode(['error' => 'Reserva não encontrada.']);
+                return;
+            }     
+
+            $data['id_reserva'] = $reserve->id;
+            $data['id_usuario'] = 1;
+            
+            $created = $this->diariaRepository->create($data);
+    
+            if(is_null($created)) {            
+                http_response_code(404); 
+                echo json_encode(['error' => 'Reserva não encontrada.']);
+                return;
+            }
+    
+            echo json_encode(['title' => "sucesso!" ,'message' => 'diaria criada']);
+            exit();
+    }
+
     // public function edit(Request $request, $id) {
     //     $reserva = $this->reservaRepository->findByUuid($id);
         
@@ -142,17 +181,22 @@ class DiariaController extends Controller
     //     return $this->router->redirect('reserva/');
     // }
 
-    // public function delete(Request $request, $id) {
-    //     $reserve = $this->reservaRepository->findByUuid($id);
+    public function destroy(Request $request, $id) {
+        $reserve = $this->reservaRepository->findByUuid($id);
+        $data = $request->getQueryParams();
         
-    //     if (is_null($reserve)) {
-    //         return $this->router->view('reserva/', ['active' => 'register', 'danger' => true]);
-    //     }
+        if (!$reserve) {
+            http_response_code(404); 
+            echo json_encode(['error' => 'Reserva não encontrada.']);
+            return;
+        }        
+        
+        $params = explode(',', $data['data']);
+        $deleted = $this->diariaRepository->deleteAll($params);
 
-    //     $reserve = $this->reservaRepository->delete($reserve->id);
-
-    //     return $this->router->redirect('reserva/');
-    // }
+        echo json_encode($deleted);
+        exit();
+    }
 
     // public function findAvailableApartments(Request $request) 
     // {

@@ -114,10 +114,10 @@
             </div>
             <hr>
             <div class="container mt-2">
-                <form action="" method="post">
+                <form action="" id="form_inserir" method="post">
                     <div class="row gx-3">
                         <div class="col-6">
-                            <input type="date" name="date_input" id="date_input" class="form-control" value="<?=date('Y-m-d')?>">
+                            <input type="date" name="dt_daily" id="dt_daily" class="form-control" value="<?=date('Y-m-d')?>">
                         </div>
                         <div class="col-6">
                             <input type="number" name="amount" id="amount" step="0.01" value="0" min="0" class="form-control">
@@ -157,7 +157,7 @@
                 <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><span class="icon-edit"></span></a>
                 <a class="btn btn-danger"><span class="icon-trash"></span></a>
             </td>`;
-            tr += `<td> <input type="checkbox" class="form-check m-0" value="${value.uuid}" /></td>`;
+            tr += `<td> <input type="checkbox" onclick="checkBox()"; class="form-check m-0" value="${value.uuid}" /></td>`;
             tr += `</tr>`;
 
             $('#list').append(tr);
@@ -165,19 +165,12 @@
     }
 
     function openModelDiaries(params) {
-        $.ajax({
-            url: `/consumos/reserva/${params}/diarias`,
-            method: 'POST',
-            dataType: 'JSON',
-            contentType: 'application/json',
-            success: function(response) { 
-                list(response)
-                $('#modalDiaries').modal('show');
-            },
-            error: function(xhr, status, error) {
-                console.error("Erro ao fazer a requisição: ", error);
-            }
-        });      
+        showData(`/consumos/reserva/${params}/diarias`)
+        .then((result) => {
+            $('#checkAll').val(params);
+            list(result)
+            $('#modalDiaries').modal('show');
+        });
     }   
 
     $('#amount').on('change', function() {
@@ -204,12 +197,43 @@
 
     $('#get-checked-values').click(function() {
       const values = getCheckedValues();
-      console.log("Valores Selecionados: ", values);
+      if (values.length === 0) {
+        $('#get-checked-values').attr('disabled', true);
+      }
+
+      Swal.fire({
+            title: "Tem certeza que deseja deletar estes dados?",
+            text: "A deleção é irrevesivel, não consiguirá reater estes daddos novamente",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, deletar!",
+            cancelButtonText: 'Cancelar',
+            }).then((result) => {
+            if (result.isConfirmed) {
+                let params = $('#checkAll').val();
+                deleteData(`/consumos/reserva/${params}/diarias?data=${values}`);
+            }
+        });
     });
 
-    $('#list .form-check').on('change', function() {
-        const anyChecked = $('#list .form-check:checked').length > 0;
-        $('#get-checked-values').prop('disabled', !anyChecked);
-    })
+    function checkBox() {
+        $('#get-checked-values').attr('disabled', false);
+    }
+
+    $('#btn_inserir').click(function() {
+        let params = $('#checkAll').val();
+        createData(`/consumos/reserva/${params}/diarias`, new FormData(document.getElementById("form_inserir"),))
+        .then((result) => {
+            showMessage(result, 'success');
+            showData(`/consumos/reserva/${params}/diarias`)
+            .then((result) => {
+                $('#checkAll').val(params);
+                list(result)
+                $('#modalDiaries').modal('show');
+            });
+        });
+    });
 
 </script>

@@ -75,7 +75,9 @@ $router->create('POST', '/maps', [$reservaController, 'reserve_by_maps'], $auth)
 $router->create('GET', '/reservas/{token}/diarias/atualizar',[$diariaController, 'generateDaily']);
 
 $router->create('GET', '/consumos/diaria', [$diariaController, 'index'], $auth);
-$router->create('POST', '/consumos/reserva/{id}/diarias', [$diariaController, 'indexJsonByReservaUuid'], $auth);
+$router->create('GET', '/consumos/reserva/{id}/diarias', [$diariaController, 'indexJsonByReservaUuid'], $auth);
+$router->create('POST', '/consumos/reserva/{id}/diarias', [$diariaController, 'storeByJson'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/diarias', [$diariaController, 'destroy'], $auth);
 
 $router->create('GET', '/', [$usuarioController, 'login'], null);
 $router->create('POST', '/login', [$usuarioController, 'auth']);
