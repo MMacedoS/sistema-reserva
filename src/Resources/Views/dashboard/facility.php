@@ -17,23 +17,36 @@
                     <?php 
                         foreach ($data['reservas'] as $key => $value) {
                     ?>                    
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="d-flex align-items-start">
                                     <img src="https://placehold.co/600x400/EEE/31343C?font=lato&text=APT <?=$value->apartament?>" alt="Bootstrap Dashboards"
-                                        class="img-fluid img-5x rounded-3" />
+                                        class="img-fluid img-5x rounded-3 border" />
                                     <div class="ms-3">
                                         <p>
                                            Hospedes: <?=getCustomers(json_decode($value->customers))?> <br>
                                            Período de <?=brDate($value->dt_checkin)?> á  <?=brDate($value->dt_checkout)?> <br>
                                         </p>
-                                        <span class="small badge rounded-pill bg-success m-1"> Diária R$ <?=number_format($value->total_diaries, 2 ,',' ,'.')?></span>
-                                        <span class="small badge rounded-pill bg-success m-1"> Consumo R$ <?=number_format($value->total_consumptions, 2 ,',' ,'.')?></span>
+                                        <span class="small badge rounded-pill bg-warning m-1 d-none-sm"> Diária R$ <?=number_format($value->total_diaries, 2 ,',' ,'.')?></span>
+                                        <span class="small badge rounded-pill bg-info m-1 d-none-sm"> Consumo R$ <?=number_format($value->total_consumptions, 2 ,',' ,'.')?></span>                                        
+                                        <span class="small badge rounded-pill bg-success m-1 d-none-sm"> Pagamento R$ <?=number_format($value->total_payments, 2 ,',' ,'.')?></span>
+                                    </div>
+                                    
+                                    <div class="ms-3 w-auto display-6 fs-4 d-none-sm">
+                                      <span class="btn btn-primary m-1">Total R$ <?=number_format(($value->total_diaries + $value->total_consumptions), 2 ,',' ,'.')?></span>  
+                                      <br>                                    
+                                      <span class="btn btn-danger m-1 text-light">Resta R$ <?=number_format(($value->total_diaries + $value->total_consumptions) - $value->total_payments, 2 ,',' ,'.')?></span>
                                     </div>
                                 </div>
-                                
-                                <div class="ms-3">
+
+                                <div class="d-sm-none">
+                                  <span class="small badge rounded-pill bg-warning m-1"> Diária R$ <?=number_format($value->total_diaries, 2 ,',' ,'.')?></span>
+                                  <span class="small badge rounded-pill bg-info m-1"> Consumo R$ <?=number_format($value->total_consumptions, 2 ,',' ,'.')?></span>                                        
+                                  <span class="small badge rounded-pill bg-success m-1"> Pagamento R$ <?=number_format($value->total_payments, 2 ,',' ,'.')?></span>
+                                </div>
+                                                               
+                                <div class="ms-3 d-none-sm">
                                       <button type="button" class="btn btn-warning m-1" onclick="openModelDiaries('<?=$value->uuid?>')">
                                         <span class="fs-6 icon-plus-circle"> Diarias</span>
                                       </button>
@@ -43,12 +56,38 @@
                                       <a class="btn btn-light m-1" href="\reserva\<?=$value->uuid?>\editar">
                                         <span class="fs-6 icon-edit"> Editar</span>
                                       </a>                                      
-                                      <button type="button" class="btn btn-success m-1" onclick="openModelDiaries('<?=$value->uuid?>')">
+                                      <button type="button" class="btn btn-success m-1" onclick="openModelPayments('<?=$value->uuid?>')">
                                         <span class="fs-6 icon-dollar-sign"> Pagamento</span>
                                       </button>
                                       <!-- <button type="button" class="btn btn-danger m-1" onclick="openModelDiaries('<?=$value->uuid?>')">
                                         <span class="fs-6 icon-login"> Check-out</span>
                                       </button> -->
+                                </div>
+
+                                <div class="ms-3 display-6 fs-4 d-sm-none">
+                                  <span class="btn btn-primary m-1 w-100">Total R$ <?=number_format(($value->total_diaries + $value->total_consumptions), 2 ,',' ,'.')?></span>                                 
+                                  <span class="btn btn-danger m-1 text-light w-100">Resta R$ <?=number_format(($value->total_diaries + $value->total_consumptions) - $value->total_payments, 2 ,',' ,'.')?></span>
+                                </div> 
+
+                                <div class="ms-3 d-sm-none me-2 w-100">
+                                    <button type="button" class="btn btn-outline-info w-100 dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                                    <div class="dropdown-menu">
+                                    <button type="button" class="btn btn-warning m-1" onclick="openModelDiaries('<?=$value->uuid?>')">
+                                        <span class="fs-6 icon-plus-circle"> Diarias</span>
+                                      </button>
+                                      <button type="button" class="btn btn-info m-1" onclick="openModelProducts('<?=$value->uuid?>')">
+                                        <span class="fs-6 icon-plus-circle"> Produtos</span>
+                                      </button>
+                                      <a class="btn btn-light m-1" href="\reserva\<?=$value->uuid?>\editar">
+                                        <span class="fs-6 icon-edit"> Editar</span>
+                                      </a>                                      
+                                      <button type="button" class="btn btn-success m-1" onclick="openModelPayments('<?=$value->uuid?>')">
+                                        <span class="fs-6 icon-dollar-sign"> Pagamento</span>
+                                      </button>
+                                      <!-- <button type="button" class="btn btn-danger m-1" onclick="openModelDiaries('<?=$value->uuid?>')">
+                                        <span class="fs-6 icon-login"> Check-out</span>
+                                      </button> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -195,7 +234,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modalPayment" data-bs-backdrop="static" data-bs-keyboard="false"
+<div class="modal fade" id="modalPayments" data-bs-backdrop="static" data-bs-keyboard="false"
     tabindex="-1" aria-labelledby="modalDiariesLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -208,7 +247,7 @@
             <div class="modal-body">
                 <div class="mb-2 d-flex align-items-end justify-content-between">
                     <h5>Pagamento Adicionados</h5>
-                    <button class="btn btn-danger" id="get-checked-values-Payments" disabled>Delete Selecionados</button>
+                    <button class="btn btn-danger" id="get-checked-values-payments" disabled>Delete Selecionados</button>
                 </div>
                 <div class="table-outer">
                     <div class="table-responsive">
@@ -233,18 +272,23 @@
             </div>
             <hr>
             <div class="container mt-2">
-                <form action="" id="form_inserir_payment" method="post">
+                <form action="" id="form_inserir_payments" method="post">
                     <input type="hidden" name="id" id="payment_id" disabled>
                     <div class="row gx-3">
-                        <div class="col-6">
-                            <select name="payment_id" id="payment" class="form-control">
-                              <?php foreach($data['payments'] as $payment){ ?>
-                                <option value="<?=$payment->id?>"><?=$payment->name?></option>
-                               <? } ?>
+                        <div class="col-5">
+                            <select name="type_payment" id="type_payment" class="form-control">
+                              <option value="Dinheiro">Dinheiro</option>
+                              <option value="Cartão Crédito">Cartão Crédito</option>
+                              <option value="Cartão Débito">Cartão Débito</option>
+                              <option value="Pix">Pix</option>
+                              <option value="Cortesia">Cortesia</option>
                             </select>
                         </div>
-                        <div class="col-6">
-                            <input type="number" name="quantity" id="quantity" step="0" value="1" min="1" class="form-control">
+                        <div class="col-3">
+                            <input type="number" name="payment_amount" id="payment_amount" step="0.01" value="0.00" min="0" class="form-control">
+                        </div>
+                        <div class="col-4">
+                            <input type="date" name="dt_payment" id="dt_payment" class="form-control" value="<?=date('Y-m-d')?>">
                         </div>
                     </div>
                 </form>

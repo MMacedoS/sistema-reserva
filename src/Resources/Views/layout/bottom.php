@@ -425,12 +425,11 @@
               $('#listPayments').empty();
 
               data.forEach((value) => {
-                  let created = formatDateWithHour(value.created_at);
+                  let created = formatDate(value.dt_payment);
                   let tr = "<tr>";
-                  tr += `<td>${JSON.parse(value.products).name}</td>`;     
-                  tr += `<td class="d-none-sm">${created}</td>`;       
-                  tr += `<td>${formatCurrency(value.amount)}</td>`;            
-                  tr += `<td>${value.quantity}</td>`;
+                  tr += `<td>${value.type_payment}</td>`;     
+                  tr += `<td>${created}</td>`;       
+                  tr += `<td>${formatCurrency(value.payment_amount)}</td>`;            
                   tr += `<td>
                       <a class="btn btn-primary m-1" onclick="editar('${value.uuid}')"><span class="icon-edit"></span></a>
                       <a class="btn btn-danger m-1" onclick="deleteItem('${value.uuid}')"><span class="icon-trash"></span></a>
@@ -443,7 +442,7 @@
           }
 
           function openModelPayments(params) {
-              showData(`/consumos/reserva/${params}/produto`)
+              showData(`/consumos/reserva/${params}/pagamento`)
               .then((result) => {
                   $('#checkAllPayments').val(params);
                   listConsumptionsPayments(result)
@@ -485,10 +484,10 @@
                   }).then((result) => {
                   if (result.isConfirmed) {
                       let params = $('#checkAllPayments').val();
-                      deleteData(`/consumos/reserva/${params}/produto?data=${values}`)
+                      deleteData(`/consumos/reserva/${params}/pagamento?data=${values}`)
                       .then((result) => {
                           showMessage(result, 'success');
-                          showData(`/consumos/reserva/${params}/produto`)
+                          showData(`/consumos/reserva/${params}/pagamento`)
                           .then((result) => {
                               $('#checkAllPayments').val(params);
                               listConsumptionsPayments(result)
@@ -507,10 +506,10 @@
               let params = $('#checkAllPayments').val();
               let id = $('#payment_id').val();
               if (id === '') {
-                  createData(`/consumos/reserva/${params}/produto`, new FormData(document.getElementById("form_inserir_Payments"),))
+                  createData(`/consumos/reserva/${params}/pagamento`, new FormData(document.getElementById("form_inserir_payments"),))
                   .then((result) => {
                       showMessage(result, 'success');
-                      showData(`/consumos/reserva/${params}/produto`)
+                      showData(`/consumos/reserva/${params}/pagamento`)
                       .then((result) => {
                           $('#checkAllPayments').val(params);
                           listConsumptionsPayments(result)
@@ -519,13 +518,13 @@
                   });
                   return;
               }
-              updateDataWithData(`/consumos/reserva/${params}/produto/${id}`, new FormData(document.getElementById("form_inserir_produtos"),))
+              updateDataWithData(`/consumos/reserva/${params}/pagamento/${id}`, new FormData(document.getElementById("form_inserir_payments"),))
               .then((result) => {
                   showMessage(result, 'success');
-                  showData(`/consumos/reserva/${params}/produto`)
+                  showData(`/consumos/reserva/${params}/pagamento`)
                   .then((result) => {
                       $('#checkAllPayments').val(params);
-                      list(result)
+                      listConsumptionsPayments(result)
                       $('#modalPayments').modal('show');
                   });
               });
@@ -533,12 +532,12 @@
 
           function editar(item) {   
               let params = $('#checkAllPayments').val();
-              showData(`/consumos/reserva/${params}/produto/${item}`)
+              showData(`/consumos/reserva/${params}/pagamento/${item}`)
               .then((result) => {
-                $('#payment_id').val(item);
-                $('#Payment').val(result.id_produto);                
-                $('#quantity').val(result.quantity);
-                $('#btn_inserir_Payments').text('Atualizar Produto');       
+                $('#payment_id').val(item);     
+                $('#payment_amount').val(result.payment_amount);                     
+                $('#type_payment').val(result.type_payment);
+                $('#btn_inserir_payments').text('Atualizar Pagamentos');       
               });
           }
 
@@ -556,10 +555,10 @@
                   }).then((result) => {
                   if (result.isConfirmed) {
                       let params = $('#checkAllPayments').val();
-                      deleteData(`/consumos/reserva/${params}/produto/${item}`)
+                      deleteData(`/consumos/reserva/${params}/pagamento/${item}`)
                       .then((result) => {
                           showMessage(result, 'success');
-                          showData(`/consumos/reserva/${params}/produto`)
+                          showData(`/consumos/reserva/${params}/pagamento`)
                           .then((result) => {
                               $('#checkAllPayments').val(params);
                               listConsumptionsPayments(result)

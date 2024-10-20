@@ -1,56 +1,48 @@
 <?php
 
-namespace App\Repositories\Reservate;
+namespace App\Repositories\Payment;
 
 use App\Config\Database;
-use App\Models\Consumers\Consumo;
+use App\Models\Payment\Pagamento;
 use App\Repositories\Traits\FindTrait;
 
-class ConsumoRepository {
-    const CLASS_NAME = Consumo::class;
-    const TABLE = 'consumos';
-    
+class PagamentoRepository {
+    const CLASS_NAME = Pagamento::class;
+    const TABLE = 'pagamentos';
+
     use FindTrait;
     protected $conn;
     protected $model;
-    protected $reservaRepository;
 
     public function __construct() {
         $conn = new Database();
         $this->conn = $conn->getConnection();
-        $this->model = new Consumo();
-        $this->reservaRepository = new ReservaRepository();
+        $this->model = new Pagamento();
     }
 
-    public function all(array $params)
-    {
+    public function all($params = []) {
         $sql = "
         SELECT 
-           c.*,
-           (
-            SELECT 
-               JSON_OBJECT(
-                   'id', p.id,
-                   'name', p.name,
-                   'price', p.price
-                )
-            FROM produtos p
-            WHERE p.id = c.id_produto
-        ) AS products
-        FROM " . self::TABLE . " c 
+           p.*           
+        FROM " . self::TABLE . " p 
         ";
         
         $conditions = [];
         $bindings = [];
 
-        if (isset($params['quantity'])) {
-            $conditions[] = "quantity = :quantity";
-            $bindings[':quantity'] = $params['quantity'];
+        if (isset($params['type_payment'])) {
+            $conditions[] = "type_payment = :type_payment";
+            $bindings[':type_payment'] = $params['type_payment'];
         }
 
         if (isset($params['reserve_id'])) {
             $conditions[] = "id_reserva = :reserve_id";
             $bindings[':reserve_id'] = $params['reserve_id'];
+        }
+
+        if (isset($params['status'])) {
+            $conditions[] = "status = :status";
+            $bindings[':status'] = $params['status'];
         }
 
         if (count($conditions) > 0) {
@@ -63,50 +55,58 @@ class ConsumoRepository {
 
         $stmt->execute($bindings);
 
-        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);   
+        return $stmt->fetchAll(\PDO::FETCH_CLASS, self::CLASS_NAME);  
     }
 
     public function create(array $data)
     {   
-        $consumo = $this->model->create(
+        $pagamento = $this->model->create(
             $data
         );
+        
         $this->conn->beginTransaction();
         try {
             $sql = "
                 INSERT INTO " . self::TABLE . " (
                     uuid,
                     id_reserva,
-                    quantity,
-                    amount,
-                    id_produto,
-                    id_usuario
+                    id_usuario,
+                    type_payment,
+                    payment_amount,
+                    dt_payment,
+                    venda_id,
+                    id_caixa
                 ) VALUES (
                     :uuid,
                     :id_reserva,
-                    :quantity,
-                    :amount,
-                    :id_produto,
-                    :id_usuario
+                    :id_usuario,
+                    :type_payment,
+                    :payment_amount,
+                    :dt_payment,
+                    :venda_id,
+                    :id_caixa
                 )
             ";
         
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
-                ':id_reserva' => $consumo->id_reserva,
-                ':quantity' => $consumo->quantity,
-                ':amount' => $consumo->amount,
-                ':id_produto' => $consumo->id_produto,
-                ':id_usuario' => $consumo->id_usuario,
-                ':uuid' => $consumo->uuid
+                ':id_reserva' => $pagamento->id_reserva,
+                ':id_usuario' => $pagamento->id_usuario,
+                ':type_payment' => $pagamento->type_payment,
+                ':payment_amount' => $pagamento->payment_amount,
+                ':dt_payment' => $pagamento->dt_payment,
+                ':venda_id' => $pagamento->venda_id,
+                ':id_caixa' => $pagamento->id_caixa,
+                ':uuid' => $pagamento->uuid
             ]);
     
-            $reservationId =  (int) $this->conn->lastInsertId();
+            $pagamentoId = (int) $this->conn->lastInsertId();
 
             $this->conn->commit();
 
-            return $this->findById($reservationId);
+            return $this->findById($pagamentoId);
         } catch (\Throwable $e) {
+            var_dump($e->getMessage());die;
             $this->conn->rollBack();
             return null;
         }
@@ -114,11 +114,9 @@ class ConsumoRepository {
 
     public function update(array $data, int $id)
     {
-        $consumo = $this->model->create(
+        $pagamento = $this->model->create(
             $data
         );
-
-        $consumoOld = $this->findById($id);
 
         $this->conn->beginTransaction();
         try {
@@ -126,31 +124,34 @@ class ConsumoRepository {
             ->prepare(
                 "UPDATE " . self::TABLE . "
                     set 
-                    id_produto = :id_produto,
-                    amount = :amount,
+                    id_reserva = :id_reserva,
                     id_usuario = :id_usuario,
-                    quantity = :quantity
+                    type_payment = :type_payment,
+                    payment_amount = :payment_amount,
+                    dt_payment = :dt_payment,
+                    venda_id = :venda_id,
+                    id_caixa = :id_caixa
                 WHERE id = :id"
             );
 
             $updated = $stmt->execute([
-                ':id' => $id,
-                ':id_produto' => $consumo->id_produto,
-                ':amount' => $consumo->amount,
-                ':quantity' => $consumo->quantity,
-                ':id_usuario' => $consumo->id_usuario
+                ':id_reserva' => $pagamento->id_reserva,
+                ':id_usuario' => $pagamento->id_usuario,
+                ':type_payment' => $pagamento->type_payment,
+                ':payment_amount' => $pagamento->payment_amount,
+                ':dt_payment' => $pagamento->dt_payment,
+                ':venda_id' => $pagamento->venda_id,
+                ':id_caixa' => $pagamento->id_caixa,
+                ':id' => $id
             ]);
 
             if (!$updated) {                
                 $this->conn->rollBack();
                 return null;
             }
-
             $this->conn->commit();
-
             return $this->findById($id);
         } catch (\Throwable $th) {
-            var_dump($th->getMessage());
             $this->conn->rollBack();
             return null;
         }
@@ -183,7 +184,7 @@ class ConsumoRepository {
         $placeholders = rtrim(str_repeat('?,', count($params)), ','); 
     
         $stmt = $this->conn->prepare(
-            "UPDATE " . self::TABLE . " SET status = :status WHERE uuid IN ($placeholders)"
+            "UPDATE " . self::TABLE . " SET status = 0 WHERE uuid IN ($placeholders)"
         );
     
         $deleted = $stmt->execute($params);

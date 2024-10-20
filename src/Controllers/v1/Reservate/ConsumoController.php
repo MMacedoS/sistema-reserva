@@ -32,9 +32,12 @@ class ConsumoController extends Controller
         $paginator = new Paginator($reserva, $perPage, $currentPage);
         $paginatedBoards = $paginator->getPaginatedItems();
 
+        $product = $this->produtoRepository->all(['status' => 1]); 
+
         $data = [
             'reservas' => $paginatedBoards,
-            'links' => $paginator->links()
+            'links' => $paginator->links(),
+            'products' => $product
         ];
 
         return $this->router->view('consumption/index', ['active' => 'consumos', 'data' => $data]);
@@ -50,9 +53,9 @@ class ConsumoController extends Controller
             return;
         }
 
-        $diarias = $this->consumoRepository->all(['reserve_id' => $reserva->id, 'status' => '1']);  
+        $consumos = $this->consumoRepository->all(['reserve_id' => $reserva->id, 'status' => '1']);  
         
-        echo json_encode($diarias);
+        echo json_encode($consumos);
         exit();
     }
 

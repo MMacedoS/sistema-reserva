@@ -69,17 +69,23 @@ class ReservaRepository {
             (
                 SELECT COALESCE(SUM(d.amount), 0)
                 FROM diarias d
-                WHERE d.id_reserva = r.id
+                WHERE d.id_reserva = r.id and d.status = 1
             ) AS total_diaries,
             (
                 SELECT COALESCE(SUM(c.amount * c.quantity), 0)
                 FROM consumos c
-                WHERE c.id_reserva = r.id
-            ) AS total_consumptions
+                WHERE c.id_reserva = r.id and c.status = 1
+            ) AS total_consumptions,
+             (
+                SELECT COALESCE(SUM(p.payment_amount), 0)
+                FROM pagamentos p
+                WHERE p.id_reserva = r.id and p.status = 1
+            ) AS total_payments 
         FROM " . self::TABLE . " r
         LEFT JOIN apartamentos a ON a.id = r.id_apartamento 
         LEFT JOIN consumos c ON c.id_reserva = r.id 
-        LEFT JOIN diarias d ON d.id_reserva = r.id 
+        LEFT JOIN diarias d ON d.id_reserva = r.id          
+        LEFT JOIN pagamentos p ON p.id_reserva = r.id 
         ";
         
         $conditions = [];

@@ -5,6 +5,7 @@ use App\Config\Router;
 use App\Controllers\v1\Apartamento\ApartamentoController;
 use App\Controllers\v1\Customer\ClienteController;
 use App\Controllers\v1\Dashboard\DashboardController;
+use App\Controllers\v1\Payment\PagamentoController;
 use App\Controllers\v1\Permission\PermissaoController;
 use App\Controllers\v1\Product\ProdutoController;
 use App\Controllers\v1\Profile\UsuarioController;
@@ -23,7 +24,7 @@ $reservaController = new ReservaController();
 $diariaController = new DiariaController();
 $consumoController = new ConsumoController();
 $produtoController = new ProdutoController();
-$pagamentoController = new ProdutoController();
+$pagamentoController = new PagamentoController();
 
 $router->create('GET', '/dashboard', [$dashboardController, 'index'], $auth);
 $router->create('GET', '/dashboard/facility', [$dashboardController, 'indexFacility'], $auth);
