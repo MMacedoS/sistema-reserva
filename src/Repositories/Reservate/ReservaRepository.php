@@ -65,9 +65,21 @@ class ReservaRepository {
                 FROM clientes h
                 JOIN reserva_hospedes rh ON h.id = rh.id_hospede
                 WHERE rh.id_reserva = r.id
-            ) AS customers
+            ) AS customers,
+            (
+                SELECT COALESCE(SUM(d.amount), 0)
+                FROM diarias d
+                WHERE d.id_reserva = r.id
+            ) AS total_diaries,
+            (
+                SELECT COALESCE(SUM(c.amount * c.quantity), 0)
+                FROM consumos c
+                WHERE c.id_reserva = r.id
+            ) AS total_consumptions
         FROM " . self::TABLE . " r
-        LEFT JOIN apartamentos a ON a.id = r.id_apartamento
+        LEFT JOIN apartamentos a ON a.id = r.id_apartamento 
+        LEFT JOIN consumos c ON c.id_reserva = r.id 
+        LEFT JOIN diarias d ON d.id_reserva = r.id 
         ";
         
         $conditions = [];
@@ -92,6 +104,8 @@ class ReservaRepository {
         if (count($conditions) > 0) {
             $sql .= " WHERE " . implode(" AND ", $conditions);
         }
+
+        $sql .= " GROUP BY r.id, a.name, customers";
 
         $sql .= " ORDER BY apartament ASC";
 

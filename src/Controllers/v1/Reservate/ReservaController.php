@@ -116,7 +116,7 @@ class ReservaController extends Controller
             return $this->router->redirect('reserva/');
         } 
         
-        $data['id_usuario'] = 1;
+        $data['id_usuario'] = $_SESSION['user']->code;;
         
         $updated = $this->reservaRepository->update($data, $reserve->id);
 

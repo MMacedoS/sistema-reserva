@@ -6,7 +6,9 @@ use App\Controllers\v1\Apartamento\ApartamentoController;
 use App\Controllers\v1\Customer\ClienteController;
 use App\Controllers\v1\Dashboard\DashboardController;
 use App\Controllers\v1\Permission\PermissaoController;
+use App\Controllers\v1\Product\ProdutoController;
 use App\Controllers\v1\Profile\UsuarioController;
+use App\Controllers\v1\Reservate\ConsumoController;
 use App\Controllers\v1\Reservate\DiariaController;
 use App\Controllers\v1\Reservate\ReservaController;
 
@@ -19,8 +21,12 @@ $permissaoController = new PermissaoController();
 $clienteController = new ClienteController();
 $reservaController = new ReservaController();
 $diariaController = new DiariaController();
+$consumoController = new ConsumoController();
+$produtoController = new ProdutoController();
+$pagamentoController = new ProdutoController();
 
 $router->create('GET', '/dashboard', [$dashboardController, 'index'], $auth);
+$router->create('GET', '/dashboard/facility', [$dashboardController, 'indexFacility'], $auth);
 
 // routes apartamentos
 $router->create('POST', '/apartamento/{id}/deletar', [$apartamentoController, 'delete'], $auth);
@@ -81,6 +87,31 @@ $router->create('GET', '/consumos/reserva/{id}/diarias/{diaria_id}', [$diariaCon
 $router->create('POST', '/consumos/reserva/{id}/diarias/{diaria_id}', [$diariaController, 'updateByJson'], $auth);
 $router->create('DELETE', '/consumos/reserva/{id}/diarias/{diaria_id}', [$diariaController, 'destroy'], $auth);
 $router->create('DELETE', '/consumos/reserva/{id}/diarias', [$diariaController, 'destroyAll'], $auth);
+
+$router->create('GET', '/consumos/produto', [$consumoController, 'index'], $auth);
+$router->create('GET', '/consumos/reserva/{id}/produto', [$consumoController, 'indexJsonByReservaUuid'], $auth);
+$router->create('POST', '/consumos/reserva/{id}/produto', [$consumoController, 'storeByJson'], $auth);
+$router->create('GET', '/consumos/reserva/{id}/produto/{consumo_id}', [$consumoController, 'showByJson'], $auth);
+$router->create('POST', '/consumos/reserva/{id}/produto/{consumo_id}', [$consumoController, 'updateByJson'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/produto/{consumo_id}', [$consumoController, 'destroy'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/produto', [$consumoController, 'destroyAll'], $auth);
+
+$router->create('GET', '/consumos/pagamento', [$pagamentoController, 'index'], $auth);
+$router->create('GET', '/consumos/reserva/{id}/pagamento', [$pagamentoController, 'indexJsonByReservaUuid'], $auth);
+$router->create('POST', '/consumos/reserva/{id}/pagamento', [$pagamentoController, 'storeByJson'], $auth);
+$router->create('GET', '/consumos/reserva/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'showByJson'], $auth);
+$router->create('POST', '/consumos/reserva/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'updateByJson'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'destroy'], $auth);
+$router->create('DELETE', '/consumos/reserva/{id}/pagamento', [$pagamentoController, 'destroyAll'], $auth);
+
+$router->create('GET', '/produtos', [$produtoController, 'index'], $auth);
+$router->create('GET', '/produtos/list', [$produtoController, 'indexJsonWithoutPaginate'], $auth);
+$router->create('GET', '/produtos/criar', [$produtoController, 'create'], $auth);
+$router->create('POST', '/produtos', [$produtoController, 'store'], $auth);
+$router->create('GET', '/produtos/{produto_id}', [$produtoController, 'edit'], $auth);
+$router->create('POST', '/produtos/{produto_id}', [$produtoController, 'update'], $auth);
+$router->create('POST', '/produtos/{produto_id}/remove', [$produtoController, 'destroy'], $auth);
+// $router->create('DELETE', '/produtos', [$produtoController, 'destroyAll'], $auth);
 
 $router->create('GET', '/', [$usuarioController, 'login'], null);
 $router->create('POST', '/login', [$usuarioController, 'auth']);

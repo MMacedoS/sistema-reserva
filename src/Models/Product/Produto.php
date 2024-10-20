@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Profile;
+namespace App\Models\Product;
 
 use App\Models\Traits\UuidTrait;
 
@@ -13,7 +13,9 @@ class Produto {
     public $name;
     public $description;
     public $price;
+    public $category;
     public $stock;
+    public $id_usuario;
     public $created_at;
     public $updated_at;
 
@@ -27,7 +29,9 @@ class Produto {
         $product->uuid = $data['uuid'] ?? $this->generateUUID();
         $product->name = $data['name'];
         $product->description = $data['description'];
-        $product->price = $data['price']; 
+        $product->price = $data['amount'];          
+        $product->id_usuario = $data['id_usuario']; 
+        $product->category = $data['category'];
         $product->stock = $data['stock'];        
         $product->created_at = $data['created_at'] ?? null;
         $product->updated_at = $data['updated_at'] ?? null;

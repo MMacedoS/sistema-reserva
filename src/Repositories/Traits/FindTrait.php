@@ -9,12 +9,12 @@ trait FindTrait{
     
         
         $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, self::CLASS_NAME);
-        $apartamento = $stmt->fetch();  
-        if (is_null($apartamento)) {
+        $register = $stmt->fetch();  
+        if (is_null($register)) {
             return null;
         }
     
-        return $apartamento;
+        return $register;
     }
 
     public function findByUuid($uuid)
@@ -28,12 +28,12 @@ trait FindTrait{
         $stmt->execute();
         
         $stmt->setFetchMode(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, self::CLASS_NAME);
-        $apartamento = $stmt->fetch(); 
-        if (!$apartamento) {
+        $register = $stmt->fetch(); 
+        if (!$register) {
             return null;
         }
     
-        return $apartamento;
+        return $register;
     }
     
 }

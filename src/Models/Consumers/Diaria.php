@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Reservate;
+namespace App\Models\Consumers;
 
 use App\Models\Traits\UuidTrait;
 

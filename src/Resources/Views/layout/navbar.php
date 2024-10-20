@@ -14,9 +14,14 @@
                                 <i class="icon-stacked_line_chart"></i> Dashboards
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
+                                <!-- <li>
                                     <a class="dropdown-item current-page" href="/dashboard/analytics">
                                         <span>Analytics</span>
+                                    </a>
+                                </li> -->
+                                <li>
+                                    <a class="dropdown-item current-page" href="/dashboard/facility">
+                                        <span>Facilidades</span>
                                     </a>
                                 </li>
                             </ul>
@@ -120,6 +125,11 @@
                                 <li>
                                     <a class="dropdown-item" href="/permissao/">
                                         <span>Permissões</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item current-page" href="/produtos">
+                                        <span>Produtos</span>
                                     </a>
                                 </li>
                             <?php } ?>

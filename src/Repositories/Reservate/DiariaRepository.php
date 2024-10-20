@@ -3,9 +3,8 @@
 namespace App\Repositories\Reservate;
 
 use App\Config\Database;
-use App\Models\Reservate\Diaria;
+use App\Models\Consumers\Diaria;
 use App\Repositories\Traits\FindTrait;
-use App\Utils\LoggerHelper;
 
 class DiariaRepository {
     const CLASS_NAME = Diaria::class;

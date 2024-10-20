@@ -18,6 +18,8 @@ class Reserva {
     public $amount;
     public $status;
     public $customers;
+    public $total_diaries;
+    public $total_consumptions;
     public $created_at;
     public $updated_at;
 
@@ -36,7 +38,9 @@ class Reserva {
         $reserva->status = $data['status']; 
         $reserva->dt_checkout = $data['dt_checkout'];    
         $reserva->amount = $data['amount'];                      
-        $reserva->customers = $data['customers'] ?? null;  
+        $reserva->customers = $data['customers'] ?? null;        
+        $reserva->total_diaries = $data['total_diaries'] ?? null;  
+        $reserva->total_consumptions = $data['total_consumptions'] ?? null;  
         $reserva->created_at = $data['created_at'] ?? null;
         $reserva->updated_at = $data['updated_at'] ?? null;
         return $reserva;
