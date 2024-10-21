@@ -1,65 +1,50 @@
 <?php
 
-namespace App\Controllers\v1\Reservate;
+namespace App\Controllers\v1\Sale;
 
 use App\Controllers\Controller;
 use App\Repositories\Product\ProdutoRepository;
-use App\Repositories\Reservate\ConsumoRepository;
 use App\Repositories\Reservate\ReservaRepository;
+use App\Repositories\Sale\ItemVendaRepository;
+use App\Repositories\Sale\VendaRepository;
 use App\Request\Request;
 use App\Utils\LoggerHelper;
 use App\Utils\Paginator;
 use App\Utils\Validator;
 
-class ConsumoController extends Controller
+class ItemVendaController extends Controller
 {
-    protected $consumoRepository;    
+    protected $vendaRepository;   
+    protected $itemVendaRepository;  
     protected $reservaRepository;
     protected $produtoRepository;
 
     public function __construct()
     {   
         parent::__construct();
-        $this->reservaRepository = new ReservaRepository();   
-        $this->consumoRepository = new ConsumoRepository(); 
-        $this->produtoRepository = new ProdutoRepository();    
-    }
-
-    public function index(Request $request) {
-        $reserva = $this->reservaRepository->allHosted();
-        $perPage = 10;
-        $currentPage = $request->getParam('page') ? (int)$request->getParam('page') : 1;
-        $paginator = new Paginator($reserva, $perPage, $currentPage);
-        $paginatedBoards = $paginator->getPaginatedItems();
-
-        $product = $this->produtoRepository->all(['status' => 1]); 
-
-        $data = [
-            'reservas' => $paginatedBoards,
-            'links' => $paginator->links(),
-            'products' => $product
-        ];
-
-        return $this->router->view('consumption/index', ['active' => 'consumos', 'data' => $data]);
+        $this->vendaRepository = new VendaRepository();  
+        $this->itemVendaRepository = new ItemVendaRepository();   
+        $this->reservaRepository = new ReservaRepository(); 
+        $this->produtoRepository = new ProdutoRepository();  
     }
 
     public function indexJsonByReservaUuid(Request $request, $id) 
     {
-        $reserva = $this->reservaRepository->findByUuid($id);
+        $venda = $this->vendaRepository->findByUuid($id);
 
-        if (!$reserva) {
+        if (!$venda) {
             http_response_code(404); 
-            echo json_encode(['error' => 'Reserva não encontrada.']);
+            echo json_encode(['error' => 'venda não encontrada.']);
             return;
         }
 
-        $consumos = $this->consumoRepository->all(['reserve_id' => $reserva->id, 'status' => '1']);  
+        $consumos = $this->itemVendaRepository->all(['id_venda' => $venda->id, 'status' => '1']);  
         
         echo json_encode($consumos);
         exit();
     }
 
-    public function storeByJson(Request $request, $reserva_id) 
+    public function storeByJson(Request $request, $venda_id) 
     {
         $data = $request->getBodyParams();
         $validator = new Validator($data);
@@ -74,9 +59,9 @@ class ConsumoController extends Controller
             exit();
        } 
     
-        $reserve = $this->reservaRepository->findByUuid($reserva_id);
+        $venda = $this->vendaRepository->findByUuid($venda_id);
         
-        if (is_null($reserve)) {
+        if (is_null($venda)) {
             http_response_code(422); 
             echo json_encode(['error' => 'Reserva não encontrada.']);
             exit();
@@ -90,46 +75,46 @@ class ConsumoController extends Controller
             exit();
         }     
 
-        $data['id_reserva'] = $reserve->id;        
+        $data['id_venda'] = $venda->id;        
         $data['id_produto'] = $product->id;
-        $data['amount'] = $product->price;
-        $data['id_usuario'] = 1;
+        $data['amount_item'] = $product->price;
+        $data['id_usuario'] = $_SESSION['user']->id;
            
-        $created = $this->consumoRepository->create($data);
+        $created = $this->itemVendaRepository->create($data);
     
         if(is_null($created)) {            
             http_response_code(404); 
-            echo json_encode(['error' => 'Reserva não encontrada.']);
+            echo json_encode(['error' => 'item não addicionado.']);
             return;
         }
     
-        echo json_encode(['title' => "sucesso!" ,'message' => 'diaria criada']);
+        echo json_encode(['title' => "sucesso!" ,'message' => 'item adicionado']);
         exit();
     }
 
-    public function showByJson(Request $request, $reserve ,$id) 
+    public function showByJson(Request $request, $vendaId ,$id) 
     {
-        $reserve = $this->reservaRepository->findByUuid($reserve);
+        $venda = $this->vendaRepository->findByUuid($vendaId);
         
-        if (!$reserve) {
+        if (!$venda) {
             http_response_code(404); 
-            echo json_encode(['error' => 'Reserva não encontrada.']);
+            echo json_encode(['error' => 'venda não encontrada.']);
             return;
         }     
         
-        $diaria = $this->consumoRepository->findByUuid($id);
+        $items = $this->itemVendaRepository->findByUuid($id);
         
-        if (!$diaria) {
+        if (!$items) {
             http_response_code(404); 
-            echo json_encode(['error' => 'diaria não encontrada.']);
+            echo json_encode(['error' => 'items não encontrada.']);
             return;
         }    
         
-        echo json_encode($diaria);
+        echo json_encode($items);
         exit();        
     }
 
-    public function updateByJson(Request $request, $reserva_id, $id) 
+    public function updateByJson(Request $request, $vendaId, $id) 
     {
         $data = $request->getBodyParams();
         $validator = new Validator($data);
@@ -144,19 +129,19 @@ class ConsumoController extends Controller
             exit();
        } 
 
-       $reserve = $this->reservaRepository->findByUuid($reserva_id);
+       $vendas = $this->vendaRepository->findByUuid($vendaId);
         
-       if (!$reserve) {
+       if (!$vendas) {
            http_response_code(404); 
-           echo json_encode(['error' => 'Reserva não encontrada.']);
+           echo json_encode(['error' => 'venda não encontrada.']);
            exit();
        }     
     
-        $consumo = $this->consumoRepository->findByUuid($id);
+        $items = $this->itemVendaRepository->findByUuid($id);
         
-        if (!$consumo) {
+        if (!$items) {
             http_response_code(404); 
-            echo json_encode(['error' => 'consumo não encontrada.']);
+            echo json_encode(['error' => 'item não encontrada.']);
             exit();
         }    
         
@@ -168,59 +153,58 @@ class ConsumoController extends Controller
             exit();
         }     
 
-        $data['id_reserva'] = $reserve->id;        
+        $data['id_venda'] = $vendas->id;        
         $data['id_produto'] = $product->id;
-        $data['amount'] = $product->price;
-
+        $data['amount_item'] = $product->price;
         $data['id_usuario'] = $_SESSION['user']->id;
            
-        $updated = $this->consumoRepository->update($data, $consumo->id);
+        $updated = $this->itemVendaRepository->update($data, $items->id);
     
         if(is_null($updated)) {            
             http_response_code(404); 
-            echo json_encode(['error' => 'consumo não atualizada.']);
+            echo json_encode(['error' => 'item não atualizada.']);
             return;
         }
     
-        echo json_encode(['title' => "sucesso!" ,'message' => 'consumo atualizada']);
+        echo json_encode(['title' => "sucesso!" ,'message' => 'item atualizado']);
         exit();
     }
 
     public function destroyAll(Request $request, $id) {
-        $reserve = $this->reservaRepository->findByUuid($id);
+        $venda = $this->vendaRepository->findByUuid($id);
         $data = $request->getQueryParams();
         
-        if (!$reserve) {
+        if (!$venda) {
             http_response_code(404); 
-            echo json_encode(['error' => 'Reserva não encontrada.']);
+            echo json_encode(['error' => 'venda não encontrada.']);
             return;
         }        
         
         $params = explode(',', $data['data']);
-        $deleted = $this->consumoRepository->deleteAll($params);
+        $deleted = $this->itemVendaRepository->deleteAll($params);
 
         echo json_encode($deleted);
         exit();
     }
 
-    public function destroy(Request $request, $reserva_id, $id) {
+    public function destroy(Request $request, $venda_id, $id) {
 
-        $reserve = $this->reservaRepository->findByUuid($reserva_id);
-        if (!$reserve) {
+        $venda = $this->vendaRepository->findByUuid($venda_id);
+        if (!$venda) {
             http_response_code(404); 
-            echo json_encode(['error' => 'Reserva não encontrada.']);
+            echo json_encode(['error' => 'venda não encontrada.']);
             return;
         }        
         
-        $diaria = $this->consumoRepository->findByUuid($id);
+        $item = $this->itemVendaRepository->findByUuid($id);
         
-        if (!$diaria) {
+        if (!$item) {
             http_response_code(404); 
-            echo json_encode(['error' => 'diaria não encontrada.']);
+            echo json_encode(['error' => 'item não encontrada.']);
             return;
         }     
 
-        $deleted = $this->consumoRepository->delete($diaria->id);
+        $deleted = $this->itemVendaRepository->delete($item->id);
 
         if (!$deleted) {
             http_response_code(422); 

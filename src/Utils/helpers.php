@@ -15,6 +15,17 @@ if (!function_exists('isPermissionChecked')) {
     }
 }
 
+if (!function_exists('reservaFilteredById')) {
+    function reservaFilteredById($reservaId, $reservas) {
+        foreach ($reservas as $reserva) {
+            if ($reserva->id === $reservaId) {
+                return $reserva;
+           }
+        }
+        return null;
+    }
+}
+
 if (!function_exists('hasPermission')) {    
     function hasPermission($permissio_name) {
         $my_permissions = $_SESSION['my_permissions'];

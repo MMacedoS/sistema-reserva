@@ -1,32 +1,32 @@
 <?php
 
-namespace App\Repositories\Reservate;
+namespace App\Repositories\Sale;
 
 use App\Config\Database;
-use App\Models\Consumers\Consumo;
+use App\Models\Sale\ItemVenda;
 use App\Repositories\Traits\FindTrait;
 
-class ConsumoRepository {
-    const CLASS_NAME = Consumo::class;
-    const TABLE = 'consumos';
+class ItemVendaRepository {
+    const CLASS_NAME = ItemVenda::class;
+    const TABLE = 'itens_Venda';
     
     use FindTrait;
     protected $conn;
     protected $model;
-    protected $reservaRepository;
+    protected $vendaRepository;
 
     public function __construct() {
         $conn = new Database();
         $this->conn = $conn->getConnection();
-        $this->model = new Consumo();
-        $this->reservaRepository = new ReservaRepository();
+        $this->model = new ItemVenda();
+        $this->vendaRepository = new VendaRepository();
     }
 
     public function all(array $params)
     {
         $sql = "
         SELECT 
-           c.*,
+           iv.*,
            (
             SELECT 
                JSON_OBJECT(
@@ -35,9 +35,9 @@ class ConsumoRepository {
                    'price', p.price
                 )
             FROM produtos p
-            WHERE p.id = c.id_produto
+            WHERE p.id = iv.id_produto
         ) AS products
-        FROM " . self::TABLE . " c 
+        FROM itens_Venda iv
         ";
         
         $conditions = [];
@@ -48,9 +48,14 @@ class ConsumoRepository {
             $bindings[':quantity'] = $params['quantity'];
         }
 
-        if (isset($params['reserve_id'])) {
-            $conditions[] = "id_reserva = :reserve_id";
-            $bindings[':reserve_id'] = $params['reserve_id'];
+        if (isset($params['id_venda'])) {
+            $conditions[] = "id_venda = :id_venda";
+            $bindings[':id_venda'] = $params['id_venda'];
+        }
+
+        if (isset($params['status'])) {
+            $conditions[] = "status = :status";
+            $bindings[':status'] = $params['status'];
         }
 
         if (count($conditions) > 0) {
@@ -76,16 +81,16 @@ class ConsumoRepository {
             $sql = "
                 INSERT INTO " . self::TABLE . " (
                     uuid,
-                    id_reserva,
+                    id_venda,
                     quantity,
-                    amount,
+                    amount_item,
                     id_produto,
                     id_usuario
                 ) VALUES (
                     :uuid,
-                    :id_reserva,
+                    :id_venda,
                     :quantity,
-                    :amount,
+                    :amount_item,
                     :id_produto,
                     :id_usuario
                 )
@@ -93,20 +98,21 @@ class ConsumoRepository {
         
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
-                ':id_reserva' => $consumo->id_reserva,
+                ':id_venda' => $consumo->id_venda,
                 ':quantity' => $consumo->quantity,
-                ':amount' => $consumo->amount,
+                ':amount_item' => $consumo->amount_item,
                 ':id_produto' => $consumo->id_produto,
                 ':id_usuario' => $consumo->id_usuario,
                 ':uuid' => $consumo->uuid
             ]);
     
-            $reservationId =  (int) $this->conn->lastInsertId();
+            $itemVendaId =  (int) $this->conn->lastInsertId();
 
             $this->conn->commit();
 
-            return $this->findById($reservationId);
+            return $this->findById($itemVendaId);
         } catch (\Throwable $e) {
+            var_dump($e->getMessage()); die;
             $this->conn->rollBack();
             return null;
         }
@@ -127,7 +133,7 @@ class ConsumoRepository {
                 "UPDATE " . self::TABLE . "
                     set 
                     id_produto = :id_produto,
-                    amount = :amount,
+                    amount_item = :amount_item,
                     id_usuario = :id_usuario,
                     quantity = :quantity
                 WHERE id = :id"
@@ -136,7 +142,7 @@ class ConsumoRepository {
             $updated = $stmt->execute([
                 ':id' => $id,
                 ':id_produto' => $consumo->id_produto,
-                ':amount' => $consumo->amount,
+                ':amount_item' => $consumo->amount_item,
                 ':quantity' => $consumo->quantity,
                 ':id_usuario' => $consumo->id_usuario
             ]);

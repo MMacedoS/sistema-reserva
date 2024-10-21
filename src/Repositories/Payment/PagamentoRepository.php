@@ -40,6 +40,11 @@ class PagamentoRepository {
             $bindings[':reserve_id'] = $params['reserve_id'];
         }
 
+        if (isset($params['id_venda'])) {
+            $conditions[] = "id_venda = :id_venda";
+            $bindings[':id_venda'] = $params['id_venda'];
+        }
+
         if (isset($params['status'])) {
             $conditions[] = "status = :status";
             $bindings[':status'] = $params['status'];
@@ -74,7 +79,7 @@ class PagamentoRepository {
                     type_payment,
                     payment_amount,
                     dt_payment,
-                    venda_id,
+                    id_venda,
                     id_caixa
                 ) VALUES (
                     :uuid,
@@ -95,7 +100,7 @@ class PagamentoRepository {
                 ':type_payment' => $pagamento->type_payment,
                 ':payment_amount' => $pagamento->payment_amount,
                 ':dt_payment' => $pagamento->dt_payment,
-                ':venda_id' => $pagamento->venda_id,
+                ':venda_id' => $pagamento->id_venda,
                 ':id_caixa' => $pagamento->id_caixa,
                 ':uuid' => $pagamento->uuid
             ]);
@@ -129,7 +134,7 @@ class PagamentoRepository {
                     type_payment = :type_payment,
                     payment_amount = :payment_amount,
                     dt_payment = :dt_payment,
-                    venda_id = :venda_id,
+                    id_venda = :venda_id,
                     id_caixa = :id_caixa
                 WHERE id = :id"
             );
@@ -140,7 +145,7 @@ class PagamentoRepository {
                 ':type_payment' => $pagamento->type_payment,
                 ':payment_amount' => $pagamento->payment_amount,
                 ':dt_payment' => $pagamento->dt_payment,
-                ':venda_id' => $pagamento->venda_id,
+                ':venda_id' => $pagamento->id_venda,
                 ':id_caixa' => $pagamento->id_caixa,
                 ':id' => $id
             ]);

@@ -91,7 +91,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item current-page" href="/consumos/venda">
+                                    <a class="dropdown-item current-page" href="/vendas">
                                         <span>Venda Livre</span>
                                     </a>
                                 </li>

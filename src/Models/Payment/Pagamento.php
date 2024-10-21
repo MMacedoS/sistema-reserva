@@ -15,7 +15,7 @@ class Pagamento {
     public $type_payment;
     public $payment_amount;
     public $dt_payment;
-    public $venda_id;
+    public $id_venda;
     public $id_caixa;
     public $created_at;
     public $updated_at;
@@ -33,7 +33,7 @@ class Pagamento {
         $pagamento->id_usuario = $data['id_usuario'] ?? null;
         $pagamento->dt_payment = $data['dt_payment']; 
         $pagamento->payment_amount = $data['payment_amount'];   
-        $pagamento->venda_id = $data['venda_id'] ?? null;       
+        $pagamento->id_venda = $data['id_venda'] ?? null;       
         $pagamento->id_caixa = $data['id_caixa'] ?? null;     
         $pagamento->created_at = $data['created_at'] ?? null;
         $pagamento->updated_at = $data['updated_at'] ?? null;

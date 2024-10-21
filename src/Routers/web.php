@@ -12,6 +12,8 @@ use App\Controllers\v1\Profile\UsuarioController;
 use App\Controllers\v1\Reservate\ConsumoController;
 use App\Controllers\v1\Reservate\DiariaController;
 use App\Controllers\v1\Reservate\ReservaController;
+use App\Controllers\v1\Sale\ItemVendaController;
+use App\Controllers\v1\Sale\VendaController;
 
 $router = new Router();
 $auth = new Auth();
@@ -25,6 +27,8 @@ $diariaController = new DiariaController();
 $consumoController = new ConsumoController();
 $produtoController = new ProdutoController();
 $pagamentoController = new PagamentoController();
+$vendaController = new VendaController();
+$itemVendaController = new ItemVendaController();
 
 $router->create('GET', '/dashboard', [$dashboardController, 'index'], $auth);
 $router->create('GET', '/dashboard/facility', [$dashboardController, 'indexFacility'], $auth);
@@ -104,6 +108,28 @@ $router->create('GET', '/consumos/reserva/{id}/pagamento/{pagamento_id}', [$paga
 $router->create('POST', '/consumos/reserva/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'updateByJson'], $auth);
 $router->create('DELETE', '/consumos/reserva/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'destroy'], $auth);
 $router->create('DELETE', '/consumos/reserva/{id}/pagamento', [$pagamentoController, 'destroyAll'], $auth);
+
+$router->create('GET', '/vendas', [$vendaController, 'index'], $auth);
+// $router->create('GET', '/consumos/venda/list', [$produtoController, 'indexJsonWithoutPaginate'], $auth);
+$router->create('GET', '/vendas/criar', [$vendaController, 'create'], $auth);
+$router->create('POST', '/vendas', [$vendaController, 'store'], $auth);
+$router->create('GET', '/vendas/{id}', [$vendaController, 'edit'], $auth);
+$router->create('POST', '/vendas/{id}', [$vendaController, 'update'], $auth);
+// $router->create('POST', '/produtos/{produto_id}/remove', [$produtoController, 'destroy'], $auth);
+
+$router->create('GET', '/vendas/{id}/items', [$itemVendaController, 'indexJsonByReservaUuid'], $auth);
+$router->create('POST', '/vendas/{id}/items', [$itemVendaController, 'storeByJson'], $auth);
+$router->create('GET', '/vendas/{id}/items/{consumo_id}', [$itemVendaController, 'showByJson'], $auth);
+$router->create('POST', '/vendas/{id}/items/{consumo_id}', [$itemVendaController, 'updateByJson'], $auth);
+$router->create('DELETE', '/vendas/{id}/items/{consumo_id}', [$itemVendaController, 'destroy'], $auth);
+$router->create('DELETE', '/vendas/{id}/items', [$itemVendaController, 'destroyAll'], $auth);
+
+$router->create('GET', '/vendas/{id}/pagamento', [$pagamentoController, 'indexJsonWithSaleByUuid'], $auth);
+$router->create('POST', '/vendas/{id}/pagamento', [$pagamentoController, 'storeWithSaleByJson'], $auth);
+$router->create('GET', '/vendas/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'showWithSaleByJson'], $auth);
+$router->create('POST', '/vendas/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'updateWithSaleByJson'], $auth);
+$router->create('DELETE', '/vendas/{id}/pagamento/{pagamento_id}', [$pagamentoController, 'destroyWithSale'], $auth);
+$router->create('DELETE', '/vendas/{id}/pagamento', [$pagamentoController, 'destroyWithSaleAll'], $auth);
 
 $router->create('GET', '/produtos', [$produtoController, 'index'], $auth);
 $router->create('GET', '/produtos/list', [$produtoController, 'indexJsonWithoutPaginate'], $auth);
