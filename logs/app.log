@@ -95,3 +95,7 @@
 [2024-10-06T20:32:04.262581+00:00] app_logger.INFO: 62 diarias geradas  [] []
 [2024-10-20T15:29:17.221297+00:00] app_logger.INFO: Iniciando a ação no SomeController [] []
 [2024-10-20T15:29:17.370973+00:00] app_logger.INFO: 27 diarias geradas  [] []
+[2024-10-21T05:04:34.641554+00:00] app_logger.INFO: Iniciando a ação no SomeController [] []
+[2024-10-21T05:04:34.705018+00:00] app_logger.INFO: 2 diarias geradas  [] []
+[2024-10-26T23:49:26.591930+00:00] app_logger.INFO: Iniciando a ação no SomeController [] []
+[2024-10-26T23:49:26.755056+00:00] app_logger.INFO: 10 diarias geradas  [] []

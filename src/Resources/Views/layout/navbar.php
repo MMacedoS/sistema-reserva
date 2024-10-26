@@ -97,6 +97,7 @@
                                 </li>
                             </ul>
                         </li>
+                        <?php if (hasPermission('visualizar financeiro')) { ?>
                         <li class="nav-item dropdown <?=$active === 'financeiro' ? 'active-link': ''?>">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="icon-soap"></i> Financeiro
@@ -109,7 +110,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <?php if (hasPermission('visualizar cadastro')) { ?>
+                        <?php } if (hasPermission('visualizar cadastro')) { ?>
                         <li class="nav-item dropdown ">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="icon-add_task"></i>Cadastro

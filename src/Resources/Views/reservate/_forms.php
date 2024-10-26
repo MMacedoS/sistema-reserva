@@ -39,26 +39,35 @@
       <div class="m-0">
         <label class="form-label">Situação</label>
         <select class="form-select" name="status">
-          <option value="Reservada" 
-            <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Reservada') { echo 'selected';} ?>>
-              Reservada
-          </option>
-          <option value="Confirmada" 
-            <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Confirmada') { echo 'selected';} ?>>
-            Confirmada
-          </option>
+
+          <? if(!isset($data['reserve']) || $data['reserve']->status === 'Reservada' || $data['reserve']->status === 'Confirmada') { ?>
+            <option value="Reservada" 
+              <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Reservada') { echo 'selected';} ?>>
+                Reservada
+            </option>
+            <option value="Confirmada" 
+              <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Confirmada') { echo 'selected';} ?>>
+              Confirmada
+            </option>
+          <? } ?>
+
+          <? if(isset($data['reserve'])) { ?>
           <option value="Hospedada" 
             <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Hospedada') { echo 'selected';} ?>>
             Hospedada
           </option>
-          <option value="Cancelada" 
-            <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Cancelada') { echo 'selected';} ?>>
-            Cancelada
-          </option>
-          <option value="Finalizada" 
-            <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Finalizada') { echo 'selected';} ?>>
-            Finalizada
-          </option>
+          <? }?>
+
+          <? if(!isset($data['reserve']) && ($data['reserve']->status === 'Cancelada' || $data['reserve']->status === 'Finalizada')) { ?>
+            <option value="Cancelada" 
+              <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Cancelada') { echo 'selected';} ?>>
+              Cancelada
+            </option>
+            <option value="Finalizada" 
+              <?php if (isset($data['reserve']->status) && $data['reserve']->status === 'Finalizada') { echo 'selected';} ?>>
+              Finalizada
+            </option>
+          <? } ?>
         </select>
       </div>
     </div>

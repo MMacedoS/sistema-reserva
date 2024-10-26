@@ -27,7 +27,7 @@
       <div class="m-0">
         <label class="form-label">Cliente</label>
         <select name="reserve_id" id="reserve_id" class="form-control">
-          <option value="">Consumidor Livre</option>
+          <option value="0">Consumidor Livre</option>
           <?php foreach($data['reservas'] as $reserva){ ?>
             <option value="<?=$reserva->id?>" <?php if(isset($sale) && $sale->id_reserva == $reserva->id) { echo 'selected' ; } ?>>Apartamento <?=$reserva->apartament?></option>
          <? } ?>

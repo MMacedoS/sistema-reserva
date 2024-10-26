@@ -21,7 +21,8 @@ class DashboardController extends Controller
     }
     
     public function index(Request $request) {
-        return $this->router->view('dashboard/index', ['active' => 'dashboard']);
+        $this->indexFacility($request);
+        // return $this->router->view('dashboard/index', ['active' => 'dashboard']);
     }
 
     public function indexFacility(Request $request) {
