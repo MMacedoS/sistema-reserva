@@ -1,12 +1,47 @@
-      </div>
+
+
     </div>
-      <!-- App footer start -->
-      <div class="app-footer">
-        <div class="container">
-          <span>© Sindsmut <?=date('Y')?></span>
-        </div>
-      </div>
+</div>
+<!-- App footer start -->
+<div class="app-footer">
+    <div class="container">
+     <span>© Sistema Reserva <?=date('Y')?> by <a href="https://github.com/MMacedoS" target="_blank">Mauricio Macedo</a></span>
+    </div>
+</div>
       <!-- App footer end -->
+<div class="modal fade" id="modalBalance" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="modalBalanceLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBalanceLabel">
+                   Abertura Caixa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">                
+                <div class="container mt-2">
+                    <form action="" id="form_inserir_caixa" method="post">
+                        <div class="row gx-3">
+                            <div class="col-12"> 
+                                <label for="">Saldo Abertura</label>
+                                <input type="number" name="starting_balance" id="starting_balance" step="0.01" value="0" min="0" class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="refreshPage()">
+                    Fechar
+                </button>
+                <button type="button" id="btn_inserir_caixa" class="btn btn-primary">
+                    Inserir Caixa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
           <!-- *************
         ************ JavaScript Files *************
@@ -112,8 +147,8 @@
                   tr += `<td>${value.amount}</td>`;            
                   tr += `<td>${date_daily[2]}/${date_daily[1]}/${date_daily[0]}</td>`;
                   tr += `<td>
-                      <a class="btn btn-primary" onclick="editar('${value.uuid}')"><span class="icon-edit"></span></a>
-                      <a class="btn btn-danger" onclick="deleteItem('${value.uuid}')"><span class="icon-trash"></span></a>
+                      <a class="btn btn-primary" onclick="editarDiaries('${value.uuid}')"><span class="icon-edit"></span></a>
+                      <a class="btn btn-danger" onclick="deleteDiariesItem('${value.uuid}')"><span class="icon-trash"></span></a>
                   </td>`;
                   tr += `<td> <input type="checkbox" onclick="checkBox()"; class="form-check m-0" value="${value.uuid}" /></td>`;
                   tr += `</tr>`;
@@ -168,7 +203,7 @@
                   cancelButtonColor: "#d33",
                   confirmButtonText: "Sim, deletar!",
                   cancelButtonText: 'Cancelar',
-                  }).then((result) => {
+                }).then((result) => {
                   if (result.isConfirmed) {
                       let params = $('#checkAll').val();
                       deleteData(`/consumos/reserva/${params}/diarias?data=${values}`)
@@ -182,7 +217,7 @@
                           });
                       });
                   }
-              });
+            });
           });
 
           function checkBox() {
@@ -217,7 +252,7 @@
               });
           });
 
-          function editar(item) 
+          function editarDiaries(item) 
           {   
               let params = $('#checkAll').val();
               showData(`/consumos/reserva/${params}/diarias/${item}`)
@@ -230,7 +265,7 @@
           }
 
           
-          function deleteItem(item) {
+          function deleteDiariesItem(item) {
             Swal.fire({
                   title: "Tem certeza que deseja deletar estes dados?",
                   text: "A deleção é irrevesivel, não consiguirá reater estes daddos novamente",
@@ -275,8 +310,8 @@
                   tr += `<td>${formatCurrency(value.amount)}</td>`;            
                   tr += `<td>${value.quantity}</td>`;
                   tr += `<td>
-                      <a class="btn btn-primary m-1" onclick="editar('${value.uuid}')"><span class="icon-edit"></span></a>
-                      <a class="btn btn-danger m-1" onclick="deleteItem('${value.uuid}')"><span class="icon-trash"></span></a>
+                      <a class="btn btn-primary m-1" onclick="editarProducts('${value.uuid}')"><span class="icon-edit"></span></a>
+                      <a class="btn btn-danger m-1" onclick="deleteProductsItem('${value.uuid}')"><span class="icon-trash"></span></a>
                   </td>`;
                   tr += `<td> <input type="checkbox" onclick="checkBox()"; class="form-check m-0" value="${value.uuid}" /></td>`;
                   tr += `</tr>`;
@@ -374,7 +409,7 @@
               });
           });
 
-          function editar(item) 
+          function editarProducts(item) 
           {   
               let params = $('#checkAllProducts').val();
               showData(`/consumos/reserva/${params}/produto/${item}`)
@@ -387,7 +422,7 @@
           }
 
           
-          function deleteItem(item) {
+          function deleteProductsItem(item) {
             Swal.fire({
                   title: "Tem certeza que deseja deletar estes dados?",
                   text: "A deleção é irrevesivel, não consiguirá reater estes daddos novamente",
@@ -431,8 +466,8 @@
                   tr += `<td>${created}</td>`;       
                   tr += `<td>${formatCurrency(value.payment_amount)}</td>`;            
                   tr += `<td>
-                      <a class="btn btn-primary m-1" onclick="editar('${value.uuid}')"><span class="icon-edit"></span></a>
-                      <a class="btn btn-danger m-1" onclick="deleteItem('${value.uuid}')"><span class="icon-trash"></span></a>
+                      <a class="btn btn-primary m-1" onclick="editarPayments('${value.uuid}')"><span class="icon-edit"></span></a>
+                      <a class="btn btn-danger m-1" onclick="deletePaymentsItem('${value.uuid}')"><span class="icon-trash"></span></a>
                   </td>`;
                   tr += `<td> <input type="checkbox" onclick="checkBox()"; class="form-check m-0" value="${value.uuid}" /></td>`;
                   tr += `</tr>`;
@@ -530,7 +565,7 @@
               });
           });
 
-          function editar(item) {   
+          function editarPayments(item) {   
               let params = $('#checkAllPayments').val();
               showData(`/consumos/reserva/${params}/pagamento/${item}`)
               .then((result) => {
@@ -542,7 +577,7 @@
           }
 
           
-          function deleteItem(item) {
+          function deletePaymentsItem(item) {
             Swal.fire({
                   title: "Tem certeza que deseja deletar estes dados?",
                   text: "A deleção é irrevesivel, não consiguirá reater estes daddos novamente",
@@ -570,5 +605,21 @@
           }
 
       </script>
+     
+      <script>
+          function openModelBalance() {
+            $('#modalBalance').modal('show');
+          }   
+
+          $('#btn_inserir_caixa').click(function() {            
+            $('#btn_inserir_caixa').attr('disabled', true);
+             createData(`/caixa/create`, new FormData(document.getElementById("form_inserir_caixa"),))
+               .then((result) => {
+                   showMessage(result, 'success');
+                   refreshPage();             
+               });
+          });
+      </script>
+      
     </body>
 </html>

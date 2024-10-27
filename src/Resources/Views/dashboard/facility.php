@@ -9,7 +9,7 @@
 </style>
 
     <!-- Row start -->
-    <div class="row gx-3">
+<div class="row gx-3">
     <div class="col-12">
         <div class="card mb-3">
             <div class="card-body">
@@ -28,22 +28,22 @@
                                            Hospedes: <?=getCustomers(json_decode($value->customers))?> <br>
                                            Período de <?=brDate($value->dt_checkin)?> á  <?=brDate($value->dt_checkout)?> <br>
                                         </p>
-                                        <span class="small badge rounded-pill bg-warning m-1 d-none-sm"> Diária R$ <?=number_format($value->total_diaries, 2 ,',' ,'.')?></span>
-                                        <span class="small badge rounded-pill bg-info m-1 d-none-sm"> Consumo R$ <?=number_format($value->total_consumptions, 2 ,',' ,'.')?></span>                                        
-                                        <span class="small badge rounded-pill bg-success m-1 d-none-sm"> Pagamento R$ <?=number_format($value->total_payments, 2 ,',' ,'.')?></span>
+                                        <span class="small badge rounded-pill bg-warning m-1 d-none-sm"> Diária <?=brCurrency($value->total_diaries)?></span>
+                                        <span class="small badge rounded-pill bg-info m-1 d-none-sm"> Consumo <?=brCurrency($value->total_consumptions)?></span>                                        
+                                        <span class="small badge rounded-pill bg-success m-1 d-none-sm"> Pagamento <?=brCurrency($value->total_payments)?></span>
                                     </div>
                                     
                                     <div class="ms-3 w-auto display-6 fs-4 d-none-sm">
-                                      <span class="btn btn-primary m-1">Total R$ <?=number_format(($value->total_diaries + $value->total_consumptions), 2 ,',' ,'.')?></span>  
+                                      <span class="btn btn-primary m-1">Total <?=brCurrency(($value->total_diaries + $value->total_consumptions))?></span>  
                                       <br>                                    
-                                      <span class="btn btn-danger m-1 text-light">Resta R$ <?=number_format(($value->total_diaries + $value->total_consumptions) - $value->total_payments, 2 ,',' ,'.')?></span>
+                                      <span class="btn btn-danger m-1 text-light">Resta <?=brCurrency(($value->total_diaries + $value->total_consumptions) - $value->total_payments)?></span>
                                     </div>
                                 </div>
 
                                 <div class="d-sm-none">
-                                  <span class="small badge rounded-pill bg-warning m-1"> Diária R$ <?=number_format($value->total_diaries, 2 ,',' ,'.')?></span>
-                                  <span class="small badge rounded-pill bg-info m-1"> Consumo R$ <?=number_format($value->total_consumptions, 2 ,',' ,'.')?></span>                                        
-                                  <span class="small badge rounded-pill bg-success m-1"> Pagamento R$ <?=number_format($value->total_payments, 2 ,',' ,'.')?></span>
+                                  <span class="small badge rounded-pill bg-warning m-1"> Diária <?=brCurrency($value->total_diaries)?></span>
+                                  <span class="small badge rounded-pill bg-info m-1"> Consumo <?=brCurrency($value->total_consumptions)?></span>                                        
+                                  <span class="small badge rounded-pill bg-success m-1"> Pagamento <?=brCurrency($value->total_payments)?></span>
                                 </div>
                                                                
                                 <div class="ms-3 d-none-sm">
@@ -65,8 +65,8 @@
                                 </div>
 
                                 <div class="ms-3 display-6 fs-4 d-sm-none">
-                                  <span class="btn btn-primary m-1 w-100">Total R$ <?=number_format(($value->total_diaries + $value->total_consumptions), 2 ,',' ,'.')?></span>                                 
-                                  <span class="btn btn-danger m-1 text-light w-100">Resta R$ <?=number_format(($value->total_diaries + $value->total_consumptions) - $value->total_payments, 2 ,',' ,'.')?></span>
+                                  <span class="btn btn-primary m-1 w-100">Total R$ <?=brCurrency(($value->total_diaries + $value->total_consumptions))?></span>                                 
+                                  <span class="btn btn-danger m-1 text-light w-100">Resta R$ <?=brCurrency(($value->total_diaries + $value->total_consumptions) - $value->total_payments)?></span>
                                 </div> 
 
                                 <div class="ms-3 d-sm-none me-2 w-100">
@@ -156,7 +156,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="refreshPage()">
                     Fechar
                 </button>
                 <button type="button" disabled id="btn_inserir" class="btn btn-primary">
@@ -223,7 +223,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="refreshPage()">
                     Fechar
                 </button>
                 <button type="button" id="btn_inserir_consumo" class="btn btn-primary">
@@ -242,7 +242,7 @@
                 <h5 class="modal-title" id="modalPaymentsLabel">
                    Adicionar Pagamentos
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="refreshPage()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-2 d-flex align-items-end justify-content-between">
@@ -294,7 +294,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="refreshPage()">
                     Fechar
                 </button>
                 <button type="button" id="btn_inserir_payments" class="btn btn-primary">

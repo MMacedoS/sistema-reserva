@@ -63,3 +63,12 @@ if (!function_exists('brDate')) {
         return "Não identificado";
     }
 }
+
+if (!function_exists('brCurrency')) {    
+    function brCurrency($value) {
+        if (!is_null($value) && is_numeric($value)) {
+            return 'R$ ' . number_format($value, 2, ',', '.');
+        }
+        return null;
+    }
+}

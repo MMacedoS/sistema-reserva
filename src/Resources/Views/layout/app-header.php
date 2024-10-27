@@ -27,7 +27,18 @@
                     </div> --}} -->
                     <!-- Search container end -->
 
-                    <div class="d-sm-flex d-none align-items-center gap-2">
+                    <div class="d-sm-flex align-items-center gap-2">
+                      <? if (isset($_SESSION['balance']->id)) { ?>
+                        <div class="alert border border-success fade show text-success mt-2">
+                          <b>Caixa:</b>  <?=brCurrency($_SESSION['balance']->current_balance); ?>
+                        </div>
+                      <? } ?>
+
+                      <? if (!isset($_SESSION['balance']->id)) { ?>
+                        <div class="alert border border-success fade show text-success">
+                          <button type="button" class="btn btn-info text-light" onclick="openModelBalance()">Abrir Caixa</button>
+                        </div>
+                      <? } ?>
                       <!-- {{-- <div class="dropdown">
                         <a class="dropdown-toggle header-action-icon" href="#!" role="button" data-bs-toggle="dropdown"
                           aria-expanded="false">

@@ -2,6 +2,7 @@
 
 namespace App\Config;
 
+use App\Repositories\Balance\CaixaRepository;
 use App\Repositories\Permission\PermissaoRepository;
 use Firebase\JWT\JWT;
 
@@ -29,9 +30,13 @@ class Auth {
         $_SESSION['user'] = $username;
         $_SESSION['login_time'] = time();
         $_SESSION['last_activity'] = time();
-        $permissaoRepository = new PermissaoRepository();
+        $permissaoRepository = new PermissaoRepository(); 
         $permissions = $permissaoRepository->allByUser((int)$username->code);
         $_SESSION['my_permissions'] = $permissions;
+
+        $caixaRepository = new CaixaRepository();
+        $balance = $caixaRepository->findBalanceByUserId((int)$username->code);
+        $_SESSION['balance'] = $balance;
     
         return true;
     }

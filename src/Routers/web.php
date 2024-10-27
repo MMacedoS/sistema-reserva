@@ -3,6 +3,7 @@
 use App\Config\Auth;
 use App\Config\Router;
 use App\Controllers\v1\Apartamento\ApartamentoController;
+use App\Controllers\v1\Balance\CaixaController;
 use App\Controllers\v1\Customer\ClienteController;
 use App\Controllers\v1\Dashboard\DashboardController;
 use App\Controllers\v1\Payment\PagamentoController;
@@ -29,6 +30,8 @@ $produtoController = new ProdutoController();
 $pagamentoController = new PagamentoController();
 $vendaController = new VendaController();
 $itemVendaController = new ItemVendaController();
+
+$caixaController = new CaixaController();
 
 $router->create('GET', '/dashboard', [$dashboardController, 'index'], $auth);
 $router->create('GET', '/dashboard/facility', [$dashboardController, 'indexFacility'], $auth);
@@ -139,6 +142,8 @@ $router->create('GET', '/produtos/{produto_id}', [$produtoController, 'edit'], $
 $router->create('POST', '/produtos/{produto_id}', [$produtoController, 'update'], $auth);
 $router->create('POST', '/produtos/{produto_id}/remove', [$produtoController, 'destroy'], $auth);
 // $router->create('DELETE', '/produtos', [$produtoController, 'destroyAll'], $auth);
+
+$router->create('POST', '/caixa/create', [$caixaController, 'storeByJson'], $auth);
 
 $router->create('GET', '/', [$usuarioController, 'login'], null);
 $router->create('POST', '/login', [$usuarioController, 'auth']);

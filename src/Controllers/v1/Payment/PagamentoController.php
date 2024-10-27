@@ -28,7 +28,7 @@ class PagamentoController extends Controller
         $this->consumoRepository = new ConsumoRepository(); 
         $this->produtoRepository = new ProdutoRepository(); 
         $this->pagamentoRepository = new PagamentoRepository();   
-        $this->vendaRepository = new VendaRepository();   
+        $this->vendaRepository = new VendaRepository();  
     }
 
     public function index(Request $request) {
@@ -64,6 +64,7 @@ class PagamentoController extends Controller
 
     public function storeByJson(Request $request, $reserva_id) 
     {
+        // $this->checkBalanceOpen();
         $data = $request->getBodyParams();
         $validator = new Validator($data);
         $rules = [

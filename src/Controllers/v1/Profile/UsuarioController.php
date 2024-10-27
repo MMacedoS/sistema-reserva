@@ -138,7 +138,7 @@ class UsuarioController extends Controller
         $data = $request->getBodyParams();
         $user = $this->usuarioRepository->getLogin($data['email'], $data['password']);
         $auth = new Auth();
-        if ($auth->login($user)) {
+        if ($auth->login($user)) {            
             return $this->router->redirect('dashboard/');
         }
 
