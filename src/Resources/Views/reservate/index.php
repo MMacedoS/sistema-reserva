@@ -16,7 +16,23 @@
     <?php if (hasPermission('cadastrar reservas')) { ?>
         <div class="col-2 col-xl-6">
             <div class="float-end">
-            <a href="\reserva\criar" class="btn btn-outline-primary" > + </a>
+                <div class="dropdown ms-3">
+                    <a class="btn btn-outline-primary" > <i class="icon-plus fs-3"></i> </a>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <div class="header-action-links">
+                          <a class="dropdown-item" href="\reserva\criar">
+                            <i class="icon-user border border-primary text-primary"></i>
+                            Reserva Individual
+                          </a>                          
+                        </div>
+                        <div class="header-action-links">
+                          <a href="\reserva\group"  class="dropdown-item">
+                            <i class="icon-users border border-primary text-primary"></i>
+                            Reserva em Grupo 
+                          </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     <? } ?>

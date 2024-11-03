@@ -74,7 +74,7 @@
         let isRequestInProgress = false;
         $(document).ready(function() {
             $('.js-example-basic-multiple').select2({
-                placeholder: "Selecione os Hóspedes",
+                placeholder: "Selecione",
                 allowClear: true
             });
 
@@ -83,7 +83,7 @@
             let checkin = $('#dt_checkin').val();
             let checkout = $('#dt_checkout').val();
             let reserve = $('#reserve').val() != '' ? $('#reserve').val() : null;
-
+            $('#apartament').attr('disabled', true);
           if (checkin && checkout) {
             isRequestInProgress = true;
               $.ajax({
@@ -115,11 +115,13 @@
                 $apartamentoSelect.append(
                   $('<option>', { 
                     value: apartamento.id, 
-                    text: apartamento.name, 
-                    selected: true
+                    text: "Apt " + apartamento.name, 
+                    selected: false
                   })
                 );
               });
+              
+            $('#apartament').attr('disabled', false);
               return;
             }
             $apartamentoSelect.append(

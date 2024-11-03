@@ -37,16 +37,6 @@ class CaixaController extends Controller
     public function storeByJson(Request $request) 
     {
         $data = $request->getBodyParams();
-        $validator = new Validator($data);
-        $rules = [
-            'starting_balance' => 'required'
-        ];
-    
-        if (!$validator->validate($rules)) {
-            http_response_code(404); 
-            echo json_encode(['error' => 'dados invalidos.']);
-            exit();
-       } 
 
         $data['current_balance'] = $data['starting_balance'];
         $data['id_usuario'] = $_SESSION['user']->code;       

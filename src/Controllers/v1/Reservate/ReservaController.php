@@ -41,7 +41,12 @@ class ReservaController extends Controller
 
     public function create() {
         $clientes = $this->clienteRepository->all();
-        return $this->router->view('reservate/create', ['active' => 'register', 'customers' => $clientes]);
+        return $this->router->view('reservate/create', ['active' => 'register', 'customers' => $clientes, 'group' => false]);
+    }
+
+    public function createGroup() {
+        $clientes = $this->clienteRepository->all();
+        return $this->router->view('reservate/create', ['active' => 'register', 'customers' => $clientes, 'group' => true]);
     }
 
     public function store(Request $request) {
@@ -68,8 +73,17 @@ class ReservaController extends Controller
         } 
 
         $data['id_usuario'] = 1;
-        
-        $created = $this->reservaRepository->create($data);
+
+        if (!is_array($data['apartament'])) {
+            $created = $this->reservaRepository->create($data);
+        }
+
+        if (is_array($data['apartament']) && !empty($data['apartament'])) {
+            foreach ($data['apartament'] as $apartament) {
+                $data['apartament'] = $apartament;
+                $created = $this->reservaRepository->create($data);
+            }
+        }
 
         if(is_null($created)) {            
         return $this->router->view('reservate/create', ['active' => 'register', 'danger' => true]);

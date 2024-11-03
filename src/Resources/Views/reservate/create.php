@@ -27,7 +27,14 @@
     <!-- Row end -->
     <form action="/reserva/add" method="post" >
         <div class="row gx-3">
-            <? include_once('_forms.php');?>
+            <? 
+                if (!$data['group']) {
+                    include_once('_forms.php');
+                }
+                if ($data['group']) {
+                    include_once('_forms-group.php');
+                }
+            ?>
         </div>
     </form>
 

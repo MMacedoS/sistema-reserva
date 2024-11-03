@@ -77,6 +77,7 @@ $router->create('GET', '/reserva/{id}/editar', [$reservaController, 'edit'], $au
 $router->create('POST', '/reserva/{id}/upt', [$reservaController, 'update'], $auth);
 $router->create('POST', '/reserva/add/', [$reservaController, 'store'], $auth);
 $router->create('GET', '/reserva/criar', [$reservaController, 'create'], $auth);
+$router->create('GET', '/reserva/group', [$reservaController, 'createGroup'], $auth);
 $router->create('GET', '/reserva/{request}', [$reservaController, 'index'], $auth);
 $router->create('GET', '/reserva/', [$reservaController, 'index'], $auth);
 $router->create('POST', '/reserva/apartamentos', [$reservaController, 'findAvailableApartments'], $auth);
