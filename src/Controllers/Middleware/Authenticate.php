@@ -8,7 +8,7 @@ class Authenticate {
     public static function handle() {
         $auth = new Auth();
         if (!$auth->check()) {            
-            header('Location: ' . URL_PREFIX);           
+            header('Location: ' . URL_PREFIX_APP);           
         }
         return;
     }

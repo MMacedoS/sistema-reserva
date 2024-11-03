@@ -51,7 +51,7 @@ class Router {
     }
 
     public function redirect($page, $delay = 0) {
-        $url = URL_PREFIX . $page;
+        $url = URL_PREFIX_APP . $page;
         echo "<meta http-equiv='refresh' content='{$delay};url={$url}'>";
         exit;
     }

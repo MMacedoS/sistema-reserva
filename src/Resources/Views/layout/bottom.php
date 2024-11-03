@@ -48,24 +48,24 @@
       ************* -->
       
       <!-- Required jQuery first, then Bootstrap Bundle JS -->
-      <script src="<?=URL_PREFIX?>/Public/assets/js/jquery.min.js"></script>
+      <script src="<?=URL_PREFIX_APP?>/Public/assets/js/jquery.min.js"></script>
       
       <!-- Include Select2 JS -->
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-      <script src="<?=URL_PREFIX?>/Public/assets/js/bootstrap.bundle.min.js"></script>
+      <script src="<?=URL_PREFIX_APP?>/Public/assets/js/bootstrap.bundle.min.js"></script>
 
       <!-- *************
         ************ Vendor Js Files *************
       ************* -->
 
       <!-- Overlay Scroll JS -->
-      <script src="<?=URL_PREFIX?>/Public/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
-      <script src="<?=URL_PREFIX?>/Public/assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
+      <script src="<?=URL_PREFIX_APP?>/Public/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js"></script>
+      <script src="<?=URL_PREFIX_APP?>/Public/assets/vendor/overlay-scroll/custom-scrollbar.js"></script>
       <!-- <script src="public/assets/vendor/quill/quill.min.js"></script>
       <script src="public/assets/vendor/quill/custom.js"></script> -->
 
-      <script src="<?=URL_PREFIX?>/Public/assets/js/custom.js"></script>
-      <script src="<?=URL_PREFIX?>/Public/assets/js/validations.js"></script>
+      <script src="<?=URL_PREFIX_APP?>/Public/assets/js/custom.js"></script>
+      <script src="<?=URL_PREFIX_APP?>/Public/assets/js/validations.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

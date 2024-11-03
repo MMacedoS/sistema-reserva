@@ -10,7 +10,7 @@
                   <!-- App brand starts -->
                   <div class="app-brand">
                     <a href="/dashboard/" class="text-light d-md-block fs-1 fw-bold">
-                        <img src="<?=URL_PREFIX?>/Public/assets/images/logo-ligth-rm-bg.png" class="img-fluid dash-logo" alt="Admin Dashboard" />
+                        <img src="<?=URL_PREFIX_APP?>/Public/assets/images/logo-ligth-rm-bg.png" class="img-fluid dash-logo" alt="Admin Dashboard" />
                     </a>
                   </div>
                   <!-- App brand ends -->
@@ -74,7 +74,7 @@
                     <div class="dropdown ms-3">
                       <a id="userSettings" class="dropdown-toggle d-flex py-2 align-items-center text-decoration-none"
                         role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                         <img src="<?=URL_PREFIX?>/Public/assets/images/user2.png" class="rounded-2 img-3x" alt="Bootstrap Gallery" />
+                         <img src="<?=URL_PREFIX_APP?>/Public/assets/images/user2.png" class="rounded-2 img-3x" alt="Bootstrap Gallery" />
                         <div class="ms-2 text-truncate d-lg-block d-none text-white">
                           <span class="d-flex opacity-50 small">
                             <?=$_SESSION['user']->name?>
